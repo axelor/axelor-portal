@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <form name="product-form" id="portal-product-form" title="Product"
+    model="com.axelor.apps.base.db.Product" extension="true">
+    <extend target="/">
+      <attribute name="onLoad" value="action-portal-group-product-onload"/>
+    </extend>
+    <extend target="//panel-tabs[@name='productSpecificAttributes']/*[last()]">
+      <insert position="after">
+        <panel name="portalPanel" title="Portal">
+          <field name="subtitle"/>
+          <field name="portalDate" colSpan="3"/>
+          <field name="featured" colSpan="3"/>
+          <field name="homepage" colSpan="3"/>
+          <field name="allowCustomNote" colSpan="3"/>
+          <field name="sellOutOfStock" colSpan="3"/>
+          <field name="leftQty" colSpan="3" readonly="true"/>
+          <field name="brand"/>
+          <field name="protalCategorySet" widget="TagSelect"/>
+          <field name="portalAvailableOptionSet" widget="TagSelect"/>
+          <field name="portalAssociatedProductSet" widget="TagSelect"/>
+          <field name="longDescription" colSpan="12" widget="html"/>
+          <field name="portalImageList" colSpan="12">
+            <editor>
+              <field name="picture" showTitle="false" colSpan="12" widget="Image"/>
+            </editor>
+          </field>
+        </panel>
+      </insert>
+    </extend>
+  </form>
+
+  <action-record name="action-product-set-left-qty"
+    model="com.axelor.apps.base.db.Product">
+    <field name="leftQty"
+      expr="call:com.axelor.apps.stock.service.StockLocationService:getRealQtyOfProductInStockLocations(id, null,null)"/>
+  </action-record>
+
+  <action-group name="action-portal-group-product-onload">
+    <action name="action-group-product-onload"/>
+    <action name="action-product-set-left-qty"/>
+  </action-group>
+
+</object-views>

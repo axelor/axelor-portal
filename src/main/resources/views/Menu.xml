@@ -14,4 +14,13 @@
     <view type="form" name="website-config-form"/>
   </action-view>
 
+  <menuitem title="Brand" name="menu-portal-brand" parent="menu-portal-root"
+    action="action.portal.brand"/>
+
+  <action-view name="action.portal.brand" title="Brand"
+    model="com.axelor.apps.portal.db.Brand">
+    <view type="grid" name="brand-grid"/>
+    <view type="form" name="brand-form"/>
+  </action-view>
+
 </object-views>
