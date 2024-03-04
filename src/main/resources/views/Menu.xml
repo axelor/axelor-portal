@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <menuitem title="Portal" name="menu-portal-root"/>
+
+  <menuitem title="Configuration" name="menu-portal-configuration"
+    parent="menu-portal-root" action="action.portal.configuration"/>
+
+  <action-view name="action.portal.configuration" title="Configuration"
+    model="com.axelor.apps.portal.db.WebsiteConfig">
+    <view type="grid" name="website-config-grid"/>
+    <view type="form" name="website-config-form"/>
+  </action-view>
+
+</object-views>

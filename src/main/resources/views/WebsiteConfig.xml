@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="website-config-grid" title="Website configurations"
+    model="com.axelor.apps.portal.db.WebsiteConfig">
+    <field name="name"/>
+    <field name="requestQuotation"/>
+    <field name="confirmOrder"/>
+    <field name="displayPrices"/>
+    <field name="displayOutOfStock"/>
+    <field name="payInAdvance"/>
+    <field name="eSignature"/>
+    <field name="byNewst"/>
+    <field name="byFeature"/>
+    <field name="byAToZ"/>
+    <field name="byZToA"/>
+    <field name="byMostExpensive"/>
+    <field name="byLessExpensive"/>
+    <field name="defaultConfig"/>
+  </grid>
+
+  <form name="website-config-form" title="Website configuration"
+    model="com.axelor.apps.portal.db.WebsiteConfig">
+    <panel name="mainPanel">
+      <field name="name" colSpan="12" required="true"/>
+      <field name="requestQuotation"/>
+      <field name="confirmOrder"/>
+      <field name="displayPrices"/>
+      <field name="displayOutOfStock"/>
+    </panel>
+    <panel name="confirmOrderPanel" title="How to confirm an order ?">
+      <field name="payInAdvance"/>
+      <field name="eSignature"/>
+    </panel>
+    <panel name="sortingPanel" title="Sort product by">
+      <field name="byNewst"/>
+      <field name="byFeature"/>
+      <field name="byAToZ"/>
+      <field name="byZToA"/>
+      <field name="byMostExpensive"/>
+      <field name="byLessExpensive"/>
+    </panel>
+    <panel name="defaultPanel" sidebar="true">
+      <field name="defaultConfig"/>
+    </panel>
+  </form>
+
+</object-views>

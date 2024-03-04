@@ -1,0 +1,18 @@
+plugins {
+	id 'com.axelor.app'
+}
+
+apply {
+	version = "1.0.0"
+}
+
+axelor {
+	title "Axelor Portal"
+	description "Axelor Portal Module"
+}
+
+dependencies {
+	api project(":modules:axelor-supplychain")
+	api project(":modules:axelor-project")
+	api project(":modules:axelor-helpdesk")
+}

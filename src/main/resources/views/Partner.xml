@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <form name="partner-form" id="portal-partner-form" title="Partner"
+    model="com.axelor.apps.base.db.Partner" extension="true">
+    <extend target="//field[@name='customerShippingCarriagePaidList']">
+      <insert position="before">
+        <panel name="websiteConfigPanel">
+          <field name="websiteConfig" form-view="website-config-form"
+            grid-view="website-config-grid"/>
+        </panel>
+      </insert>
+    </extend>
+  </form>
+
+</object-views>

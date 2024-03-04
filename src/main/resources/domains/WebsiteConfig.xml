@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="WebsiteConfig">
+
+    <string name="name"/>
+    <boolean name="requestQuotation" title="Request quotation"/>
+    <boolean name="confirmOrder" title="Confirm order"/>
+    <boolean name="displayPrices" title="Display prices"/>
+    <boolean name="displayOutOfStock" title="Display 'out of stock' for product"/>
+
+    <boolean name="payInAdvance" title="Pay in advance"/>
+    <boolean name="eSignature" title="E signature"/>
+
+    <boolean name="byNewst" title="By newst"/>
+    <boolean name="byFeature" title="By feature"/>
+    <boolean name="byAToZ" title="By A-Z"/>
+    <boolean name="byZToA" title="By Z-A"/>
+    <boolean name="byMostExpensive" title="By most expensive"/>
+    <boolean name="byLessExpensive" title="By less expensive"/>
+
+    <boolean name="defaultConfig" title="Default"/>
+
+  </entity>
+
+</domain-models>
