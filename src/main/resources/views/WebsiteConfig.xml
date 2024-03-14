@@ -11,14 +11,6 @@
     <field name="confirmOrder"/>
     <field name="displayPrices"/>
     <field name="displayOutOfStock"/>
-    <field name="payInAdvance"/>
-    <field name="eSignature"/>
-    <field name="byNewst"/>
-    <field name="byFeature"/>
-    <field name="byAToZ"/>
-    <field name="byZToA"/>
-    <field name="byMostExpensive"/>
-    <field name="byLessExpensive"/>
     <field name="defaultConfig"/>
   </grid>
 

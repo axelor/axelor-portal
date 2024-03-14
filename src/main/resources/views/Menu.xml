@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-  <menuitem title="Portal" name="menu-portal-root"/>
+  <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"/>
 
   <menuitem title="Configuration" name="menu-portal-configuration"
     parent="menu-portal-root" action="action.portal.configuration"/>
