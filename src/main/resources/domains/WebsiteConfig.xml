@@ -25,6 +25,8 @@
 
     <boolean name="defaultConfig" title="Default"/>
 
+    <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
+
   </entity>
 
 </domain-models>

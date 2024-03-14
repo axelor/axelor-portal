@@ -6,6 +6,7 @@
   <grid name="website-config-grid" title="Website configurations"
     model="com.axelor.apps.portal.db.WebsiteConfig">
     <field name="name"/>
+    <field name="company"/>
     <field name="requestQuotation"/>
     <field name="confirmOrder"/>
     <field name="displayPrices"/>
@@ -24,7 +25,8 @@
   <form name="website-config-form" title="Website configuration"
     model="com.axelor.apps.portal.db.WebsiteConfig">
     <panel name="mainPanel">
-      <field name="name" colSpan="12" required="true"/>
+      <field name="name" required="true"/>
+      <field name="company"/>
       <field name="requestQuotation"/>
       <field name="confirmOrder"/>
       <field name="displayPrices"/>
