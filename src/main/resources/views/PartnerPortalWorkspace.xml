@@ -5,7 +5,6 @@
 
   <grid name="partner-portal-workspace-grid" title="Partner workspaces"
     model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
-    <field name="name"/>
     <field name="workspace"/>
     <field name="websiteConfig"/>
     <field name="isDefault"/>
@@ -14,7 +13,6 @@
   <form name="partner-portal-workspace-form" title="Partner workspace"
     model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
     <panel name="mainPanel">
-      <field name="name"/>
       <field name="workspace"/>
       <field name="websiteConfig"/>
     </panel>
