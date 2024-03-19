@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-workspace-grid" title="Workspaces"
+    model="com.axelor.apps.portal.db.PortalWorkspace">
+    <field name="url"/>
+    <field name="defaultWebsiteconfig"/>
+    <field name="defaultTheme"/>
+  </grid>
+
+  <form name="portal-workspace-form" title="Workspace"
+    model="com.axelor.apps.portal.db.PortalWorkspace">
+    <panel name="mainPanel">
+      <field name="url" widget="url" colSpan="12"/>
+      <field name="defaultWebsiteconfig"/>
+      <field name="defaultTheme"/>
+    </panel>
+  </form>
+
+</object-views>

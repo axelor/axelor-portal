@@ -14,6 +14,15 @@
     <view type="form" name="website-config-form"/>
   </action-view>
 
+  <menuitem title="Workspace" name="menu-portal-portal-workspace" parent="menu-portal-root"
+    action="action.portal.porttal.workspace"/>
+
+  <action-view name="action.portal.porttal.workspace" title="Workspace"
+    model="com.axelor.apps.portal.db.PortalWorkspace">
+    <view type="grid" name="portal-workspace-grid"/>
+    <view type="form" name="portal-workspace-form"/>
+  </action-view>
+
   <menuitem title="Brand" name="menu-portal-brand" parent="menu-portal-root"
     action="action.portal.brand"/>
 

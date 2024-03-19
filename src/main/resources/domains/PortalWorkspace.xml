@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalWorkspace">
+
+    <string name="url" title="URL" namecolumn="true"/>
+    <many-to-one name="defaultWebsiteconfig"
+      ref="com.axelor.apps.portal.db.WebsiteConfig" title="Default websiteconfig"/>
+    <string name="defaultTheme" title="Default theme"/>
+
+  </entity>
+
+</domain-models>
