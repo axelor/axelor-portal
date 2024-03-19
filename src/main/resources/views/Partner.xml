@@ -7,9 +7,10 @@
     model="com.axelor.apps.base.db.Partner" extension="true">
     <extend target="//field[@name='customerShippingCarriagePaidList']">
       <insert position="before">
-        <panel name="websiteConfigPanel">
+        <panel name="portalPanel" colSpan="12">
           <field name="websiteConfig" form-view="website-config-form"
             grid-view="website-config-grid"/>
+          <field name="partnerPortalWorkspaceList" colSpan="12"/>
         </panel>
       </insert>
     </extend>

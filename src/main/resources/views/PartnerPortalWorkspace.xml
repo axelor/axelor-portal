@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="partner-portal-workspace-grid" title="Partner workspaces"
+    model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
+    <field name="workspace"/>
+    <field name="websiteConfig"/>
+    <field name="isDefault"/>
+  </grid>
+
+  <form name="partner-portal-workspace-form" title="Partner workspace"
+    model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
+    <panel name="mainPanel">
+      <field name="workspace"/>
+      <field name="websiteConfig"/>
+    </panel>
+    <panel name="sidePanel" sidebar="true">
+      <field name="isDefault"/>
+    </panel>
+  </form>
+
+</object-views>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PartnerPortalWorkspace">
+
+    <many-to-one name="workspace" title="Workspace"
+      ref="com.axelor.apps.portal.db.PortalWorkspace" required="true"/>
+    <many-to-one name="websiteConfig" title="Website configuration"
+      ref="com.axelor.apps.portal.db.WebsiteConfig"/>
+    <boolean name="isDefault" title="Default"/>
+    <many-to-one name="partner" ref="com.axelor.apps.base.db.Partner" title="partner"/>
+
+    <unique-constraint columns="partner,workspace"/>
+
+  </entity>
+
+</domain-models>
