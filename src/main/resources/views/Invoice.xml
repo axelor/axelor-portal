@@ -8,7 +8,7 @@
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
-          <field name="partnerPortalWorkspace"/>
+          <field name="portalWorkspace"/>
         </panel>
       </insert>
     </extend>

@@ -8,8 +8,8 @@
   <entity sequential="true" name="Invoice"
     implements="com.axelor.apps.base.interfaces.PricedOrder">
 
-    <many-to-one name="partnerPortalWorkspace"
-      ref="com.axelor.apps.portal.db.PartnerPortalWorkspace" title="Workspace"/>
+    <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
+      title="Workspace"/>
 
   </entity>
 

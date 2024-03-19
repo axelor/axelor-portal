@@ -11,8 +11,8 @@
       title="Portal variants"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="portalImage"
       title="Portal image"/>
-    <many-to-one name="partnerPortalWorkspace"
-      ref="com.axelor.apps.portal.db.PartnerPortalWorkspace" title="Workspace"/>
+    <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
+      title="Workspace"/>
     <string name="subtitle" title="Subtitle"/>
     <boolean name="filterOnBrand" title="Filter On Brands"/>
 

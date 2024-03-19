@@ -19,7 +19,7 @@
           <field name="sellOutOfStock" colSpan="3"/>
           <field name="leftQty" colSpan="3" readonly="true"/>
           <field name="brand"/>
-          <field name="partnerPortalWorkspace"/>
+          <field name="portalWorkspace"/>
           <field name="protalCategorySet" widget="TagSelect"/>
           <field name="portalAvailableOptionSet" widget="TagSelect"/>
           <field name="portalAssociatedProductSet" widget="TagSelect"/>
