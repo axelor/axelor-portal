@@ -5,10 +5,10 @@
 
   <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"/>
 
-  <menuitem title="Configuration" name="menu-portal-configuration"
+  <menuitem title="Website configuration" name="menu-portal-configuration"
     parent="menu-portal-root" action="action.portal.configuration"/>
 
-  <action-view name="action.portal.configuration" title="Configuration"
+  <action-view name="action.portal.configuration" title="Website configuration"
     model="com.axelor.apps.portal.db.WebsiteConfig">
     <view type="grid" name="website-config-grid"/>
     <view type="form" name="website-config-form"/>
