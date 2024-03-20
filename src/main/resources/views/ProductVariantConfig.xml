@@ -3,8 +3,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
 
-  <form name="product-variant-form" id="portal-product-variant-form" title="Product variant"
-    model="com.axelor.apps.base.db.ProductVariant" extension="true">
+  <form name="product-variant-config-form" id="portal-product-variant-config-form" title="Product variant configuration"
+    model="com.axelor.apps.base.db.ProductVariantConfig" extension="true">
     <extend target="//panel[@name='mainPanel']/*[last()]">
       <insert position="after">
         <field name="displaySelect"/>
