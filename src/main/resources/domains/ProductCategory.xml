@@ -7,8 +7,8 @@
 
   <entity name="ProductCategory">
 
-    <many-to-many ref="com.axelor.apps.base.db.ProductVariant" name="portalVariantSet"
-      title="Portal variants"/>
+    <many-to-many ref="com.axelor.apps.base.db.ProductVariantConfig"
+      name="portalVariantConfigSet" title="Portal variants"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="portalImage"
       title="Portal image"/>
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
