@@ -5,7 +5,7 @@
 
   <module name="base" package="com.axelor.apps.base.db"/>
 
-  <entity name="ProductVariantConfig">
+  <entity name="ProductVariantAttr">
 
     <string name="displaySelect" title="Display as select or checkbox"
       selection="product.display.select" default="select"/>
