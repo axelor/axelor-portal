@@ -175,7 +175,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     if (cartItem.containsKey("quantity") && cartItem.get("quantity") != null) {
       qty = new BigDecimal(cartItem.get("quantity").toString());
     }
-    if (BigDecimal.ZERO.compareTo(qty) <= 0) {
+    if (BigDecimal.ZERO.compareTo(qty) >= 0) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_INCONSISTENCY, I18n.get(PortalExceptionMessage.QTY_ERROR));
     }

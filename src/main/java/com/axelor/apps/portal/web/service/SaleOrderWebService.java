@@ -23,6 +23,8 @@ import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
 import com.axelor.apps.portal.service.response.ResponseGeneratorFactory;
 import com.axelor.apps.sale.db.SaleOrder;
+import com.axelor.db.JpaSecurity;
+import com.axelor.db.JpaSecurity.AccessType;
 import com.axelor.inject.Beans;
 import java.util.Map;
 import javax.ws.rs.Consumes;
@@ -42,6 +44,7 @@ public class SaleOrderWebService extends AbstractWebService {
   public PortalRestResponse createQuotation(Map<String, Object> values) throws AxelorException {
 
     try {
+      Beans.get(JpaSecurity.class).check(AccessType.CREATE, SaleOrder.class);
       Pair<SaleOrder, Boolean> saleOrder =
           Beans.get(SaleOrderPortalService.class).createQuotation(values);
 
