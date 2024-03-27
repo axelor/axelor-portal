@@ -8,8 +8,6 @@
   <entity name="Partner">
 
     <string name="portalPassword" title="Password" encrypted="true"/>
-    <many-to-one name="websiteConfig" ref="com.axelor.apps.portal.db.WebsiteConfig"
-      title="Website configuration"/>
     <one-to-many name="partnerPortalWorkspaceList"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace" title="Workspaces" mappedBy="partner"/>
 

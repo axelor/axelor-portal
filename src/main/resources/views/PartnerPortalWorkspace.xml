@@ -15,6 +15,7 @@
     <panel name="mainPanel">
       <field name="workspace"/>
       <field name="websiteConfig"/>
+      <field name="apps" widget="TagSelect" colSpan="12"/>
     </panel>
     <panel name="sidePanel" sidebar="true">
       <field name="isDefault"/>

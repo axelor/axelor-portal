@@ -13,6 +13,7 @@
       ref="com.axelor.apps.portal.db.WebsiteConfig"/>
     <boolean name="isDefault" title="Default"/>
     <many-to-one name="partner" ref="com.axelor.apps.base.db.Partner" title="partner"/>
+    <many-to-many name="apps" ref="com.axelor.apps.portal.db.PortalApp"/>
 
     <unique-constraint columns="partner,workspace"/>
 

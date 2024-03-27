@@ -8,8 +8,6 @@
     <extend target="//field[@name='customerShippingCarriagePaidList']">
       <insert position="before">
         <panel name="portalPanel" colSpan="12">
-          <field name="websiteConfig" form-view="website-config-form"
-            grid-view="website-config-grid"/>
           <field name="portalPassword" widget="password"/>
           <field name="partnerPortalWorkspaceList" colSpan="12"/>
         </panel>
