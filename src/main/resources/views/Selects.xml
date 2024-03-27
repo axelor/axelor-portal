@@ -22,4 +22,10 @@
     <option value="yes">Yes</option>
     <option value="no">No</option>
   </selection>
+
+  <selection name="app.install.select">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </selection>
+
 </object-views>

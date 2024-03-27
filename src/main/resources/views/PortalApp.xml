@@ -3,13 +3,16 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
 
-  <grid name="portal-theme-grid" title="Themes" model="com.axelor.apps.portal.db.PortalTheme">
+  <grid name="portal-app-grid" title="Portal apps" model="com.axelor.apps.portal.db.PortalApp">
     <field name="name"/>
   </grid>
 
-  <form name="portal-theme-form" title="Theme" model="com.axelor.apps.portal.db.PortalTheme">
+  <form name="portal-app-form" title="Portal app" model="com.axelor.apps.portal.db.PortalApp">
     <panel name="mainPanel">
       <field name="name" required="true"/>
+      <field name="installed"/>
+      <field name="dependnecySet" colSpan="12" widget="TagSelect"/>
+      <field name="description" colSpan="12"/>
     </panel>
   </form>
 
