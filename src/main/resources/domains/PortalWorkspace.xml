@@ -10,7 +10,12 @@
     <string name="url" title="URL" namecolumn="true"/>
     <many-to-one name="defaultWebsiteconfig"
       ref="com.axelor.apps.portal.db.WebsiteConfig" title="Default websiteconfig"/>
-    <string name="defaultTheme" title="Default theme"/>
+    <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
+    <string name="priceAfterLoginSelect" title="Price After Login"
+      selection="price.after.login.select"/>
+    <string name="displayPriceSelect" title="Display price" selection="display.price.select"/>
+    <string name="allowRegistrationSelect" title="Allow registration ?"
+      selection="allow.registration.select"/>
 
   </entity>
 

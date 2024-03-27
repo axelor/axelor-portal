@@ -32,4 +32,13 @@
     <view type="form" name="brand-form"/>
   </action-view>
 
+  <menuitem title="Theme" name="menu-portal-portal-theme" parent="menu-portal-root"
+    action="action.portal.portal.theme"/>
+
+  <action-view name="action.portal.portal.theme" title="Theme"
+    model="com.axelor.apps.portal.db.PortalTheme">
+    <view type="grid" name="portal-theme-grid"/>
+    <view type="form" name="portal-theme-form"/>
+  </action-view>
+
 </object-views>

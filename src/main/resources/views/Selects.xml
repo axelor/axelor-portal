@@ -8,4 +8,18 @@
     <option value="checkbox">Checkbox</option>
   </selection>
 
+  <selection name="price.after.login.select">
+    <option value="fromDB">From DB</option>
+    <option value="fromWS">From WS</option>
+  </selection>
+
+  <selection name="display.price.select">
+    <option value="at">AT</option>
+    <option value="wt">WT</option>
+  </selection>
+
+  <selection name="allow.registration.select">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </selection>
 </object-views>
