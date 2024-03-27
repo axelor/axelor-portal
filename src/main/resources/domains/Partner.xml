@@ -10,6 +10,8 @@
     <string name="portalPassword" title="Password" encrypted="true"/>
     <one-to-many name="partnerPortalWorkspaceList"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace" title="Workspaces" mappedBy="partner"/>
+    <one-to-many name="portalPermissionList"
+      ref="com.axelor.apps.portal.db.PortalPermission" mappedBy="partner" title="Permissions"/>
 
   </entity>
 
