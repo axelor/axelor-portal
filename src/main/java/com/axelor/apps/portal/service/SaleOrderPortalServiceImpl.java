@@ -33,6 +33,7 @@ import com.axelor.apps.base.service.CurrencyScaleService;
 import com.axelor.apps.base.service.PartnerPriceListService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.FiscalPositionService;
+import com.axelor.apps.base.service.tax.TaxService;
 import com.axelor.apps.base.service.user.UserService;
 import com.axelor.apps.portal.db.PartnerPortalWorkspace;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
@@ -70,6 +71,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   @Inject FiscalPositionService fiscalPositionService;
   @Inject SaleOrderMarginService saleOrderMarginService;
   @Inject CurrencyScaleService currencyScaleService;
+  @Inject TaxService taxService;
 
   @Inject PartnerRepository partnerRepo;
   @Inject ProductRepository productRepo;
@@ -218,18 +220,19 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     }
     fillTaxInformation(line, order);
     if (cartItem.containsKey("price") && cartItem.get("price") != null) {
+      BigDecimal itemPrice = new BigDecimal(cartItem.get("price").toString());
+      BigDecimal amount =
+          taxService.convertUnitPrice(
+              order.getInAti(),
+              line.getTaxLine(),
+              itemPrice,
+              appBaseService.getNbDecimalDigitForUnitPrice());
       if (order.getInAti()) {
-        line.setPrice(
-            (new BigDecimal(cartItem.get("price").toString()))
-                .multiply(BigDecimal.valueOf(100))
-                .divide(BigDecimal.valueOf(100).add(line.getTaxLine().getValue())));
-        line.setInTaxPrice(new BigDecimal(cartItem.get("price").toString()));
+        line.setInTaxPrice(itemPrice);
+        line.setPrice(amount);
       } else {
-        line.setPrice(new BigDecimal(cartItem.get("price").toString()));
-        line.setInTaxPrice(
-            (new BigDecimal(cartItem.get("price").toString()))
-                .multiply(line.getTaxLine().getValue())
-                .divide(BigDecimal.valueOf(100)));
+        line.setInTaxPrice(amount);
+        line.setPrice(itemPrice);
       }
     }
     line.setCompanyCostPrice(saleOrderLineService.getCompanyCostPrice(order, line));
@@ -279,7 +282,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     BigDecimal companyExTaxTotal;
     BigDecimal inTaxTotal;
     BigDecimal companyInTaxTotal;
-    if (order.getInAti()) {
+    if (!order.getInAti()) {
       exTaxTotal =
           saleOrderLineService.computeAmount(
               line.getQty(), line.getPrice(), currencyScaleService.getScale(order));
@@ -292,7 +295,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     } else {
       inTaxTotal =
           saleOrderLineService.computeAmount(
-              line.getQty(), line.getPrice(), currencyScaleService.getScale(order));
+              line.getQty(), line.getInTaxPrice(), currencyScaleService.getScale(order));
       exTaxTotal =
           inTaxTotal.divide(
               taxRate.add(BigDecimal.ONE),
