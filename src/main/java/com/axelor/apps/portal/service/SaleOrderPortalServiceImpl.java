@@ -18,6 +18,9 @@
  */
 package com.axelor.apps.portal.service;
 
+import com.axelor.apps.account.db.AccountManagement;
+import com.axelor.apps.account.db.Tax;
+import com.axelor.apps.account.db.TaxEquiv;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Partner;
@@ -26,17 +29,23 @@ import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.db.repo.PriceListRepository;
 import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
+import com.axelor.apps.base.service.CurrencyScaleService;
 import com.axelor.apps.base.service.PartnerPriceListService;
+import com.axelor.apps.base.service.app.AppBaseService;
+import com.axelor.apps.base.service.tax.FiscalPositionService;
 import com.axelor.apps.base.service.user.UserService;
+import com.axelor.apps.portal.db.PartnerPortalWorkspace;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
+import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderLineService;
-import com.axelor.apps.stock.db.StockLocation;
-import com.axelor.apps.stock.service.config.StockConfigService;
+import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
+import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
 import com.axelor.i18n.I18n;
@@ -44,11 +53,10 @@ import com.axelor.inject.Beans;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.NotFoundException;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
@@ -57,6 +65,11 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   @Inject SaleOrderLineService saleOrderLineService;
   @Inject SaleOrderComputeService saleOrderComputeService;
   @Inject UserService userService;
+  @Inject AppSaleService appSaleService;
+  @Inject AppBaseService appBaseService;
+  @Inject FiscalPositionService fiscalPositionService;
+  @Inject SaleOrderMarginService saleOrderMarginService;
+  @Inject CurrencyScaleService currencyScaleService;
 
   @Inject PartnerRepository partnerRepo;
   @Inject ProductRepository productRepo;
@@ -64,19 +77,35 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
   @Override
   @Transactional
-  public Pair<SaleOrder, Boolean> createQuotation(Map<String, Object> values)
-      throws AxelorException {
+  public SaleOrder createQuotation(Map<String, Object> values) throws AxelorException {
 
-    Company company = userService.getUserActiveCompany();
-    SaleOrder order = createSaleOrder(company, values);
-    Boolean isItemsChanged = createOrderLines(company, values, order);
+    SaleOrder order = createSaleOrder(values);
+    createOrderLines(values, order);
     saleOrderComputeService.computeSaleOrder(order);
     saleOrderRepo.save(order);
-    return ImmutablePair.of(order, isItemsChanged);
+    return order;
   }
 
-  private SaleOrder createSaleOrder(Company company, Map<String, Object> values)
-      throws AxelorException {
+  private Company getCompany(Partner clientPartner) {
+
+    Company company = AuthUtils.getUser().getActiveCompany();
+    if (clientPartner == null) {
+      return company;
+    }
+
+    PartnerPortalWorkspace partnerPortalWorkspace =
+        clientPartner.getPartnerPortalWorkspaceList().stream()
+            .filter(pws -> pws.getIsDefault())
+            .findFirst()
+            .orElse(null);
+    if (partnerPortalWorkspace == null) {
+      return company;
+    }
+
+    return partnerPortalWorkspace.getWebsiteConfig().getCompany();
+  }
+
+  private SaleOrder createSaleOrder(Map<String, Object> values) throws AxelorException {
 
     Partner clientPartner = null, contactPartner = null;
     if (values.containsKey("partnerId") && ObjectUtils.notEmpty(values.get("partnerId"))) {
@@ -97,9 +126,10 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
           I18n.get(PortalExceptionMessage.ADDRESS_MISSING));
     }
 
+    Company company = getCompany(clientPartner);
     SaleOrder saleOrder =
         saleOrdeCreateService.createSaleOrder(
-            userService.getUser(),
+            null,
             company,
             contactPartner,
             company != null ? company.getCurrency() : null,
@@ -111,7 +141,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
             clientPartner,
             null,
             null,
-            null,
+            clientPartner.getFiscalPosition(),
             null);
 
     if (saleOrder != null) {
@@ -121,44 +151,33 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     return saleOrder;
   }
 
-  private Boolean createOrderLines(Company company, Map<String, Object> values, SaleOrder order)
+  private void createOrderLines(Map<String, Object> values, SaleOrder order)
       throws AxelorException {
 
-    StockConfigService stockConfigService = Beans.get(StockConfigService.class);
-    StockLocation stockLocation =
-        stockConfigService.getPickupDefaultStockLocation(
-            stockConfigService.getStockConfig(company));
-    Boolean isItemsChanged = false;
-
-    if (values.containsKey("items") && ObjectUtils.notEmpty(values.get("items"))) {
-      @SuppressWarnings("unchecked")
-      List<Map<String, Object>> items = (List<Map<String, Object>>) values.get("items");
-      for (Map<String, Object> cartItem : items) {
-        Product product = getProduct(cartItem);
-        BigDecimal qty = getQty(cartItem);
-        BigDecimal price = getPrice(cartItem);
-        BigDecimal availableQty = BigDecimal.ZERO;
-        if (ProductRepository.PRODUCT_TYPE_STORABLE.equals(product.getProductTypeSelect())) {
-          availableQty = productPortalService.getAvailableQty(product, company, stockLocation);
-          if (qty.compareTo(availableQty) > 0) {
-            cartItem.put("quantity", availableQty);
-            qty = availableQty;
-            isItemsChanged = true;
-          }
-        }
-
-        SaleOrderLine line = createSaleOrderLine(order, product, qty, price);
-        if (cartItem.containsKey("note") && StringUtils.notBlank(cartItem.get("note").toString())) {
-          line.setDescription(cartItem.get("note").toString());
-        }
-        order.addSaleOrderLineListItem(line);
-      }
+    if (!values.containsKey("items") || ObjectUtils.isEmpty(values.get("items"))) {
+      return;
     }
 
-    return isItemsChanged;
+    @SuppressWarnings("unchecked")
+    List<Map<String, Object>> items = (List<Map<String, Object>>) values.get("items");
+    for (Map<String, Object> cartItem : items) {
+      SaleOrderLine line = new SaleOrderLine();
+      line.setProduct(getProduct(cartItem));
+      line.setQty(getQty(cartItem));
+
+      String note = getNote(cartItem);
+      if (StringUtils.notBlank(note)) {
+        line.setDescription(note);
+      } else if (appSaleService.getAppSale().getIsEnabledProductDescriptionCopy()) {
+        line.setDescription(line.getProduct().getDescription());
+      }
+      completeSaleOrderLine(order, line, cartItem);
+      order.addSaleOrderLineListItem(line);
+    }
   }
 
-  private Product getProduct(Map<String, Object> cartItem) {
+  protected Product getProduct(Map<String, Object> cartItem) {
+
     Product product = null;
     if (cartItem.containsKey("productId") && cartItem.get("productId") != null) {
       product = productRepo.find(Long.parseLong(cartItem.get("productId").toString()));
@@ -169,7 +188,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     return product;
   }
 
-  private BigDecimal getQty(Map<String, Object> cartItem) throws AxelorException {
+  protected BigDecimal getQty(Map<String, Object> cartItem) throws AxelorException {
 
     BigDecimal qty = BigDecimal.ZERO;
     if (cartItem.containsKey("quantity") && cartItem.get("quantity") != null) {
@@ -182,27 +201,126 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     return qty;
   }
 
-  private BigDecimal getPrice(Map<String, Object> cartItem) {
-    BigDecimal price = BigDecimal.ZERO;
+  protected String getNote(Map<String, Object> cartItem) {
 
-    if (cartItem.containsKey("price") && cartItem.get("price") != null) {
-      price = new BigDecimal(cartItem.get("price").toString());
+    if (cartItem.containsKey("note") && StringUtils.notBlank(cartItem.get("note").toString())) {
+      return cartItem.get("note").toString();
     }
 
-    return price;
+    return null;
   }
 
-  private SaleOrderLine createSaleOrderLine(
-      SaleOrder order, Product product, BigDecimal qty, BigDecimal price) throws AxelorException {
-    SaleOrderLine line = new SaleOrderLine();
-    line.setProduct(product);
-    line.setQty(qty);
-    saleOrderLineService.computeProductInformation(line, order);
-    if (BigDecimal.ZERO.compareTo(price) < 0) {
-      line.setPrice(price);
+  protected void fillPrice(Map<String, Object> cartItem, SaleOrderLine line, SaleOrder order)
+      throws AxelorException {
+
+    if (appBaseService.getAppBase().getEnablePricingScale()) {
+      saleOrderLineService.computePricingScale(line, order);
     }
-    line.setInTaxPrice(line.getInTaxPrice().setScale(10));
-    saleOrderLineService.computeValues(order, line);
+    fillTaxInformation(line, order);
+    if (cartItem.containsKey("price") && cartItem.get("price") != null) {
+      if (order.getInAti()) {
+        line.setPrice(
+            (new BigDecimal(cartItem.get("price").toString()))
+                .multiply(BigDecimal.valueOf(100))
+                .divide(BigDecimal.valueOf(100).add(line.getTaxLine().getValue())));
+        line.setInTaxPrice(new BigDecimal(cartItem.get("price").toString()));
+      } else {
+        line.setPrice(new BigDecimal(cartItem.get("price").toString()));
+        line.setInTaxPrice(
+            (new BigDecimal(cartItem.get("price").toString()))
+                .multiply(line.getTaxLine().getValue())
+                .divide(BigDecimal.valueOf(100)));
+      }
+    }
+    line.setCompanyCostPrice(saleOrderLineService.getCompanyCostPrice(order, line));
+  }
+
+  protected void fillTaxInformation(SaleOrderLine line, SaleOrder order) throws AxelorException {
+
+    if (order.getClientPartner() == null) {
+      return;
+    }
+
+    Tax tax = null;
+    if (line.getProduct() != null
+        && line.getProduct().getProductFamily() != null
+        && ObjectUtils.notEmpty(line.getProduct().getProductFamily().getAccountManagementList())) {
+      AccountManagement accountManagement =
+          line.getProduct().getProductFamily().getAccountManagementList().stream()
+              .filter(am -> am.getCompany().equals(order.getCompany()))
+              .findFirst()
+              .orElse(null);
+      if (accountManagement != null && accountManagement.getSaleTax() != null) {
+        tax = accountManagement.getSaleTax();
+        line.setTaxLine(tax.getActiveTaxLine());
+      }
+    }
+
+    TaxEquiv taxEquiv = fiscalPositionService.getTaxEquiv(order.getFiscalPosition(), tax);
+    line.setTaxEquiv(taxEquiv);
+  }
+
+  private SaleOrderLine completeSaleOrderLine(
+      SaleOrder order, SaleOrderLine line, Map<String, Object> cartItem) throws AxelorException {
+
+    line.setProductName(line.getProduct().getName());
+    line.setUnit(saleOrderLineService.getSaleUnit(line));
+    line.setTypeSelect(SaleOrderLineRepository.TYPE_NORMAL);
+    fillPrice(cartItem, line, order);
+
+    saleOrderLineService.fillComplementaryProductList(line);
+
+    BigDecimal taxRate = BigDecimal.ZERO;
+    if (line.getTaxLine() != null) {
+      taxRate = line.getTaxLine().getValue().divide(new BigDecimal(100));
+    }
+
+    BigDecimal exTaxTotal;
+    BigDecimal companyExTaxTotal;
+    BigDecimal inTaxTotal;
+    BigDecimal companyInTaxTotal;
+    if (order.getInAti()) {
+      exTaxTotal =
+          saleOrderLineService.computeAmount(
+              line.getQty(), line.getPrice(), currencyScaleService.getScale(order));
+      inTaxTotal =
+          currencyScaleService.getScaledValue(order, exTaxTotal.add(exTaxTotal.multiply(taxRate)));
+      companyExTaxTotal = saleOrderLineService.getAmountInCompanyCurrency(exTaxTotal, order);
+      companyInTaxTotal =
+          currencyScaleService.getCompanyScaledValue(
+              order, companyExTaxTotal.add(companyExTaxTotal.multiply(taxRate)));
+    } else {
+      inTaxTotal =
+          saleOrderLineService.computeAmount(
+              line.getQty(), line.getPrice(), currencyScaleService.getScale(order));
+      exTaxTotal =
+          inTaxTotal.divide(
+              taxRate.add(BigDecimal.ONE),
+              currencyScaleService.getScale(order),
+              RoundingMode.HALF_UP);
+      companyInTaxTotal = saleOrderLineService.getAmountInCompanyCurrency(inTaxTotal, order);
+      companyExTaxTotal =
+          companyInTaxTotal.divide(
+              taxRate.add(BigDecimal.ONE),
+              currencyScaleService.getCompanyScale(order),
+              RoundingMode.HALF_UP);
+    }
+
+    BigDecimal subTotalCostPrice = BigDecimal.ZERO;
+    if (line.getProduct() != null && line.getPrice().compareTo(BigDecimal.ZERO) != 0) {
+      subTotalCostPrice =
+          currencyScaleService.getCompanyScaledValue(
+              order, line.getPrice().multiply(line.getQty()));
+    }
+
+    line.setInTaxTotal(inTaxTotal);
+    line.setExTaxTotal(exTaxTotal);
+    line.setPriceDiscounted(line.getPrice());
+    line.setCompanyInTaxTotal(companyInTaxTotal);
+    line.setCompanyExTaxTotal(companyExTaxTotal);
+    line.setSubTotalCostPrice(subTotalCostPrice);
+    saleOrderMarginService.getSaleOrderLineComputedMarginInfo(order, line);
+
     return line;
   }
 }

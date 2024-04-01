@@ -21,10 +21,8 @@ package com.axelor.apps.portal.service;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.sale.db.SaleOrder;
 import java.util.Map;
-import org.apache.commons.lang3.tuple.Pair;
 
 public interface SaleOrderPortalService {
 
-  public Pair<SaleOrder, Boolean> createQuotation(Map<String, Object> values)
-      throws AxelorException;
+  public SaleOrder createQuotation(Map<String, Object> values) throws AxelorException;
 }

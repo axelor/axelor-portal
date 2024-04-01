@@ -20,10 +20,8 @@ package com.axelor.apps.portal.service.response.generator;
 
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Company;
-import com.axelor.apps.base.db.Currency;
 import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.db.ProductCategory;
-import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.base.service.user.UserService;
 import com.axelor.apps.portal.service.ProductPortalService;
@@ -39,7 +37,6 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class ProductResponseGenerator extends ResponseGenerator {
@@ -51,9 +48,6 @@ public class ProductResponseGenerator extends ResponseGenerator {
             "id", "name", "description", "productTypeSelect", "complementaryProductList"));
     extraFieldMap.put("_categories", this::getCategories);
     extraFieldMap.put("_pictures", this::getPictures);
-    extraFieldMap.put("_price", this::getPrice);
-    extraFieldMap.put("_discount", this::getDiscountStr);
-    extraFieldMap.put("_currency", this::getCurrency);
     extraFieldMap.put("_realQty", this::getRealQty);
     classType = Product.class;
   }
@@ -79,48 +73,6 @@ public class ProductResponseGenerator extends ResponseGenerator {
     return pictures;
   }
 
-  private BigDecimal getPrice(Object object) {
-    Product product = (Product) object;
-    Optional<Company> company =
-        Optional.ofNullable(Beans.get(UserService.class).getUserActiveCompany());
-    Optional<Currency> currency = company.map(Company::getCurrency);
-    if (!currency.isPresent()) {
-      return null;
-    }
-    try {
-      return Beans.get(ProductPortalService.class)
-          .getUnitPriceDiscounted(product, currency.get(), company.get(), getIsAti());
-    } catch (AxelorException e) {
-      return BigDecimal.ZERO;
-    }
-  }
-
-  private String getDiscountStr(Object object) {
-    Product product = (Product) object;
-    Optional<Company> company =
-        Optional.ofNullable(Beans.get(UserService.class).getUserActiveCompany());
-    Optional<Currency> currency = company.map(Company::getCurrency);
-    if (!currency.isPresent()) {
-      return null;
-    }
-    try {
-      return Beans.get(ProductPortalService.class)
-          .getDiscountStr(product, currency.get(), company.get());
-    } catch (AxelorException e) {
-      return null;
-    }
-  }
-
-  private Object getCurrency(Object object) {
-    Optional<Company> company =
-        Optional.ofNullable(Beans.get(UserService.class).getUserActiveCompany());
-    Optional<Currency> currency = company.map(Company::getCurrency);
-    if (!currency.isPresent()) {
-      return null;
-    }
-    return ResponseGeneratorFactory.of(Currency.class.getName()).generate(currency.get());
-  }
-
   private BigDecimal getRealQty(Object object) {
     try {
       Product product = (Product) object;
@@ -141,15 +93,5 @@ public class ProductResponseGenerator extends ResponseGenerator {
       TraceBackService.trace(e);
       return BigDecimal.ZERO;
     }
-  }
-
-  private Boolean getIsAti() {
-
-    Integer ati = Beans.get(AppBaseService.class).getAppBase().getProductInAtiSelect();
-    if (ati != null && (ati == 2 || ati == 4)) {
-      return true;
-    }
-
-    return false;
   }
 }

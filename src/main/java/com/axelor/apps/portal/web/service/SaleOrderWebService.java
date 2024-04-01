@@ -32,7 +32,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.apache.commons.lang3.tuple.Pair;
 
 @Path("/portal/orders")
 public class SaleOrderWebService extends AbstractWebService {
@@ -45,15 +44,13 @@ public class SaleOrderWebService extends AbstractWebService {
 
     try {
       Beans.get(JpaSecurity.class).check(AccessType.CREATE, SaleOrder.class);
-      Pair<SaleOrder, Boolean> saleOrder =
-          Beans.get(SaleOrderPortalService.class).createQuotation(values);
+      SaleOrder saleOrder = Beans.get(SaleOrderPortalService.class).createQuotation(values);
 
       Map<String, Object> data =
-          ResponseGeneratorFactory.of(SaleOrder.class.getName()).generate(saleOrder.getLeft());
-      data.put("itemsChanged", saleOrder.getRight());
-
+          ResponseGeneratorFactory.of(SaleOrder.class.getName()).generate(saleOrder);
       PortalRestResponse response = new PortalRestResponse();
       return response.setData(data).success();
+
     } catch (Exception e) {
       PortalRestResponse response = new PortalRestResponse();
       response.setException(e);

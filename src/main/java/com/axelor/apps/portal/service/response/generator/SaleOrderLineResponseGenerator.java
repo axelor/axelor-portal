@@ -21,8 +21,6 @@ package com.axelor.apps.portal.service.response.generator;
 import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.google.inject.Inject;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class SaleOrderLineResponseGenerator extends ResponseGenerator {
@@ -34,17 +32,6 @@ public class SaleOrderLineResponseGenerator extends ResponseGenerator {
     modelFields.addAll(
         Arrays.asList(
             "id", "exTaxTotal", "price", "productName", "qty", "taxLine", "inTaxTotal", "product"));
-    extraFieldMap.put("_discountTotal", this::getDiscount);
     classType = SaleOrderLine.class;
-  }
-
-  private BigDecimal getDiscount(Object object) {
-    SaleOrderLine line = (SaleOrderLine) object;
-    if (line.getId() != null) {
-      line = saleOrderLineRepo.find(line.getId());
-    }
-    BigDecimal totalWTDiscount = line.getPrice().multiply(line.getQty());
-    BigDecimal totalInDiscount = line.getExTaxTotal();
-    return totalWTDiscount.subtract(totalInDiscount).setScale(2, RoundingMode.HALF_EVEN);
   }
 }
