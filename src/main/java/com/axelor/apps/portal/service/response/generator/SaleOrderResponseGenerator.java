@@ -29,25 +29,7 @@ public class SaleOrderResponseGenerator extends ResponseGenerator {
 
   @Override
   public void init() {
-    modelFields.addAll(
-        Arrays.asList(
-            "id",
-            "saleOrderSeq",
-            "clientPartner",
-            "confirmationDateTime",
-            "creationDate",
-            "currency",
-            "deliveryAddress",
-            "deliveryAddressStr",
-            "exTaxTotal",
-            "inTaxTotal",
-            "mainInvoicingAddress",
-            "mainInvoicingAddressStr",
-            "orderDate",
-            "saleOrderLineList",
-            "saleOrderLineTaxList",
-            "statusSelect",
-            "taxTotal"));
+    modelFields.addAll(Arrays.asList("id"));
     classType = SaleOrder.class;
   }
 }

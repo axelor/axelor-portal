@@ -18,35 +18,11 @@
  */
 package com.axelor.apps.portal.service.response;
 
-import com.axelor.apps.account.db.TaxLine;
-import com.axelor.apps.base.db.Address;
-import com.axelor.apps.base.db.City;
-import com.axelor.apps.base.db.Country;
-import com.axelor.apps.base.db.Currency;
-import com.axelor.apps.base.db.Partner;
-import com.axelor.apps.base.db.PartnerAddress;
-import com.axelor.apps.base.db.Product;
-import com.axelor.apps.base.db.ProductCategory;
-import com.axelor.apps.portal.service.response.generator.AddressResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.CityResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.CountryResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.CurrencyResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.EmailAddressResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.PartnerAddressResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.PartnerResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.ProductCategoryResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.ProductResponseGenerator;
 import com.axelor.apps.portal.service.response.generator.ResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.SaleOrderLineResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.SaleOrderLineTaxResponseGenerator;
 import com.axelor.apps.portal.service.response.generator.SaleOrderResponseGenerator;
-import com.axelor.apps.portal.service.response.generator.TaxLineResponseGenerator;
 import com.axelor.apps.sale.db.SaleOrder;
-import com.axelor.apps.sale.db.SaleOrderLine;
-import com.axelor.apps.sale.db.SaleOrderLineTax;
 import com.axelor.common.StringUtils;
 import com.axelor.inject.Beans;
-import com.axelor.message.db.EmailAddress;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,19 +35,7 @@ public class ResponseGeneratorFactory {
   static {
     Map<String, Class<? extends ResponseGenerator>> map =
         new ImmutableMap.Builder<String, Class<? extends ResponseGenerator>>()
-            .put(Partner.class.getName(), PartnerResponseGenerator.class)
-            .put(Address.class.getName(), AddressResponseGenerator.class)
-            .put(PartnerAddress.class.getName(), PartnerAddressResponseGenerator.class)
-            .put(EmailAddress.class.getName(), EmailAddressResponseGenerator.class)
-            .put(City.class.getName(), CityResponseGenerator.class)
-            .put(Country.class.getName(), CountryResponseGenerator.class)
             .put(SaleOrder.class.getName(), SaleOrderResponseGenerator.class)
-            .put(Currency.class.getName(), CurrencyResponseGenerator.class)
-            .put(SaleOrderLine.class.getName(), SaleOrderLineResponseGenerator.class)
-            .put(TaxLine.class.getName(), TaxLineResponseGenerator.class)
-            .put(SaleOrderLineTax.class.getName(), SaleOrderLineTaxResponseGenerator.class)
-            .put(Product.class.getName(), ProductResponseGenerator.class)
-            .put(ProductCategory.class.getName(), ProductCategoryResponseGenerator.class)
             .build();
     CUSTOMISED_MODELS.putAll(map);
   }

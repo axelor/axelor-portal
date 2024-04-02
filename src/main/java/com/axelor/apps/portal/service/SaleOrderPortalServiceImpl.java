@@ -34,7 +34,6 @@ import com.axelor.apps.base.service.PartnerPriceListService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.FiscalPositionService;
 import com.axelor.apps.base.service.tax.TaxService;
-import com.axelor.apps.base.service.user.UserService;
 import com.axelor.apps.portal.db.PartnerPortalWorkspace;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.apps.sale.db.SaleOrder;
@@ -61,21 +60,47 @@ import javax.ws.rs.NotFoundException;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
-  @Inject ProductPortalService productPortalService;
-  @Inject SaleOrderCreateService saleOrdeCreateService;
-  @Inject SaleOrderLineService saleOrderLineService;
-  @Inject SaleOrderComputeService saleOrderComputeService;
-  @Inject UserService userService;
-  @Inject AppSaleService appSaleService;
-  @Inject AppBaseService appBaseService;
-  @Inject FiscalPositionService fiscalPositionService;
-  @Inject SaleOrderMarginService saleOrderMarginService;
-  @Inject CurrencyScaleService currencyScaleService;
-  @Inject TaxService taxService;
+  protected SaleOrderCreateService saleOrdeCreateService;
+  protected SaleOrderLineService saleOrderLineService;
+  protected SaleOrderComputeService saleOrderComputeService;
+  protected AppSaleService appSaleService;
+  protected AppBaseService appBaseService;
+  protected FiscalPositionService fiscalPositionService;
+  protected SaleOrderMarginService saleOrderMarginService;
+  protected CurrencyScaleService currencyScaleService;
+  protected TaxService taxService;
 
-  @Inject PartnerRepository partnerRepo;
-  @Inject ProductRepository productRepo;
-  @Inject SaleOrderRepository saleOrderRepo;
+  protected PartnerRepository partnerRepo;
+  protected ProductRepository productRepo;
+  protected SaleOrderRepository saleOrderRepo;
+
+  @Inject
+  public SaleOrderPortalServiceImpl(
+      SaleOrderCreateService saleOrdeCreateService,
+      SaleOrderLineService saleOrderLineService,
+      SaleOrderComputeService saleOrderComputeService,
+      AppSaleService appSaleService,
+      AppBaseService appBaseService,
+      FiscalPositionService fiscalPositionService,
+      SaleOrderMarginService saleOrderMarginService,
+      CurrencyScaleService currencyScaleService,
+      TaxService taxService,
+      PartnerRepository partnerRepo,
+      ProductRepository productRepo,
+      SaleOrderRepository saleOrderRepo) {
+    this.saleOrdeCreateService = saleOrdeCreateService;
+    this.saleOrderLineService = saleOrderLineService;
+    this.saleOrderComputeService = saleOrderComputeService;
+    this.appSaleService = appSaleService;
+    this.appBaseService = appBaseService;
+    this.fiscalPositionService = fiscalPositionService;
+    this.saleOrderMarginService = saleOrderMarginService;
+    this.currencyScaleService = currencyScaleService;
+    this.taxService = taxService;
+    this.partnerRepo = partnerRepo;
+    this.productRepo = productRepo;
+    this.saleOrderRepo = saleOrderRepo;
+  }
 
   @Override
   @Transactional
@@ -88,7 +113,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     return order;
   }
 
-  private Company getCompany(Partner clientPartner) {
+  protected Company getCompany(Partner clientPartner) {
 
     Company company = AuthUtils.getUser().getActiveCompany();
     if (clientPartner == null) {
@@ -107,7 +132,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     return partnerPortalWorkspace.getWebsiteConfig().getCompany();
   }
 
-  private SaleOrder createSaleOrder(Map<String, Object> values) throws AxelorException {
+  protected SaleOrder createSaleOrder(Map<String, Object> values) throws AxelorException {
 
     Partner clientPartner = null, contactPartner = null;
     if (values.containsKey("partnerId") && ObjectUtils.notEmpty(values.get("partnerId"))) {
@@ -153,7 +178,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     return saleOrder;
   }
 
-  private void createOrderLines(Map<String, Object> values, SaleOrder order)
+  protected void createOrderLines(Map<String, Object> values, SaleOrder order)
       throws AxelorException {
 
     if (!values.containsKey("items") || ObjectUtils.isEmpty(values.get("items"))) {
@@ -263,7 +288,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     line.setTaxEquiv(taxEquiv);
   }
 
-  private SaleOrderLine completeSaleOrderLine(
+  protected SaleOrderLine completeSaleOrderLine(
       SaleOrder order, SaleOrderLine line, Map<String, Object> cartItem) throws AxelorException {
 
     line.setProductName(line.getProduct().getName());
