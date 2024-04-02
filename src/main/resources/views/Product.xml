@@ -25,7 +25,7 @@
           <field name="portalAssociatedProductSet" widget="TagSelect"/>
           <field name="longDescription" colSpan="12" widget="html"/>
           <field name="portalImageList" colSpan="12">
-            <editor>
+            <editor x-viewer="true">
               <field name="picture" showTitle="false" colSpan="12" widget="Image"/>
             </editor>
           </field>
