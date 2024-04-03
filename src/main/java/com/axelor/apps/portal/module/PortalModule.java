@@ -21,11 +21,14 @@ package com.axelor.apps.portal.module;
 import com.axelor.app.AxelorModule;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.SaleOrderPortalServiceImpl;
+import com.axelor.apps.portal.service.StockMovePortalServiceImpl;
+import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 
 public class PortalModule extends AxelorModule {
 
   @Override
   protected void configure() {
     bind(SaleOrderPortalService.class).to(SaleOrderPortalServiceImpl.class);
+    bind(StockMoveServiceProductionImpl.class).to(StockMovePortalServiceImpl.class);
   }
 }
