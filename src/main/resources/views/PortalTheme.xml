@@ -10,6 +10,7 @@
   <form name="portal-theme-form" title="Theme" model="com.axelor.apps.portal.db.PortalTheme">
     <panel name="mainPanel">
       <field name="name" required="true"/>
+      <field name="css" colSpan="12" widget="code-editor" x-code-syntax="json"/>
     </panel>
   </form>
 

@@ -8,6 +8,7 @@
   <entity name="PortalTheme">
 
     <string name="name"/>
+    <string name="css" large="true"/>
 
   </entity>
 
