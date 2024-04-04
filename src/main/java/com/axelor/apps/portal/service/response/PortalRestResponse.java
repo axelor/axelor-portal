@@ -20,9 +20,6 @@ package com.axelor.apps.portal.service.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.NumberSerializer;
 import com.google.common.base.Throwables;
 import java.sql.BatchUpdateException;
 
@@ -32,43 +29,11 @@ public class PortalRestResponse {
   public static final int STATUS_SUCCESS = 0;
   public static final int STATUS_FAILURE = -1;
 
-  @SuppressWarnings("serial")
-  private static class OffsetSerializer extends NumberSerializer {
-
-    public OffsetSerializer() {
-      super(Integer.class);
-    }
-
-    @Override
-    public boolean isEmpty(SerializerProvider provider, Number value) {
-      return value == null || value.intValue() == -1;
-    }
-  }
-
-  @SuppressWarnings("serial")
-  private static class TotalSerializer extends NumberSerializer {
-
-    public TotalSerializer() {
-      super(Long.class);
-    }
-
-    @Override
-    public boolean isEmpty(SerializerProvider provider, Number value) {
-      return value == null || value.longValue() == -1;
-    }
-  }
-
   private Object data;
 
   private int status;
 
   private String message;
-
-  @JsonSerialize(using = OffsetSerializer.class)
-  private int offset = -1;
-
-  @JsonSerialize(using = TotalSerializer.class)
-  private long total = -1;
 
   public PortalRestResponse success() {
     this.status = STATUS_SUCCESS;
@@ -103,22 +68,6 @@ public class PortalRestResponse {
 
   public void setMessage(String message) {
     this.message = message;
-  }
-
-  public int getOffset() {
-    return offset;
-  }
-
-  public void setOffset(int offset) {
-    this.offset = offset;
-  }
-
-  public long getTotal() {
-    return total;
-  }
-
-  public void setTotal(long total) {
-    this.total = total;
   }
 
   public void setException(Throwable throwable) {

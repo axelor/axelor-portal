@@ -21,7 +21,6 @@ package com.axelor.apps.portal.web.service;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
-import com.axelor.apps.portal.service.response.ResponseGeneratorFactory;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.db.JpaSecurity;
 import com.axelor.db.JpaSecurity.AccessType;
@@ -34,7 +33,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("/portal/orders")
-public class SaleOrderWebService extends AbstractWebService {
+public class SaleOrderWebService {
 
   @POST
   @Path("/quotation")
@@ -46,10 +45,8 @@ public class SaleOrderWebService extends AbstractWebService {
       Beans.get(JpaSecurity.class).check(AccessType.CREATE, SaleOrder.class);
       SaleOrder saleOrder = Beans.get(SaleOrderPortalService.class).createQuotation(values);
 
-      Map<String, Object> data =
-          ResponseGeneratorFactory.of(SaleOrder.class.getName()).generate(saleOrder);
       PortalRestResponse response = new PortalRestResponse();
-      return response.setData(data).success();
+      return response.setData(saleOrder.getId()).success();
 
     } catch (Exception e) {
       PortalRestResponse response = new PortalRestResponse();
