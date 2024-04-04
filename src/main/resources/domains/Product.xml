@@ -20,7 +20,7 @@
     <date name="portalDate" title="Portal date"/>
     <integer name="featured" title="Featured"/>
     <one-to-many ref="com.axelor.apps.base.db.ProductPicture" name="portalImageList"
-      title="Portal images"/>
+      title="Portal images" mappedBy="product"/>
     <many-to-many ref="com.axelor.apps.base.db.Product" name="portalAvailableOptionSet"
       title="Portal available options"/>
     <many-to-many ref="com.axelor.apps.base.db.Product"
