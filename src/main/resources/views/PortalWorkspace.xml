@@ -19,6 +19,8 @@
       <field name="priceAfterLoginSelect"/>
       <field name="displayPriceSelect"/>
       <field name="allowRegistrationSelect"/>
+      <field name="publicEshopSelect"/>
+      <field name="nbOfProductsPerPage" min="0"/>
     </panel>
   </form>
 

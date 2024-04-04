@@ -16,6 +16,8 @@
     <string name="displayPriceSelect" title="Display price" selection="display.price.select"/>
     <string name="allowRegistrationSelect" title="Allow registration ?"
       selection="allow.registration.select"/>
+    <string name="publicEshopSelect" title="Public eshop" selection="public.eshop.select"/>
+    <integer name="nbOfProductsPerPage"/>
 
   </entity>
 
