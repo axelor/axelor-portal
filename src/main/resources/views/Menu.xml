@@ -41,8 +41,8 @@
     <view type="form" name="portal-theme-form"/>
   </action-view>
 
-  <menuitem title="Portal app" name="menu-portal-portal-app"
-    parent="menu-portal-root" action="action.portal.portal.app"/>
+  <menuitem title="Portal app" name="menu-portal-portal-app" parent="menu-portal-root"
+    action="action.portal.portal.app"/>
 
   <action-view name="action.portal.portal.app" title="Portal app"
     model="com.axelor.apps.portal.db.PortalApp">
