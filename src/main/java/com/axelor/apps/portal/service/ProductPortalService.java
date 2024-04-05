@@ -16,17 +16,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.portal.exception;
+package com.axelor.apps.portal.service;
 
-public final class PortalExceptionMessage {
+import com.axelor.apps.base.AxelorException;
+import java.math.BigDecimal;
+import java.util.Map;
 
-  private PortalExceptionMessage() {}
+public interface ProductPortalService {
 
-  public static final String CUSTOMER_MISSING = /*$$(*/ "Customer is missing" /*)*/;
-  public static final String ADDRESS_MISSING = /*$$(*/ "Address not specified" /*)*/;
-  public static final String QTY_ERROR = /*$$(*/ "Quantity must be greater than 0" /*)*/;
-
-  public static final String PRODUCT_MISSING = /*$$(*/ "Product not found" /*)*/;
-  public static final String COMPANY_MISSING = /*$$(*/ "Company not found" /*)*/;
-  public static final String PARTNER_MISSING = /*$$(*/ "Customer not found" /*)*/;
+  public Map<String, Object> getProductPrices(
+      Long productId, Long companyId, Long partnerId, BigDecimal qty) throws AxelorException;
 }
