@@ -57,6 +57,7 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.NotFoundException;
+import org.apache.commons.collections.CollectionUtils;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
@@ -116,7 +117,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected Company getCompany(Partner clientPartner) {
 
     Company company = AuthUtils.getUser().getActiveCompany();
-    if (clientPartner == null) {
+    if (clientPartner == null
+        || CollectionUtils.isEmpty(clientPartner.getPartnerPortalWorkspaceList())) {
       return company;
     }
 
@@ -124,7 +126,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
         clientPartner.getPartnerPortalWorkspaceList().stream()
             .filter(pws -> pws.getIsDefault())
             .findFirst()
-            .orElse(null);
+            .orElse(clientPartner.getPartnerPortalWorkspaceList().get(0));
     if (partnerPortalWorkspace == null) {
       return company;
     }
