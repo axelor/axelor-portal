@@ -16,7 +16,6 @@
       <field name="url" widget="url" colSpan="12"/>
       <field name="defaultWebsiteconfig"/>
       <field name="defaultTheme"/>
-      <field name="priceAfterLoginSelect"/>
       <field name="displayPriceSelect"/>
       <field name="allowRegistrationSelect"/>
       <field name="publicEshopSelect"/>

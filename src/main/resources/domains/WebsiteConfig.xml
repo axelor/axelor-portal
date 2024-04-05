@@ -8,6 +8,12 @@
   <entity name="WebsiteConfig">
 
     <string name="name"/>
+    <string name="mainPriceSelect" title="Which is the main price to display ?"
+      selection="main.price.select" default="at"/>
+    <string name="displayTwoPricesSelect" title="Display 2 prices : with and withou taxes ?"
+      selection="display.two.prices.select"/>
+    <string name="priceAfterLoginSelect" title="Price After Login"
+      selection="price.after.login.select"/>
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
@@ -24,8 +30,11 @@
     <boolean name="byLessExpensive" title="By less expensive"/>
 
     <boolean name="defaultConfig" title="Default"/>
+    <boolean name="displayEshop"/>
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
+      name="paymentOptions" mappedBy="websiteConfig"/>
 
   </entity>
 

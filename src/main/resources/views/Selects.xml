@@ -38,4 +38,19 @@
     <option value="Total">total</option>
   </selection>
 
+  <selection name="payment.config.type.select">
+    <option value="paypal">Paypal</option>
+    <option value="stripe">Stripe</option>
+  </selection>
+
+  <selection name="main.price.select">
+    <option value="at">AT</option>
+    <option value="wt">WT</option>
+  </selection>
+
+  <selection name="display.two.prices.select">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </selection>
+
 </object-views>

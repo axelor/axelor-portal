@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-payment-config-grid" title="Payment configs"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig" editable="true">
+    <field name="name"/>
+    <field name="typeSelect"/>
+  </grid>
+
+  <form name="portal-payment-config-form" title="Payment config"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig">
+    <panel name="mainPanel">
+      <field name="name" required="true"/>
+      <field name="typeSelect"/>
+    </panel>
+  </form>
+
+</object-views>

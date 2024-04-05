@@ -23,6 +23,10 @@
       <field name="confirmOrder"/>
       <field name="displayPrices"/>
       <field name="displayOutOfStock"/>
+      <field name="mainPriceSelect"/>
+      <field name="displayEshop"/>
+      <field name="priceAfterLoginSelect"/>
+      <field name="displayTwoPricesSelect"/>
     </panel>
     <panel name="confirmOrderPanel" title="How to confirm an order ?">
       <field name="payInAdvance"/>
@@ -35,6 +39,9 @@
       <field name="byZToA"/>
       <field name="byMostExpensive"/>
       <field name="byLessExpensive"/>
+    </panel>
+    <panel name="paymentOptionPanel">
+      <field name="paymentOptions" colSpan="12"/>
     </panel>
     <panel name="defaultPanel" sidebar="true">
       <field name="defaultConfig"/>
