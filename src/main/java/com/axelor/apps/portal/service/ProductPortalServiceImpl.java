@@ -109,7 +109,7 @@ public class ProductPortalServiceImpl implements ProductPortalService {
     if (partner == null) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
-          I18n.get(PortalExceptionMessage.PARTNER_MISSING));
+          I18n.get(PortalExceptionMessage.CUSTOMER_MISSING));
     }
 
     LocalDate todayDate = appBaseService.getTodayDate(company);

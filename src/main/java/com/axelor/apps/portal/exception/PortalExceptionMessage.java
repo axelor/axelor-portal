@@ -28,5 +28,4 @@ public final class PortalExceptionMessage {
 
   public static final String PRODUCT_MISSING = /*$$(*/ "Product not found" /*)*/;
   public static final String COMPANY_MISSING = /*$$(*/ "Company not found" /*)*/;
-  public static final String PARTNER_MISSING = /*$$(*/ "Customer not found" /*)*/;
 }
