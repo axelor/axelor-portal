@@ -23,12 +23,16 @@ import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Currency;
 import com.axelor.apps.base.db.Partner;
+import com.axelor.apps.base.db.PartnerPriceList;
+import com.axelor.apps.base.db.PriceList;
+import com.axelor.apps.base.db.PriceListLine;
 import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.db.repo.CompanyRepository;
 import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.base.service.CurrencyService;
+import com.axelor.apps.base.service.PriceListService;
 import com.axelor.apps.base.service.ProductCompanyService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.AccountManagementService;
@@ -42,6 +46,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.collections.CollectionUtils;
 
 public class ProductPortalServiceImpl implements ProductPortalService {
 
@@ -55,6 +60,7 @@ public class ProductPortalServiceImpl implements ProductPortalService {
   protected AppBaseService appBaseService;
   protected AppSaleService appSaleService;
   protected CurrencyService currencyService;
+  protected PriceListService priceListService;
 
   @Inject
   public ProductPortalServiceImpl(
@@ -66,7 +72,8 @@ public class ProductPortalServiceImpl implements ProductPortalService {
       AccountManagementService accountManagementService,
       AppBaseService appBaseService,
       AppSaleService appSaleService,
-      CurrencyService currencyService) {
+      CurrencyService currencyService,
+      PriceListService priceListService) {
     this.productRepo = productRepo;
     this.partnerRepo = partnerRepo;
     this.companyRepo = companyRepo;
@@ -76,6 +83,7 @@ public class ProductPortalServiceImpl implements ProductPortalService {
     this.appBaseService = appBaseService;
     this.appSaleService = appSaleService;
     this.currencyService = currencyService;
+    this.priceListService = priceListService;
   }
 
   @Override
@@ -136,9 +144,45 @@ public class ProductPortalServiceImpl implements ProductPortalService {
     if (productInAti) {
       data.put("price", computedPrice);
       data.put("inTaxPrice", basePrice);
+      data.put("priceDiscounted", computedPrice);
+      data.put("priceDiscountedATI", basePrice);
     } else {
       data.put("price", basePrice);
       data.put("inTaxPrice", computedPrice);
+      data.put("priceDiscounted", basePrice);
+      data.put("priceDiscountedATI", computedPrice);
+    }
+
+    PriceList priceList = null;
+    PartnerPriceList partnerPriceList = partner.getSalePartnerPriceList();
+    if (partnerPriceList != null
+        && CollectionUtils.isNotEmpty(partnerPriceList.getPriceListSet())) {
+      priceList =
+          partnerPriceList.getPriceListSet().stream()
+              .filter(pl -> pl.getIsActive())
+              .findFirst()
+              .orElse(null);
+    }
+
+    if (priceList != null) {
+      PriceListLine priceListLine =
+          priceListService.getPriceListLine(product, qty, priceList, basePrice);
+      if (priceListLine != null) {
+        BigDecimal discountAmount =
+            priceListService
+                .getDiscountAmount(priceListLine, basePrice)
+                .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+        BigDecimal priceDiscounted =
+            priceListService.computeDiscount(
+                computedPrice,
+                priceListService.getDiscountTypeSelect(priceListLine),
+                discountAmount);
+        BigDecimal priceDiscountedATI =
+            priceListService.computeDiscount(
+                basePrice, priceListService.getDiscountTypeSelect(priceListLine), discountAmount);
+        data.put("priceDiscounted", priceDiscounted);
+        data.put("priceDiscountedATI", priceDiscountedATI);
+      }
     }
 
     return data;
