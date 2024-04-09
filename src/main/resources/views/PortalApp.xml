@@ -6,15 +6,23 @@
   <grid name="portal-app-grid" title="Portal apps" model="com.axelor.apps.portal.db.PortalApp"
     canNew="false" canEdit="false" canDelete="false">
     <field name="name"/>
+    <field name="code"/>
   </grid>
 
   <form name="portal-app-form" title="Portal app" model="com.axelor.apps.portal.db.PortalApp"
     canNew="false" canEdit="false" canDelete="false">
     <panel name="mainPanel">
       <field name="name" required="true"/>
-      <field name="installed"/>
+      <field name="code" required="true"/>
+      <field name="showInTopMenu"/>
+      <field name="orderForTopMenu" showIf="showInTopMenu"/>
+      <field name="showInMySpace"/>
+      <field name="orderForMySpaceMenu" showIf="showInMySpace"/>
       <field name="dependnecySet" colSpan="12" widget="TagSelect"/>
       <field name="description" colSpan="12"/>
+    </panel>
+    <panel name="sidePanel" sidebar="true">
+      <field name="installed"/>
     </panel>
   </form>
 
