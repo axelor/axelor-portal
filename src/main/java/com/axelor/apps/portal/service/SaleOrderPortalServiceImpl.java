@@ -118,15 +118,18 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
     Company company = AuthUtils.getUser().getActiveCompany();
     if (clientPartner == null
-        || CollectionUtils.isEmpty(clientPartner.getPartnerPortalWorkspaceList())) {
+        || clientPartner.getPortalPartnerPermission() == null
+        || CollectionUtils.isEmpty(
+            clientPartner.getPortalPartnerPermission().getPartnerPortalWorkspaceList())) {
       return company;
     }
 
     PartnerPortalWorkspace partnerPortalWorkspace =
-        clientPartner.getPartnerPortalWorkspaceList().stream()
-            .filter(pws -> pws.getIsDefault())
+        clientPartner.getPortalPartnerPermission().getPartnerPortalWorkspaceList().stream()
+            .filter(pws -> pws.getIsDefaultWorkspaceAfterLogin())
             .findFirst()
-            .orElse(clientPartner.getPartnerPortalWorkspaceList().get(0));
+            .orElse(
+                clientPartner.getPortalPartnerPermission().getPartnerPortalWorkspaceList().get(0));
     if (partnerPortalWorkspace == null) {
       return company;
     }

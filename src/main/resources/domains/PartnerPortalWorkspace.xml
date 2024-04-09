@@ -11,11 +11,10 @@
       ref="com.axelor.apps.portal.db.PortalWorkspace" required="true"/>
     <many-to-one name="portalAppConfig" title="Portal app configuration"
       ref="com.axelor.apps.portal.db.PortalAppConfig"/>
-    <boolean name="isDefault" title="Default"/>
-    <many-to-one name="partner" ref="com.axelor.apps.base.db.Partner" title="partner"/>
+    <boolean name="isDefaultWorkspaceAfterLogin" title="Default workspace after login"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalPartnerPermission"
+      name="portalPartnerPermission"/>
     <many-to-many name="apps" ref="com.axelor.apps.portal.db.PortalApp"/>
-
-    <unique-constraint columns="partner,workspace"/>
 
   </entity>
 

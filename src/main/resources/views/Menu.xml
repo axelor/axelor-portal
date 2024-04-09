@@ -50,4 +50,13 @@
     <view type="form" name="portal-app-form"/>
   </action-view>
 
+  <menuitem title="Portal partner permission" name="menu-portal-portal-partner-permission"
+    parent="menu-portal-root" action="action.portal.portal.partner.permission"/>
+
+  <action-view name="action.portal.portal.partner.permission"
+    title="Portal partner permission" model="com.axelor.apps.portal.db.PortalPartnerPermission">
+    <view type="grid" name="portal-partner-permission-grid"/>
+    <view type="form" name="portal-partner-permission-form"/>
+  </action-view>
+
 </object-views>
