@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-app-config-grid" title="Portal app configurations"
+    model="com.axelor.apps.portal.db.PortalAppConfig">
+    <field name="name"/>
+    <field name="company"/>
+    <field name="requestQuotation"/>
+    <field name="confirmOrder"/>
+    <field name="displayPrices"/>
+    <field name="displayOutOfStock"/>
+  </grid>
+
+  <form name="portal-app-config-form" title="Portal app configuration"
+    model="com.axelor.apps.portal.db.PortalAppConfig" width="large">
+    <panel name="mainPanel">
+      <field name="name" required="true"/>
+      <field name="company"/>
+    </panel>
+    <panel-tabs name="mainPanelTab">
+      <panel title="Shop" name="shopPanel">
+        <field name="displayOutOfStock"/>
+        <field name="displayPrices"/>
+        <panel name="priceConfigPanel" title="Price Config" colSpan="12">
+          <field name="mainPriceSelect"/>
+          <field name="priceAfterLoginSelect"/>
+          <field name="displayTwoPricesSelect"/>
+        </panel>
+        <panel name="sortingPanel" title="Sorting preference" colSpan="12">
+          <field name="byNewst"/>
+          <field name="byFeature"/>
+          <field name="byAToZ"/>
+          <field name="byZToA"/>
+          <field name="byMostExpensive"/>
+          <field name="byLessExpensive"/>
+        </panel>
+        <panel name="confirmOrderPanel" title="How to confirm an order ?" colSpan="12">
+          <field name="payInAdvance"/>
+          <field name="eSignature"/>
+        </panel>
+        <panel name="orderPanel" title="Order/Quotation" colSpan="12">
+          <field name="requestQuotation"/>
+          <field name="confirmOrder"/>
+        </panel>
+        <panel name="paymentPanel" title="Payment" colSpan="12">
+          <field name="allowOnlinePaymentForEcommerce"/>
+          <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
+        </panel>
+      </panel>
+      <panel name="invociePanel" title="Invoice">
+        <field name="allowOnlinePaymentForInvoices"/>
+      </panel>
+    </panel-tabs>
+  </form>
+
+</object-views>

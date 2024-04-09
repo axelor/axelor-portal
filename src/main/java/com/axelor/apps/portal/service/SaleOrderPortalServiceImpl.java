@@ -131,7 +131,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       return company;
     }
 
-    return partnerPortalWorkspace.getWebsiteConfig().getCompany();
+    return partnerPortalWorkspace.getPortalAppConfig().getCompany();
   }
 
   protected SaleOrder createSaleOrder(Map<String, Object> values) throws AxelorException {

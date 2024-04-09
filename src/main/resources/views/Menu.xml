@@ -5,13 +5,13 @@
 
   <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"/>
 
-  <menuitem title="Website configuration" name="menu-portal-configuration"
-    parent="menu-portal-root" action="action.portal.configuration"/>
+  <menuitem title="Portal app configuration" name="menu-portal-app-configuration"
+    parent="menu-portal-root" action="action.portal.app.configuration"/>
 
-  <action-view name="action.portal.configuration" title="Website configuration"
-    model="com.axelor.apps.portal.db.WebsiteConfig">
-    <view type="grid" name="website-config-grid"/>
-    <view type="form" name="website-config-form"/>
+  <action-view name="action.portal.app.configuration" title="Portal app configuration"
+    model="com.axelor.apps.portal.db.PortalAppConfig">
+    <view type="grid" name="portal-app-config-grid"/>
+    <view type="form" name="portal-app-config-form"/>
   </action-view>
 
   <menuitem title="Workspace" name="menu-portal-portal-workspace" parent="menu-portal-root"

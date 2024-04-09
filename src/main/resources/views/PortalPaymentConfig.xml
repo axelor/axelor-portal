@@ -5,16 +5,23 @@
 
   <grid name="portal-payment-config-grid" title="Payment configs"
     model="com.axelor.apps.portal.db.PortalPaymentConfig" editable="true">
-    <field name="name"/>
-    <field name="typeSelect"/>
+    <field name="name" required="true"/>
+    <field name="typeSelect" onChange="action-portal-payment-config-type-select-onchange"/>
   </grid>
 
   <form name="portal-payment-config-form" title="Payment config"
     model="com.axelor.apps.portal.db.PortalPaymentConfig">
     <panel name="mainPanel">
       <field name="name" required="true"/>
-      <field name="typeSelect"/>
+      <field name="typeSelect" onChange="action-portal-payment-config-type-select-onchange"/>
     </panel>
   </form>
+
+  <action-record name="action-portal-payment-config-type-select-onchange"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig">
+    <field name="name"
+      expr="eval: __repo__(MetaSelectItem).all().filter('self.select.name = \'payment.config.type.select\'
+      AND self.value = :typeSelect').bind('typeSelect', typeSelect).fetchOne()?.title"/>
+  </action-record>
 
 </object-views>
