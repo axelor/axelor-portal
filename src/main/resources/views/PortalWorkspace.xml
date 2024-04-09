@@ -16,10 +16,12 @@
       <field name="url" widget="url" colSpan="12"/>
       <field name="defaultWebsiteconfig"/>
       <field name="defaultTheme"/>
-      <field name="displayPriceSelect"/>
       <field name="allowRegistrationSelect"/>
       <field name="publicEshopSelect"/>
       <field name="nbOfProductsPerPage" min="0"/>
+    </panel>
+    <panel name="paymentOptionPanel">
+      <field name="paymentOptions" colSpan="12"/>
     </panel>
   </form>
 

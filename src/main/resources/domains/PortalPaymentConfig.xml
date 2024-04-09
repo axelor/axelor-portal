@@ -9,9 +9,9 @@
 
     <string name="name"/>
     <string name="typeSelect" selection="payment.config.type.select"/>
-    <many-to-one ref="com.axelor.apps.portal.db.WebsiteConfig" name="websiteConfig"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="portalWorkspace"/>
 
-    <unique-constraint columns="websiteConfig,typeSelect"/>
+    <unique-constraint columns="portalWorkspace,typeSelect"/>
 
   </entity>
 

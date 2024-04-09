@@ -40,9 +40,6 @@
       <field name="byMostExpensive"/>
       <field name="byLessExpensive"/>
     </panel>
-    <panel name="paymentOptionPanel">
-      <field name="paymentOptions" colSpan="12"/>
-    </panel>
     <panel name="defaultPanel" sidebar="true">
       <field name="defaultConfig"/>
     </panel>

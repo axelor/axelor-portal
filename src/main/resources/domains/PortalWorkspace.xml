@@ -11,11 +11,12 @@
     <many-to-one name="defaultWebsiteconfig"
       ref="com.axelor.apps.portal.db.WebsiteConfig" title="Default websiteconfig"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
-    <string name="displayPriceSelect" title="Display price" selection="display.price.select"/>
     <string name="allowRegistrationSelect" title="Allow registration ?"
       selection="allow.registration.select"/>
     <string name="publicEshopSelect" title="Public eshop" selection="public.eshop.select"/>
     <integer name="nbOfProductsPerPage"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
+      name="paymentOptions" mappedBy="portalWorkspace"/>
 
   </entity>
 
