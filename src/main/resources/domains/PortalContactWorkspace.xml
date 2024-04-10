@@ -5,13 +5,14 @@
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
-  <entity name="PortalPermission">
+  <entity name="PortalContactWorkspace">
 
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
     <many-to-one name="portalApp" ref="com.axelor.apps.portal.db.PortalApp" title="App"/>
     <string name="roleSelect" selection="portal.role.select" title="Role"/>
-    <many-to-one ref="com.axelor.apps.base.db.Partner" name="partner"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalContactPermission"
+      name="portalContactPermission"/>
 
   </entity>
 

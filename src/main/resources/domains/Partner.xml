@@ -8,8 +8,8 @@
   <entity name="Partner">
 
     <string name="portalPassword" title="Password" encrypted="true"/>
-    <one-to-many name="portalPermissionList"
-      ref="com.axelor.apps.portal.db.PortalPermission" mappedBy="partner" title="Permissions"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalContactPermission"
+      name="portalContactPermission"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalPartnerPermission"
       name="portalPartnerPermission"/>
 

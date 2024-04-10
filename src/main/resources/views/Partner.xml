@@ -21,7 +21,7 @@
       <insert position="after">
         <panel title="Portal" name="portalPanel">
           <field name="portalPassword" widget="password"/>
-          <field name="portalPartnerPermission"/>
+          <field name="portalContactPermission"/>
         </panel>
       </insert>
     </extend>
