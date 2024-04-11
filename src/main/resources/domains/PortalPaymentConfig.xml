@@ -9,9 +9,8 @@
 
     <string name="name"/>
     <string name="typeSelect" selection="payment.config.type.select"/>
-    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="portalWorkspace"/>
-
-    <unique-constraint columns="portalWorkspace,typeSelect"/>
+    <string name="publicEshopSelect" title="Public eshop" selection="public.eshop.select"/>
+    <integer name="nbOfProductsPerPage"/>
 
   </entity>
 

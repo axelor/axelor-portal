@@ -7,6 +7,8 @@
     model="com.axelor.apps.portal.db.PortalPaymentConfig" editable="true">
     <field name="name" required="true"/>
     <field name="typeSelect" onChange="action-portal-payment-config-type-select-onchange"/>
+    <field name="publicEshopSelect"/>
+    <field name="nbOfProductsPerPage" min="0"/>
   </grid>
 
   <form name="portal-payment-config-form" title="Payment config"
@@ -14,6 +16,8 @@
     <panel name="mainPanel">
       <field name="name" required="true"/>
       <field name="typeSelect" onChange="action-portal-payment-config-type-select-onchange"/>
+      <field name="publicEshopSelect"/>
+      <field name="nbOfProductsPerPage" min="0"/>
     </panel>
   </form>
 

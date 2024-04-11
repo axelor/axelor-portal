@@ -68,4 +68,13 @@
     <view type="form" name="portal-contact-permission-form"/>
   </action-view>
 
+  <menuitem title="Payment config" name="menu-portal-portal-payment-config"
+    parent="menu-portal-root" action="action.portal.portal.payment.config"/>
+
+  <action-view name="action.portal.portal.payment.config" title="Payment config"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig">
+    <view type="grid" name="portal-payment-config-grid"/>
+    <view type="form" name="portal-payment-config-form"/>
+  </action-view>
+
 </object-views>

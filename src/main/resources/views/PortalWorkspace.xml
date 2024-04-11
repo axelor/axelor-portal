@@ -17,11 +17,6 @@
       <field name="defaultPortalAppConfig"/>
       <field name="defaultTheme"/>
       <field name="allowRegistrationSelect"/>
-      <field name="publicEshopSelect"/>
-      <field name="nbOfProductsPerPage" min="0"/>
-    </panel>
-    <panel name="paymentOptionPanel">
-      <field name="paymentOptions" colSpan="12"/>
     </panel>
   </form>
 
