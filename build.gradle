@@ -2,17 +2,50 @@ plugins {
 	id 'com.axelor.app'
 }
 
-apply {
-	version = "1.0.0"
+apply from: "version.gradle"
+if(!file("../../gradle/style.gradle").exists()) {
+    apply from: 'gradle/style.gradle'
 }
+
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+group = "com.axelor.apps.enterprise"
 
 axelor {
 	title "Axelor Portal"
 	description "Axelor Portal Module"
 }
 
+ext.aosVersion = '8.0.4'
+
 dependencies {
-	api project(":modules:axelor-production")
-	api project(":modules:axelor-project")
-	api project(":modules:axelor-helpdesk")
+
+  	api "com.axelor.apps:axelor-production:${aosVersion}"
+  	api "com.axelor.apps:axelor-project:${aosVersion}"
+  	api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
+}
+
+apply plugin: 'maven-publish'
+
+ext {
+    mavenUsername = project.findProperty( 'axelorMavenUsername' )
+    mavenPassword = project.findProperty( 'axelorMavenPassword' )
+}
+
+publishing {
+    repositories {
+        maven {
+			def repoPath = project.hasProperty("finalRelease")
+					? "maven-enterprise-releases"
+					: "maven-enterprise-snapshots";
+            name = "maven-enterprise"
+            url = "https://repository.axelor.com/nexus/repository/" + repoPath
+            credentials {
+                username = project.mavenUsername
+                password = project.mavenPassword
+            }
+        }
+    }
 }
