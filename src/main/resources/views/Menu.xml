@@ -5,17 +5,8 @@
 
   <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"/>
 
-  <menuitem title="Portal app config" name="menu-portal-app-configuration"
-    parent="menu-portal-root" action="action.portal.app.configuration"/>
-
-  <action-view name="action.portal.app.configuration" title="Portal app config"
-    model="com.axelor.apps.portal.db.PortalAppConfig">
-    <view type="grid" name="portal-app-config-grid"/>
-    <view type="form" name="portal-app-config-form"/>
-  </action-view>
-
   <menuitem title="Workspace" name="menu-portal-portal-workspace" parent="menu-portal-root"
-    action="action.portal.porttal.workspace"/>
+    action="action.portal.porttal.workspace" order="101"/>
 
   <action-view name="action.portal.porttal.workspace" title="Workspace"
     model="com.axelor.apps.portal.db.PortalWorkspace">
@@ -23,35 +14,17 @@
     <view type="form" name="portal-workspace-form"/>
   </action-view>
 
-  <menuitem title="Brand" name="menu-portal-brand" parent="menu-portal-root"
-    action="action.portal.brand"/>
+  <menuitem title="Portal app config" name="menu-portal-app-configuration"
+    parent="menu-portal-root" action="action.portal.app.configuration" order="105"/>
 
-  <action-view name="action.portal.brand" title="Brand"
-    model="com.axelor.apps.portal.db.Brand">
-    <view type="grid" name="brand-grid"/>
-    <view type="form" name="brand-form"/>
-  </action-view>
-
-  <menuitem title="Theme" name="menu-portal-portal-theme" parent="menu-portal-root"
-    action="action.portal.portal.theme"/>
-
-  <action-view name="action.portal.portal.theme" title="Theme"
-    model="com.axelor.apps.portal.db.PortalTheme">
-    <view type="grid" name="portal-theme-grid"/>
-    <view type="form" name="portal-theme-form"/>
-  </action-view>
-
-  <menuitem title="Portal app" name="menu-portal-portal-app" parent="menu-portal-root"
-    action="action.portal.portal.app"/>
-
-  <action-view name="action.portal.portal.app" title="Portal app"
-    model="com.axelor.apps.portal.db.PortalApp">
-    <view type="grid" name="portal-app-grid"/>
-    <view type="form" name="portal-app-form"/>
+  <action-view name="action.portal.app.configuration" title="Portal app config"
+    model="com.axelor.apps.portal.db.PortalAppConfig">
+    <view type="grid" name="portal-app-config-grid"/>
+    <view type="form" name="portal-app-config-form"/>
   </action-view>
 
   <menuitem title="Permission" name="menu-portal-portal-permission"
-    parent="menu-portal-root"/>
+    parent="menu-portal-root" order="110"/>
 
   <menuitem title="Partner permission" name="menu-portal-portal-partner-permission"
     parent="menu-portal-portal-permission" action="action.portal.portal.partner.permission"/>
@@ -71,8 +44,39 @@
     <view type="form" name="portal-contact-permission-form"/>
   </action-view>
 
+  <menuitem title="Configuration" name="menu-portal-configuration-root"
+    parent="menu-portal-root" order="115"/>
+
+  <menuitem title="Portal app" name="menu-portal-portal-app"
+    parent="menu-portal-configuration-root" action="action.portal.portal.app" order="1000"/>
+
+  <action-view name="action.portal.portal.app" title="Portal app"
+    model="com.axelor.apps.portal.db.PortalApp">
+    <view type="grid" name="portal-app-grid"/>
+    <view type="form" name="portal-app-form"/>
+  </action-view>
+
+  <menuitem title="Brand" name="menu-portal-brand" parent="menu-portal-configuration-root"
+    action="action.portal.brand" order="1005"/>
+
+  <action-view name="action.portal.brand" title="Brand"
+    model="com.axelor.apps.portal.db.Brand">
+    <view type="grid" name="brand-grid"/>
+    <view type="form" name="brand-form"/>
+  </action-view>
+
+  <menuitem title="Theme" name="menu-portal-portal-theme"
+    parent="menu-portal-configuration-root" action="action.portal.portal.theme" order="1010"/>
+
+  <action-view name="action.portal.portal.theme" title="Theme"
+    model="com.axelor.apps.portal.db.PortalTheme">
+    <view type="grid" name="portal-theme-grid"/>
+    <view type="form" name="portal-theme-form"/>
+  </action-view>
+
   <menuitem title="Payment config" name="menu-portal-portal-payment-config"
-    parent="menu-portal-root" action="action.portal.portal.payment.config"/>
+    parent="menu-portal-configuration-root" action="action.portal.portal.payment.config"
+    order="1015"/>
 
   <action-view name="action.portal.portal.payment.config" title="Payment config"
     model="com.axelor.apps.portal.db.PortalPaymentConfig">
