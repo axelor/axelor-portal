@@ -50,20 +50,23 @@
     <view type="form" name="portal-app-form"/>
   </action-view>
 
-  <menuitem title="Partner permission" name="menu-portal-portal-partner-permission"
-    parent="menu-portal-root" action="action.portal.portal.partner.permission"/>
+  <menuitem title="Permission" name="menu-portal-portal-permission"
+    parent="menu-portal-root"/>
 
-  <action-view name="action.portal.portal.partner.permission"
-    title="Partner permission" model="com.axelor.apps.portal.db.PortalPartnerPermission">
+  <menuitem title="Partner permission" name="menu-portal-portal-partner-permission"
+    parent="menu-portal-portal-permission" action="action.portal.portal.partner.permission"/>
+
+  <action-view name="action.portal.portal.partner.permission" title="Partner permission"
+    model="com.axelor.apps.portal.db.PortalPartnerPermission">
     <view type="grid" name="portal-partner-permission-grid"/>
     <view type="form" name="portal-partner-permission-form"/>
   </action-view>
 
   <menuitem title="Contact permission" name="menu-portal-portal-contact-permission"
-    parent="menu-portal-root" action="action.portal.portal.contact.permission"/>
+    parent="menu-portal-portal-permission" action="action.portal.portal.contact.permission"/>
 
-  <action-view name="action.portal.portal.contact.permission"
-    title="Contact permission" model="com.axelor.apps.portal.db.PortalContactPermission">
+  <action-view name="action.portal.portal.contact.permission" title="Contact permission"
+    model="com.axelor.apps.portal.db.PortalContactPermission">
     <view type="grid" name="portal-contact-permission-grid"/>
     <view type="form" name="portal-contact-permission-form"/>
   </action-view>
