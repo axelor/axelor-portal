@@ -22,8 +22,8 @@
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="displayOutOfStock"/>
-        <field name="displayPrices"/>
         <panel name="priceConfigPanel" title="Price Config" colSpan="12">
+          <field name="displayPrices"/>
           <field name="mainPriceSelect"/>
           <field name="priceAfterLoginSelect"/>
           <field name="displayTwoPricesSelect"/>

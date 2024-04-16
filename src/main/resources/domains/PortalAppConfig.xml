@@ -34,7 +34,7 @@
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
-      name="paymentOptionSet"/>
+      name="paymentOptionSet" title="Payment options"/>
 
   </entity>
 
