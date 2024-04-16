@@ -5,10 +5,10 @@
 
   <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"/>
 
-  <menuitem title="Portal app configuration" name="menu-portal-app-configuration"
+  <menuitem title="Portal app config" name="menu-portal-app-configuration"
     parent="menu-portal-root" action="action.portal.app.configuration"/>
 
-  <action-view name="action.portal.app.configuration" title="Portal app configuration"
+  <action-view name="action.portal.app.configuration" title="Portal app config"
     model="com.axelor.apps.portal.db.PortalAppConfig">
     <view type="grid" name="portal-app-config-grid"/>
     <view type="form" name="portal-app-config-form"/>
@@ -50,20 +50,20 @@
     <view type="form" name="portal-app-form"/>
   </action-view>
 
-  <menuitem title="Portal partner permission" name="menu-portal-portal-partner-permission"
+  <menuitem title="Partner permission" name="menu-portal-portal-partner-permission"
     parent="menu-portal-root" action="action.portal.portal.partner.permission"/>
 
   <action-view name="action.portal.portal.partner.permission"
-    title="Portal partner permission" model="com.axelor.apps.portal.db.PortalPartnerPermission">
+    title="Partner permission" model="com.axelor.apps.portal.db.PortalPartnerPermission">
     <view type="grid" name="portal-partner-permission-grid"/>
     <view type="form" name="portal-partner-permission-form"/>
   </action-view>
 
-  <menuitem title="Portal contact permission" name="menu-portal-portal-contact-permission"
+  <menuitem title="Contact permission" name="menu-portal-portal-contact-permission"
     parent="menu-portal-root" action="action.portal.portal.contact.permission"/>
 
   <action-view name="action.portal.portal.contact.permission"
-    title="Portal contact permission" model="com.axelor.apps.portal.db.PortalContactPermission">
+    title="Contact permission" model="com.axelor.apps.portal.db.PortalContactPermission">
     <view type="grid" name="portal-contact-permission-grid"/>
     <view type="form" name="portal-contact-permission-form"/>
   </action-view>
