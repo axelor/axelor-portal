@@ -3,14 +3,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
 
-  <grid name="portal-app-grid" title="Portal apps" model="com.axelor.apps.portal.db.PortalApp"
-    canNew="false" canEdit="false" canDelete="false">
+  <grid name="portal-app-grid" title="Portal apps" model="com.axelor.apps.portal.db.PortalApp">
     <field name="name"/>
     <field name="code"/>
   </grid>
 
-  <form name="portal-app-form" title="Portal app" model="com.axelor.apps.portal.db.PortalApp"
-    canNew="false" canEdit="false" canDelete="false">
+  <form name="portal-app-form" title="Portal app" model="com.axelor.apps.portal.db.PortalApp">
     <panel name="mainPanel">
       <field name="name" required="true"/>
       <field name="code" required="true"/>
