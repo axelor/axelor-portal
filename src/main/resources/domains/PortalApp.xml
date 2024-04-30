@@ -11,6 +11,9 @@
     <string name="code" unique="true"/>
     <string name="description" large="true"/>
     <string name="installed" selection="app.install.select"/>
+    <string name="color" selection="color.name.selection"/>
+    <string name="background" selection="color.name.selection"/>
+    <string name="icon"/>
     <many-to-many name="dependnecySet" ref="com.axelor.apps.portal.db.PortalApp"
       title="Dependencies"/>
     <boolean name="showInTopMenu" title="Show in top menu ?"/>

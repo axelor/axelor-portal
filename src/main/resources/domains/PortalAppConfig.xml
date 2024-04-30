@@ -21,6 +21,7 @@
 
     <boolean name="payInAdvance" title="Pay in advance"/>
     <boolean name="eSignature" title="E signature"/>
+    <boolean name="isPublicEshop" title="Public eshop ?"/>
 
     <boolean name="byNewst" title="By newst"/>
     <boolean name="byFeature" title="By feature"/>

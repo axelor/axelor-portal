@@ -16,6 +16,9 @@
       <field name="orderForTopMenu" showIf="showInTopMenu"/>
       <field name="showInMySpace"/>
       <field name="orderForMySpaceMenu" showIf="showInMySpace"/>
+      <field name="color" widget="SingleSelect"/>
+      <field name="background" widget="SingleSelect"/>
+      <field name="icon"/>
       <field name="dependnecySet" colSpan="12" widget="TagSelect"/>
       <field name="description" colSpan="12"/>
     </panel>
