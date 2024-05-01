@@ -21,7 +21,7 @@
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
-        <field name="isPublicEshop"/>
+        <field name="publicEshop"/>
         <field name="displayOutOfStock"/>
         <panel name="priceConfigPanel" title="Price Config" colSpan="12">
           <field name="displayPrices"/>
