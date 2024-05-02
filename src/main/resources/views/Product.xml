@@ -20,7 +20,7 @@
           <field name="leftQty" colSpan="3" readonly="true"/>
           <field name="brand"/>
           <field name="portalWorkspace"/>
-          <field name="protalCategorySet" widget="TagSelect"/>
+          <field name="portalCategorySet" widget="TagSelect"/>
           <field name="portalAvailableOptionSet" widget="TagSelect"/>
           <field name="portalAssociatedProductSet" widget="TagSelect"/>
           <field name="longDescription" colSpan="12" widget="html"/>
