@@ -16,6 +16,7 @@
       <field name="url" widget="url" colSpan="12"/>
       <field name="defaultPortalAppConfig"/>
       <field name="defaultTheme"/>
+      <field name="defaultPWAfterRegistration" target-name="workspace.url"/>
       <field name="allowRegistrationSelect"/>
     </panel>
   </form>

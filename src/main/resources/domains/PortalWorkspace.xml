@@ -11,6 +11,9 @@
     <many-to-one name="defaultPortalAppConfig"
       ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
+    <many-to-one name="defaultPWAfterRegistration"
+      title="Default partner workspace after registration"
+      ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <string name="allowRegistrationSelect" title="Allow registration ?"
       selection="allow.registration.select"/>
 
