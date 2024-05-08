@@ -12,8 +12,6 @@
     <many-to-one name="portalAppConfig" title="Portal app configuration"
       ref="com.axelor.apps.portal.db.PortalAppConfig"/>
     <boolean name="isDefaultWorkspaceAfterLogin" title="Default workspace after login"/>
-    <many-to-one ref="com.axelor.apps.portal.db.PortalPartnerPermission"
-      name="portalPartnerPermission"/>
     <many-to-many name="apps" ref="com.axelor.apps.portal.db.PortalApp"/>
 
   </entity>

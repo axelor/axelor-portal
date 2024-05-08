@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-contact-app-permission-grid" title="Contact app permissions"
+    model="com.axelor.apps.portal.db.PortalContactAppPermission">
+    <field name="app"/>
+    <field name="roleSelect"/>
+  </grid>
+
+  <form name="portal-contact-app-permission-form" title="Contact app permission"
+    model="com.axelor.apps.portal.db.PortalContactAppPermission">
+    <panel name="mainPanel">
+      <field name="app"/>
+      <field name="roleSelect"/>
+    </panel>
+  </form>
+
+</object-views>

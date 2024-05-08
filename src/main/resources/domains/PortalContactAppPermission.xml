@@ -5,13 +5,10 @@
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
-  <entity name="PortalContactPermission">
+  <entity name="PortalContactAppPermission">
 
-    <string name="name"/>
-    <boolean name="isDefault" title="Default"/>
-    <one-to-many name="portalContactWorkspaceList"
-      ref="com.axelor.apps.portal.db.PortalContactWorkspace" mappedBy="portalContactPermission"
-      title="Permissions"/>
+    <many-to-one name="app" ref="com.axelor.apps.portal.db.PortalApp" title="App"/>
+    <string name="roleSelect" selection="portal.role.select" title="Role"/>
 
   </entity>
 

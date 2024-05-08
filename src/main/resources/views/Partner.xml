@@ -9,7 +9,7 @@
       <insert position="before">
         <panel name="portalPanel" colSpan="12">
           <field name="portalPassword" widget="password"/>
-          <field name="portalPartnerPermission"/>
+          <field name="partnerWorkspaceSet" colSpan="12"/>
         </panel>
       </insert>
     </extend>
@@ -21,7 +21,7 @@
       <insert position="after">
         <panel title="Portal" name="portalPanel">
           <field name="portalPassword" widget="password"/>
-          <field name="portalContactPermission"/>
+          <field name="contactWorkspaceConfigSet" colSpan="12"/>
         </panel>
       </insert>
     </extend>

@@ -5,13 +5,13 @@
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
-  <entity name="PortalPartnerPermission">
+  <entity name="PortalContactWorkspaceConfig">
 
     <string name="name"/>
-    <boolean name="isDefault" title="Default"/>
-    <one-to-many name="partnerPortalWorkspaceList"
-      ref="com.axelor.apps.portal.db.PartnerPortalWorkspace" title="Workspaces"
-      mappedBy="portalPartnerPermission"/>
+    <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
+      title="Workspace"/>
+    <one-to-many name="contactAppPermissionList" title="App permissions"
+      ref="com.axelor.apps.portal.db.PortalContactAppPermission"/>
 
   </entity>
 
