@@ -30,7 +30,7 @@
 
   <selection name="portal.role.select">
     <option value="restricted">Restricted</option>
-    <option value="Total">total</option>
+    <option value="total">Total</option>
   </selection>
 
   <selection name="payment.config.type.select">

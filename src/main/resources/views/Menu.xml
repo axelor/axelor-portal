@@ -23,8 +23,23 @@
     <view type="form" name="portal-app-config-form"/>
   </action-view>
 
-  <menuitem title="Permission" name="menu-portal-portal-permission"
-    parent="menu-portal-root" order="110"/>
+  <menuitem title="Partner workspace" name="menu-portal-portal-partner-workspace"
+    parent="menu-portal-root" action="action.portal.portal.partner.workspace" order="110"/>
+
+  <action-view name="action.portal.portal.partner.workspace" title="Partner workspace"
+    model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
+    <view type="grid" name="partner-portal-workspace-grid"/>
+    <view type="form" name="partner-portal-workspace-form"/>
+  </action-view>
+
+  <menuitem title="Contact workspace config" name="menu-portal-contact-workspace-config"
+    parent="menu-portal-root" action="action.portal.portal.contact.workspace.config" order="110"/>
+
+  <action-view name="action.portal.portal.contact.workspace.config"
+    title="Contact workspace config" model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig">
+    <view type="grid" name="portal-contact-workspace-config-grid"/>
+    <view type="form" name="portal-contact-workspace-config-form"/>
+  </action-view>
 
   <menuitem title="Configuration" name="menu-portal-configuration-root"
     parent="menu-portal-root" order="115"/>
