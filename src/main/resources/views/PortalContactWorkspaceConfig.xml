@@ -5,12 +5,14 @@
 
   <grid name="portal-contact-workspace-config-grid" title="Contact workspace configs"
     model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig">
+    <field name="name"/>
     <field name="portalWorkspace"/>
   </grid>
 
   <form name="portal-contact-workspace-config-form" title="Contact workspace config"
     model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig">
     <panel name="mainPanel">
+      <field name="name"/>
       <field name="portalWorkspace"/>
       <field name="contactAppPermissionList" colSpan="12"/>
     </panel>

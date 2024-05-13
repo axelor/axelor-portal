@@ -11,7 +11,7 @@
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
     <one-to-many name="contactAppPermissionList" title="App permissions"
-      ref="com.axelor.apps.portal.db.PortalContactAppPermission"/>
+      ref="com.axelor.apps.portal.db.PortalContactAppPermission" mappedBy="contactWorkspaceConfig"/>
 
   </entity>
 

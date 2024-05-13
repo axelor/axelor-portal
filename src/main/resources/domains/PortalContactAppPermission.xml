@@ -8,6 +8,8 @@
   <entity name="PortalContactAppPermission">
 
     <many-to-one name="app" ref="com.axelor.apps.portal.db.PortalApp" title="App"/>
+    <many-to-one name="contactWorkspaceConfig"
+      ref="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"/>
     <string name="roleSelect" selection="portal.role.select" title="Role"/>
 
   </entity>

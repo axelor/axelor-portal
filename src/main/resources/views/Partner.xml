@@ -21,8 +21,7 @@
       <insert position="after">
         <panel title="Portal" name="portalPanel">
           <field name="portalPassword" widget="password"/>
-          <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"
-            target-name="portalWorkspace.url"/>
+          <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"/>
         </panel>
       </insert>
     </extend>
