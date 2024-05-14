@@ -5,10 +5,12 @@
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
-  <entity name="PortalTheme">
+  <entity name="PortalContactWorkspace">
 
-    <string name="name"/>
-    <string name="css" large="true"/>
+    <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
+      title="Workspace"/>
+    <many-to-one name="portalApp" ref="com.axelor.apps.portal.db.PortalApp" title="App"/>
+    <string name="roleSelect" selection="portal.role.select" title="Role"/>
 
   </entity>
 

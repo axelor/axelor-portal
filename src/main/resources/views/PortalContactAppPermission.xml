@@ -3,18 +3,16 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
 
-  <grid name="portal-permission-grid" title="Permissions"
-    model="com.axelor.apps.portal.db.PortalPermission">
-    <field name="portalWorkspace"/>
-    <field name="portalApp"/>
+  <grid name="portal-contact-app-permission-grid" title="Contact app permissions"
+    model="com.axelor.apps.portal.db.PortalContactAppPermission">
+    <field name="app"/>
     <field name="roleSelect"/>
   </grid>
 
-  <form name="portal-permission-form" title="Permission"
-    model="com.axelor.apps.portal.db.PortalPermission">
+  <form name="portal-contact-app-permission-form" title="Contact app permission"
+    model="com.axelor.apps.portal.db.PortalContactAppPermission">
     <panel name="mainPanel">
-      <field name="portalWorkspace"/>
-      <field name="portalApp"/>
+      <field name="app"/>
       <field name="roleSelect"/>
     </panel>
   </form>

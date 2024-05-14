@@ -57,6 +57,7 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.NotFoundException;
+import org.apache.commons.collections.CollectionUtils;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
@@ -116,20 +117,24 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected Company getCompany(Partner clientPartner) {
 
     Company company = AuthUtils.getUser().getActiveCompany();
-    if (clientPartner == null) {
+    if (clientPartner == null
+        || clientPartner.getPartnerWorkspaceSet() == null
+        || CollectionUtils.isEmpty(clientPartner.getPartnerWorkspaceSet())) {
       return company;
     }
 
     PartnerPortalWorkspace partnerPortalWorkspace =
-        clientPartner.getPartnerPortalWorkspaceList().stream()
-            .filter(pws -> pws.getIsDefault())
+        clientPartner.getPartnerWorkspaceSet().stream()
+            .filter(pws -> pws.getIsDefaultWorkspaceAfterLogin())
             .findFirst()
-            .orElse(null);
+            .orElse(
+                (PartnerPortalWorkspace)
+                    CollectionUtils.get(clientPartner.getPartnerWorkspaceSet(), 0));
     if (partnerPortalWorkspace == null) {
       return company;
     }
 
-    return partnerPortalWorkspace.getWebsiteConfig().getCompany();
+    return partnerPortalWorkspace.getPortalAppConfig().getCompany();
   }
 
   protected SaleOrder createSaleOrder(Map<String, Object> values) throws AxelorException {

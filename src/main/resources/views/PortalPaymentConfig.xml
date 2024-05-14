@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-payment-config-grid" title="Payment configs"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig" editable="true">
+    <field name="name" required="true"/>
+    <field name="typeSelect" onChange="action-portal-payment-config-type-select-onchange"/>
+    <field name="publicEshopSelect"/>
+    <field name="nbOfProductsPerPage" min="0"/>
+  </grid>
+
+  <form name="portal-payment-config-form" title="Payment config"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig">
+    <panel name="mainPanel">
+      <field name="name" required="true"/>
+      <field name="typeSelect" onChange="action-portal-payment-config-type-select-onchange"/>
+      <field name="publicEshopSelect"/>
+      <field name="nbOfProductsPerPage" min="0"/>
+    </panel>
+  </form>
+
+  <action-record name="action-portal-payment-config-type-select-onchange"
+    model="com.axelor.apps.portal.db.PortalPaymentConfig">
+    <field name="name"
+      expr="eval: __repo__(MetaSelectItem).all().filter('self.select.name = \'payment.config.type.select\'
+      AND self.value = :typeSelect').bind('typeSelect', typeSelect).fetchOne()?.title"/>
+  </action-record>
+
+</object-views>

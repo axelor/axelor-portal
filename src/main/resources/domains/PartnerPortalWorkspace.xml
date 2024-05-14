@@ -7,15 +7,13 @@
 
   <entity name="PartnerPortalWorkspace">
 
+    <string name="name"/>
     <many-to-one name="workspace" title="Workspace"
       ref="com.axelor.apps.portal.db.PortalWorkspace" required="true"/>
-    <many-to-one name="websiteConfig" title="Website configuration"
-      ref="com.axelor.apps.portal.db.WebsiteConfig"/>
-    <boolean name="isDefault" title="Default"/>
-    <many-to-one name="partner" ref="com.axelor.apps.base.db.Partner" title="partner"/>
+    <many-to-one name="portalAppConfig" title="Portal app configuration"
+      ref="com.axelor.apps.portal.db.PortalAppConfig"/>
+    <boolean name="isDefaultWorkspaceAfterLogin" title="Default workspace after login"/>
     <many-to-many name="apps" ref="com.axelor.apps.portal.db.PortalApp"/>
-
-    <unique-constraint columns="partner,workspace"/>
 
   </entity>
 

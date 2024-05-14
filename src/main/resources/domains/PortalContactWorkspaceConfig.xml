@@ -5,10 +5,13 @@
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
-  <entity name="PortalTheme">
+  <entity name="PortalContactWorkspaceConfig">
 
     <string name="name"/>
-    <string name="css" large="true"/>
+    <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
+      title="Workspace"/>
+    <one-to-many name="contactAppPermissionList" title="App permissions"
+      ref="com.axelor.apps.portal.db.PortalContactAppPermission" mappedBy="contactWorkspaceConfig"/>
 
   </entity>
 

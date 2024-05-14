@@ -8,12 +8,12 @@
   <entity name="PortalWorkspace">
 
     <string name="url" title="URL" namecolumn="true"/>
-    <many-to-one name="defaultWebsiteconfig"
-      ref="com.axelor.apps.portal.db.WebsiteConfig" title="Default websiteconfig"/>
+    <many-to-one name="defaultPortalAppConfig"
+      ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
-    <string name="priceAfterLoginSelect" title="Price After Login"
-      selection="price.after.login.select"/>
-    <string name="displayPriceSelect" title="Display price" selection="display.price.select"/>
+    <many-to-one name="defaultPWAfterRegistration"
+      title="Default partner workspace after registration"
+      ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <string name="allowRegistrationSelect" title="Allow registration ?"
       selection="allow.registration.select"/>
 

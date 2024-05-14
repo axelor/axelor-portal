@@ -16,20 +16,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.portal.service.response.generator;
+package com.axelor.apps.portal.service;
 
-import com.axelor.apps.sale.db.SaleOrder;
-import com.axelor.apps.sale.db.repo.SaleOrderRepository;
-import com.google.inject.Inject;
-import java.util.Arrays;
+import com.axelor.apps.base.AxelorException;
+import java.math.BigDecimal;
+import java.util.Map;
 
-public class SaleOrderResponseGenerator extends ResponseGenerator {
+public interface ProductPortalService {
 
-  @Inject SaleOrderRepository saleOrderRepo;
-
-  @Override
-  public void init() {
-    modelFields.addAll(Arrays.asList("id"));
-    classType = SaleOrder.class;
-  }
+  public Map<String, Object> getProductPrices(
+      Long productId, Long companyId, Long partnerId, BigDecimal qty) throws AxelorException;
 }

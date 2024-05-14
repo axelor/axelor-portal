@@ -25,4 +25,7 @@ public final class PortalExceptionMessage {
   public static final String CUSTOMER_MISSING = /*$$(*/ "Customer is missing" /*)*/;
   public static final String ADDRESS_MISSING = /*$$(*/ "Address not specified" /*)*/;
   public static final String QTY_ERROR = /*$$(*/ "Quantity must be greater than 0" /*)*/;
+
+  public static final String PRODUCT_MISSING = /*$$(*/ "Product not found" /*)*/;
+  public static final String COMPANY_MISSING = /*$$(*/ "Company not found" /*)*/;
 }

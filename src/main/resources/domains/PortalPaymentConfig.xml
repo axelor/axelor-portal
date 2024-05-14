@@ -5,10 +5,12 @@
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
-  <entity name="PortalTheme">
+  <entity name="PortalPaymentConfig">
 
     <string name="name"/>
-    <string name="css" large="true"/>
+    <string name="typeSelect" selection="payment.config.type.select"/>
+    <string name="publicEshopSelect" title="Public eshop" selection="public.eshop.select"/>
+    <integer name="nbOfProductsPerPage"/>
 
   </entity>
 

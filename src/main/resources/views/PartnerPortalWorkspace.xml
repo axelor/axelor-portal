@@ -5,20 +5,22 @@
 
   <grid name="partner-portal-workspace-grid" title="Partner workspaces"
     model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
+    <field name="name"/>
     <field name="workspace"/>
-    <field name="websiteConfig"/>
-    <field name="isDefault"/>
+    <field name="portalAppConfig"/>
+    <field name="isDefaultWorkspaceAfterLogin"/>
   </grid>
 
   <form name="partner-portal-workspace-form" title="Partner workspace"
     model="com.axelor.apps.portal.db.PartnerPortalWorkspace">
     <panel name="mainPanel">
+      <field name="name" required="true"/>
       <field name="workspace"/>
-      <field name="websiteConfig"/>
+      <field name="portalAppConfig"/>
       <field name="apps" widget="TagSelect" colSpan="12"/>
     </panel>
     <panel name="sidePanel" sidebar="true">
-      <field name="isDefault"/>
+      <field name="isDefaultWorkspaceAfterLogin"/>
     </panel>
   </form>
 

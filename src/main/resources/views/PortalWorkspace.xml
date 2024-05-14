@@ -6,7 +6,7 @@
   <grid name="portal-workspace-grid" title="Workspaces"
     model="com.axelor.apps.portal.db.PortalWorkspace">
     <field name="url"/>
-    <field name="defaultWebsiteconfig"/>
+    <field name="defaultPortalAppConfig"/>
     <field name="defaultTheme"/>
   </grid>
 
@@ -14,10 +14,9 @@
     model="com.axelor.apps.portal.db.PortalWorkspace">
     <panel name="mainPanel">
       <field name="url" widget="url" colSpan="12"/>
-      <field name="defaultWebsiteconfig"/>
+      <field name="defaultPortalAppConfig"/>
       <field name="defaultTheme"/>
-      <field name="priceAfterLoginSelect"/>
-      <field name="displayPriceSelect"/>
+      <field name="defaultPWAfterRegistration"/>
       <field name="allowRegistrationSelect"/>
     </panel>
   </form>

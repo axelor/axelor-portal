@@ -19,34 +19,42 @@
 package com.axelor.apps.portal.web.service;
 
 import com.axelor.apps.base.AxelorException;
-import com.axelor.apps.portal.service.SaleOrderPortalService;
+import com.axelor.apps.base.db.Product;
+import com.axelor.apps.portal.service.ProductPortalService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
-import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.db.JpaSecurity;
 import com.axelor.db.JpaSecurity.AccessType;
 import com.axelor.inject.Beans;
+import java.math.BigDecimal;
 import java.util.Map;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("/portal/orders")
-public class SaleOrderWebService {
+@Path("/portal/products")
+public class ProductWebService {
 
-  @POST
-  @Path("/quotation")
+  @GET
+  @Path("/productPrices/{productId}")
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
-  public PortalRestResponse createQuotation(Map<String, Object> values) throws AxelorException {
+  public PortalRestResponse fetchProductPrices(
+      @PathParam("productId") Long productId,
+      @QueryParam("companyId") Long companyId,
+      @QueryParam("partnerId") Long partnerId,
+      @QueryParam("qty") int qty)
+      throws AxelorException {
 
     try {
-      Beans.get(JpaSecurity.class).check(AccessType.CREATE, SaleOrder.class);
-      SaleOrder saleOrder = Beans.get(SaleOrderPortalService.class).createQuotation(values);
-
+      Beans.get(JpaSecurity.class).check(AccessType.READ, Product.class, productId);
+      BigDecimal productQty = BigDecimal.valueOf(qty);
+      Map<String, Object> data =
+          Beans.get(ProductPortalService.class)
+              .getProductPrices(productId, companyId, partnerId, productQty);
       PortalRestResponse response = new PortalRestResponse();
-      return response.setData(saleOrder.getId()).success();
+      return response.setData(data).success();
 
     } catch (Exception e) {
       PortalRestResponse response = new PortalRestResponse();
