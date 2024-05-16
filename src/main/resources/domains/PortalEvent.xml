@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalEvent">
+
+    <string name="eventTitle" title="Title" namecolumn="true"/>
+    <string name="eventPlace"/>
+    <string name="eventLink"/>
+    <string name="eventDescription" large="true"/>
+    <integer name="eventDegressiveNumberPartcipant"/>
+    <boolean name="eventAllDay"/>
+    <boolean name="eventAllowRegistration"/>
+    <boolean name="eventAllowMultipleRegistrations"/>
+    <boolean name="eventVisibility"/>
+    <datetime name="eventStartDateTime" title="Event start date"/>
+    <datetime name="eventEndDateTime" title="Event end date"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
+    <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalComment" name="eventCommentList"
+      mappedBy="portalEvent" title="Event comments"/>
+    <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
+      name="eventCategorySet" title="Event categories"/>
+
+  </entity>
+
+</domain-models>

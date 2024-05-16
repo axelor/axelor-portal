@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalComment">
+
+    <string name="title" namecolumn="true"/>
+    <datetime name="publicationDateTime" title="Publication date"/>
+    <many-to-one name="author" ref="com.axelor.auth.db.User"/>
+    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+    <one-to-many name="parentCommentList" ref="com.axelor.apps.portal.db.PortalComment"
+      mappedBy="childComment" title="Parent comments"/>
+    <many-to-one name="childComment" ref="com.axelor.apps.portal.db.PortalComment"/>
+    <one-to-many name="parentNewsList" ref="com.axelor.apps.portal.db.PortalNews"
+      mappedBy="portalComment" title="Parent news"/>
+    <many-to-one name="portalEvent" ref="com.axelor.apps.portal.db.PortalEvent"/>
+
+  </entity>
+
+</domain-models>

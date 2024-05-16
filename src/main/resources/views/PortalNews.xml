@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-portal-news-grid" title="Portal news"
+    model="com.axelor.apps.portal.db.PortalNews">
+    <field name="title"/>
+    <field name="publicationDateTime"/>
+    <field name="categorySet" widget="TagSelect"/>
+  </grid>
+
+  <form name="portal-portal-news-form" title="Portal news"
+    model="com.axelor.apps.portal.db.PortalNews" width="large"
+    onNew="action-portal-record-portal-news-category-onnew">
+    <panel name="mainPanel">
+      <panel name="imagePanel" colSpan="2">
+        <field name="image" widget="Image" colSpan="12" showTitle="false"/>
+      </panel>
+      <panel name="infoPanel" colSpan="10">
+        <field name="title" required="true" colSpan="12"/>
+        <field name="publicationDateTime"/>
+        <field name="author"/>
+      </panel>
+      <field name="categorySet" colSpan="12" widget="TagSelect"/>
+      <field name="description" colSpan="12"/>
+      <field name="content" colSpan="12" widget="html"/>
+    </panel>
+  </form>
+
+  <action-record name="action-portal-record-portal-news-category-onnew"
+    model="com.axelor.apps.portal.db.PortalNews">
+    <field name="author" expr="eval: __user__?.partner"/>
+  </action-record>
+
+</object-views>

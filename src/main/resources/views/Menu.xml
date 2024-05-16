@@ -41,8 +41,44 @@
     <view type="form" name="portal-contact-workspace-config-form"/>
   </action-view>
 
+  <menuitem title="News" name="menu-portal-portal-news" parent="menu-portal-root"
+    action="action.portal.portal.news" order="115"/>
+
+  <action-view name="action.portal.portal.news" title="News"
+    model="com.axelor.apps.portal.db.PortalNews">
+    <view type="grid" name="portal-portal-news-grid"/>
+    <view type="form" name="portal-portal-news-form"/>
+  </action-view>
+
+  <menuitem title="Registration" name="menu-portal-registration" parent="menu-portal-root"
+    action="action.portal.registration" order="120"/>
+
+  <action-view name="action.portal.registration" title="Registration"
+    model="com.axelor.apps.portal.db.Registration">
+    <view type="grid" name="portal-registration-grid"/>
+    <view type="form" name="portal-registration-form"/>
+  </action-view>
+
+  <menuitem title="Events" name="menu-portal-portal-event" parent="menu-portal-root"
+    action="action.portal.portal.event" order="125"/>
+
+  <action-view name="action.portal.portal.event" title="Event"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <view type="grid" name="portal-portal-event-grid"/>
+    <view type="form" name="portal-portal-event-form"/>
+  </action-view>
+
+  <menuitem title="Participant" name="menu-portal-portal-participant"
+    parent="menu-portal-root" action="action.portal.portal.participant" order="130"/>
+
+  <action-view name="action.portal.portal.participant" title="Participant"
+    model="com.axelor.apps.portal.db.PortalParticipant">
+    <view type="grid" name="portal-portal-participant-grid"/>
+    <view type="form" name="portal-portal-participant-form"/>
+  </action-view>
+
   <menuitem title="Configuration" name="menu-portal-configuration-root"
-    parent="menu-portal-root" order="115"/>
+    parent="menu-portal-root" order="135"/>
 
   <menuitem title="Portal app" name="menu-portal-portal-app"
     parent="menu-portal-configuration-root" action="action.portal.portal.app" order="1000"/>
@@ -79,6 +115,34 @@
     model="com.axelor.apps.portal.db.PortalPaymentConfig">
     <view type="grid" name="portal-payment-config-grid"/>
     <view type="form" name="portal-payment-config-form"/>
+  </action-view>
+
+  <menuitem title="News category" name="menu-portal-portal-news-catgory"
+    parent="menu-portal-configuration-root" action="action.portal.portal.news.category" order="1020"/>
+
+  <action-view name="action.portal.portal.news.category" title="News category"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <view type="grid" name="portal-portal-news-category-grid"/>
+    <view type="form" name="portal-portal-news-category-form"/>
+  </action-view>
+
+  <menuitem title="Event category" name="menu-portal-portal-event-catgory"
+    parent="menu-portal-configuration-root" action="action.portal.portal.event.category"
+    order="1025"/>
+
+  <action-view name="action.portal.portal.event.category" title="Event category"
+    model="com.axelor.apps.portal.db.PortalEventCategory">
+    <view type="grid" name="portal-portal-event-category-grid"/>
+    <view type="form" name="portal-portal-event-category-form"/>
+  </action-view>
+
+  <menuitem title="Comment" name="menu-portal-portal-comment"
+    parent="menu-portal-configuration-root" action="action.portal.portal.comment" order="1030"/>
+
+  <action-view name="action.portal.portal.comment" title="Comment"
+    model="com.axelor.apps.portal.db.PortalComment">
+    <view type="grid" name="portal-portal-comment-grid"/>
+    <view type="form" name="portal-portal-comment-form"/>
   </action-view>
 
 </object-views>

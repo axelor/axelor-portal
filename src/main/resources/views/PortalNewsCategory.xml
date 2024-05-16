@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-portal-news-category-grid" title="Portal news categories"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <field name="name"/>
+    <field name="color" widget="SingleSelect"/>
+  </grid>
+
+  <form name="portal-portal-news-category-form" title="Portal news category"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <panel name="mainPanel">
+      <field name="name" required="true" colSpan="12"/>
+      <field name="color" widget="SingleSelect"/>
+      <field name="parentCategory"/>
+      <field name="description" colSpan="12"/>
+    </panel>
+  </form>
+
+</object-views>
