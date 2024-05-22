@@ -9,7 +9,7 @@
 
     <string name="name"/>
     <string name="surname"/>
-    <string name="emailAdress"/>
+    <string name="emailAddress"/>
     <string name="phone"/>
     <many-to-one name="contact" ref="com.axelor.apps.base.db.Partner"/>
 
