@@ -11,10 +11,13 @@
     <datetime name="publicationDateTime" title="Publication date"/>
     <string name="description" large="true"/>
     <string name="content" large="true"/>
+    <boolean name="isFeaturedNews" title="Featured ?"/>
     <many-to-many name="categorySet" ref="com.axelor.apps.portal.db.PortalNewsCategory"
       title="Parent news categories"/>
     <many-to-one name="author" ref="com.axelor.apps.base.db.Partner"/>
     <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+    <many-to-many ref="com.axelor.apps.portal.db.PortalNews" name="relatedNewsSet"
+      title="Related news"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalComment" name="portalComment"/>
 
   </entity>

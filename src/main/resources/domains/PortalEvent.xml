@@ -15,7 +15,7 @@
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
     <boolean name="eventAllowMultipleRegistrations"/>
-    <boolean name="eventVisibility"/>
+    <boolean name="eventVisibility" default="true"/>
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>

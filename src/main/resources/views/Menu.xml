@@ -41,13 +41,25 @@
     <view type="form" name="portal-contact-workspace-config-form"/>
   </action-view>
 
-  <menuitem title="News" name="menu-portal-portal-news" parent="menu-portal-root"
-    action="action.portal.portal.news" order="115"/>
+  <menuitem title="News app" name="menu-portal-portal-news-root" parent="menu-portal-root"
+    order="115"/>
+
+  <menuitem title="News" name="menu-portal-portal-news"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news" order="1151"/>
 
   <action-view name="action.portal.portal.news" title="News"
     model="com.axelor.apps.portal.db.PortalNews">
     <view type="grid" name="portal-portal-news-grid"/>
     <view type="form" name="portal-portal-news-form"/>
+  </action-view>
+
+  <menuitem title="News category" name="menu-portal-portal-news-catgory"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news.category" order="1155"/>
+
+  <action-view name="action.portal.portal.news.category" title="News category"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <view type="grid" name="portal-portal-news-category-grid"/>
+    <view type="form" name="portal-portal-news-category-form"/>
   </action-view>
 
   <menuitem title="Registration" name="menu-portal-registration" parent="menu-portal-root"
@@ -115,15 +127,6 @@
     model="com.axelor.apps.portal.db.PortalPaymentConfig">
     <view type="grid" name="portal-payment-config-grid"/>
     <view type="form" name="portal-payment-config-form"/>
-  </action-view>
-
-  <menuitem title="News category" name="menu-portal-portal-news-catgory"
-    parent="menu-portal-configuration-root" action="action.portal.portal.news.category" order="1020"/>
-
-  <action-view name="action.portal.portal.news.category" title="News category"
-    model="com.axelor.apps.portal.db.PortalNewsCategory">
-    <view type="grid" name="portal-portal-news-category-grid"/>
-    <view type="form" name="portal-portal-news-category-form"/>
   </action-view>
 
   <menuitem title="Event category" name="menu-portal-portal-event-catgory"

@@ -17,7 +17,7 @@
       <field name="surname"/>
       <field name="emailAddress" widget="email"/>
       <field name="phone" widget="phone" x-placeholder-number-type="FIXED_LINE"/>
-      <field name="contact"/>
+      <field name="contact" form-view="partner-contact-form" grid-view="partner-contact-grid"/>
     </panel>
   </form>
 

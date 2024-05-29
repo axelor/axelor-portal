@@ -21,7 +21,7 @@
         <field name="eventTitle" required="true" colSpan="12"/>
         <field name="eventStartDateTime"/>
         <field name="eventEndDateTime"
-          validIf="$moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
+          validIf="eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
         <field name="eventPlace"/>
         <field name="eventLink" widget="url"/>
       </panel>
