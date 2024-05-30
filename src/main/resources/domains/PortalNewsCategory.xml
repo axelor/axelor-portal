@@ -12,6 +12,7 @@
     <string name="description" large="true"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalNewsCategory"
       name="parentCategory"/>
+    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
 
   </entity>
 
