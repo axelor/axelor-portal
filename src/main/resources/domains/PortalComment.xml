@@ -7,7 +7,7 @@
 
   <entity name="PortalComment">
 
-    <string name="title" namecolumn="true"/>
+    <string name="contentComment" large="true"/>
     <datetime name="publicationDateTime" title="Publication date"/>
     <many-to-one name="author" ref="com.axelor.auth.db.User"/>
     <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
