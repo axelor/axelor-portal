@@ -18,6 +18,9 @@
       <field name="emailAddress" widget="email"/>
       <field name="phone" widget="phone" x-placeholder-number-type="FIXED_LINE"/>
       <field name="contact" form-view="partner-contact-form" grid-view="partner-contact-grid"/>
+      <field name="company"/>
+      <field name="registration"/>
+      <field name="contactAttrs" colSpan="12"/>
     </panel>
   </form>
 

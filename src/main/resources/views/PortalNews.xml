@@ -19,8 +19,9 @@
         <field name="image" widget="Image" colSpan="12" showTitle="false"/>
       </panel>
       <panel name="infoPanel" colSpan="10">
-        <field name="title" required="true" colSpan="11"/>
-        <field name="isFeaturedNews" colSpan="1"/>
+        <field name="title" required="true" colSpan="12"/>
+        <field name="slug"/>
+        <field name="isFeaturedNews"/>
         <field name="publicationDateTime"/>
         <field name="author"/>
       </panel>
@@ -28,6 +29,7 @@
       <field name="relatedNewsSet" colSpan="12" widget="TagSelect"/>
       <field name="description" colSpan="12"/>
       <field name="content" colSpan="12" widget="html"/>
+      <field name="portalCommentList" colSpan="12"/>
     </panel>
   </form>
 

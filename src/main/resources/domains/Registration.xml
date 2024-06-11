@@ -8,8 +8,8 @@
   <entity name="Registration">
 
     <many-to-one name="event" ref="com.axelor.apps.portal.db.PortalEvent"/>
-    <many-to-many ref="com.axelor.apps.portal.db.PortalParticipant"
-      name="participantSet" title="Event participants"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalParticipant"
+      name="participantList" title="Event participants" mappedBy="registration"/>
 
   </entity>
 

@@ -6,14 +6,14 @@
   <grid name="portal-registration-grid" title="Portal registrations"
     model="com.axelor.apps.portal.db.Registration">
     <field name="event"/>
-    <field name="participantSet" widget="TagSelect"/>
+    <field name="participantList" widget="TagSelect"/>
   </grid>
 
   <form name="portal-registration-form" title="Portal registration"
     model="com.axelor.apps.portal.db.Registration">
     <panel name="mainPanel">
       <field name="event" required="true"/>
-      <field name="participantSet" colSpan="12" widget="TagSelect"/>
+      <field name="participantList" colSpan="12"/>
     </panel>
   </form>
 

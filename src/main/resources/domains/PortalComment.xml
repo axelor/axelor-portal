@@ -11,12 +11,14 @@
     <datetime name="publicationDateTime" title="Publication date"/>
     <many-to-one name="author" ref="com.axelor.auth.db.User"/>
     <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
-    <one-to-many name="parentCommentList" ref="com.axelor.apps.portal.db.PortalComment"
-      mappedBy="childComment" title="Parent comments"/>
-    <many-to-one name="childComment" ref="com.axelor.apps.portal.db.PortalComment"/>
-    <one-to-many name="parentNewsList" ref="com.axelor.apps.portal.db.PortalNews"
-      mappedBy="portalComment" title="Parent news"/>
-    <many-to-one name="portalEvent" ref="com.axelor.apps.portal.db.PortalEvent"/>
+    <many-to-one name="parentComment" ref="com.axelor.apps.portal.db.PortalComment"
+      title="Parent comment"/>
+    <one-to-many name="childCommentList" ref="com.axelor.apps.portal.db.PortalComment"
+      mappedBy="parentComment"/>
+    <many-to-one name="parentNews" ref="com.axelor.apps.portal.db.PortalNews"
+      title="News"/>
+    <many-to-one name="portalEvent" ref="com.axelor.apps.portal.db.PortalEvent"
+      title="Event"/>
 
   </entity>
 
