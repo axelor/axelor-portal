@@ -19,12 +19,14 @@
 package com.axelor.apps.portal.module;
 
 import com.axelor.app.AxelorModule;
+import com.axelor.apps.portal.db.repo.DMSFilePortalRepository;
 import com.axelor.apps.portal.service.ProductPortalService;
 import com.axelor.apps.portal.service.ProductPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.SaleOrderPortalServiceImpl;
 import com.axelor.apps.portal.service.StockMovePortalServiceImpl;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
+import com.axelor.dms.db.repo.DMSFileRepository;
 
 public class PortalModule extends AxelorModule {
 
@@ -33,5 +35,7 @@ public class PortalModule extends AxelorModule {
     bind(ProductPortalService.class).to(ProductPortalServiceImpl.class);
     bind(SaleOrderPortalService.class).to(SaleOrderPortalServiceImpl.class);
     bind(StockMoveServiceProductionImpl.class).to(StockMovePortalServiceImpl.class);
+
+    bind(DMSFileRepository.class).to(DMSFilePortalRepository.class);
   }
 }

@@ -8,12 +8,20 @@
     <extend target="//panel[@name='tagsPanel']">
       <insert position="after">
         <panel name="portalPanel" sidebar="true">
-          <field name="isSharedFolder"/>
           <field name="author"/>
-          <field name="workspaceSet" widget="TagSelect"/>
-          <field name="partnerCategorySet" widget="TagSelect"/>
-          <field name="description"/>
         </panel>
+      </insert>
+    </extend>
+  </form>
+
+  <form name="dms-folder-form" id="portal-dms-folder-form" title="Directory"
+    model="com.axelor.dms.db.DMSFile" extension="true">
+    <extend target="//panel[@name='Overview']/*[last()]">
+      <insert position="after">
+        <field name="isSharedFolder"/>
+        <field name="workspaceSet" widget="TagSelect"/>
+        <field name="partnerCategorySet" widget="TagSelect"/>
+        <field name="description"/>
       </insert>
     </extend>
   </form>
