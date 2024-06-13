@@ -8,7 +8,7 @@
   <entity name="PortalNewsCategory">
 
     <string name="name"/>
-    <string name="slug"/>
+    <string name="slug" required="true" unique="true"/>
     <string name="color" selection="color.name.selection"/>
     <string name="description" large="true"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalNewsCategory"

@@ -8,7 +8,7 @@
   <entity name="PortalNews">
 
     <string name="title" namecolumn="true"/>
-    <string name="slug"/>
+    <string name="slug" required="true" unique="true"/>
     <datetime name="publicationDateTime" title="Publication date"/>
     <string name="description" large="true"/>
     <string name="content" large="true"/>
