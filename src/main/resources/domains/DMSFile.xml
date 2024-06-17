@@ -14,7 +14,8 @@
       title="Workspaces"/>
     <many-to-many ref="com.axelor.apps.base.db.PartnerCategory"
       name="partnerCategorySet" title="Categories"/>
-
+    <one-to-many ref="com.axelor.dms.db.DMSFile" name="children" mappedBy="parent"
+      title="Children"/>
   </entity>
 
 </domain-models>
