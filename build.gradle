@@ -18,7 +18,7 @@ axelor {
 	description "Axelor Portal Module"
 }
 
-ext.aosVersion = '8.0.4'
+ext.aosVersion = '8.1.0'
 
 dependencies {
 

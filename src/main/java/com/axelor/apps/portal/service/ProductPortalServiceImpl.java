@@ -46,6 +46,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 
 public class ProductPortalServiceImpl implements ProductPortalService {
@@ -124,8 +125,8 @@ public class ProductPortalServiceImpl implements ProductPortalService {
     Boolean productInAti = (Boolean) productCompanyService.get(product, "inAti", company);
     BigDecimal productSalePrice =
         ((BigDecimal) productCompanyService.get(product, "salePrice", company)).multiply(qty);
-    TaxLine taxLine =
-        accountManagementService.getTaxLine(
+    Set<TaxLine> taxLineSet =
+        accountManagementService.getTaxLineSet(
             todayDate, product, company, partner.getFiscalPosition(), false);
 
     BigDecimal basePrice =
@@ -138,7 +139,7 @@ public class ProductPortalServiceImpl implements ProductPortalService {
             .setScale(appSaleService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
     BigDecimal computedPrice =
         taxService.convertUnitPrice(
-            productInAti, taxLine, basePrice, appBaseService.getNbDecimalDigitForUnitPrice());
+            productInAti, taxLineSet, basePrice, appBaseService.getNbDecimalDigitForUnitPrice());
 
     Map<String, Object> data = new HashMap<>();
     if (productInAti) {

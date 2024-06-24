@@ -50,12 +50,14 @@ import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.ws.rs.NotFoundException;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -254,7 +256,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       BigDecimal amount =
           taxService.convertUnitPrice(
               order.getInAti(),
-              line.getTaxLine(),
+              line.getTaxLineSet(),
               itemPrice,
               appBaseService.getNbDecimalDigitForUnitPrice());
       if (order.getInAti()) {
@@ -271,10 +273,12 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected void fillTaxInformation(SaleOrderLine line, SaleOrder order) throws AxelorException {
 
     if (order.getClientPartner() == null) {
+      line.setTaxLineSet(Sets.newHashSet());
+      line.setTaxEquiv(null);
       return;
     }
 
-    Tax tax = null;
+    Set<Tax> taxSet = null;
     if (line.getProduct() != null
         && line.getProduct().getProductFamily() != null
         && ObjectUtils.notEmpty(line.getProduct().getProductFamily().getAccountManagementList())) {
@@ -283,13 +287,13 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
               .filter(am -> am.getCompany().equals(order.getCompany()))
               .findFirst()
               .orElse(null);
-      if (accountManagement != null && accountManagement.getSaleTax() != null) {
-        tax = accountManagement.getSaleTax();
-        line.setTaxLine(tax.getActiveTaxLine());
+      if (accountManagement != null && ObjectUtils.notEmpty(accountManagement.getSaleTaxSet())) {
+        taxSet = accountManagement.getSaleTaxSet();
+        line.setTaxLineSet(taxService.getTaxLineSet(taxSet, order.getCreationDate()));
       }
     }
 
-    TaxEquiv taxEquiv = fiscalPositionService.getTaxEquiv(order.getFiscalPosition(), tax);
+    TaxEquiv taxEquiv = fiscalPositionService.getTaxEquiv(order.getFiscalPosition(), taxSet);
     line.setTaxEquiv(taxEquiv);
   }
 
@@ -304,8 +308,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     saleOrderLineService.fillComplementaryProductList(line);
 
     BigDecimal taxRate = BigDecimal.ZERO;
-    if (line.getTaxLine() != null) {
-      taxRate = line.getTaxLine().getValue().divide(new BigDecimal(100));
+    if (ObjectUtils.notEmpty(line.getTaxLineSet())) {
+      taxRate = taxService.getTotalTaxRate(line.getTaxLineSet());
     }
 
     BigDecimal exTaxTotal;
