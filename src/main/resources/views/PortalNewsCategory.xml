@@ -20,6 +20,7 @@
         <field name="color" widget="SingleSelect"/>
         <field name="slug" pattern="^[a-z0-9-]*$"/>
         <field name="parentCategory"/>
+        <field name="workspace"/>
       </panel>
       <field name="description" colSpan="12"/>
     </panel>
