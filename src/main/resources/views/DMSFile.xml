@@ -9,6 +9,10 @@
       <insert position="after">
         <panel name="portalPanel" sidebar="true">
           <field name="author"/>
+          <field name="isSharedFolder"/>
+          <field name="workspaceSet" widget="TagSelect"/>
+          <field name="partnerCategorySet" widget="TagSelect"/>
+          <field name="description"/>
         </panel>
       </insert>
     </extend>
