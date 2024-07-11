@@ -9,8 +9,8 @@
 
     <many-to-many ref="com.axelor.apps.base.db.ProductVariantAttr"
       name="productVariantAttrSet" title="Portal variants"/>
-    <one-to-many ref="com.axelor.apps.base.db.Product" name="productList"
-      title="Products" mappedBy="productCategory"/>
+    <many-to-many ref="com.axelor.apps.base.db.Product" name="productList"
+      title="Products" mappedBy="portalCategorySet"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="portalImage"
       title="Portal image"/>
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
