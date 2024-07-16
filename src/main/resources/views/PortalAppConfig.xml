@@ -50,14 +50,7 @@
           <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
         </panel>
         <panel name="carouselPanel" title="Carousel" colSpan="12">
-          <panel name="imagePanel" colSpan="2">
-            <field name="image" widget="image"/>
-          </panel>
-          <panel name="fieldsPanel" colSpan="10" itemSpan="12">
-            <field name="title"/>
-            <field name="subTitle"/>
-            <field name="href" widget="url" pattern="^(?:http(?:s)?://)?\S+(?:\.\S+)+$"/>
-          </panel>
+          <panel-related field="carouselList" form-view="carousel-form" colSpan="12"/>
         </panel>
       </panel>
       <panel name="invociePanel" title="Invoice">
