@@ -37,10 +37,7 @@
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
       name="paymentOptionSet" title="Payment options"/>
 
-    <many-to-one ref="com.axelor.meta.db.MetaFile" name="image"/>
-    <string name="title" title="Title"/>
-    <string name="subTitle" title="Sub title"/>
-    <string name="href"/>
+    <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"/>
 
   </entity>
 
