@@ -56,7 +56,7 @@
           <panel name="fieldsPanel" colSpan="10" itemSpan="12">
             <field name="title"/>
             <field name="subTitle"/>
-            <field name="href" widget="url"/>
+            <field name="href" widget="url" pattern="^(?:http(?:s)?://)?\S+(?:\.\S+)+$"/>
           </panel>
         </panel>
       </panel>
