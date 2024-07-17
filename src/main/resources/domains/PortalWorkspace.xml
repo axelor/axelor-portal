@@ -11,12 +11,12 @@
     <many-to-one name="defaultPortalAppConfig"
       ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
-    <many-to-one name="defaultPWAfterRegistration"
-      title="Default partner workspace after registration"
+    <many-to-one name="defaultPartnerWorkspace" title="Default partner workspace"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <string name="allowRegistrationSelect" title="Allow registration ?"
       selection="allow.registration.select"/>
-
+    <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
+      name="defaultGuestWorkspace" title="Default guest workspace"/>
   </entity>
 
 </domain-models>

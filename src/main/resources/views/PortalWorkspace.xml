@@ -16,8 +16,9 @@
       <field name="url" widget="url" colSpan="12"/>
       <field name="defaultPortalAppConfig"/>
       <field name="defaultTheme"/>
-      <field name="defaultPWAfterRegistration"/>
+      <field name="defaultPartnerWorkspace"/>
       <field name="allowRegistrationSelect"/>
+      <field name="defaultGuestWorkspace"/>
     </panel>
   </form>
 
