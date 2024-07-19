@@ -10,7 +10,8 @@
     <string name="name"/>
     <string name="color" selection="color.name.selection"/>
     <string name="description" large="true"/>
-
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
+      title="Workspace"/>
   </entity>
 
 </domain-models>
