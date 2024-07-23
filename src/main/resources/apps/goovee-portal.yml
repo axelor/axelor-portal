@@ -1,0 +1,15 @@
+---
+name: Goovee portal
+code: goovee-portal
+typeSelect: addons
+installOrder: 2370
+description: |
+   Portal configuration
+image: goovee-portal.png
+modules: 
+   axelor-portal
+dependsOn:
+  - production
+  - project
+  - helpdesk
+sequence: 57
