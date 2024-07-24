@@ -8,6 +8,7 @@
   <entity name="PortalWorkspace">
 
     <string name="url" title="URL" namecolumn="true"/>
+    <string name="name" title="Name"/>
     <many-to-one name="defaultPortalAppConfig"
       ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
@@ -17,6 +18,14 @@
       selection="allow.registration.select"/>
     <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
       name="defaultGuestWorkspace" title="Default guest workspace"/>
+    <string name="navigationSelect" title="Navigation" selection="navigation.select"/>
+
+    <extra-code>
+      	<![CDATA[
+      		public static final String NAVIGATION_LEFT_SIDE = "leftSide";
+      		public static final String NAVIGATION_TOP_SIDE = "topSide";
+      	]]>
+    </extra-code>
   </entity>
 
 </domain-models>
