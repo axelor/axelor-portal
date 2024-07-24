@@ -12,6 +12,8 @@
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"
       ref="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
+      name="defaultWorkspace" title="Default workspace"/>
 
   </entity>
 

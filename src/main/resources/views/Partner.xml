@@ -10,6 +10,7 @@
         <panel name="portalPanel" colSpan="12">
           <field name="portalPassword" widget="password"/>
           <field name="partnerWorkspaceSet" widget="TagSelect" colSpan="12"/>
+          <field name="defaultWorkspace" domain="self IN (:partnerWorkspaceSet)"/>
         </panel>
       </insert>
     </extend>

@@ -48,4 +48,9 @@
     <option value="no">No</option>
   </selection>
 
+  <selection name="navigation.select">
+    <option value="leftSide">Left side</option>
+    <option value="topSide">Top side</option>
+  </selection>
+
 </object-views>
