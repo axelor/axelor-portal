@@ -44,12 +44,18 @@ import com.google.inject.Inject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 
 public class ProductPortalServiceImpl implements ProductPortalService {
+
+  protected static final String IN_ATI = "IN_ATI";
+  protected static final String WT = "WT";
+  protected static final String BOTH = "BOTH";
 
   protected ProductRepository productRepo;
   protected PartnerRepository partnerRepo;
@@ -88,18 +94,9 @@ public class ProductPortalServiceImpl implements ProductPortalService {
   }
 
   @Override
-  public Map<String, Object> getProductPrices(
-      Long productId, Long companyId, Long partnerId, BigDecimal qty) throws AxelorException {
-
-    Product product = null;
-    if (productId != null) {
-      product = productRepo.find(productId);
-    }
-    if (product == null) {
-      throw new AxelorException(
-          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
-          I18n.get(PortalExceptionMessage.PRODUCT_MISSING));
-    }
+  public List<Map<String, Object>> getProductPrices(
+      List<Long> productIds, Long companyId, Long partnerId, String taxSelect)
+      throws AxelorException {
 
     Company company = null;
     if (companyId != null) {
@@ -122,9 +119,33 @@ public class ProductPortalServiceImpl implements ProductPortalService {
     }
 
     LocalDate todayDate = appBaseService.getTodayDate(company);
+
+    List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
+    for (Long productId : productIds) {
+      Map<String, Object> data = new HashMap<>();
+
+      Product product = productRepo.find(productId);
+      if (product == null) {
+        data.put("productId", productId);
+        data.put("error", I18n.get(PortalExceptionMessage.PRODUCT_MISSING));
+        continue;
+      }
+
+      data = getPrices(product, company, partner, todayDate, taxSelect);
+      datas.add(data);
+    }
+
+    return datas;
+  }
+
+  protected Map<String, Object> getPrices(
+      Product product, Company company, Partner partner, LocalDate todayDate, String taxSelect)
+      throws AxelorException {
+
+    Map<String, Object> data = new HashMap<>();
     Boolean productInAti = (Boolean) productCompanyService.get(product, "inAti", company);
     BigDecimal productSalePrice =
-        ((BigDecimal) productCompanyService.get(product, "salePrice", company)).multiply(qty);
+        ((BigDecimal) productCompanyService.get(product, "salePrice", company));
     Set<TaxLine> taxLineSet =
         accountManagementService.getTaxLineSet(
             todayDate, product, company, partner.getFiscalPosition(), false);
@@ -141,18 +162,39 @@ public class ProductPortalServiceImpl implements ProductPortalService {
         taxService.convertUnitPrice(
             productInAti, taxLineSet, basePrice, appBaseService.getNbDecimalDigitForUnitPrice());
 
-    Map<String, Object> data = new HashMap<>();
+    data.put("productId", product.getId());
     if (productInAti) {
-      data.put("price", computedPrice);
-      data.put("inTaxPrice", basePrice);
-      data.put("priceDiscounted", computedPrice);
-      data.put("priceDiscountedATI", basePrice);
+      if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
+        data.put("inTaxPrice", basePrice);
+        data.put("priceDiscountedATI", basePrice);
+      }
+      if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
+        data.put("price", computedPrice);
+        data.put("priceDiscounted", computedPrice);
+      }
     } else {
-      data.put("price", basePrice);
-      data.put("inTaxPrice", computedPrice);
-      data.put("priceDiscounted", basePrice);
-      data.put("priceDiscountedATI", computedPrice);
+      if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
+        data.put("inTaxPrice", computedPrice);
+        data.put("priceDiscountedATI", computedPrice);
+      }
+      if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
+        data.put("price", basePrice);
+        data.put("priceDiscounted", basePrice);
+      }
     }
+
+    getDiscountedPrices(data, basePrice, computedPrice, product, partner, taxSelect);
+
+    return data;
+  }
+
+  protected Map<String, Object> getDiscountedPrices(
+      Map<String, Object> data,
+      BigDecimal basePrice,
+      BigDecimal computedPrice,
+      Product product,
+      Partner partner,
+      String taxSelect) {
 
     PriceList priceList = null;
     PartnerPriceList partnerPriceList = partner.getSalePartnerPriceList();
@@ -167,7 +209,7 @@ public class ProductPortalServiceImpl implements ProductPortalService {
 
     if (priceList != null) {
       PriceListLine priceListLine =
-          priceListService.getPriceListLine(product, qty, priceList, basePrice);
+          priceListService.getPriceListLine(product, BigDecimal.ONE, priceList, basePrice);
       if (priceListLine != null) {
         BigDecimal discountAmount =
             priceListService
@@ -181,8 +223,12 @@ public class ProductPortalServiceImpl implements ProductPortalService {
         BigDecimal priceDiscountedATI =
             priceListService.computeDiscount(
                 basePrice, priceListService.getDiscountTypeSelect(priceListLine), discountAmount);
-        data.put("priceDiscounted", priceDiscounted);
-        data.put("priceDiscountedATI", priceDiscountedATI);
+        if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
+          data.put("priceDiscountedATI", priceDiscountedATI);
+        }
+        if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
+          data.put("priceDiscounted", priceDiscounted);
+        }
       }
     }
 

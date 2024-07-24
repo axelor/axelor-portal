@@ -19,11 +19,12 @@
 package com.axelor.apps.portal.service;
 
 import com.axelor.apps.base.AxelorException;
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 public interface ProductPortalService {
 
-  public Map<String, Object> getProductPrices(
-      Long productId, Long companyId, Long partnerId, BigDecimal qty) throws AxelorException;
+  public List<Map<String, Object>> getProductPrices(
+      List<Long> productId, Long companyId, Long partnerId, String taxSelect)
+      throws AxelorException;
 }

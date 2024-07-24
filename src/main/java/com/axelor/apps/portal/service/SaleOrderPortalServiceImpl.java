@@ -45,6 +45,7 @@ import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderLineService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
+import com.axelor.apps.sale.service.saleorder.SaleOrderWorkflowService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
@@ -359,5 +360,21 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     saleOrderMarginService.getSaleOrderLineComputedMarginInfo(order, line);
 
     return line;
+  }
+
+  @Override
+  @Transactional
+  public SaleOrder createOrder(Map<String, Object> values) throws AxelorException {
+
+    SaleOrder order = createSaleOrder(values);
+    createOrderLines(values, order);
+    saleOrderComputeService.computeSaleOrder(order);
+    saleOrderRepo.save(order);
+
+    SaleOrderWorkflowService soWorkflowService = Beans.get(SaleOrderWorkflowService.class);
+    soWorkflowService.finalizeQuotation(order);
+    soWorkflowService.confirmSaleOrder(order);
+
+    return order;
   }
 }

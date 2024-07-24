@@ -25,4 +25,6 @@ import java.util.Map;
 public interface SaleOrderPortalService {
 
   public SaleOrder createQuotation(Map<String, Object> values) throws AxelorException;
+
+  public SaleOrder createOrder(Map<String, Object> values) throws AxelorException;
 }
