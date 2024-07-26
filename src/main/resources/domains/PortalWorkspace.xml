@@ -7,7 +7,7 @@
 
   <entity name="PortalWorkspace">
 
-    <string name="url" title="URL" namecolumn="true"/>
+    <string name="url" title="URL"/>
     <string name="name" title="Name"/>
     <many-to-one name="defaultPortalAppConfig"
       ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
