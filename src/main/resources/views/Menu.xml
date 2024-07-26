@@ -89,8 +89,20 @@
     <view type="form" name="portal-portal-participant-form"/>
   </action-view>
 
+  <menuitem title="Forum app" name="menu-portal-forum-root" parent="menu-portal-root"
+    order="135"/>
+
+  <menuitem title="Group" name="menu-portal-forum-group" parent="menu-portal-forum-root"
+    action="action.portal.forum.group"/>
+
+  <action-view name="action.portal.forum.group" title="Group"
+    model="com.axelor.apps.portal.db.ForumGroup">
+    <view type="grid" name="forum-group-grid"/>
+    <view type="form" name="forum-group-form"/>
+  </action-view>
+
   <menuitem title="Configuration" name="menu-portal-configuration-root"
-    parent="menu-portal-root" order="135"/>
+    parent="menu-portal-root" order="140"/>
 
   <menuitem title="Portal app" name="menu-portal-portal-app"
     parent="menu-portal-configuration-root" action="action.portal.portal.app" order="1000"/>
