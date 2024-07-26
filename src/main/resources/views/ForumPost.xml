@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.ForumPost" title="Forum posts" name="forum-post-grid">
+    <field name="title"/>
+    <field name="postDateT"/>
+    <field name="forumGroup"/>
+    <field name="author"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.ForumPost" title="Forum post" name="forum-post-form">
+    <panel name="mainPanel">
+      <field name="title"/>
+      <field name="postDateT"/>
+      <field name="forumGroup"/>
+      <field name="author"/>
+    </panel>
+    <panel name="contentPanel">
+      <field name="content" widget="html"/>
+    </panel>
+    <panel name="postAttachmentPanel">
+      <field name="attachmentList" colSpan="12">
+        <editor x-viewer="true">
+          <field name="metaFile" showTitle="false" widget="binary-link"
+            form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4"/>
+          <field name="title" showTitle="false" colSpan="8"/>
+        </editor>
+      </field>
+    </panel>
+    <panel name="commentPanel">
+      <panel-related field="commentList" grid-view="portal-portal-comment-grid"
+        form-view="portal-portal-comment-form" colSpan="12"/>
+    </panel>
+  </form>
+
+</object-views>

@@ -19,6 +19,9 @@
       title="News"/>
     <many-to-one name="portalEvent" ref="com.axelor.apps.portal.db.PortalEvent"
       title="Event"/>
+    <many-to-one ref="com.axelor.apps.portal.db.ForumPost" name="forumPost"/>
+    <one-to-many ref="com.axelor.apps.portal.db.CommentAttachment" name="attachmentList"
+      mappedBy="portalComment"/>
 
   </entity>
 

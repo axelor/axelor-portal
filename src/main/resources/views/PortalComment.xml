@@ -20,9 +20,19 @@
         <field name="author"/>
         <field name="parentNews"/>
         <field name="portalEvent"/>
+        <field name="forumPost"/>
       </panel>
       <field name="contentComment" required="true" colSpan="12"/>
       <field name="childCommentList" colSpan="12"/>
+      <panel name="postAttachmentPanel">
+        <field name="attachmentList" colSpan="12">
+          <editor x-viewer="true">
+            <field name="metaFile" showTitle="false" widget="binary-link"
+              form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4"/>
+            <field name="title" showTitle="false" colSpan="8"/>
+          </editor>
+        </field>
+      </panel>
     </panel>
   </form>
 
