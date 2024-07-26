@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.ForumGroupMember" title="Forum group members"
+    name="forum-group-member-grid">
+    <field name="forumGroup"/>
+    <field name="member"/>
+    <field name="isPin"/>
+    <field name="notificationSelect"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.ForumGroupMember" title="Forum group member"
+    name="forum-group-member-form">
+    <panel name="mainPanel" colSpan="12">
+      <field name="forumGroup"/>
+      <field name="member"/>
+      <field name="isPin"/>
+      <field name="notificationSelect"/>
+    </panel>
+  </form>
+
+</object-views>

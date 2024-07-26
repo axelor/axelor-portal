@@ -101,6 +101,15 @@
     <view type="form" name="forum-group-form"/>
   </action-view>
 
+  <menuitem title="Group member" name="menu-portal-forum-group-member"
+    parent="menu-portal-forum-root" action="action.portal.forum.group.member"/>
+
+  <action-view name="action.portal.forum.group.member" title="Group member"
+    model="com.axelor.apps.portal.db.ForumGroupMember">
+    <view type="grid" name="forum-group-member-grid"/>
+    <view type="form" name="forum-group-member-form"/>
+  </action-view>
+
   <menuitem title="Configuration" name="menu-portal-configuration-root"
     parent="menu-portal-root" order="140"/>
 

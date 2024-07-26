@@ -53,4 +53,11 @@
     <option value="topSide">Top side</option>
   </selection>
 
+  <selection name="notification.select">
+    <option value="all">All new post and new comments</option>
+    <option value="allOnMyPost">All new post and new comments on my post</option>
+    <option value="newCommentsOnMyPost">Only new comments on my post</option>
+    <option value="none">No notification</option>
+  </selection>
+
 </object-views>
