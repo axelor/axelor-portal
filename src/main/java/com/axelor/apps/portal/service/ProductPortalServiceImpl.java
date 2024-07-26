@@ -39,6 +39,7 @@ import com.axelor.apps.base.service.tax.AccountManagementService;
 import com.axelor.apps.base.service.tax.TaxService;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.apps.sale.service.app.AppSaleService;
+import com.axelor.common.ObjectUtils;
 import com.axelor.i18n.I18n;
 import com.google.inject.Inject;
 import java.math.BigDecimal;
@@ -126,65 +127,35 @@ public class ProductPortalServiceImpl implements ProductPortalService {
 
       Product product = productRepo.find(productId);
       if (product == null) {
-        data.put("productId", productId);
+        data.put("product", getProduct(product));
         data.put("error", I18n.get(PortalExceptionMessage.PRODUCT_MISSING));
         continue;
       }
 
-      data = getPrices(product, company, partner, todayDate, taxSelect);
+      data = getItem(product, company, partner, todayDate, taxSelect);
       datas.add(data);
     }
 
     return datas;
   }
 
-  protected Map<String, Object> getPrices(
+  protected Map<String, Object> getItem(
       Product product, Company company, Partner partner, LocalDate todayDate, String taxSelect)
       throws AxelorException {
 
     Map<String, Object> data = new HashMap<>();
-    Boolean productInAti = (Boolean) productCompanyService.get(product, "inAti", company);
-    BigDecimal productSalePrice =
-        ((BigDecimal) productCompanyService.get(product, "salePrice", company));
     Set<TaxLine> taxLineSet =
         accountManagementService.getTaxLineSet(
             todayDate, product, company, partner.getFiscalPosition(), false);
-
-    BigDecimal basePrice =
-        currencyService
-            .getAmountCurrencyConvertedAtDate(
-                (Currency) productCompanyService.get(product, "saleCurrency", company),
-                partner.getCurrency(),
-                productSalePrice,
-                todayDate)
-            .setScale(appSaleService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
-    BigDecimal computedPrice =
-        taxService.convertUnitPrice(
-            productInAti, taxLineSet, basePrice, appBaseService.getNbDecimalDigitForUnitPrice());
-
-    data.put("productId", product.getId());
-    if (productInAti) {
-      if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
-        data.put("inTaxPrice", basePrice);
-        data.put("priceDiscountedATI", basePrice);
-      }
-      if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
-        data.put("price", computedPrice);
-        data.put("priceDiscounted", computedPrice);
-      }
-    } else {
-      if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
-        data.put("inTaxPrice", computedPrice);
-        data.put("priceDiscountedATI", computedPrice);
-      }
-      if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
-        data.put("price", basePrice);
-        data.put("priceDiscounted", basePrice);
-      }
-    }
-
-    getDiscountedPrices(data, basePrice, computedPrice, product, partner, taxSelect);
-
+    Currency startCurrency = (Currency) productCompanyService.get(product, "saleCurrency", company);
+    Currency endCurrency = getEndCurrency(partner, startCurrency);
+    data.put("product", getProduct(product));
+    data.put("tax", getTax(taxLineSet));
+    data.put("scale", getScale(endCurrency));
+    data.put("currency", getCurrency(endCurrency));
+    data.put(
+        "price",
+        getPrices(product, company, partner, todayDate, taxSelect, startCurrency, taxLineSet));
     return data;
   }
 
@@ -224,14 +195,103 @@ public class ProductPortalServiceImpl implements ProductPortalService {
             priceListService.computeDiscount(
                 basePrice, priceListService.getDiscountTypeSelect(priceListLine), discountAmount);
         if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
-          data.put("priceDiscountedATI", priceDiscountedATI);
+          data.put("discountedATI", priceDiscountedATI);
         }
         if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
-          data.put("priceDiscounted", priceDiscounted);
+          data.put("discountedWT", priceDiscounted);
         }
       }
     }
 
     return data;
+  }
+
+  protected Map<String, Object> getProduct(Product product) {
+    Map<String, Object> productMap = new HashMap<String, Object>();
+    productMap.put("id", product.getId());
+    return productMap;
+  }
+
+  protected Map<String, Object> getTax(Set<TaxLine> taxLineSet) {
+    Map<String, Object> taxMap = new HashMap<String, Object>();
+    if (ObjectUtils.notEmpty(taxLineSet)) {
+      taxMap.put(
+          "value",
+          taxLineSet.stream().map(TaxLine::getValue).reduce(BigDecimal.ZERO, BigDecimal::add));
+    }
+
+    return taxMap;
+  }
+
+  protected Map<String, Object> getScale(Currency currency) {
+    Map<String, Object> taxMap = new HashMap<String, Object>();
+    taxMap.put("unit", appSaleService.getNbDecimalDigitForUnitPrice());
+    taxMap.put("currency", currency.getNumberOfDecimals());
+    return taxMap;
+  }
+
+  protected Map<String, Object> getCurrency(Currency currency) {
+    Map<String, Object> currencyMap = new HashMap<String, Object>();
+    if (currency != null) {
+      currencyMap.put("code", currency.getCode());
+      currencyMap.put("symbol", currency.getSymbol());
+    }
+    return currencyMap;
+  }
+
+  protected Currency getEndCurrency(Partner partner, Currency startCurrency) {
+    if (partner != null && partner.getCurrency() != null) {
+      return partner.getCurrency();
+    }
+    return startCurrency;
+  }
+
+  protected Map<String, Object> getPrices(
+      Product product,
+      Company company,
+      Partner partner,
+      LocalDate todayDate,
+      String taxSelect,
+      Currency startCurrency,
+      Set<TaxLine> taxLineSet)
+      throws AxelorException {
+    Map<String, Object> priceMap = new HashMap<String, Object>();
+
+    Boolean productInAti = (Boolean) productCompanyService.get(product, "inAti", company);
+    BigDecimal productSalePrice =
+        ((BigDecimal) productCompanyService.get(product, "salePrice", company));
+
+    BigDecimal basePrice =
+        currencyService
+            .getAmountCurrencyConvertedAtDate(
+                startCurrency, partner.getCurrency(), productSalePrice, todayDate)
+            .setScale(appSaleService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+    BigDecimal computedPrice =
+        taxService.convertUnitPrice(
+            productInAti, taxLineSet, basePrice, appBaseService.getNbDecimalDigitForUnitPrice());
+
+    if (productInAti) {
+      if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
+        priceMap.put("ati", basePrice);
+        priceMap.put("discountedATI", basePrice);
+      }
+      if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
+        priceMap.put("wt", computedPrice);
+        priceMap.put("discountedWT", computedPrice);
+      }
+    } else {
+      if (taxSelect.equalsIgnoreCase(IN_ATI) || taxSelect.equalsIgnoreCase(BOTH)) {
+        priceMap.put("ati", computedPrice);
+        priceMap.put("discountedATI", computedPrice);
+      }
+      if (taxSelect.equalsIgnoreCase(WT) || taxSelect.equalsIgnoreCase(BOTH)) {
+        priceMap.put("wt", basePrice);
+        priceMap.put("discountedWT", basePrice);
+      }
+    }
+
+    getDiscountedPrices(priceMap, basePrice, computedPrice, product, partner, taxSelect);
+
+    return priceMap;
   }
 }
