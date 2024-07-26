@@ -17,7 +17,7 @@
     model="com.axelor.apps.portal.db.PortalAppConfig" width="large">
     <panel name="mainPanel">
       <field name="name" required="true"/>
-      <field name="company"/>
+      <field name="company" required="true"/>
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
