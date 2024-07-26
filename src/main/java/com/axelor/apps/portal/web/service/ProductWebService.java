@@ -32,7 +32,7 @@ import com.axelor.inject.Beans;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -41,7 +41,7 @@ import javax.ws.rs.core.MediaType;
 public class ProductWebService {
 
   @SuppressWarnings("unchecked")
-  @GET
+  @POST
   @Path("/productPrices")
   @Produces(MediaType.APPLICATION_JSON)
   public PortalRestResponse fetchProductPrices(Map<String, Object> values) throws AxelorException {
