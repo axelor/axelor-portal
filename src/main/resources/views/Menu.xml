@@ -110,6 +110,25 @@
     <view type="form" name="forum-group-member-form"/>
   </action-view>
 
+  <menuitem title="Post" name="menu-portal-forum-post" parent="menu-portal-forum-root"
+    action="action.portal.forum.post"/>
+
+  <action-view name="action.portal.forum.post" title="Post"
+    model="com.axelor.apps.portal.db.ForumPost">
+    <view type="grid" name="forum-post-grid"/>
+    <view type="form" name="forum-post-form"/>
+  </action-view>
+
+  <menuitem title="Comments" name="menu-portal-forum-comment"
+    parent="menu-portal-forum-root" action="action.portal.forum.comment"/>
+
+  <action-view name="action.portal.forum.comment" title="Comments"
+    model="com.axelor.apps.portal.db.PortalComment">
+    <view type="grid" name="portal-portal-comment-grid"/>
+    <view type="form" name="portal-portal-comment-form"/>
+    <domain>self.forumPost IS NOT NULL</domain>
+  </action-view>
+
   <menuitem title="Configuration" name="menu-portal-configuration-root"
     parent="menu-portal-root" order="140"/>
 
