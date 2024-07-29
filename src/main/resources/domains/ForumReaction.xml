@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="ForumReaction">
+    <string name="reactionSelect" title="Reaction" selection="reaction.image.select"/>
+    <many-to-one ref="com.axelor.apps.portal.db.ForumPost" name="post"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalComment" name="portalComment"/>
+
+    <extra-code>
+  		<![CDATA[
+  			public static final String REACTION_LIKE = "like";
+  			public static final String REACTION_DISLIKE = "dislike";
+  			public static final String REACTION_LOVE = "love";
+  			public static final String REACTION_SAD = "sad";
+  			public static final String REACTION_ANGRY = "angry";
+  			public static final String REACTION_FUNNY = "funny";
+  		]]>
+    </extra-code>
+  </entity>
+
+</domain-models>

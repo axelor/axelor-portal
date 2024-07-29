@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.ForumReaction" title="Forum reactions"
+    name="forum-reaction-grid">
+    <field name="reactionSelect"/>
+    <field name="post"/>
+    <field name="portalComment"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.ForumReaction" title="Forum reaction"
+    name="forum-reaction-form" width="large">
+    <panel name="mainPanel">
+      <field name="reactionSelect" widget="ImageSelect"/>
+      <field name="post"/>
+      <field name="portalComment"/>
+    </panel>
+  </form>
+
+</object-views>
