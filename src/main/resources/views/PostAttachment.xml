@@ -10,7 +10,7 @@
   </grid>
 
   <form model="com.axelor.apps.portal.db.PostAttachment" title="Post attachment"
-    name="post-attachment-form">
+    name="post-attachment-form" width="large">
     <panel name="mainPanel" itemSpan="12">
       <field name="title"/>
       <field name="forumPost"/>

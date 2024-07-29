@@ -10,7 +10,8 @@
     <field name="author"/>
   </grid>
 
-  <form model="com.axelor.apps.portal.db.ForumPost" title="Forum post" name="forum-post-form">
+  <form model="com.axelor.apps.portal.db.ForumPost" title="Forum post" name="forum-post-form"
+    width="large">
     <panel name="mainPanel">
       <field name="title"/>
       <field name="postDateT"/>

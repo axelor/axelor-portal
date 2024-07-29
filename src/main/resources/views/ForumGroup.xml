@@ -10,7 +10,7 @@
   </grid>
 
   <form model="com.axelor.apps.portal.db.ForumGroup" title="Forum group"
-    name="forum-group-form">
+    name="forum-group-form" width="large">
     <panel name="mainPanel" colSpan="12">
       <panel name="imagePanel" colSpan="2">
         <field name="image" widget="image"/>

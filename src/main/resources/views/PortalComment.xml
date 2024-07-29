@@ -18,9 +18,11 @@
       <panel name="infoPanel" colSpan="10">
         <field name="publicationDateTime"/>
         <field name="author"/>
-        <field name="parentNews"/>
-        <field name="portalEvent"/>
-        <field name="forumPost"/>
+        <field name="parentNews" showIf="parentNews"/>
+        <spacer name="newSpacer" showIf="parentNews"/>
+        <field name="portalEvent" showIf="portalEvent"/>
+        <spacer name="eventSpecer" showIf="portalEvent"/>
+        <field name="forumPost" showIf="forumPost"/>
       </panel>
       <field name="contentComment" required="true" colSpan="12"/>
       <field name="childCommentList" colSpan="12"/>
