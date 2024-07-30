@@ -44,8 +44,8 @@
   <menuitem title="News app" name="menu-portal-portal-news-root" parent="menu-portal-root"
     order="115"/>
 
-  <menuitem title="News" name="menu-portal-portal-news"
-    parent="menu-portal-portal-news-root" action="action.portal.portal.news" order="1151"/>
+  <menuitem title="News" name="menu-portal-portal-news" order="5"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news"/>
 
   <action-view name="action.portal.portal.news" title="News"
     model="com.axelor.apps.portal.db.PortalNews">
@@ -53,8 +53,18 @@
     <view type="form" name="portal-portal-news-form"/>
   </action-view>
 
-  <menuitem title="News category" name="menu-portal-portal-news-catgory"
-    parent="menu-portal-portal-news-root" action="action.portal.portal.news.category" order="1155"/>
+  <menuitem title="Comments" name="menu-portal-portal-news-comment" order="10"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news.comment"/>
+
+  <action-view name="action.portal.portal.news.comment" title="Comments"
+    model="com.axelor.apps.portal.db.PortalComment">
+    <view type="grid" name="portal-portal-comment-grid"/>
+    <view type="form" name="portal-portal-comment-form"/>
+    <domain>self.parentNews IS NOT NULL</domain>
+  </action-view>
+
+  <menuitem title="News category" name="menu-portal-portal-news-catgory" order="15"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news.category"/>
 
   <action-view name="action.portal.portal.news.category" title="News category"
     model="com.axelor.apps.portal.db.PortalNewsCategory">
@@ -62,17 +72,11 @@
     <view type="form" name="portal-portal-news-category-form"/>
   </action-view>
 
-  <menuitem title="Registration" name="menu-portal-registration" parent="menu-portal-root"
-    action="action.portal.registration" order="120"/>
+  <menuitem title="Event app" name="menu-portal-portal-event-root"
+    parent="menu-portal-root" order="120"/>
 
-  <action-view name="action.portal.registration" title="Registration"
-    model="com.axelor.apps.portal.db.Registration">
-    <view type="grid" name="portal-registration-grid"/>
-    <view type="form" name="portal-registration-form"/>
-  </action-view>
-
-  <menuitem title="Events" name="menu-portal-portal-event" parent="menu-portal-root"
-    action="action.portal.portal.event" order="125"/>
+  <menuitem title="Events" name="menu-portal-portal-event" order="5"
+    parent="menu-portal-portal-event-root" action="action.portal.portal.event"/>
 
   <action-view name="action.portal.portal.event" title="Event"
     model="com.axelor.apps.portal.db.PortalEvent">
@@ -80,13 +84,44 @@
     <view type="form" name="portal-portal-event-form"/>
   </action-view>
 
-  <menuitem title="Participant" name="menu-portal-portal-participant"
-    parent="menu-portal-root" action="action.portal.portal.participant" order="130"/>
+  <menuitem title="Registration" name="menu-portal-registration" order="10"
+    parent="menu-portal-portal-event-root" action="action.portal.registration"/>
+
+  <action-view name="action.portal.registration" title="Registration"
+    model="com.axelor.apps.portal.db.Registration">
+    <view type="grid" name="portal-registration-grid"/>
+    <view type="form" name="portal-registration-form"/>
+  </action-view>
+
+  <menuitem title="Participant" name="menu-portal-portal-participant" order="15"
+    parent="menu-portal-portal-event-root" action="action.portal.portal.participant"/>
 
   <action-view name="action.portal.portal.participant" title="Participant"
     model="com.axelor.apps.portal.db.PortalParticipant">
     <view type="grid" name="portal-portal-participant-grid"/>
     <view type="form" name="portal-portal-participant-form"/>
+  </action-view>
+
+  <menuitem title="Configuration" name="menu-portal-portal-event-configuration"
+    parent="menu-portal-portal-event-root" order="20"/>
+
+  <menuitem title="Comments" name="menu-portal-portal-event-comment"
+    parent="menu-portal-portal-event-configuration" action="action.portal.portal.event.comment"/>
+
+  <action-view name="action.portal.portal.event.comment" title="Comments"
+    model="com.axelor.apps.portal.db.PortalComment">
+    <view type="grid" name="portal-portal-comment-grid"/>
+    <view type="form" name="portal-portal-comment-form"/>
+    <domain>self.portalEvent IS NOT NULL</domain>
+  </action-view>
+
+  <menuitem title="Event category" name="menu-portal-portal-event-catgory"
+    parent="menu-portal-portal-event-configuration" action="action.portal.portal.event.category"/>
+
+  <action-view name="action.portal.portal.event.category" title="Event category"
+    model="com.axelor.apps.portal.db.PortalEventCategory">
+    <view type="grid" name="portal-portal-event-category-grid"/>
+    <view type="form" name="portal-portal-event-category-form"/>
   </action-view>
 
   <menuitem title="Forum app" name="menu-portal-forum-root" parent="menu-portal-root"
@@ -167,16 +202,6 @@
     model="com.axelor.apps.portal.db.PortalPaymentConfig">
     <view type="grid" name="portal-payment-config-grid"/>
     <view type="form" name="portal-payment-config-form"/>
-  </action-view>
-
-  <menuitem title="Event category" name="menu-portal-portal-event-catgory"
-    parent="menu-portal-configuration-root" action="action.portal.portal.event.category"
-    order="1025"/>
-
-  <action-view name="action.portal.portal.event.category" title="Event category"
-    model="com.axelor.apps.portal.db.PortalEventCategory">
-    <view type="grid" name="portal-portal-event-category-grid"/>
-    <view type="form" name="portal-portal-event-category-form"/>
   </action-view>
 
   <menuitem title="Comment" name="menu-portal-portal-comment"
