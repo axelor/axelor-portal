@@ -60,4 +60,13 @@
     <option value="none">No notification</option>
   </selection>
 
+  <selection name="reaction.image.select">
+    <option value="like" icon="img/forumReaction/Like-icon.png">Like</option>
+    <option value="dislike" icon="img/forumReaction/Dislike-icon.png">Dislike</option>
+    <option value="love" icon="img/forumReaction/Love-icon.png">Love</option>
+    <option value="sad" icon="img/forumReaction/Sad-icon.png">Sad</option>
+    <option value="angry" icon="img/forumReaction/Angry-icon.png">Angry</option>
+    <option value="funny" icon="img/forumReaction/Funny-icon.png">Funny</option>
+  </selection>
+
 </object-views>
