@@ -10,6 +10,7 @@
     <string name="title" title="Title"/>
     <string name="subTitle" title="Sub title"/>
     <string name="href"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalAppConfig" name="portalAppConfig"/>
   </entity>
 
 </domain-models>
