@@ -35,9 +35,10 @@
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
-      name="paymentOptionSet" title="Payment options"/>
+      name="paymentOptionSet" title="Payment options" mappedBy="portalAppConfigSet"/>
 
-    <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"/>
+    <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
+      mappedBy="portalAppConfig"/>
 
   </entity>
 
