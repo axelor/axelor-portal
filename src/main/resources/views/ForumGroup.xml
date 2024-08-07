@@ -19,6 +19,7 @@
         <field name="name"/>
         <field name="workspace"/>
       </panel>
+      <field name="description" colSpan="12"/>
     </panel>
   </form>
 

@@ -7,6 +7,7 @@
 
   <entity name="ForumGroup">
     <string name="name" title="Name"/>
+    <string name="description" large="true"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="image"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
       title="Workspace"/>
