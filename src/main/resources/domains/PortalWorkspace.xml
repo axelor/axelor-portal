@@ -9,8 +9,6 @@
 
     <string name="url" title="URL"/>
     <string name="name" title="Name"/>
-    <many-to-one name="defaultPortalAppConfig"
-      ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
     <many-to-one name="defaultPartnerWorkspace" title="Default partner workspace"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>

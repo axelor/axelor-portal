@@ -25,8 +25,8 @@
         <field name="displayOutOfStock"/>
         <panel name="priceConfigPanel" title="Price Config" colSpan="12">
           <field name="displayPrices"/>
+          <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
           <field name="mainPriceSelect"/>
-          <field name="priceAfterLoginSelect"/>
           <field name="displayTwoPricesSelect"/>
         </panel>
         <panel name="sortingPanel" title="Sorting preference" colSpan="12">
@@ -55,6 +55,9 @@
       </panel>
       <panel name="invociePanel" title="Invoice">
         <field name="allowOnlinePaymentForInvoices"/>
+      </panel>
+      <panel name="eventPanel" title="Event">
+        <field name="allowGuestEventRegistartion"/>
       </panel>
     </panel-tabs>
   </form>

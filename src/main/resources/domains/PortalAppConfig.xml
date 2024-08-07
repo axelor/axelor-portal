@@ -32,6 +32,7 @@
     <boolean name="allowOnlinePaymentForInvoices" title="Allow online payment for invoices"/>
     <boolean name="allowOnlinePaymentForEcommerce"
       title="Allow online payment for ecommerce"/>
+    <boolean name="allowGuestEventRegistartion" title="Allow guests to register to events"/>
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"

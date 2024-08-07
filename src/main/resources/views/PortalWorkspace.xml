@@ -7,7 +7,6 @@
     model="com.axelor.apps.portal.db.PortalWorkspace">
     <field name="name"/>
     <field name="url"/>
-    <field name="defaultPortalAppConfig"/>
     <field name="defaultTheme"/>
   </grid>
 
@@ -17,7 +16,6 @@
       <field name="name"/>
       <field name="navigationSelect"/>
       <field name="url" widget="url" colSpan="12"/>
-      <field name="defaultPortalAppConfig"/>
       <field name="defaultTheme"/>
       <field name="defaultPartnerWorkspace"/>
       <field name="allowRegistrationSelect"/>
