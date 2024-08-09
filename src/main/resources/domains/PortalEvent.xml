@@ -20,8 +20,8 @@
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
     <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
-    <one-to-many ref="com.axelor.apps.portal.db.PortalComment" name="eventCommentList"
-      mappedBy="portalEvent" title="Event comments"/>
+    <one-to-many ref="com.axelor.apps.base.db.Comment" name="eventCommentList"
+      title="Event comments" mappedBy="portalEvent"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
       name="eventCategorySet" title="Event categories"/>
 

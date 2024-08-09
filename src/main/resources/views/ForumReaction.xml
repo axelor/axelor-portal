@@ -7,7 +7,7 @@
     name="forum-reaction-grid">
     <field name="reactionSelect"/>
     <field name="post"/>
-    <field name="portalComment"/>
+    <field name="reactionComment"/>
   </grid>
 
   <form model="com.axelor.apps.portal.db.ForumReaction" title="Forum reaction"
@@ -15,7 +15,7 @@
     <panel name="mainPanel">
       <field name="reactionSelect" widget="ImageSelect"/>
       <field name="post"/>
-      <field name="portalComment"/>
+      <field name="reactionComment"/>
     </panel>
   </form>
 

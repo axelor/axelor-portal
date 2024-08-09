@@ -8,7 +8,7 @@
   <entity name="ForumReaction">
     <string name="reactionSelect" title="Reaction" selection="reaction.image.select"/>
     <many-to-one ref="com.axelor.apps.portal.db.ForumPost" name="post"/>
-    <many-to-one ref="com.axelor.apps.portal.db.PortalComment" name="portalComment"/>
+    <many-to-one ref="com.axelor.apps.base.db.Comment" name="reactionComment"/>
 
     <extra-code>
   		<![CDATA[

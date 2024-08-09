@@ -23,7 +23,7 @@
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
         <field name="displayOutOfStock"/>
-        <panel name="priceConfigPanel" title="Price Config" colSpan="12">
+        <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
           <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
           <field name="mainPriceSelect"/>
