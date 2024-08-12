@@ -20,17 +20,19 @@
       <panel name="infoPanel" colSpan="10">
         <field name="eventTitle" required="true" colSpan="12"/>
         <field name="eventStartDateTime"/>
-        <field name="eventEndDateTime"
-          validIf="eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
+        <field name="eventEndDateTime" showIf="!eventAllDay"
+          validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
         <field name="eventPlace"/>
         <field name="eventLink" widget="url"/>
       </panel>
       <field name="eventAllDay" colSpan="3"/>
-      <field name="eventAllowRegistration" colSpan="3"/>
-      <field name="eventAllowMultipleRegistrations" colSpan="3"/>
       <field name="eventVisibility" colSpan="3"/>
-      <field name="eventProduct"/>
-      <field name="eventDegressiveNumberPartcipant" min="0"/>
+      <field name="eventAllowRegistration" colSpan="3"/>
+      <field name="eventAllowMultipleRegistrations" colSpan="3"
+        showIf="eventAllowRegistration"/>
+      <field name="eventProduct" showIf="eventAllowRegistration"/>
+      <field name="eventDegressiveNumberPartcipant" min="0"
+        showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
       <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
       <field name="eventCommentList" colSpan="12"/>
       <field name="eventDescription" colSpan="12" widget="html"/>
