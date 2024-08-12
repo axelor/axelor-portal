@@ -164,6 +164,15 @@
     <domain>self.forumPost IS NOT NULL</domain>
   </action-view>
 
+  <menuitem title="Group configuration" name="menu-portal-forum-group-configuration"
+    parent="menu-portal-forum-root" action="action.portal.forum.group.configuration"/>
+
+  <action-view name="action.portal.forum.group.configuration"
+    model="com.axelor.apps.portal.db.ForumGroupConfig" title="Group configuration">
+    <view type="grid" name="forum-group-config-grid"/>
+    <view type="form" name="forum-group-config-form"/>
+  </action-view>
+
   <menuitem title="Configuration" name="menu-portal-configuration-root"
     parent="menu-portal-root" order="140"/>
 

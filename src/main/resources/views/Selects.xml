@@ -69,4 +69,15 @@
     <option value="funny" icon="img/forumReaction/Funny-icon.png">Funny</option>
   </selection>
 
+  <selection name="access.type.select">
+    <option value="allPartners">Allow all partners that have access to the app</option>
+    <option value="selectedPartners">Only selected partners</option>
+    <option value="selectedCategories">Only selected partner categories</option>
+  </selection>
+
+  <selection name="subscribe.type.select">
+    <option value="always">Always subscribe</option>
+    <option value="groupSubscribe">Only if user subscribe to the group</option>
+  </selection>
+
 </object-views>

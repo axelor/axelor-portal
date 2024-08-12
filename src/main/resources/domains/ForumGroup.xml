@@ -11,6 +11,7 @@
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="image"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
       title="Workspace"/>
+    <many-to-one ref="com.axelor.apps.portal.db.ForumGroupConfig" name="groupConfig"/>
   </entity>
 
 </domain-models>

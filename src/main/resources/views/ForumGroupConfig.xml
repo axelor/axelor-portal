@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.ForumGroupConfig" title="Forum group configurations"
+    name="forum-group-config-grid">
+    <field name="name"/>
+    <field name="accessTypeSelect"/>
+    <field name="subscribeSelect"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.ForumGroupConfig" title="Forum group configuration"
+    name="forum-group-config-form">
+    <panel name="mainPanel">
+      <field name="name" colSpan="12"/>
+      <field name="accessTypeSelect"/>
+      <field name="subscribeSelect"/>
+      <field name="partnerSet" showIf="accessTypeSelect == 'selectedPartners'" colSpan="12"/>
+      <field name="partnerCategorySet" showIf="accessTypeSelect == 'selectedCategories'"
+        colSpan="12"/>
+    </panel>
+  </form>
+
+</object-views>
