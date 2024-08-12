@@ -18,6 +18,7 @@
       <panel name="fieldsPanel" colSpan="10" itemSpan="12">
         <field name="name"/>
         <field name="workspace"/>
+        <field name="groupConfig"/>
       </panel>
       <field name="description" colSpan="12"/>
     </panel>
