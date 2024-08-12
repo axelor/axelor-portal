@@ -55,6 +55,7 @@
       </panel>
       <panel name="invociePanel" title="Invoice">
         <field name="allowOnlinePaymentForInvoices"/>
+        <field name="canPayInvoice"/>
       </panel>
       <panel name="eventPanel" title="Event">
         <field name="allowGuestEventRegistartion"/>

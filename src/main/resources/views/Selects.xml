@@ -80,4 +80,10 @@
     <option value="groupSubscribe">Only if user subscribe to the group</option>
   </selection>
 
+  <selection name="can.pay.invoice.select">
+    <option value="no">No</option>
+    <option value="total">Total</option>
+    <option value="partial">Partial</option>
+  </selection>
+
 </object-views>

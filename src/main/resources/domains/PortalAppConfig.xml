@@ -14,6 +14,7 @@
       selection="display.two.prices.select"/>
     <string name="priceAfterLoginSelect" title="Price After Login"
       selection="price.after.login.select"/>
+    <string name="canPayInvoice" title="Can pay invoice?" selection="can.pay.invoice.select"/>
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
@@ -40,6 +41,14 @@
 
     <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
       mappedBy="portalAppConfig"/>
+
+    <extra-code>
+    	<![CDATA[
+    		public static final String NO_INVOICE = "no";
+    		public static final String TOTAL_INVOICE = "total";
+    		public static final String PARTIAL_INVOICE = "partial";
+    	]]>
+    </extra-code>
 
   </entity>
 
