@@ -86,7 +86,7 @@
 
   <input file="base_productPicture.csv" separator=";"
     type="com.axelor.apps.base.db.ProductPicture" search="self.importId = :importId"
-    call="com.axelor.csv.script.ImportProductPicture:importProductPicture" update="true"/>
+    call="com.axelor.csv.script.ImportProductPicture:importProductPicture"/>
 
   <input file="base_partner.csv" separator=";" type="com.axelor.apps.base.db.Partner"
     search="self.importId = :importId" update="true">
