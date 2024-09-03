@@ -30,17 +30,18 @@ import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.purchase.db.repo.PurchaseOrderRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.service.saleorder.SaleOrderConfirmService;
 import com.axelor.apps.stock.db.StockMove;
 import com.axelor.apps.stock.db.StockMoveLine;
 import com.axelor.apps.stock.db.repo.StockMoveLineRepository;
 import com.axelor.apps.stock.db.repo.StockMoveRepository;
 import com.axelor.apps.stock.service.PartnerProductQualityRatingService;
 import com.axelor.apps.stock.service.PartnerStockSettingsService;
-import com.axelor.apps.stock.service.StockLocationService;
 import com.axelor.apps.stock.service.StockMoveLineService;
 import com.axelor.apps.stock.service.StockMoveToolService;
 import com.axelor.apps.stock.service.app.AppStockService;
 import com.axelor.apps.stock.service.config.StockConfigService;
+import com.axelor.apps.stock.utils.StockLocationUtilsService;
 import com.axelor.apps.supplychain.service.PartnerSupplychainService;
 import com.axelor.apps.supplychain.service.ReservedQtyService;
 import com.axelor.apps.supplychain.service.StockMoveLineServiceSupplychain;
@@ -51,7 +52,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
 
-  protected StockLocationService stockLocationService;
+  protected StockLocationUtilsService stockLocationUtilsService;
 
   @Inject
   public StockMovePortalServiceImpl(
@@ -65,6 +66,7 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
       PartnerStockSettingsService partnerStockSettingsService,
       StockConfigService stockConfigService,
       AppStockService appStockService,
+      ProductCompanyService productCompanyService,
       AppSupplychainService appSupplyChainService,
       AppAccountService appAccountService,
       PurchaseOrderRepository purchaseOrderRepo,
@@ -73,10 +75,10 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
       ReservedQtyService reservedQtyService,
       PartnerSupplychainService partnerSupplychainService,
       FixedAssetRepository fixedAssetRepository,
-      StockMoveLineServiceSupplychain stockMoveLineServiceSupplychain,
       PfpService pfpService,
-      ProductCompanyService productCompanyService,
-      StockLocationService stockLocationService) {
+      SaleOrderConfirmService saleOrderConfirmService,
+      StockMoveLineServiceSupplychain stockMoveLineServiceSupplychain,
+      StockLocationUtilsService stockLocationUtilsService) {
     super(
         stockMoveLineService,
         stockMoveToolService,
@@ -88,6 +90,7 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
         partnerStockSettingsService,
         stockConfigService,
         appStockService,
+        productCompanyService,
         appSupplyChainService,
         appAccountService,
         purchaseOrderRepo,
@@ -96,10 +99,10 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
         reservedQtyService,
         partnerSupplychainService,
         fixedAssetRepository,
-        stockMoveLineServiceSupplychain,
         pfpService,
-        productCompanyService);
-    this.stockLocationService = stockLocationService;
+        saleOrderConfirmService,
+        stockMoveLineServiceSupplychain);
+    this.stockLocationUtilsService = stockLocationUtilsService;
   }
 
   @Override
@@ -118,7 +121,7 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
         try {
           Product product = stockMoveLine.getProduct();
           product.setLeftQty(
-              stockLocationService.getRealQtyOfProductInStockLocations(
+              stockLocationUtilsService.getRealQtyOfProductInStockLocations(
                   product.getId(), null, stockMove.getCompany().getId()));
           productRepository.save(product);
         } catch (Exception e) {

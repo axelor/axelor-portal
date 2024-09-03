@@ -42,10 +42,15 @@ import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
+import com.axelor.apps.sale.service.saleorder.SaleOrderConfirmService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
-import com.axelor.apps.sale.service.saleorder.SaleOrderLineService;
+import com.axelor.apps.sale.service.saleorder.SaleOrderFinalizeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
-import com.axelor.apps.sale.service.saleorder.SaleOrderWorkflowService;
+import com.axelor.apps.sale.service.saleorder.pricing.SaleOrderLinePricingService;
+import com.axelor.apps.sale.service.saleorderline.SaleOrderLineComplementaryProductService;
+import com.axelor.apps.sale.service.saleorderline.SaleOrderLineComputeService;
+import com.axelor.apps.sale.service.saleorderline.SaleOrderLinePriceService;
+import com.axelor.apps.sale.service.saleorderline.SaleOrderLineProductService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
@@ -65,8 +70,14 @@ import org.apache.commons.collections.CollectionUtils;
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
   protected SaleOrderCreateService saleOrdeCreateService;
-  protected SaleOrderLineService saleOrderLineService;
+  protected SaleOrderLinePricingService saleOrderLinePricingService;
+  protected SaleOrderLinePriceService saleOrderLinePriceService;
+  protected SaleOrderLineProductService saleOrderLineProductService;
+  protected SaleOrderLineComplementaryProductService saleOrderLineComplementaryProductService;
+  protected SaleOrderLineComputeService saleOrderLineComputeService;
   protected SaleOrderComputeService saleOrderComputeService;
+  protected SaleOrderFinalizeService saleOrderFinalizeService;
+  protected SaleOrderConfirmService saleOrderConfirmService;
   protected AppSaleService appSaleService;
   protected AppBaseService appBaseService;
   protected FiscalPositionService fiscalPositionService;
@@ -81,8 +92,14 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   @Inject
   public SaleOrderPortalServiceImpl(
       SaleOrderCreateService saleOrdeCreateService,
-      SaleOrderLineService saleOrderLineService,
+      SaleOrderLinePricingService saleOrderLinePricingService,
+      SaleOrderLinePriceService saleOrderLinePriceService,
+      SaleOrderLineProductService saleOrderLineProductService,
+      SaleOrderLineComplementaryProductService saleOrderLineComplementaryProductService,
+      SaleOrderLineComputeService saleOrderLineComputeService,
       SaleOrderComputeService saleOrderComputeService,
+      SaleOrderFinalizeService saleOrderFinalizeService,
+      SaleOrderConfirmService saleOrderConfirmService,
       AppSaleService appSaleService,
       AppBaseService appBaseService,
       FiscalPositionService fiscalPositionService,
@@ -93,8 +110,14 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       ProductRepository productRepo,
       SaleOrderRepository saleOrderRepo) {
     this.saleOrdeCreateService = saleOrdeCreateService;
-    this.saleOrderLineService = saleOrderLineService;
+    this.saleOrderLinePricingService = saleOrderLinePricingService;
+    this.saleOrderLinePriceService = saleOrderLinePriceService;
+    this.saleOrderLineProductService = saleOrderLineProductService;
+    this.saleOrderLineComplementaryProductService = saleOrderLineComplementaryProductService;
+    this.saleOrderLineComputeService = saleOrderLineComputeService;
     this.saleOrderComputeService = saleOrderComputeService;
+    this.saleOrderFinalizeService = saleOrderFinalizeService;
+    this.saleOrderConfirmService = saleOrderConfirmService;
     this.appSaleService = appSaleService;
     this.appBaseService = appBaseService;
     this.fiscalPositionService = fiscalPositionService;
@@ -249,7 +272,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       throws AxelorException {
 
     if (appBaseService.getAppBase().getEnablePricingScale()) {
-      saleOrderLineService.computePricingScale(line, order);
+      saleOrderLinePricingService.computePricingScale(line, order);
     }
     fillTaxInformation(line, order);
     if (cartItem.containsKey("price") && cartItem.get("price") != null) {
@@ -268,7 +291,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
         line.setPrice(itemPrice);
       }
     }
-    line.setCompanyCostPrice(saleOrderLineService.getCompanyCostPrice(order, line));
+    line.setCompanyCostPrice(saleOrderLinePriceService.getCompanyCostPrice(order, line));
   }
 
   protected void fillTaxInformation(SaleOrderLine line, SaleOrder order) throws AxelorException {
@@ -302,11 +325,11 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       SaleOrder order, SaleOrderLine line, Map<String, Object> cartItem) throws AxelorException {
 
     line.setProductName(line.getProduct().getName());
-    line.setUnit(saleOrderLineService.getSaleUnit(line));
+    line.setUnit(saleOrderLineProductService.getSaleUnit(line.getProduct()));
     line.setTypeSelect(SaleOrderLineRepository.TYPE_NORMAL);
     fillPrice(cartItem, line, order);
 
-    saleOrderLineService.fillComplementaryProductList(line);
+    cartItem.putAll(saleOrderLineComplementaryProductService.fillComplementaryProductList(line));
 
     BigDecimal taxRate = BigDecimal.ZERO;
     if (ObjectUtils.notEmpty(line.getTaxLineSet())) {
@@ -317,26 +340,25 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     BigDecimal companyExTaxTotal;
     BigDecimal inTaxTotal;
     BigDecimal companyInTaxTotal;
+
+    int scale = currencyScaleService.getScale(order);
     if (!order.getInAti()) {
-      exTaxTotal =
-          saleOrderLineService.computeAmount(
-              line.getQty(), line.getPrice(), currencyScaleService.getScale(order));
+      exTaxTotal = line.getQty().multiply(line.getPrice()).setScale(scale, RoundingMode.HALF_UP);
       inTaxTotal =
           currencyScaleService.getScaledValue(order, exTaxTotal.add(exTaxTotal.multiply(taxRate)));
-      companyExTaxTotal = saleOrderLineService.getAmountInCompanyCurrency(exTaxTotal, order);
+      companyExTaxTotal = saleOrderLineComputeService.getAmountInCompanyCurrency(exTaxTotal, order);
       companyInTaxTotal =
           currencyScaleService.getCompanyScaledValue(
               order, companyExTaxTotal.add(companyExTaxTotal.multiply(taxRate)));
     } else {
       inTaxTotal =
-          saleOrderLineService.computeAmount(
-              line.getQty(), line.getInTaxPrice(), currencyScaleService.getScale(order));
+          line.getQty().multiply(line.getInTaxPrice()).setScale(scale, RoundingMode.HALF_UP);
       exTaxTotal =
           inTaxTotal.divide(
               taxRate.add(BigDecimal.ONE),
               currencyScaleService.getScale(order),
               RoundingMode.HALF_UP);
-      companyInTaxTotal = saleOrderLineService.getAmountInCompanyCurrency(inTaxTotal, order);
+      companyInTaxTotal = saleOrderLineComputeService.getAmountInCompanyCurrency(inTaxTotal, order);
       companyExTaxTotal =
           companyInTaxTotal.divide(
               taxRate.add(BigDecimal.ONE),
@@ -371,9 +393,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     saleOrderComputeService.computeSaleOrder(order);
     saleOrderRepo.save(order);
 
-    SaleOrderWorkflowService soWorkflowService = Beans.get(SaleOrderWorkflowService.class);
-    soWorkflowService.finalizeQuotation(order);
-    soWorkflowService.confirmSaleOrder(order);
+    saleOrderFinalizeService.finalizeQuotation(order);
+    saleOrderConfirmService.confirmSaleOrder(order);
 
     return order;
   }
