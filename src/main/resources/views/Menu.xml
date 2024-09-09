@@ -58,10 +58,10 @@
     parent="menu-portal-portal-news-root" action="action.portal.portal.news.comment"/>
 
   <action-view name="action.portal.portal.news.comment" title="Comments"
-    model="com.axelor.apps.portal.db.PortalComment">
-    <view type="grid" name="portal-portal-comment-grid"/>
-    <view type="form" name="portal-portal-comment-form"/>
-    <domain>self.parentNews IS NOT NULL</domain>
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
+    <domain>self.portalNews IS NOT NULL</domain>
   </action-view>
 
   <menuitem title="News category" name="menu-portal-portal-news-catgory" order="15"
@@ -110,9 +110,9 @@
     parent="menu-portal-portal-event-configuration" action="action.portal.portal.event.comment"/>
 
   <action-view name="action.portal.portal.event.comment" title="Comments"
-    model="com.axelor.apps.portal.db.PortalComment">
-    <view type="grid" name="portal-portal-comment-grid"/>
-    <view type="form" name="portal-portal-comment-form"/>
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
     <domain>self.portalEvent IS NOT NULL</domain>
   </action-view>
 
@@ -159,9 +159,9 @@
     parent="menu-portal-forum-root" action="action.portal.forum.comment"/>
 
   <action-view name="action.portal.forum.comment" title="Comments"
-    model="com.axelor.apps.portal.db.PortalComment">
-    <view type="grid" name="portal-portal-comment-grid"/>
-    <view type="form" name="portal-portal-comment-form"/>
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
     <domain>self.forumPost IS NOT NULL</domain>
   </action-view>
 
@@ -218,9 +218,9 @@
     parent="menu-portal-configuration-root" action="action.portal.portal.comment" order="1030"/>
 
   <action-view name="action.portal.portal.comment" title="Comment"
-    model="com.axelor.apps.portal.db.PortalComment">
-    <view type="grid" name="portal-portal-comment-grid"/>
-    <view type="form" name="portal-portal-comment-form"/>
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
   </action-view>
 
 </object-views>

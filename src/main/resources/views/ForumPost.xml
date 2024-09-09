@@ -17,9 +17,7 @@
       <field name="postDateT"/>
       <field name="forumGroup"/>
       <field name="author"/>
-    </panel>
-    <panel name="contentPanel">
-      <field name="content" widget="html"/>
+      <field name="content" widget="html" colSpan="12"/>
     </panel>
     <panel name="postAttachmentPanel">
       <field name="attachmentList" colSpan="12">
@@ -30,10 +28,20 @@
         </editor>
       </field>
     </panel>
-    <panel name="commentPanel">
-      <panel-related field="commentList" grid-view="portal-portal-comment-grid"
-        form-view="portal-portal-comment-form" colSpan="12"/>
+    <panel name="commentPanel" title="Comments">
+      <spacer name="commentSpacer" colSpan="11"/>
+      <button onClick="action-portal-portal-add-comment" name="addbtn" title="Add"
+        colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
+      <panel-dashlet action="action-portal-portal-post-display-comment" colSpan="12"
+        title=""/>
     </panel>
   </form>
+
+  <action-view name="action-portal-portal-post-display-comment" title="Comments"
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
+    <domain>self.forumPost.id = :id</domain>
+  </action-view>
 
 </object-views>

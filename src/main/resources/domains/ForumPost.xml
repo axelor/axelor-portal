@@ -13,7 +13,7 @@
     <one-to-many ref="com.axelor.apps.portal.db.PostAttachment" name="attachmentList"
       mappedBy="forumPost"/>
     <many-to-one ref="com.axelor.apps.base.db.Partner" name="author"/>
-    <one-to-many ref="com.axelor.apps.portal.db.PortalComment" name="commentList"
+    <one-to-many ref="com.axelor.apps.base.db.Comment" name="commentList"
       mappedBy="forumPost"/>
   </entity>
 

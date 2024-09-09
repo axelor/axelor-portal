@@ -34,9 +34,22 @@
       <field name="eventDegressiveNumberPartcipant" min="0"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
       <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
-      <field name="eventCommentList" colSpan="12"/>
       <field name="eventDescription" colSpan="12" widget="html"/>
     </panel>
+    <panel name="commentPanel" title="Comments">
+      <spacer name="commentSpacer" colSpan="11"/>
+      <button onClick="action-portal-portal-add-comment" name="addbtn" title="Add"
+        colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
+      <panel-dashlet action="action-portal-portal-event-display-comment" colSpan="12"
+        title=""/>
+    </panel>
   </form>
+
+  <action-view name="action-portal-portal-event-display-comment" title="Comments"
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
+    <domain>self.portalevent.id = :id</domain>
+  </action-view>
 
 </object-views>

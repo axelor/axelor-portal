@@ -29,9 +29,22 @@
       <field name="relatedNewsSet" colSpan="12" widget="TagSelect"/>
       <field name="description" colSpan="12"/>
       <field name="content" colSpan="12" widget="html"/>
-      <field name="portalCommentList" colSpan="12"/>
+      <panel name="commentPanel" title="Comments" colSpan="12">
+        <spacer name="commentSpacer" colSpan="11"/>
+        <button onClick="action-portal-portal-add-comment" name="addbtn" title="Add"
+          colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
+        <panel-dashlet action="action-portal-portal-news-display-comment" colSpan="12"
+          title=""/>
+      </panel>
     </panel>
   </form>
+
+  <action-view name="action-portal-portal-news-display-comment" title="Comments"
+    model="com.axelor.apps.base.db.Comment">
+    <view type="cards" name="comment-card"/>
+    <view type="form" name="portal-comment-form"/>
+    <domain>self.portalNews.id = :id</domain>
+  </action-view>
 
   <action-record name="action-portal-record-portal-news-category-onnew"
     model="com.axelor.apps.portal.db.PortalNews">
