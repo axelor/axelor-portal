@@ -60,6 +60,9 @@
       <panel name="eventPanel" title="Event">
         <field name="allowGuestEventRegistartion"/>
       </panel>
+      <panel name="ticketingPanel" title="Ticketing">
+        <field name="ticketStatusChangeMethodSelect"/>
+      </panel>
     </panel-tabs>
   </form>
 
