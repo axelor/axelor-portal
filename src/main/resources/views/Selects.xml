@@ -86,4 +86,9 @@
     <option value="partial">Partial</option>
   </selection>
 
+  <selection name="ticket.status.change.method.select">
+    <option value="fromDB">From DB</option>
+    <option value="fromWS">From WS</option>
+  </selection>
+
 </object-views>
