@@ -6,22 +6,13 @@
   <grid name="portal-comment-grid" title="Portal comments"
     model="com.axelor.apps.base.db.Comment" orderBy="-createdOn">
     <field name="mailMessage"/>
+    <field name="note"/>
   </grid>
 
   <form name="portal-comment-form" title="Portal comment"
     model="com.axelor.apps.base.db.Comment" width="large" onNew="action-portal-record-comment-onnew"
     onSave="action-portal-record-comment-onsave">
-    <panel name="contentPanel" showIf="!$readonly()">
-      <field name="mailMessage" colSpan="12" showTitle="false" canSelect="false"
-        canRemove="false">
-        <editor>
-          <field name="subject" title="Subject" colSpan="12"/>
-          <field name="messageContentHtml" title="Content" colSpan="12" widget="html"
-            required="true"/>
-        </editor>
-      </field>
-    </panel>
-    <panel name="mailMessagePanel" showIf="$readonly()">
+    <panel name="mailMessagePanel" showIf="$readonly() &amp;&amp; mailMessage  != null">
       <field name="mailMessage.subject" colSpan="10"/>
       <field name="$edited" colSpan="2" showIf="mailMessage.updatedOn" showTitle="false">
         <viewer><![CDATA[
@@ -30,10 +21,12 @@
       </field>
       <field name="mailMessage.author"/>
       <field name="mailMessage.createdOn"/>
-      <field name="mailMessage.messageContentHtml" required="true" colSpan="12" widget="html"
-        showTitle="false"/>
+      <field name="mailMessage.body" colSpan="12" widget="html" showTitle="false"/>
       <field name="mailMessage.updatedOn" hidden="true"/>
-      <field name="mailMessage.body" hidden="true"/>
+    </panel>
+    <panel name="notePanel">
+      <field name="note" colSpan="12" widget="html"/>
+      <field name="isPrivateNote" showIf="!$readonly()" widget="boolean-switch"/>
     </panel>
     <panel name="portalPanel" showIf="portalEvent || portalNews || forumPost" readonly="true">
       <field name="portalEvent" colSpan="12" showIf="portalEvent"/>
@@ -70,8 +63,6 @@
     model="com.axelor.apps.base.db.Comment">
     <field name="mailMessage.author" expr="eval: __user__"/>
     <field name="mailMessage.relatedId" expr="eval: id"/>
-    <field name="mailMessage.body" expr="eval: mailMessage.messageContentHtml"
-      if="!mailMessage.body"/>
     <field name="mailMessage.relatedModel" expr="com.axelor.apps.portal.db.PortalEvent"
       if="portalEvent"/>
     <field name="mailMessage.relatedModel" expr="com.axelor.apps.portal.db.PortalNews"
