@@ -49,7 +49,7 @@
     model="com.axelor.apps.base.db.Comment">
     <view type="cards" name="comment-card"/>
     <view type="form" name="portal-comment-form"/>
-    <domain>self.portalevent.id = :id</domain>
+    <domain>self.portalEvent.id = :id</domain>
   </action-view>
 
 </object-views>
