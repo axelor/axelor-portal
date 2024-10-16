@@ -10,19 +10,22 @@
   </grid>
 
   <form name="portal-portal-news-category-form" title="Portal news category"
-    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    model="com.axelor.apps.portal.db.PortalNewsCategory" width="large">
     <panel name="mainPanel">
       <panel name="imagePanel" colSpan="2">
         <field name="image" widget="Image" colSpan="12" showTitle="false"/>
       </panel>
       <panel name="infoPanel" colSpan="10">
-        <field name="name" required="true"/>
+        <field name="name" required="true" colSpan="11"/>
+        <field name="isPrivate" colSpan="1"/>
         <field name="color" widget="SingleSelect"/>
         <field name="slug" pattern="^[a-z0-9-]*$"/>
         <field name="parentCategory"/>
         <field name="workspace"/>
       </panel>
       <field name="description" colSpan="12"/>
+      <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
+      <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
     </panel>
   </form>
 

@@ -12,6 +12,11 @@
     <string name="description" large="true"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
       title="Workspace"/>
+    <boolean name="isPrivate" title="Private"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
   </entity>
 
 </domain-models>

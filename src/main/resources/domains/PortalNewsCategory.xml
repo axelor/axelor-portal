@@ -16,6 +16,11 @@
     <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
     <many-to-one name="workspace" title="Workspace"
       ref="com.axelor.apps.portal.db.PortalWorkspace"/>
+    <boolean name="isPrivate" title="Private"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
 
   </entity>
 

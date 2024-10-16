@@ -16,6 +16,7 @@
     <boolean name="eventAllowRegistration"/>
     <boolean name="eventAllowMultipleRegistrations"/>
     <boolean name="eventVisibility" default="true"/>
+    <boolean name="isPrivate" title="Private"/>
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
@@ -24,6 +25,10 @@
       title="Event comments" mappedBy="portalEvent"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
       name="eventCategorySet" title="Event categories"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
 
   </entity>
 

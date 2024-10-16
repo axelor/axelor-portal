@@ -13,6 +13,7 @@
     <string name="description" large="true"/>
     <string name="content" large="true"/>
     <boolean name="isFeaturedNews" title="Featured ?"/>
+    <boolean name="isPrivate" title="Private"/>
     <many-to-many name="categorySet" ref="com.axelor.apps.portal.db.PortalNewsCategory"
       title="Parent news categories"/>
     <many-to-one name="author" ref="com.axelor.apps.base.db.Partner"/>
@@ -21,6 +22,10 @@
       title="Related news"/>
     <one-to-many ref="com.axelor.apps.base.db.Comment" name="newsCommentList"
       mappedBy="portalNews"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
 
   </entity>
 
