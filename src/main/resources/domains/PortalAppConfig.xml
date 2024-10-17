@@ -17,6 +17,31 @@
     <string name="ticketStatusChangeMethodSelect" title="Ticket status change method"
       selection="ticket.status.change.method.select"/>
     <string name="canPayInvoice" title="Can pay invoice?" selection="can.pay.invoice.select"/>
+
+    <string name="eventHeroTitle"/>
+    <string name="eventHeroDescription" large="true"/>
+    <string name="eventHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="eventHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="newsHeroTitle"/>
+    <string name="newsHeroDescription" large="true"/>
+    <string name="newsHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="newsHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="ticketHeroTitle"/>
+    <string name="ticketHeroDescription" large="true"/>
+    <string name="ticketHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="ticketHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="forumHeroTitle"/>
+    <string name="forumHeroDescription" large="true"/>
+    <string name="forumHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="forumHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+    <string name="forumGroupHeroTitle"/>
+    <string name="forumGroupHeroDescription" large="true"/>
+    <string name="forumGroupHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="forumGroupHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>

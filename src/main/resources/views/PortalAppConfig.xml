@@ -59,9 +59,48 @@
       </panel>
       <panel name="eventPanel" title="Event">
         <field name="allowGuestEventRegistartion"/>
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="eventHeroTitle" title="Title"/>
+          <field name="eventHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="eventHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="eventHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
+      <panel name="newsPanel" title="News">
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="newsHeroTitle" title="Title"/>
+          <field name="newsHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="newsHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="newsHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
+      <panel name="forumPanel" title="Forum">
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="forumHeroTitle" title="Title"/>
+          <field name="forumHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="forumHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="forumHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+        <panel name="groupHeroPanel" colSpan="12" title="Group hero details">
+          <field name="forumGroupHeroTitle" title="Title"/>
+          <field name="forumGroupHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="forumGroupHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="forumGroupHeroDescription" colSpan="12" title="Description"/>
+        </panel>
       </panel>
       <panel name="ticketingPanel" title="Ticketing">
         <field name="ticketStatusChangeMethodSelect"/>
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="ticketHeroTitle" title="Title"/>
+          <field name="ticketHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="ticketHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="ticketHeroDescription" colSpan="12" title="Description"/>
+        </panel>
       </panel>
     </panel-tabs>
   </form>
