@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="mail" package="com.axelor.mail.db"/>
+
+  <entity name="MailMessage" table="MAIL_MESSAGE" cacheable="true" repository="none">
+
+    <one-to-many name="childMailMessageList" ref="com.axelor.mail.db.MailMessage"
+      mappedBy="parentMailMessage"/>
+
+  </entity>
+
+</domain-models>

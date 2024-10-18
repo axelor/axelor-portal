@@ -18,36 +18,35 @@
  */
 package com.axelor.apps.portal.db.repo;
 
-import com.axelor.apps.base.db.Comment;
-import com.axelor.apps.project.db.repo.CommentProjectRepository;
+import com.axelor.apps.project.db.repo.MailMessageProjectRepository;
+import com.axelor.mail.db.MailMessage;
 
-public class CommentPortalRepository extends CommentProjectRepository {
+public class MailMessagePortalRepository extends MailMessageProjectRepository {
 
   @Override
-  public Comment save(Comment entity) {
+  public MailMessage save(MailMessage entity) {
 
-    entity = super.save(entity);
-    setRelatedRecord(entity, entity.getParentComment());
+    setRelatedRecord(entity, entity.getParentMailMessage());
+
+    if (entity.getRelatedModel() != null) {
+      entity = super.save(entity);
+    }
+
     return entity;
   }
 
-  protected void setRelatedRecord(Comment comment, Comment parent) {
+  protected void setRelatedRecord(MailMessage mailMessage, MailMessage parent) {
 
     if (parent == null) {
       return;
     }
 
-    if (parent.getParentComment() == null) {
-      if (parent.getForumPost() != null) {
-        comment.setForumPost(parent.getForumPost());
-      } else if (parent.getPortalEvent() != null) {
-        comment.setPortalEvent(parent.getPortalEvent());
-      } else if (parent.getPortalNews() != null) {
-        comment.setPortalNews(parent.getPortalNews());
-      }
+    if (parent.getParentMailMessage() == null) {
+      mailMessage.setRelatedId(parent.getRelatedId());
+      mailMessage.setRelatedModel(parent.getRelatedModel());
       return;
     } else {
-      setRelatedRecord(comment, parent);
+      setRelatedRecord(mailMessage, parent);
     }
   }
 }
