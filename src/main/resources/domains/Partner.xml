@@ -8,6 +8,7 @@
   <entity name="Partner">
 
     <string name="portalPassword" title="Password" encrypted="true"/>
+    <boolean name="isRegisteredOnPortal"/>
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"
