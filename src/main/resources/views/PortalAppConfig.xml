@@ -71,7 +71,7 @@
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="newsHeroTitle" title="Title"/>
           <field name="newsHeroOverlayColorSelect" widget="SingleSelect"
-            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+            x-color-field="newsHeroOverlayColorSelect" title="Overlay color"/>
           <field name="newsHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="newsHeroDescription" colSpan="12" title="Description"/>
         </panel>
@@ -80,16 +80,18 @@
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="forumHeroTitle" title="Title"/>
           <field name="forumHeroOverlayColorSelect" widget="SingleSelect"
-            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+            x-color-field="forumHeroOverlayColorSelect" title="Overlay color"/>
           <field name="forumHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="forumHeroDescription" colSpan="12" title="Description"/>
         </panel>
-        <panel name="groupHeroPanel" colSpan="12" title="Group hero details">
-          <field name="forumGroupHeroTitle" title="Title"/>
-          <field name="forumGroupHeroOverlayColorSelect" widget="SingleSelect"
-            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
-          <field name="forumGroupHeroBgImage" widget="binary-link" title="Background image"/>
-          <field name="forumGroupHeroDescription" colSpan="12" title="Description"/>
+      </panel>
+      <panel name="resourcesPanel" title="Resources">
+        <panel name="resourcesHeroPanel" colSpan="12" title="Resources hero details">
+          <field name="resourcesHeroTitle" title="Title"/>
+          <field name="resourcesHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="resourcesHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="resourcesHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="resourcesHeroDescription" colSpan="12" title="Description"/>
         </panel>
       </panel>
       <panel name="ticketingPanel" title="Ticketing">

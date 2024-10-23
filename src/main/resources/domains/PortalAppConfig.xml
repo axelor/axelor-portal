@@ -37,10 +37,11 @@
     <string name="forumHeroDescription" large="true"/>
     <string name="forumHeroOverlayColorSelect" selection="color.name.selection"/>
     <many-to-one name="forumHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
-    <string name="forumGroupHeroTitle"/>
-    <string name="forumGroupHeroDescription" large="true"/>
-    <string name="forumGroupHeroOverlayColorSelect" selection="color.name.selection"/>
-    <many-to-one name="forumGroupHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="resourcesHeroTitle"/>
+    <string name="resourcesHeroDescription" large="true"/>
+    <string name="resourcesHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="resourcesHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
 
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
