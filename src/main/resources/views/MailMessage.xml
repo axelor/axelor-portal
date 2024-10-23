@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <action-view name="action-portal-portal-add-comment" title="Comment"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="form" name="mail-message-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="forceEdit" value="true"/>
+    <context name="_relatedId" expr="eval: __this__.id"/>
+    <context name="_relatedModel" expr="eval: _model"/>
+  </action-view>
+
+</object-views>

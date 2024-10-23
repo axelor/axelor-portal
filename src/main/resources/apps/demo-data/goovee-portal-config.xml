@@ -56,12 +56,6 @@
       eval="relatedNewsSet?.split('\\|') as List"/>
   </input>
 
-  <input file="portal_comment.csv" separator=";"
-    type="com.axelor.apps.portal.db.PortalComment" search="self.importId = :importId">
-    <bind to="publicationDateTime" column="publicationDateTime"
-      eval="call:com.axelor.csv.script.ImportDateTime:importDateTime(publicationDateTime)"/>
-  </input>
-
   <input file="portal_contactWorkspaceConfig.csv" separator=";"
     type="com.axelor.apps.portal.db.PortalContactWorkspaceConfig" search="self.importId = :importId">
     <bind to="contactAppPermissionList" column="contactAppPermissionList"

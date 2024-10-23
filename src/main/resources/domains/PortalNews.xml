@@ -20,8 +20,6 @@
     <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalNews" name="relatedNewsSet"
       title="Related news"/>
-    <one-to-many ref="com.axelor.apps.base.db.Comment" name="newsCommentList"
-      mappedBy="portalNews"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
       title="Partners"/>
     <many-to-many name="partnerCategorySet"

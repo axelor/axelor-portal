@@ -58,10 +58,10 @@
     parent="menu-portal-portal-news-root" action="action.portal.portal.news.comment"/>
 
   <action-view name="action.portal.portal.news.comment" title="Comments"
-    model="com.axelor.apps.base.db.Comment">
-    <view type="cards" name="comment-card"/>
-    <view type="form" name="portal-comment-form"/>
-    <domain>self.portalNews IS NOT NULL</domain>
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedModel = 'com.axelor.apps.portal.db.PortalNews'</domain>
   </action-view>
 
   <menuitem title="News category" name="menu-portal-portal-news-catgory" order="15"
@@ -110,10 +110,10 @@
     parent="menu-portal-portal-event-configuration" action="action.portal.portal.event.comment"/>
 
   <action-view name="action.portal.portal.event.comment" title="Comments"
-    model="com.axelor.apps.base.db.Comment">
-    <view type="cards" name="comment-card"/>
-    <view type="form" name="portal-comment-form"/>
-    <domain>self.portalEvent IS NOT NULL</domain>
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedModel = 'com.axelor.apps.portal.db.PortalEvent'</domain>
   </action-view>
 
   <menuitem title="Event category" name="menu-portal-portal-event-catgory"
@@ -159,10 +159,10 @@
     parent="menu-portal-forum-root" action="action.portal.forum.comment"/>
 
   <action-view name="action.portal.forum.comment" title="Comments"
-    model="com.axelor.apps.base.db.Comment">
-    <view type="cards" name="comment-card"/>
-    <view type="form" name="portal-comment-form"/>
-    <domain>self.forumPost IS NOT NULL</domain>
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedModel = 'com.axelor.apps.portal.db.ForumPost'</domain>
   </action-view>
 
   <menuitem title="Group configuration" name="menu-portal-forum-group-configuration"
@@ -218,9 +218,9 @@
     parent="menu-portal-configuration-root" action="action.portal.portal.comment" order="1030"/>
 
   <action-view name="action.portal.portal.comment" title="Comment"
-    model="com.axelor.apps.base.db.Comment">
-    <view type="cards" name="comment-card"/>
-    <view type="form" name="portal-comment-form"/>
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
   </action-view>
 
 </object-views>

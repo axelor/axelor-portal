@@ -41,7 +41,7 @@
     </panel>
     <panel name="commentPanel" title="Comments">
       <spacer name="commentSpacer" colSpan="11"/>
-      <button onClick="action-portal-portal-add-comment" name="addbtn" title="Add"
+      <button onClick="save,action-portal-portal-add-comment" name="addbtn" title="Add"
         colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
       <panel-dashlet action="action-portal-portal-event-display-comment" colSpan="12"
         title=""/>
@@ -49,10 +49,10 @@
   </form>
 
   <action-view name="action-portal-portal-event-display-comment" title="Comments"
-    model="com.axelor.apps.base.db.Comment">
-    <view type="cards" name="comment-card"/>
-    <view type="form" name="portal-comment-form"/>
-    <domain>self.portalEvent.id = :id</domain>
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedId = :id AND self.relatedModel = 'com.axelor.apps.portal.db.PortalEvent'</domain>
   </action-view>
 
 </object-views>
