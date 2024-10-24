@@ -65,6 +65,10 @@
     <boolean name="enableNewsComment" default="true"/>
     <boolean name="enableEventComment" default="true"/>
 
+    <boolean name="enableRecommendedNews" default="true"/>
+    <boolean name="enableSocialMediaSharing" default="true"/>
+    <string name="socialMediaSelect" selection="social.media.select"/>
+
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
       name="paymentOptionSet" title="Payment options" mappedBy="portalAppConfigSet"/>
