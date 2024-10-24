@@ -59,6 +59,7 @@
       </panel>
       <panel name="eventPanel" title="Event">
         <field name="allowGuestEventRegistartion"/>
+        <field name="enableEventComment"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="eventHeroTitle" title="Title"/>
           <field name="eventHeroOverlayColorSelect" widget="SingleSelect"
@@ -68,6 +69,7 @@
         </panel>
       </panel>
       <panel name="newsPanel" title="News">
+        <field name="enableNewsComment"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="newsHeroTitle" title="Title"/>
           <field name="newsHeroOverlayColorSelect" widget="SingleSelect"

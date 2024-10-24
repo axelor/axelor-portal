@@ -62,6 +62,8 @@
     <boolean name="allowOnlinePaymentForEcommerce"
       title="Allow online payment for ecommerce"/>
     <boolean name="allowGuestEventRegistartion" title="Allow guests to register to events"/>
+    <boolean name="enableNewsComment" default="true"/>
+    <boolean name="enableEventComment" default="true"/>
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
