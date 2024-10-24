@@ -96,6 +96,11 @@
           <field name="resourcesHeroDescription" colSpan="12" title="Description"/>
         </panel>
       </panel>
+      <panel name="newsPanel" title="News">
+        <field name="enableRecommendedNews"/>
+        <field name="enableSocialMediaSharing"/>
+        <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
+      </panel>
       <panel name="ticketingPanel" title="Ticketing">
         <field name="ticketStatusChangeMethodSelect"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">

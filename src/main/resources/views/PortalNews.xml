@@ -32,6 +32,15 @@
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
       <field name="description" colSpan="12"/>
       <field name="content" colSpan="12" widget="html"/>
+      <panel name="attachmentPanel">
+        <field name="attachmentList" colSpan="12" title="Related files">
+          <editor x-viewer="true">
+            <field name="metaFile" showTitle="false" widget="binary-link"
+              form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4"/>
+            <field name="title" showTitle="false" colSpan="8"/>
+          </editor>
+        </field>
+      </panel>
       <panel name="commentPanel" title="Comments" colSpan="12">
         <spacer name="commentSpacer" colSpan="11"/>
         <button onClick="save,action-portal-portal-add-comment" name="addbtn" title="Add"
