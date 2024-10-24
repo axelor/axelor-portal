@@ -19,6 +19,10 @@
       <field name="publicEshopSelect"/>
       <field name="nbOfProductsPerPage" min="0"/>
     </panel>
+    <panel name="portalAppConfigPanel">
+      <panel-related field="portalAppConfigSet" form-view="portal-app-config-form"
+        grid-view="portal-app-config-grid" colSpan="12"/>
+    </panel>
   </form>
 
   <action-record name="action-portal-payment-config-type-select-onchange"

@@ -17,16 +17,16 @@
     model="com.axelor.apps.portal.db.PortalAppConfig" width="large">
     <panel name="mainPanel">
       <field name="name" required="true"/>
-      <field name="company"/>
+      <field name="company" required="true"/>
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
         <field name="displayOutOfStock"/>
-        <panel name="priceConfigPanel" title="Price Config" colSpan="12">
+        <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
+          <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
           <field name="mainPriceSelect"/>
-          <field name="priceAfterLoginSelect"/>
           <field name="displayTwoPricesSelect"/>
         </panel>
         <panel name="sortingPanel" title="Sorting preference" colSpan="12">
@@ -49,9 +49,67 @@
           <field name="allowOnlinePaymentForEcommerce"/>
           <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
         </panel>
+        <panel name="carouselPanel" title="Carousel" colSpan="12">
+          <panel-related field="carouselList" form-view="carousel-form" colSpan="12"/>
+        </panel>
       </panel>
       <panel name="invociePanel" title="Invoice">
         <field name="allowOnlinePaymentForInvoices"/>
+        <field name="canPayInvoice"/>
+      </panel>
+      <panel name="eventPanel" title="Event">
+        <field name="allowGuestEventRegistartion"/>
+        <field name="enableEventComment"/>
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="eventHeroTitle" title="Title"/>
+          <field name="eventHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="eventHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="eventHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
+      <panel name="newsPanel" title="News">
+        <field name="enableNewsComment"/>
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="newsHeroTitle" title="Title"/>
+          <field name="newsHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="newsHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="newsHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="newsHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
+      <panel name="forumPanel" title="Forum">
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="forumHeroTitle" title="Title"/>
+          <field name="forumHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="forumHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="forumHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="forumHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
+      <panel name="resourcesPanel" title="Resources">
+        <panel name="resourcesHeroPanel" colSpan="12" title="Resources hero details">
+          <field name="resourcesHeroTitle" title="Title"/>
+          <field name="resourcesHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="resourcesHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="resourcesHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="resourcesHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
+      <panel name="newsPanel" title="News">
+        <field name="enableRecommendedNews"/>
+        <field name="enableSocialMediaSharing"/>
+        <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
+      </panel>
+      <panel name="ticketingPanel" title="Ticketing">
+        <field name="ticketStatusChangeMethodSelect"/>
+        <panel name="heroPanel" colSpan="12" title="Hero details">
+          <field name="ticketHeroTitle" title="Title"/>
+          <field name="ticketHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="ticketHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="ticketHeroDescription" colSpan="12" title="Description"/>
+        </panel>
       </panel>
     </panel-tabs>
   </form>

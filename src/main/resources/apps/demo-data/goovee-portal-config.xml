@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csv-inputs xmlns="http://axelor.com/xml/ns/data-import"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/data-import http://axelor.com/xml/ns/data-import/data-import_7.0.xsd">
+
+  <input file="portal_theme.csv" separator=";" type="com.axelor.apps.portal.db.PortalTheme"
+    search="self.name = :name"/>
+
+  <input file="portal_app.csv" separator=";" type="com.axelor.apps.portal.db.PortalApp"
+    search="self.importId = :importId"/>
+
+  <input file="portal_carousel.csv" separator=";" type="com.axelor.apps.portal.db.Carousel"
+    search="self.importId = :importId"/>
+
+  <input file="portal_appConfig.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalAppConfig" search="self.importId = :importId">
+  </input>
+
+  <input file="portal_workspace.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalWorkspace" search="self.importId = :importId"/>
+
+  <input file="portal_partnerWorkspace.csv" separator=";"
+    type="com.axelor.apps.portal.db.PartnerPortalWorkspace" search="self.importId = :importId">
+    <bind to="apps" column="apps" search="self.importId in :apps"
+      eval="apps?.split('\\|') as List"/>
+  </input>
+
+  <input file="portal_workspace.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalWorkspace" search="self.importId = :importId"
+    update="true"/>
+
+  <input file="portal_eventCategory.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalEventCategory" search="self.importId = :importId"/>
+
+  <input file="portal_newsCategory.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalNewsCategory" search="self.importId = :importId"
+    call="com.axelor.csv.script.ImportNewsCategory:importNewsCategory"/>
+
+  <input file="portal_event.csv" separator=";" type="com.axelor.apps.portal.db.PortalEvent"
+    search="self.importId = :importId" call="com.axelor.csv.script.ImportEvent:importEvent">
+    <bind to="eventStartDateTime" column="eventStartDateTime"
+      eval="call:com.axelor.csv.script.ImportDateTime:importDateTime(eventStartDateTime)"/>
+    <bind to="eventEndDateTime" column="eventEndDateTime"
+      eval="call:com.axelor.csv.script.ImportDateTime:importDateTime(eventEndDateTime)"/>
+    <bind to="eventCategorySet" column="eventCategorySet"
+      search="self.importId in :eventCategorySet" eval="eventCategorySet?.split('\\|') as List"/>
+  </input>
+
+  <input file="portal_news.csv" separator=";" type="com.axelor.apps.portal.db.PortalNews"
+    search="self.importId = :importId" call="com.axelor.csv.script.ImportNews:importNews">
+    <bind to="publicationDateTime" column="publicationDateTime"
+      eval="call:com.axelor.csv.script.ImportDateTime:importDateTime(publicationDateTime)"/>
+    <bind to="categorySet" column="categorySet" search="self.importId in :categorySet"
+      eval="categorySet?.split('\\|') as List"/>
+    <bind to="relatedNewsSet" column="relatedNewsSet" search="self.importId in :relatedNewsSet"
+      eval="relatedNewsSet?.split('\\|') as List"/>
+  </input>
+
+  <input file="portal_contactWorkspaceConfig.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalContactWorkspaceConfig" search="self.importId = :importId">
+    <bind to="contactAppPermissionList" column="contactAppPermissionList"
+      search="self.importId in :contactAppPermissionList"
+      eval="contactAppPermissionList?.split('\\|') as List"/>
+  </input>
+
+  <input file="portal_contactAppPermission.csv" separator=";"
+    type="com.axelor.apps.portal.db.PortalContactAppPermission" search="self.importId = :importId"/>
+
+  <input file="base_productCategory.csv" separator=";"
+    type="com.axelor.apps.base.db.ProductCategory" search="self.importId = :importId" update="true"/>
+
+  <input file="base_product.csv" separator=";" type="com.axelor.apps.base.db.Product"
+    search="self.code = :code">
+    <bind to="portalCategorySet" column="portalCategorySet"
+      search="self.importId in :portalCategorySet" eval="portalCategorySet?.split('\\|') as List"/>
+    <bind to="portalAssociatedProductSet" column="portalAssociatedProductSet"
+      search="self.code in :portalAssociatedProductSet"
+      eval="portalAssociatedProductSet?.split('\\|') as List"/>
+  </input>
+
+  <input file="base_productPicture.csv" separator=";"
+    type="com.axelor.apps.base.db.ProductPicture" search="self.importId = :importId"
+    call="com.axelor.csv.script.ImportProductPicture:importProductPicture"/>
+
+  <input file="base_partner.csv" separator=";" type="com.axelor.apps.base.db.Partner"
+    search="self.importId = :importId" update="true">
+    <bind to="partnerWorkspaceSet" column="partnerWorkspaceSet"
+      search="self.importId in :partnerWorkspaceSet"
+      eval="partnerWorkspaceSet?.split('\\|') as List" update="true"/>
+    <bind to="contactWorkspaceConfigSet" column="contactWorkspaceConfigSet"
+      search="self.importId in :contactWorkspaceConfigSet"
+      eval="contactWorkspaceConfigSet?.split('\\|') as List" update="true"/>
+  </input>
+
+</csv-inputs>

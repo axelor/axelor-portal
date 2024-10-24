@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.ForumPost" title="Forum posts" name="forum-post-grid">
+    <field name="title"/>
+    <field name="postDateT"/>
+    <field name="forumGroup"/>
+    <field name="author"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.ForumPost" title="Forum post" name="forum-post-form"
+    width="large">
+    <panel name="mainPanel">
+      <field name="title"/>
+      <field name="postDateT"/>
+      <field name="forumGroup"/>
+      <field name="author"/>
+      <field name="content" widget="html" colSpan="12"/>
+    </panel>
+    <panel name="postAttachmentPanel">
+      <field name="attachmentList" colSpan="12">
+        <editor x-viewer="true">
+          <field name="metaFile" showTitle="false" widget="binary-link"
+            form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4"/>
+          <field name="title" showTitle="false" colSpan="8"/>
+        </editor>
+      </field>
+    </panel>
+    <panel name="commentPanel" title="Comments">
+      <spacer name="commentSpacer" colSpan="11"/>
+      <button onClick="save,action-portal-portal-add-comment" name="addbtn" title="Add"
+        colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
+      <panel-dashlet action="action-portal-portal-post-display-comment" colSpan="12"
+        title=""/>
+    </panel>
+  </form>
+
+  <action-view name="action-portal-portal-post-display-comment" title="Comments"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedId = :id AND self.relatedModel = 'com.axelor.apps.portal.db.ForumPost'</domain>
+  </action-view>
+
+</object-views>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.PostAttachment" title="Post attachments"
+    name="post-attachment-grid">
+    <field name="title"/>
+    <field name="forumPost"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.PostAttachment" title="Post attachment"
+    name="post-attachment-form" width="large">
+    <panel name="mainPanel" itemSpan="12">
+      <field name="title"/>
+      <field name="forumPost"/>
+      <field name="metaFile" widget="binary-link" form-view="meta-files-form"
+        grid-view="meta-files-grid"/>
+    </panel>
+  </form>
+
+</object-views>

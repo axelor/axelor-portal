@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
@@ -14,6 +14,35 @@
       selection="display.two.prices.select"/>
     <string name="priceAfterLoginSelect" title="Price After Login"
       selection="price.after.login.select"/>
+    <string name="ticketStatusChangeMethodSelect" title="Ticket status change method"
+      selection="ticket.status.change.method.select"/>
+    <string name="canPayInvoice" title="Can pay invoice?" selection="can.pay.invoice.select"/>
+
+    <string name="eventHeroTitle"/>
+    <string name="eventHeroDescription" large="true"/>
+    <string name="eventHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="eventHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="newsHeroTitle"/>
+    <string name="newsHeroDescription" large="true"/>
+    <string name="newsHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="newsHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="ticketHeroTitle"/>
+    <string name="ticketHeroDescription" large="true"/>
+    <string name="ticketHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="ticketHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="forumHeroTitle"/>
+    <string name="forumHeroDescription" large="true"/>
+    <string name="forumHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="forumHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <string name="resourcesHeroTitle"/>
+    <string name="resourcesHeroDescription" large="true"/>
+    <string name="resourcesHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="resourcesHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
@@ -32,10 +61,28 @@
     <boolean name="allowOnlinePaymentForInvoices" title="Allow online payment for invoices"/>
     <boolean name="allowOnlinePaymentForEcommerce"
       title="Allow online payment for ecommerce"/>
+    <boolean name="allowGuestEventRegistartion" title="Allow guests to register to events"/>
+    <boolean name="enableNewsComment" default="true"/>
+    <boolean name="enableEventComment" default="true"/>
+
+    <boolean name="enableRecommendedNews" default="true"/>
+    <boolean name="enableSocialMediaSharing" default="true"/>
+    <string name="socialMediaSelect" selection="social.media.select"/>
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
-      name="paymentOptionSet" title="Payment options"/>
+      name="paymentOptionSet" title="Payment options" mappedBy="portalAppConfigSet"/>
+
+    <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
+      mappedBy="portalAppConfig"/>
+
+    <extra-code>
+    	<![CDATA[
+    		public static final String NO_INVOICE = "no";
+    		public static final String TOTAL_INVOICE = "total";
+    		public static final String PARTIAL_INVOICE = "partial";
+    	]]>
+    </extra-code>
 
   </entity>
 

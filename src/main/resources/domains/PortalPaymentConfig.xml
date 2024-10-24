@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
@@ -11,6 +11,8 @@
     <string name="typeSelect" selection="payment.config.type.select"/>
     <string name="publicEshopSelect" title="Public eshop" selection="public.eshop.select"/>
     <integer name="nbOfProductsPerPage"/>
+    <many-to-many ref="com.axelor.apps.portal.db.PortalAppConfig"
+      name="portalAppConfigSet" title="Portal app configs"/>
 
   </entity>
 

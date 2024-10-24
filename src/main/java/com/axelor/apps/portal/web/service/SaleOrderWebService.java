@@ -54,4 +54,24 @@ public class SaleOrderWebService {
       return response.fail();
     }
   }
+
+  @POST
+  @Path("/order")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public PortalRestResponse createOrder(Map<String, Object> values) throws AxelorException {
+
+    try {
+      Beans.get(JpaSecurity.class).check(AccessType.CREATE, SaleOrder.class);
+      SaleOrder saleOrder = Beans.get(SaleOrderPortalService.class).createOrder(values);
+
+      PortalRestResponse response = new PortalRestResponse();
+      return response.setData(saleOrder.getId()).success();
+
+    } catch (Exception e) {
+      PortalRestResponse response = new PortalRestResponse();
+      response.setException(e);
+      return response.fail();
+    }
+  }
 }

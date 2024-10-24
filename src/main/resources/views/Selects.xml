@@ -48,4 +48,54 @@
     <option value="no">No</option>
   </selection>
 
+  <selection name="navigation.select">
+    <option value="leftSide">Left side</option>
+    <option value="topSide">Top side</option>
+  </selection>
+
+  <selection name="notification.select">
+    <option value="all">All new post and new comments</option>
+    <option value="allOnMyPost">All new post and new comments on my post</option>
+    <option value="newCommentsOnMyPost">Only new comments on my post</option>
+    <option value="none">No notification</option>
+  </selection>
+
+  <selection name="reaction.image.select">
+    <option value="like" icon="img/forumReaction/Like-icon.png">Like</option>
+    <option value="dislike" icon="img/forumReaction/Dislike-icon.png">Dislike</option>
+    <option value="love" icon="img/forumReaction/Love-icon.png">Love</option>
+    <option value="sad" icon="img/forumReaction/Sad-icon.png">Sad</option>
+    <option value="angry" icon="img/forumReaction/Angry-icon.png">Angry</option>
+    <option value="funny" icon="img/forumReaction/Funny-icon.png">Funny</option>
+  </selection>
+
+  <selection name="access.type.select">
+    <option value="allPartners">Allow all partners that have access to the app</option>
+    <option value="selectedPartners">Only selected partners</option>
+    <option value="selectedCategories">Only selected partner categories</option>
+  </selection>
+
+  <selection name="subscribe.type.select">
+    <option value="always">Always subscribe</option>
+    <option value="groupSubscribe">Only if user subscribe to the group</option>
+  </selection>
+
+  <selection name="can.pay.invoice.select">
+    <option value="no">No</option>
+    <option value="total">Total</option>
+    <option value="partial">Partial</option>
+  </selection>
+
+  <selection name="ticket.status.change.method.select">
+    <option value="fromDB">From DB</option>
+    <option value="fromWS">From WS</option>
+  </selection>
+
+  <selection name="social.media.select">
+    <option value="linkedin">LinkedIn</option>
+    <option value="twitter">Twitter</option>
+    <option value="instagram">Instagram</option>
+    <option value="whatsapp">Wjhatsapp</option>
+  </selection>
+
 </object-views>

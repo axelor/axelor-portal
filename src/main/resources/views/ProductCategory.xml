@@ -12,10 +12,17 @@
             <field name="portalImage" widget="Image" colSpan="12"/>
           </panel>
           <panel name="detailsPanel" colSpan="10">
-            <field name="portalWorkspace"/>
-            <field name="filterOnBrand"/>
+            <field name="portalWorkspace" colSpan="3"/>
+            <field name="filterOnBrand" colSpan="3"/>
+            <field name="isFeatured" colSpan="3"/>
+            <field name="isPrivate" colSpan="3"/>
+            <field name="productList" colSpan="12" widget="TagSelect"/>
             <field name="productVariantAttrSet" widget="TagSelect" colSpan="12"/>
           </panel>
+        </panel>
+        <panel name="visibilityPanel">
+          <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
+          <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
         </panel>
       </insert>
     </extend>

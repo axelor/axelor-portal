@@ -16,14 +16,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.portal.service;
+package com.axelor.apps.portal.db.repo;
 
-import com.axelor.apps.base.AxelorException;
-import java.math.BigDecimal;
-import java.util.Map;
+import com.axelor.auth.AuthUtils;
+import com.axelor.auth.db.User;
+import com.axelor.dms.db.DMSFile;
+import com.axelor.dms.db.repo.DMSFileRepository;
 
-public interface ProductPortalService {
+public class DMSFilePortalRepository extends DMSFileRepository {
 
-  public Map<String, Object> getProductPrices(
-      Long productId, Long companyId, Long partnerId, BigDecimal qty) throws AxelorException;
+  @Override
+  public DMSFile save(DMSFile entity) {
+
+    entity = super.save(entity);
+
+    if (entity.getVersion() == 0 && entity.getAuthor() == null) {
+      User user = AuthUtils.getUser();
+      if (user != null && user.getActiveCompany() != null) {
+        entity.setAuthor(user.getActiveCompany().getPartner());
+      }
+    }
+
+    return entity;
+  }
 }

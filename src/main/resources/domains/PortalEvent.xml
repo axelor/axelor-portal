@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalEvent">
+
+    <string name="eventTitle" title="Title" namecolumn="true"/>
+    <string name="eventPlace"/>
+    <string name="eventLink"/>
+    <string name="eventDescription" large="true"/>
+    <integer name="eventDegressiveNumberPartcipant"/>
+    <boolean name="eventAllDay"/>
+    <boolean name="eventAllowRegistration"/>
+    <boolean name="eventAllowMultipleRegistrations"/>
+    <boolean name="eventVisibility" default="true"/>
+    <boolean name="isPrivate" title="Private"/>
+    <datetime name="eventStartDateTime" title="Event start date"/>
+    <datetime name="eventEndDateTime" title="Event end date"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
+    <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
+    <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
+      name="eventCategorySet" title="Event categories"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
+
+  </entity>
+
+</domain-models>

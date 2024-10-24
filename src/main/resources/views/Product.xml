@@ -17,12 +17,15 @@
           <field name="homepage" colSpan="3"/>
           <field name="allowCustomNote" colSpan="3"/>
           <field name="sellOutOfStock" colSpan="3"/>
-          <field name="leftQty" colSpan="3" readonly="true"/>
+          <field name="isPrivate" colSpan="3"/>
+          <field name="leftQty" readonly="true"/>
           <field name="brand"/>
           <field name="portalWorkspace"/>
           <field name="portalCategorySet" widget="TagSelect"/>
           <field name="portalAvailableOptionSet" widget="TagSelect"/>
           <field name="portalAssociatedProductSet" widget="TagSelect"/>
+          <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
+          <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
           <field name="longDescription" colSpan="12" widget="html"/>
           <field name="portalImageList" colSpan="12">
             <editor x-viewer="true">

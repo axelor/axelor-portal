@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="ForumGroupMember">
+    <many-to-one ref="com.axelor.apps.portal.db.ForumGroup" name="forumGroup"
+      title="Group"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="member" title="Member"/>
+    <boolean name="isPin" title="Is pin?"/>
+    <string name="notificationSelect" title="Notification" selection="notification.select"/>
+
+    <extra-code>
+      	<![CDATA[
+      		public static final String NOTIFICATION_ALL = "all";
+      		public static final String NOTIFICATION_ALL_ON_MY_POST = "allOnMyPost";
+      		public static final String NOTIFICATION_NEW_COMMENTS_ON_MY_POST = "newCommentsOnMyPost";
+      		public static final String NOTIFICATION_NONE = "none";
+      	]]>
+    </extra-code>
+  </entity>
+
+</domain-models>

@@ -3,7 +3,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-  <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"/>
+  <menuitem title="Portal" name="menu-portal-root" icon="pc-display-horizontal"
+    if="__config__.app.isApp('goovee-portal')"/>
 
   <menuitem title="Workspace" name="menu-portal-portal-workspace" parent="menu-portal-root"
     action="action.portal.porttal.workspace" order="101"/>
@@ -41,8 +42,140 @@
     <view type="form" name="portal-contact-workspace-config-form"/>
   </action-view>
 
+  <menuitem title="News app" name="menu-portal-portal-news-root" parent="menu-portal-root"
+    order="115"/>
+
+  <menuitem title="News" name="menu-portal-portal-news" order="5"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news"/>
+
+  <action-view name="action.portal.portal.news" title="News"
+    model="com.axelor.apps.portal.db.PortalNews">
+    <view type="grid" name="portal-portal-news-grid"/>
+    <view type="form" name="portal-portal-news-form"/>
+  </action-view>
+
+  <menuitem title="Comments" name="menu-portal-portal-news-comment" order="10"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news.comment"/>
+
+  <action-view name="action.portal.portal.news.comment" title="Comments"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedModel = 'com.axelor.apps.portal.db.PortalNews'</domain>
+  </action-view>
+
+  <menuitem title="News category" name="menu-portal-portal-news-catgory" order="15"
+    parent="menu-portal-portal-news-root" action="action.portal.portal.news.category"/>
+
+  <action-view name="action.portal.portal.news.category" title="News category"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <view type="grid" name="portal-portal-news-category-grid"/>
+    <view type="form" name="portal-portal-news-category-form"/>
+  </action-view>
+
+  <menuitem title="Event app" name="menu-portal-portal-event-root"
+    parent="menu-portal-root" order="120"/>
+
+  <menuitem title="Events" name="menu-portal-portal-event" order="5"
+    parent="menu-portal-portal-event-root" action="action.portal.portal.event"/>
+
+  <action-view name="action.portal.portal.event" title="Event"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <view type="grid" name="portal-portal-event-grid"/>
+    <view type="form" name="portal-portal-event-form"/>
+  </action-view>
+
+  <menuitem title="Registration" name="menu-portal-registration" order="10"
+    parent="menu-portal-portal-event-root" action="action.portal.registration"/>
+
+  <action-view name="action.portal.registration" title="Registration"
+    model="com.axelor.apps.portal.db.Registration">
+    <view type="grid" name="portal-registration-grid"/>
+    <view type="form" name="portal-registration-form"/>
+  </action-view>
+
+  <menuitem title="Participant" name="menu-portal-portal-participant" order="15"
+    parent="menu-portal-portal-event-root" action="action.portal.portal.participant"/>
+
+  <action-view name="action.portal.portal.participant" title="Participant"
+    model="com.axelor.apps.portal.db.PortalParticipant">
+    <view type="grid" name="portal-portal-participant-grid"/>
+    <view type="form" name="portal-portal-participant-form"/>
+  </action-view>
+
+  <menuitem title="Configuration" name="menu-portal-portal-event-configuration"
+    parent="menu-portal-portal-event-root" order="20"/>
+
+  <menuitem title="Comments" name="menu-portal-portal-event-comment"
+    parent="menu-portal-portal-event-configuration" action="action.portal.portal.event.comment"/>
+
+  <action-view name="action.portal.portal.event.comment" title="Comments"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedModel = 'com.axelor.apps.portal.db.PortalEvent'</domain>
+  </action-view>
+
+  <menuitem title="Event category" name="menu-portal-portal-event-catgory"
+    parent="menu-portal-portal-event-configuration" action="action.portal.portal.event.category"/>
+
+  <action-view name="action.portal.portal.event.category" title="Event category"
+    model="com.axelor.apps.portal.db.PortalEventCategory">
+    <view type="grid" name="portal-portal-event-category-grid"/>
+    <view type="form" name="portal-portal-event-category-form"/>
+  </action-view>
+
+  <menuitem title="Forum app" name="menu-portal-forum-root" parent="menu-portal-root"
+    order="135"/>
+
+  <menuitem title="Group" name="menu-portal-forum-group" parent="menu-portal-forum-root"
+    action="action.portal.forum.group"/>
+
+  <action-view name="action.portal.forum.group" title="Group"
+    model="com.axelor.apps.portal.db.ForumGroup">
+    <view type="grid" name="forum-group-grid"/>
+    <view type="form" name="forum-group-form"/>
+  </action-view>
+
+  <menuitem title="Group member" name="menu-portal-forum-group-member"
+    parent="menu-portal-forum-root" action="action.portal.forum.group.member"/>
+
+  <action-view name="action.portal.forum.group.member" title="Group member"
+    model="com.axelor.apps.portal.db.ForumGroupMember">
+    <view type="grid" name="forum-group-member-grid"/>
+    <view type="form" name="forum-group-member-form"/>
+  </action-view>
+
+  <menuitem title="Post" name="menu-portal-forum-post" parent="menu-portal-forum-root"
+    action="action.portal.forum.post"/>
+
+  <action-view name="action.portal.forum.post" title="Post"
+    model="com.axelor.apps.portal.db.ForumPost">
+    <view type="grid" name="forum-post-grid"/>
+    <view type="form" name="forum-post-form"/>
+  </action-view>
+
+  <menuitem title="Comments" name="menu-portal-forum-comment"
+    parent="menu-portal-forum-root" action="action.portal.forum.comment"/>
+
+  <action-view name="action.portal.forum.comment" title="Comments"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedModel = 'com.axelor.apps.portal.db.ForumPost'</domain>
+  </action-view>
+
+  <menuitem title="Group configuration" name="menu-portal-forum-group-configuration"
+    parent="menu-portal-forum-root" action="action.portal.forum.group.configuration"/>
+
+  <action-view name="action.portal.forum.group.configuration"
+    model="com.axelor.apps.portal.db.ForumGroupConfig" title="Group configuration">
+    <view type="grid" name="forum-group-config-grid"/>
+    <view type="form" name="forum-group-config-form"/>
+  </action-view>
+
   <menuitem title="Configuration" name="menu-portal-configuration-root"
-    parent="menu-portal-root" order="115"/>
+    parent="menu-portal-root" order="140"/>
 
   <menuitem title="Portal app" name="menu-portal-portal-app"
     parent="menu-portal-configuration-root" action="action.portal.portal.app" order="1000"/>
@@ -79,6 +212,15 @@
     model="com.axelor.apps.portal.db.PortalPaymentConfig">
     <view type="grid" name="portal-payment-config-grid"/>
     <view type="form" name="portal-payment-config-form"/>
+  </action-view>
+
+  <menuitem title="Comment" name="menu-portal-portal-comment"
+    parent="menu-portal-configuration-root" action="action.portal.portal.comment" order="1030"/>
+
+  <action-view name="action.portal.portal.comment" title="Comment"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
   </action-view>
 
 </object-views>

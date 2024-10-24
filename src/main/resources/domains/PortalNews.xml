@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalNews">
+
+    <string name="title" namecolumn="true"/>
+    <string name="slug" required="true" unique="true"/>
+    <datetime name="publicationDateTime" title="Publication date"/>
+    <string name="description" large="true"/>
+    <string name="content" large="true"/>
+    <boolean name="isFeaturedNews" title="Featured ?"/>
+    <boolean name="isPrivate" title="Private"/>
+    <many-to-many name="categorySet" ref="com.axelor.apps.portal.db.PortalNewsCategory"
+      title="Parent news categories"/>
+    <many-to-one name="author" ref="com.axelor.apps.base.db.Partner"/>
+    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+    <many-to-many ref="com.axelor.apps.portal.db.PortalNews" name="relatedNewsSet"
+      title="Related news"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
+    <one-to-many ref="com.axelor.apps.portal.db.Attachment" name="attachmentList"
+      mappedBy="portalNews"/>
+
+  </entity>
+
+</domain-models>

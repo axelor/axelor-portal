@@ -5,19 +5,21 @@
 
   <grid name="portal-workspace-grid" title="Workspaces"
     model="com.axelor.apps.portal.db.PortalWorkspace">
+    <field name="name"/>
     <field name="url"/>
-    <field name="defaultPortalAppConfig"/>
     <field name="defaultTheme"/>
   </grid>
 
   <form name="portal-workspace-form" title="Workspace"
     model="com.axelor.apps.portal.db.PortalWorkspace">
     <panel name="mainPanel">
+      <field name="name"/>
+      <field name="navigationSelect"/>
       <field name="url" widget="url" colSpan="12"/>
-      <field name="defaultPortalAppConfig"/>
       <field name="defaultTheme"/>
-      <field name="defaultPWAfterRegistration"/>
+      <field name="defaultPartnerWorkspace"/>
       <field name="allowRegistrationSelect"/>
+      <field name="defaultGuestWorkspace"/>
     </panel>
   </form>
 

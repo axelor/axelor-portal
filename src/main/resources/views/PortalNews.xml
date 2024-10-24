@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-portal-news-grid" title="Portal news"
+    model="com.axelor.apps.portal.db.PortalNews">
+    <field name="title"/>
+    <field name="publicationDateTime"/>
+    <field name="isFeaturedNews"/>
+    <field name="categorySet" widget="TagSelect"/>
+  </grid>
+
+  <form name="portal-portal-news-form" title="Portal news"
+    model="com.axelor.apps.portal.db.PortalNews" width="large"
+    onNew="action-portal-record-portal-news-category-onnew">
+    <panel name="mainPanel">
+      <panel name="imagePanel" colSpan="2">
+        <field name="image" widget="Image" colSpan="12" showTitle="false"/>
+      </panel>
+      <panel name="infoPanel" colSpan="10">
+        <field name="title" required="true" colSpan="11"/>
+        <field name="isFeaturedNews" colSpan="1"/>
+        <field name="slug" pattern="^[a-z0-9-]*$" colSpan="11"/>
+        <field name="isPrivate" colSpan="1"/>
+        <field name="publicationDateTime"/>
+        <field name="author"/>
+      </panel>
+      <field name="categorySet" colSpan="12" widget="TagSelect"/>
+      <field name="relatedNewsSet" colSpan="12" widget="TagSelect"/>
+      <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
+      <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+      <field name="description" colSpan="12"/>
+      <field name="content" colSpan="12" widget="html"/>
+      <panel name="attachmentPanel">
+        <field name="attachmentList" colSpan="12" title="Related files">
+          <editor x-viewer="true">
+            <field name="metaFile" showTitle="false" widget="binary-link"
+              form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4"/>
+            <field name="title" showTitle="false" colSpan="8"/>
+          </editor>
+        </field>
+      </panel>
+      <panel name="commentPanel" title="Comments" colSpan="12">
+        <spacer name="commentSpacer" colSpan="11"/>
+        <button onClick="save,action-portal-portal-add-comment" name="addbtn" title="Add"
+          colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
+        <panel-dashlet action="action-portal-portal-news-display-comment" colSpan="12"
+          title=""/>
+      </panel>
+    </panel>
+  </form>
+
+  <action-view name="action-portal-portal-news-display-comment" title="Comments"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <domain>self.relatedId = :id AND self.relatedModel = 'com.axelor.apps.portal.db.PortalNews'</domain>
+  </action-view>
+
+  <action-record name="action-portal-record-portal-news-category-onnew"
+    model="com.axelor.apps.portal.db.PortalNews">
+    <field name="author" expr="eval: __user__?.partner"/>
+  </action-record>
+
+</object-views>

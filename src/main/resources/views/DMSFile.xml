@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <form name="dms-file-form" id="portal-dms-file-form" title="Document"
+    model="com.axelor.dms.db.DMSFile" extension="true">
+    <extend target="//panel[@name='tagsPanel']">
+      <insert position="after">
+        <panel name="portalPanel" sidebar="true">
+          <field name="author"/>
+          <field name="isSharedFolder"/>
+          <field name="workspaceSet" widget="TagSelect"/>
+          <field name="partnerCategorySet" widget="TagSelect"/>
+          <field name="description"/>
+        </panel>
+      </insert>
+    </extend>
+  </form>
+
+  <form name="dms-folder-form" id="portal-dms-folder-form" title="Directory"
+    model="com.axelor.dms.db.DMSFile" extension="true">
+    <extend target="//panel[@name='Overview']/*[last()]">
+      <insert position="after">
+        <field name="isSharedFolder"/>
+        <field name="workspaceSet" widget="TagSelect"/>
+        <field name="partnerCategorySet" widget="TagSelect"/>
+        <field name="description"/>
+      </insert>
+    </extend>
+  </form>
+
+</object-views>

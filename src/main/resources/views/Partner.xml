@@ -9,7 +9,9 @@
       <insert position="before">
         <panel name="portalPanel" colSpan="12">
           <field name="portalPassword" widget="password"/>
+          <field name="isRegisteredOnPortal"/>
           <field name="partnerWorkspaceSet" widget="TagSelect" colSpan="12"/>
+          <field name="defaultWorkspace" domain="self IN (:partnerWorkspaceSet)"/>
         </panel>
       </insert>
     </extend>
@@ -21,6 +23,7 @@
       <insert position="after">
         <panel title="Portal" name="portalPanel">
           <field name="portalPassword" widget="password"/>
+          <field name="isRegisteredOnPortal"/>
           <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"/>
         </panel>
       </insert>

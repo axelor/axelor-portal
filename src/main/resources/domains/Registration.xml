@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="Registration">
+
+    <many-to-one name="event" ref="com.axelor.apps.portal.db.PortalEvent"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalParticipant"
+      name="participantList" title="Event participants" mappedBy="registration"/>
+
+  </entity>
+
+</domain-models>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
 
   <module name="base" package="com.axelor.apps.base.db"/>
 
@@ -9,12 +9,20 @@
 
     <many-to-many ref="com.axelor.apps.base.db.ProductVariantAttr"
       name="productVariantAttrSet" title="Portal variants"/>
+    <many-to-many ref="com.axelor.apps.base.db.Product" name="productList"
+      title="Products" mappedBy="portalCategorySet"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="portalImage"
       title="Portal image"/>
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
     <string name="subtitle" title="Subtitle"/>
     <boolean name="filterOnBrand" title="Filter On Brands"/>
+    <boolean name="isFeatured" title="Featured ?"/>
+    <boolean name="isPrivate" title="Private"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
 
   </entity>
 

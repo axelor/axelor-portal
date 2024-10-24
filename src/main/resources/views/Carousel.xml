@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.Carousel" title="Carousels" name="carousel-grid">
+    <field name="title"/>
+    <field name="subTitle"/>
+    <field name="href"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.Carousel" title="Carousel" name="carousel-form">
+    <panel name="carouselPanel" title="Carousel" colSpan="12">
+      <panel name="imagePanel" colSpan="2">
+        <field name="image" widget="image"/>
+      </panel>
+      <panel name="fieldsPanel" colSpan="10" itemSpan="12">
+        <field name="title"/>
+        <field name="subTitle"/>
+        <field name="href" widget="url" pattern="^(?:http(?:s)?://)?\S+(?:\.\S+)+$"/>
+        <field name="portalAppConfig"/>
+      </panel>
+    </panel>
+  </form>
+
+</object-views>

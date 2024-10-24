@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-portal-event-category-grid" title="Portal event categories"
+    model="com.axelor.apps.portal.db.PortalEventCategory">
+    <field name="name"/>
+    <field name="color" widget="SingleSelect"/>
+  </grid>
+
+  <form name="portal-portal-event-category-form" title="Portal event category"
+    model="com.axelor.apps.portal.db.PortalEventCategory" width="large">
+    <panel name="mainPanel">
+      <field name="name" required="true" colSpan="11"/>
+      <field name="isPrivate" colSpan="1"/>
+      <field name="color" widget="SingleSelect"/>
+      <field name="workspace"/>
+      <field name="description" colSpan="12"/>
+      <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
+      <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+    </panel>
+  </form>
+
+</object-views>

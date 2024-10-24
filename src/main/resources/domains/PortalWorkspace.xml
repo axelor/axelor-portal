@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
 
   <module name="portal" package="com.axelor.apps.portal.db"/>
 
   <entity name="PortalWorkspace">
 
-    <string name="url" title="URL" namecolumn="true"/>
-    <many-to-one name="defaultPortalAppConfig"
-      ref="com.axelor.apps.portal.db.PortalAppConfig" title="Default portal app config"/>
+    <string name="url" title="URL"/>
+    <string name="name" title="Name"/>
     <many-to-one name="defaultTheme" ref="com.axelor.apps.portal.db.PortalTheme"/>
-    <many-to-one name="defaultPWAfterRegistration"
-      title="Default partner workspace after registration"
+    <many-to-one name="defaultPartnerWorkspace" title="Default partner workspace"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <string name="allowRegistrationSelect" title="Allow registration ?"
       selection="allow.registration.select"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
+      name="defaultGuestWorkspace" title="Default guest workspace"/>
+    <string name="navigationSelect" title="Navigation" selection="navigation.select"/>
 
+    <extra-code>
+      	<![CDATA[
+      		public static final String NAVIGATION_LEFT_SIDE = "leftSide";
+      		public static final String NAVIGATION_TOP_SIDE = "topSide";
+      	]]>
+    </extra-code>
   </entity>
 
 </domain-models>

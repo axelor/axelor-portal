@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="dms" package="com.axelor.dms.db"/>
+
+  <entity name="DMSFile" table="DMS_FILE" repository="none">
+
+    <string name="description" large="true"/>
+    <boolean name="isSharedFolder" title="Shared folder"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="author"/>
+    <many-to-many ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspaceSet"
+      title="Workspaces"/>
+    <many-to-many ref="com.axelor.apps.base.db.PartnerCategory"
+      name="partnerCategorySet" title="Categories"/>
+    <one-to-many ref="com.axelor.dms.db.DMSFile" name="children" mappedBy="parent"
+      title="Children"/>
+  </entity>
+
+</domain-models>
