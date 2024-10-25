@@ -97,5 +97,9 @@
     <option value="instagram">Instagram</option>
     <option value="whatsapp">Wjhatsapp</option>
   </selection>
+  
+  <selection name="project.chat.visibility" id="portal.project.chat.visibility">
+    <option value="3">Customer chat</option>
+  </selection>
 
 </object-views>

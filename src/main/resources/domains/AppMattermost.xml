@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models https://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="studio" package="com.axelor.studio.db"/>
+
+  <entity name="AppMattermost" cacheable="true">
+
+    <many-to-one ref="com.axelor.apps.portal.db.PortalApp" name="portalAppToAccessChat"
+      title="App to use to check access to chat for contacts"/>
+  </entity>
+
+</domain-models>
+

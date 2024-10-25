@@ -30,4 +30,25 @@
     </extend>
   </form>
 
+  <action-group name="action-partner-group-onsave"
+    id="portal-action-partner-group-onsave">
+    <action name="action-partner-iban-check-on-save"/>
+    <action name="save"/>
+    <action name="action-partner-method-set-user-partner"/>
+    <action name="action-method-partner-check-registration-code"/>
+    <action name="action-partner-method-create-user-mattermost"/>
+  </action-group>
+
+  <action-method name="action-partner-method-create-user-mattermost">
+    <call class="com.axelor.apps.portal.mattermost.web.PartnerController" method="createUser"/>
+  </action-method>
+
+  <action-group name="action-contact-group-on-save">
+    <action name="save"/>
+    <action name="action-partner-method-set-user-partner"/>
+    <action name="action-partner-method-add-contact-partner"/>
+    <action name="action-partner-method-create-user-mattermost"/>
+  </action-group>
+
+
 </object-views>
