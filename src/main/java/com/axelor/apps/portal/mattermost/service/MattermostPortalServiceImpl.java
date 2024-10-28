@@ -73,28 +73,33 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
   }
 
   @Override
-  public void createUsers(Partner customer) {
+  public void createUsers(Partner partner) {
     try {
       initialize();
-      checkMailAddress(customer);
-      String email = customer.getEmailAddress().getAddress();
-      if (ObjectUtils.isEmpty(customer.getMattermostUserId())) {
+      checkMailAddress(partner);
+      String email = partner.getEmailAddress().getAddress();
+      if (ObjectUtils.isEmpty(partner.getMattermostUserId())) {
         String userId =
             new MattermostRestUser(url, token)
                 .createUser(
-                    customer.getId(), email, customer.getFirstName(), customer.getName(), email);
+                		partner.getId(), email, partner.getFirstName(), partner.getName(), email);
         if (ObjectUtils.notEmpty(userId)) {
-          customer.setMattermostUserId(userId);
+        	partner.setMattermostUserId(userId);
         }
-        savePartner(customer);
+        savePartner(partner);
       }
-
-      Set<Partner> contactSet = customer.getContactPartnerSet();
+      if(partner.getIsContact()) {
+    	  Set<PortalContactWorkspaceConfig> portalContactWorkspaceConfigSet = partner.getContactWorkspaceConfigSet();
+    	  for (PortalContactWorkspaceConfig portalContactWorkspaceConfig : portalContactWorkspaceConfigSet) {
+    		  updateChatAccessForContacts(portalContactWorkspaceConfig);
+		}
+      }
+      Set<Partner> contactSet = partner.getContactPartnerSet();
       if (CollectionUtils.isEmpty(contactSet)) {
         return;
       }
-      for (Partner partner : contactSet) {
-        createUsers(partner);
+      for (Partner contact : contactSet) {
+        createUsers(contact);
       }
     } catch (Exception e) {
       TraceBackService.trace(e, "mattermost");
@@ -197,19 +202,39 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
         TraceBackService.trace(e, "mattermost");
       }
     }
+    try {
+      addContactWithAllAccess();
+    } catch (Exception e) {
+      TraceBackService.trace(e, "mattermost");
+    }
+
     removeNotFoundUsers(userIDs, project);
+  }
+
+  protected void addContactWithAllAccess() throws AxelorException {
+    AppMattermost appMattermost = appMattermostService.getAppMattermost();
+    PortalApp portalApp = appMattermost.getPortalAppToAccessChat();
+    List<PortalContactAppPermission> portalContactAppPermissionList =
+        JPA.all(PortalContactAppPermission.class)
+            .filter("self.app = :app AND self.roleSelect = 'total'")
+            .bind("app", portalApp)
+            .fetch();
+    List<PortalContactWorkspaceConfig> portalContactWorkspaceConfigList =
+        new ArrayList<PortalContactWorkspaceConfig>();
+    for (PortalContactAppPermission portalContactAppPermission : portalContactAppPermissionList) {
+      PortalContactWorkspaceConfig portalContactWorkspaceConfig =
+          portalContactAppPermission.getContactWorkspaceConfig();
+      if (!portalContactWorkspaceConfigList.contains(portalContactWorkspaceConfig)) {
+        portalContactWorkspaceConfigList.add(portalContactWorkspaceConfig);
+        updateChatAccessForContacts(portalContactWorkspaceConfig);
+      }
+    }
   }
 
   @Override
   public void updateChatAccessForContacts(PortalContactWorkspaceConfig portalContactWorkspaceConfig)
       throws AxelorException {
-    if (!checkApp(portalContactWorkspaceConfig)) {
-      return;
-    }
     String roleSelect = getRoleSelect(portalContactWorkspaceConfig);
-    if (ObjectUtils.isEmpty(roleSelect)) {
-      return;
-    }
     List<Partner> contactList =
         JPA.all(Partner.class)
             .filter(
@@ -225,7 +250,24 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
           updateAccessToChat(partner, true);
           break;
         default:
-          continue;
+          removeAccessToChat(partner);
+      }
+    }
+  }
+
+  protected void removeAccessToChat(Partner partner) throws AxelorException {
+    initialize();
+    List<Project> allCustomerChatProjects =
+        JPA.all(Project.class).filter("self.chatVisibilitySelect > 2").fetch();
+
+    if (CollectionUtils.isEmpty(allCustomerChatProjects)) {
+      return;
+    }
+    for (Project project : allCustomerChatProjects) {
+      try {
+        removeUserFromChannel(project, partner.getMattermostUserId());
+      } catch (Exception e) {
+        TraceBackService.trace(e, "mattermost");
       }
     }
   }
@@ -244,7 +286,7 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
         JPA.all(Project.class).filter("self.chatVisibilitySelect > 2").fetch();
 
     if (CollectionUtils.isEmpty(projectWithContact)
-        || CollectionUtils.isEmpty(allCustomerChatProjects)) {
+        && CollectionUtils.isEmpty(allCustomerChatProjects)) {
       return;
     }
     if (accessToAllProject) {
@@ -279,16 +321,17 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
     AppMattermost appMattermost = appMattermostService.getAppMattermost();
     PortalApp portalApp = appMattermost.getPortalAppToAccessChat();
     if (ObjectUtils.isEmpty(portalApp)) {
-      return null;
+      return "";
     }
     List<PortalContactAppPermission> appPermissionList =
         portalContactWorkspaceConfig.getContactAppPermissionList();
     for (PortalContactAppPermission appPermission : appPermissionList) {
-      if (appPermission.getApp() != null && appPermission.getId().equals(portalApp.getId())) {
+      if (appPermission.getApp() != null
+          && appPermission.getApp().getId().equals(portalApp.getId())) {
         return appPermission.getRoleSelect();
       }
     }
-    return null;
+    return "";
   }
 
   protected boolean checkApp(PortalContactWorkspaceConfig portalContactWorkspaceConfig) {
@@ -303,7 +346,8 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
       return false;
     }
     for (PortalContactAppPermission appPermission : appPermissionList) {
-      if (appPermission.getApp() != null && appPermission.getId().equals(portalApp.getId())) {
+      if (appPermission.getApp() != null
+          && appPermission.getApp().getId().equals(portalApp.getId())) {
         return true;
       }
     }

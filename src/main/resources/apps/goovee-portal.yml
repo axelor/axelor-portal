@@ -12,5 +12,5 @@ dependsOn:
   - production
   - project
   - helpdesk
-  - axelor-mattermost
+  - mattermost
 sequence: 57

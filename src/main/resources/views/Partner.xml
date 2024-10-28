@@ -19,6 +19,9 @@
 
   <form name="partner-contact-form" id="portal-partner-contact-form" title="Contact"
     model="com.axelor.apps.base.db.Partner" extension="true">
+    <extend target="/">
+    	<attribute name="onSave" value="action-contact-group-on-save"/>
+    </extend>
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel title="Portal" name="portalPanel">
