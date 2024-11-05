@@ -49,6 +49,12 @@
     </panel>
     <panel-dashlet action="action-project-task-dashlet-show-history"
       name="historyPanel" title="History" canSearch="true" showIf="id" colSpan="12"/>
+    <panel name="watchersPanel" title="Watchers">
+      <field name="internalWatchers" title="Internal Watchers" widget="TagSelect"
+        canNew="false" form-view="user-form" grid-view="user-grid"/>
+      <field name="externalWatchers" title="External Watchers" widget="TagSelect"
+        canNew="false" form-view="user-form" grid-view="user-grid"/>
+    </panel>
 
   </form>
 

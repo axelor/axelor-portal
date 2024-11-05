@@ -11,6 +11,10 @@
       ref="com.axelor.apps.base.db.MailMessageFile" title="Files"/>
     <string name="note" title="comment.note" large="true"/>
     <boolean name="isPublicNote" title="Public note" default="false" transient="true"/>
+    <many-to-many ref="com.axelor.auth.db.User" name="internalWatchers"
+      title="Internal Watchers"/>
+    <many-to-many ref="com.axelor.auth.db.User" name="externalWatchers"
+      title="External Watchers"/>
 
     <track>
       <field name="note"/>
