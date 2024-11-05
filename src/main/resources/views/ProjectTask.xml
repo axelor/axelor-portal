@@ -17,6 +17,18 @@
       <attribute name="onSave" value="action-project-task-group-on-save"/>
     </extend>
 
+    <extend target="//panel-tabs[@name='mainPanelTab']">
+      <insert position="inside">
+        <panel name="portalPanel" title="Portal">
+          <field name="assignedToContact" title="Contact"
+            onSelect="action-project-task-attrs-assigned-to-contact-domain" canNew="false"
+            canView="false" canEdit="false"/>
+          <field name="displayFinancialData" widget="boolean-switch"
+            help="To dispaly or hide financial data on customer side"/>
+        </panel>
+      </insert>
+    </extend>
+
   </form>
 
   <form name="project-task-history-form" title="History"
@@ -95,6 +107,21 @@
     <attribute name="value" for="relatedId" expr="eval: _relatedId"/>
     <attribute name="value" for="relatedModel" expr="eval: _relatedModel"/>
     <attribute name="value" for="isPublicNote" expr="eval: _isPublicNote"/>
+  </action-attrs>
+
+  <action-attrs name="action-project-task-attrs-assigned-to-contact-domain">
+    <attribute name="domain" for="assignedToContact"
+      expr="eval: &quot;self.isRegisteredOnPortal = true AND (self.id = ${project?.clientPartner?.id} OR self.id IN (${project?.clientPartner?.contactPartnerSet?.collect{it.id}?.join(',')}))&quot;"/>
+  </action-attrs>
+
+  <!-- Portal change: update filter to fetch tasks with same type -->
+  <action-attrs
+    id="action-project-task-attrs-project-portal-parent-task-configurations"
+    name="action-project-task-attrs-project-parent-task-configurations"
+    model="com.axelor.apps.project.db.ProjectTask">
+    <attribute name="domain"
+      expr="eval: (project?.projectTaskList !=null &amp;&amp; project?.projectTaskList?.size() > 0 ) ? &quot;self.typeSelect = '${typeSelect}' AND self.id != ${id} AND self.id IN(${project?.projectTaskList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null)&quot;"
+      for="parentTask"/>
   </action-attrs>
 
   <action-method
