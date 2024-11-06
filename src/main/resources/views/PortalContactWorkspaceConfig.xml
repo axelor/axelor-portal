@@ -10,12 +10,19 @@
   </grid>
 
   <form name="portal-contact-workspace-config-form" title="Contact workspace config"
-    model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig">
+    model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"
+    onSave="action-portal-contact-workspace-config-method-update-contact-access-to-chat">
     <panel name="mainPanel">
       <field name="name"/>
       <field name="portalWorkspace"/>
       <field name="contactAppPermissionList" colSpan="12"/>
     </panel>
   </form>
+
+  <action-method
+    name="action-portal-contact-workspace-config-method-update-contact-access-to-chat">
+    <call class="com.axelor.apps.portal.mattermost.web.PortalContactWorkspaceConfigController"
+      method="updateChatAccessForContacts"/>
+  </action-method>
 
 </object-views>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views https://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <form name="app-mattermost-config-form" title="App mattermost"
+    model="com.axelor.studio.db.AppMattermost" width="large" canDelete="false" canNew="false"
+    canCopy="false" extension="true" id="portal-app-mattermost-config-form">
+    <extend target="//field[@name='tenantName']">
+      <insert position="after">
+        <field name="portalAppToAccessChat" required="true"/>
+        <spacer/>
+      </insert>
+    </extend>
+  </form>
+
+</object-views>
