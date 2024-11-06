@@ -12,4 +12,5 @@ dependsOn:
   - production
   - project
   - helpdesk
+  - mattermost
 sequence: 57

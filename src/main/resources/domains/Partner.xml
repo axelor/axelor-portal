@@ -16,6 +16,9 @@
     <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
       name="defaultWorkspace" title="Default workspace"/>
 
+    <!-- MATTERMOST -->
+    <string name="mattermostUserId" title="Mattermost channel id" unique="true"/>
+    <entity-listener class="com.axelor.apps.portal.db.repo.PartnerListener"/>
   </entity>
 
 </domain-models>

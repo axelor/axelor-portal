@@ -30,6 +30,11 @@ import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.portal.service.MailMessagePortalServiceImpl;
 import com.axelor.apps.portal.service.MailServicePortalImpl;
 import com.axelor.apps.portal.service.ProjectTaskLinkPortalServiceImpl;
+import com.axelor.apps.mattermost.mattermost.service.MattermostServiceImpl;
+import com.axelor.apps.portal.db.repo.DMSFilePortalRepository;
+import com.axelor.apps.portal.db.repo.MailMessagePortalRepository;
+import com.axelor.apps.portal.mattermost.service.MattermostPortalService;
+import com.axelor.apps.portal.mattermost.service.MattermostPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.SaleOrderPortalServiceImpl;
 import com.axelor.apps.portal.service.StockMovePortalServiceImpl;
@@ -52,5 +57,7 @@ public class PortalModule extends AxelorModule {
     bind(MailMessageFileService.class).to(MailMessageFileServiceImpl.class);
     bind(MailServiceHelpDeskImpl.class).to(MailServicePortalImpl.class);
     bind(ProjectTaskLinkServiceImpl.class).to(ProjectTaskLinkPortalServiceImpl.class);
+    bind(MattermostPortalService.class).to(MattermostPortalServiceImpl.class);
+    bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
   }
 }
