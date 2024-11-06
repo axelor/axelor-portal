@@ -25,7 +25,7 @@ dependencies {
   	api "com.axelor.apps:axelor-production:${aosVersion}"
   	api "com.axelor.apps:axelor-project:${aosVersion}"
   	api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
-    api project(":modules:axelor-mattermost")
+  	api project(":modules:axelor-mattermost")
 }
 
 apply plugin: 'maven-publish'
