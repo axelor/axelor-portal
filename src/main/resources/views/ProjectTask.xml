@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.2.xsd">
+
+  <form name="business-project-task-form" title="Task"
+    model="com.axelor.apps.project.db.ProjectTask" id="portal-business-project-task-form"
+    extension="true">
+
+    <extend target="//panel-mail[@name='mailPanel']">
+      <replace>
+        <panel-include view="project-task-history-form"/>
+      </replace>
+    </extend>
+
+    <extend target="/">
+      <attribute name="onSave" value="action-project-task-group-on-save"/>
+    </extend>
+
+  </form>
+
+  <form name="project-task-history-form" title="History"
+    model="com.axelor.apps.project.db.ProjectTask" width="large">
+
+    <panel-include view="mail-message-file-preview-form"/>
+    <panel name="editPanel" title="Edit" colSpan="12" showIf="id &amp;&amp; !$readonly()">
+      <field name="publicNoteLabel" readonly="true" showTitle="false" showIf="isPublicNote">
+        <viewer>
+	          <![CDATA[
+		          <>
+		          	{<Badge style={{ backgroundColor: "red" }}>Public Note</Badge>}
+				  </>
+	          ]]>
+        </viewer>
+      </field>
+      <field name="note" title="Note" colSpan="12" widget="html"/>
+      <field name="isPublicNote" widget="boolean-switch"
+        onChange="action-mail-message-attrs-is-public-note-on-change"/>
+      <field name="mailMessageFileList" title="Files" colSpan="12">
+        <editor x-viewer="true">
+          <field name="attachmentFile" showTitle="false"
+            onChange="action-mail-message-file-clear-attachment-file-description" required="true"
+            widget="binary-link"/>
+          <field name="description" showTitle="false" showIf="attachmentFile" widget="string"/>
+        </editor>
+      </field>
+      <button onClick="action-project-task-group-on-save" name="submitBtn" title="Submit"
+        colSpan="1"/>
+    </panel>
+    <panel-dashlet action="action-project-task-dashlet-show-history"
+      name="historyPanel" title="History" canSearch="true" showIf="id" colSpan="12"/>
+
+  </form>
+
+  <form model="com.axelor.apps.project.db.ProjectTask" title="Files"
+    name="mail-message-file-preview-form">
+
+    <panel name="mailMessageFilePreviewPanel" title="Files" showIf="id" collapseIf="true">
+      <field name="$mailMessageFilePreviewList" showTitle="false" type="one-to-many"
+        target="com.axelor.apps.base.db.MailMessageFile" colSpan="12" readonly="true">
+        <viewer>
+			<![CDATA[
+				<>
+				  <Icon icon="attachment" />
+				  <Link href={`ws/rest/com.axelor.meta.db.MetaFile/${attachmentFile.id}/content/download?v=${attachmentFile.$version}`} style={{ textDecoration: "none" }}>
+				    {attachmentFile.fileName}
+				  </Link>{" "}
+				  {description && `${description}`}{" "}
+				  <span style={{ color: "#999" }}>
+				    {createdBy.fullName}, {$moment(createdOn).format("MM/DD/YYYY HH:mm")}
+				  </span>
+				  <Button variant="link" onClick={() => $execute("action-project-task-view-edit-mail-message-file")}>
+				    <Icon icon="edit" />
+				  </Button>
+				  <Button variant="link" onClick={() => $execute("action-project-task-group-delete-mail-message-file")}>
+				    <Icon icon="delete" />
+				  </Button>
+				</>
+			]]>
+        </viewer>
+      </field>
+    </panel>
+
+  </form>
+
+  <action-attrs id="project-task-action-mail-message-attrs-on-new"
+    name="action-mail-message-attrs-on-new">
+    <attribute name="value" for="parentMailMessage" expr="eval: _parentMailMessage"/>
+    <attribute name="value" for="relatedId" expr="eval: _relatedId"/>
+    <attribute name="value" for="relatedModel" expr="eval: _relatedModel"/>
+    <attribute name="value" for="isPublicNote" expr="eval: _isPublicNote"/>
+  </action-attrs>
+
+  <action-method
+    name="action-project-task-method-create-mail-message-with-only-attachment">
+    <call class="com.axelor.apps.portal.web.ProjectTaskPortalController"
+      method="createCommentWithOnlyAttachment"/>
+  </action-method>
+
+  <action-method name="action-project-task-method-delete-file">
+    <call class="com.axelor.apps.portal.web.MailMessageFileController"
+      method="deleteMailMessageFile"/>
+  </action-method>
+
+  <action-view name="action-project-task-dashlet-show-history" title="History"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="cards" name="mail-message-card"/>
+    <view type="form" name="mail-message-form"/>
+    <view-param name="forceEdit" value="true"/>
+    <domain>self.relatedModel = 'com.axelor.apps.project.db.ProjectTask' and self.relatedId = :id</domain>
+  </action-view>
+
+  <action-view id="project-task-action-mail-message-view-quote-note"
+    name="action-mail-message-view-quote-note" title="Quote a note"
+    model="com.axelor.mail.db.MailMessage">
+    <view type="form" name="mail-message-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="popup-save" value="true"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="forceEdit" value="true"/>
+    <context name="_parentMailMessage" expr="eval: __repo__(MailMessage).find(id)"
+      if="!parentMailMessage.id"/>
+    <context name="_parentMailMessage"
+      expr="eval: __repo__(MailMessage).find(parentMailMessage.id)" if="parentMailMessage.id"/>
+    <context name="_relatedId" expr="eval: relatedId"/>
+    <context name="_relatedModel" expr="eval: relatedModel"/>
+    <context name="_isPublicNote" expr="eval: isPublicNote"/>
+  </action-view>
+
+  <action-view name="action-project-task-view-edit-mail-message-file"
+    title="Edit attached file" model="com.axelor.apps.base.db.MailMessageFile">
+    <view type="form" name="mail-message-file-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="popup-save" value="true"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="forceEdit" value="true"/>
+    <context name="_showRecord" expr="eval: id"/>
+  </action-view>
+
+  <action-group name="action-project-task-group-on-save">
+    <action name="save"/>
+    <action name="action-project-task-method-create-mail-message-with-only-attachment"/>
+  </action-group>
+
+  <action-group name="action-project-task-group-delete-mail-message-file">
+    <action name="action-mail-message-validate-delete"/>
+    <action name="action-project-task-method-delete-file"/>
+  </action-group>
+
+</object-views>

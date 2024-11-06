@@ -23,7 +23,7 @@ ext.aosVersion = '8.2.0-SNAPSHOT'
 dependencies {
 
   	api "com.axelor.apps:axelor-production:${aosVersion}"
-  	api "com.axelor.apps:axelor-project:${aosVersion}"
+  	api "com.axelor.apps:axelor-business-support:${aosVersion}"
   	api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
 }
 
