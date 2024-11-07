@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.2.xsd">
+
+  <module name="project" package="com.axelor.apps.project.db"/>
+
+  <entity name="ProjectTask">
+
+    <one-to-many name="mailMessageFileList"
+      ref="com.axelor.apps.base.db.MailMessageFile" title="Files"/>
+    <string name="note" title="comment.note" large="true"/>
+    <boolean name="isPublicNote" title="Public note" default="false" transient="true"/>
+    <many-to-many ref="com.axelor.auth.db.User" name="internalWatchers"
+      title="Internal Watchers"/>
+    <many-to-many ref="com.axelor.auth.db.User" name="externalWatchers"
+      title="External Watchers"/>
+
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="assignedToContact"
+      title="Assigned to contact"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="requestedByContact"
+      title="Requested by contact"/>
+    <boolean name="displayFinancialData" title="Display financial data" default="false"/>
+
+    <track>
+      <field name="note"/>
+      <field name="priority"/>
+      <field name="assignedToContact"/>
+    </track>
+
+  </entity>
+
+</domain-models>
