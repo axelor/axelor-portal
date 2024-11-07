@@ -16,4 +16,17 @@
 
   </form>
 
+  <form id="protal-business-project-form" name="business-project-form" title="Business project"
+    model="com.axelor.apps.project.db.Project" extension="true">
+
+    <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
+      <insert position="after">
+        <panel name="portalPanel" title="Portal">
+          <field name="portalWorkspace"/>
+        </panel>
+      </insert>
+    </extend>
+
+  </form>
+
 </object-views>
