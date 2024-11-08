@@ -20,6 +20,7 @@ package com.axelor.apps.portal.db.repo;
 
 import com.axelor.app.AppSettings;
 import com.axelor.apps.base.db.MailMessageFile;
+import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.project.db.ProjectTask;
 import com.axelor.apps.project.db.repo.ProjectTaskRepository;
@@ -29,6 +30,7 @@ import com.axelor.mail.db.repo.MailMessageRepository;
 import com.axelor.meta.db.MetaFile;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 
 public class MailMessagePortalRepository extends MailMessageRepository {
@@ -40,9 +42,16 @@ public class MailMessagePortalRepository extends MailMessageRepository {
 
     if (entity.getRelatedModel() != null
         && ProjectTask.class.getName().equals(entity.getRelatedModel())) {
-      ProjectTask projectTask = Beans.get(ProjectTaskRepository.class).find(entity.getRelatedId());
-      entity = Beans.get(MailMessagePortalService.class).computeMailMessage(projectTask, entity);
-      clearProjectTaskTempFields(projectTask);
+
+      try {
+        ProjectTask projectTask =
+            Beans.get(ProjectTaskRepository.class).find(entity.getRelatedId());
+        entity = Beans.get(MailMessagePortalService.class).computeMailMessage(projectTask, entity);
+        clearProjectTaskTempFields(projectTask);
+      } catch (Exception e) {
+        TraceBackService.traceExceptionFromSaveMethod(e);
+        throw new PersistenceException(e.getMessage(), e);
+      }
     }
 
     return super.save(entity);

@@ -15,6 +15,7 @@
       title="Parent"/>
     <one-to-many name="childMailMessageList" ref="com.axelor.mail.db.MailMessage"
       mappedBy="parentMailMessage"/>
+    <string name="publicBody" title="Body" large="true"/>
 
   </entity>
 
