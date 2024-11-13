@@ -24,9 +24,10 @@ import wslite.json.JSONException;
 
 public interface MailMessagePortalService {
 
-  public MailMessage computeMailMessage(ProjectTask projectTask, MailMessage entity);
+  public MailMessage computeMailMessage(ProjectTask projectTask, MailMessage entity)
+      throws JSONException;
 
-  public void createMailMessageWithOnlyAttachment(ProjectTask projectTask);
+  public void createMailMessageWithOnlyAttachment(ProjectTask projectTask) throws JSONException;
 
   public void deleteMailMessage(MailMessage mailMessage) throws JSONException;
 }

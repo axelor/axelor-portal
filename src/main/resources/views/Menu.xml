@@ -223,4 +223,12 @@
     <view type="form" name="mail-message-form"/>
   </action-view>
 
+  <menuitem title="Track project task fields" name="menu-track-project-task-fields"
+    parent="project-configurations" action="menu.track.project.task.fields" order="1700"/>
+
+  <action-method name="menu.track.project.task.fields">
+    <call class="com.axelor.apps.portal.web.ProjectMenuPortalController"
+      method="trackProjectTaskFields"/>
+  </action-method>
+
 </object-views>

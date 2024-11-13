@@ -23,8 +23,10 @@ import com.axelor.apps.project.db.ProjectTask;
 import com.axelor.common.StringUtils;
 import com.axelor.mail.db.MailMessage;
 import com.axelor.mail.db.repo.MailMessageRepository;
+import com.axelor.meta.db.repo.MetaFieldRepository;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import wslite.json.JSONArray;
@@ -34,15 +36,19 @@ import wslite.json.JSONObject;
 public class MailMessagePortalServiceImpl implements MailMessagePortalService {
 
   protected MailMessageRepository mailMessageRepo;
+  protected MetaFieldRepository metaFieldRepo;
 
   @Inject
-  public MailMessagePortalServiceImpl(MailMessageRepository mailMessageRepo) {
+  public MailMessagePortalServiceImpl(
+      MailMessageRepository mailMessageRepo, MetaFieldRepository metaFieldRepo) {
 
     this.mailMessageRepo = mailMessageRepo;
+    this.metaFieldRepo = metaFieldRepo;
   }
 
   @Override
-  public MailMessage computeMailMessage(ProjectTask projectTask, MailMessage message) {
+  public MailMessage computeMailMessage(ProjectTask projectTask, MailMessage message)
+      throws JSONException {
 
     message.setAuthor(projectTask.getUpdatedBy());
     message.setRelatedId(projectTask.getId());
@@ -62,12 +68,14 @@ public class MailMessagePortalServiceImpl implements MailMessagePortalService {
       mailMessageFileList.forEach(message::addMailMessageFileListItem);
     }
 
+    initPublicBody(message);
+
     return message;
   }
 
   @Override
   @Transactional(rollbackOn = Exception.class)
-  public void createMailMessageWithOnlyAttachment(ProjectTask projectTask) {
+  public void createMailMessageWithOnlyAttachment(ProjectTask projectTask) throws JSONException {
 
     mailMessageRepo.save(computeMailMessage(projectTask, new MailMessage()));
   }
@@ -108,5 +116,41 @@ public class MailMessagePortalServiceImpl implements MailMessagePortalService {
     mailMessage.setNote("");
 
     mailMessageRepo.save(mailMessage);
+  }
+
+  protected void initPublicBody(MailMessage mailMessage) throws JSONException {
+
+    String body = mailMessage.getBody();
+
+    if (!StringUtils.isEmpty(body)) {
+      body = body.trim();
+
+      if (!(body.startsWith("{") || body.startsWith("}"))) {
+        return;
+      }
+
+      JSONObject jsonBody = new JSONObject(body);
+      JSONArray tracks = jsonBody.optJSONArray("tracks");
+
+      if (tracks != null) {
+        List<JSONObject> publicTracks = new ArrayList<>();
+
+        for (int i = 0; i < tracks.length(); i++) {
+          JSONObject track = tracks.getJSONObject(i);
+
+          if (metaFieldRepo.findByNameAndModelAndPublic(
+                  track.getString("name"), ProjectTask.class.getName(), true)
+              != null) {
+            publicTracks.add(track);
+          }
+        }
+
+        if (CollectionUtils.isNotEmpty(publicTracks)) {
+          jsonBody.remove("tracks");
+          jsonBody.putOnce("tracks", publicTracks);
+          mailMessage.setPublicBody(jsonBody.toString());
+        }
+      }
+    }
   }
 }
