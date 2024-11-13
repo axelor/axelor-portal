@@ -58,7 +58,7 @@
         <field name="canPayInvoice"/>
       </panel>
       <panel name="eventPanel" title="Event">
-        <field name="allowGuestEventRegistartion"/>
+        <field name="allowGuestEventRegistration"/>
         <field name="enableEventComment"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="eventHeroTitle" title="Title"/>
