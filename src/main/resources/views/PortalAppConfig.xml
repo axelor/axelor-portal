@@ -70,6 +70,9 @@
       </panel>
       <panel name="newsPanel" title="News">
         <field name="enableNewsComment"/>
+        <field name="enableRecommendedNews"/>
+        <field name="enableSocialMediaSharing"/>
+        <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="newsHeroTitle" title="Title"/>
           <field name="newsHeroOverlayColorSelect" widget="SingleSelect"
@@ -95,11 +98,6 @@
           <field name="resourcesHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="resourcesHeroDescription" colSpan="12" title="Description"/>
         </panel>
-      </panel>
-      <panel name="newsPanel" title="News">
-        <field name="enableRecommendedNews"/>
-        <field name="enableSocialMediaSharing"/>
-        <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
       </panel>
       <panel name="ticketingPanel" title="Ticketing">
         <field name="ticketStatusChangeMethodSelect"/>
