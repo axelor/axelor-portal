@@ -20,9 +20,9 @@
             <field name="productVariantAttrSet" widget="TagSelect" colSpan="12"/>
           </panel>
         </panel>
-        <panel name="visibilityPanel">
-          <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
-          <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+        <panel name="visibilityPanel" colSpan="12" itemSpan="12">
+          <field name="partnerSet" showIf="isPrivate"/>
+          <field name="partnerCategorySet" showIf="isPrivate"/>
         </panel>
       </insert>
     </extend>

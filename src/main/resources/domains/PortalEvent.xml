@@ -15,7 +15,6 @@
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
     <boolean name="eventAllowMultipleRegistrations"/>
-    <boolean name="eventVisibility" default="true"/>
     <boolean name="isPrivate" title="Private"/>
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
