@@ -62,6 +62,7 @@
     <boolean name="allowOnlinePaymentForEcommerce"
       title="Allow online payment for ecommerce"/>
     <boolean name="allowGuestEventRegistration" title="Allow guests to register to events"/>
+    <boolean name="enableComment" default="true"/>
     <boolean name="enableNewsComment" default="true"/>
     <boolean name="enableEventComment" default="true"/>
 

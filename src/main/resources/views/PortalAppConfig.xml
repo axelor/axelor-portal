@@ -18,6 +18,7 @@
     <panel name="mainPanel">
       <field name="name" required="true"/>
       <field name="company" required="true"/>
+      <field name="enableComment"/>
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
