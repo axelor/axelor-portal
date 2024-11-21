@@ -18,7 +18,7 @@
     <panel name="mainPanel">
       <field name="name" required="true"/>
       <field name="company" required="true"/>
-      <field name="enableComment"/>
+      <field name="enableComment" onChange="action-record-portal-enable-comment-onchange"/>
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
@@ -112,5 +112,11 @@
       </panel>
     </panel-tabs>
   </form>
+
+  <action-record name="action-record-portal-enable-comment-onchange"
+    model="com.axelor.apps.portal.db.PortalAppConfig">
+    <field name="enableNewsComment" expr="eval: enableComment" if="enableComment"/>
+    <field name="enableEventComment" expr="eval: enableComment" if="enableComment"/>
+  </action-record>
 
 </object-views>
