@@ -9,9 +9,12 @@
       <insert position="after">
         <panel name="portalPanel" sidebar="true">
           <field name="author"/>
-          <field name="isSharedFolder"/>
           <field name="workspaceSet" widget="TagSelect"/>
-          <field name="partnerCategorySet" widget="TagSelect"/>
+          <field name="isPrivate"/>
+          <field name="canWrite" showIf="isPrivate" colSpan="6"/>
+          <field name="canUpload" showIf="isPrivate" colSpan="6"/>
+          <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
+          <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
           <field name="description"/>
         </panel>
       </insert>
@@ -22,9 +25,12 @@
     model="com.axelor.dms.db.DMSFile" extension="true">
     <extend target="//panel[@name='Overview']/*[last()]">
       <insert position="after">
-        <field name="isSharedFolder"/>
         <field name="workspaceSet" widget="TagSelect"/>
-        <field name="partnerCategorySet" widget="TagSelect"/>
+        <field name="isPrivate"/>
+        <field name="canWrite" showIf="isPrivate" colSpan="6"/>
+        <field name="canUpload" showIf="isPrivate" colSpan="6"/>
+        <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
+        <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
         <field name="description"/>
       </insert>
     </extend>

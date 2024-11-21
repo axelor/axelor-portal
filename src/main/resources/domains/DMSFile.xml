@@ -8,10 +8,14 @@
   <entity name="DMSFile" table="DMS_FILE" repository="none">
 
     <string name="description" large="true"/>
-    <boolean name="isSharedFolder" title="Shared folder"/>
+    <boolean name="isPrivate" title="Private"/>
+    <boolean name="canWrite"/>
+    <boolean name="canUpload"/>
     <many-to-one ref="com.axelor.apps.base.db.Partner" name="author"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspaceSet"
       title="Workspaces"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
     <many-to-many ref="com.axelor.apps.base.db.PartnerCategory"
       name="partnerCategorySet" title="Categories"/>
     <one-to-many ref="com.axelor.dms.db.DMSFile" name="children" mappedBy="parent"
