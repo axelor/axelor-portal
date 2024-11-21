@@ -18,43 +18,27 @@
  */
 package com.axelor.csv.script;
 
-import com.axelor.apps.portal.db.PortalNews;
-import com.axelor.apps.portal.db.PortalNewsCategory;
-import com.axelor.apps.portal.db.repo.PortalNewsCategoryRepository;
-import com.axelor.apps.portal.db.repo.PortalNewsRepository;
+import com.axelor.apps.portal.db.ForumGroup;
+import com.axelor.apps.portal.db.repo.ForumGroupRepository;
 import com.axelor.meta.db.MetaFile;
 import com.google.inject.Inject;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class ImportNews {
+public class ImportForum {
 
-  @Inject private PortalNewsRepository newsRepo;
-  @Inject private PortalNewsCategoryRepository newsCategoryRepo;
+  @Inject private ForumGroupRepository groupRepo;
 
-  public Object importNews(Object bean, Map<String, Object> values) {
-    assert bean instanceof PortalNews;
+  public Object importForumGroup(Object bean, Map<String, Object> values) {
+    assert bean instanceof ForumGroup;
     MetaFile metaFile =
         ImportUtils.importFile((String) values.get("image_path"), (Path) values.get("__path__"));
     if (metaFile == null) {
       return bean;
     }
 
-    PortalNews news = (PortalNews) bean;
-    news.setImage(metaFile);
-    return newsRepo.save(news);
-  }
-
-  public Object importNewsCategory(Object bean, Map<String, Object> values) {
-    assert bean instanceof PortalNewsCategory;
-    MetaFile metaFile =
-        ImportUtils.importFile((String) values.get("image_path"), (Path) values.get("__path__"));
-    if (metaFile == null) {
-      return bean;
-    }
-
-    PortalNewsCategory newsCategory = (PortalNewsCategory) bean;
-    newsCategory.setImage(metaFile);
-    return newsCategoryRepo.save(newsCategory);
+    ForumGroup group = (ForumGroup) bean;
+    group.setImage(metaFile);
+    return groupRepo.save(group);
   }
 }

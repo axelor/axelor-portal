@@ -34,7 +34,7 @@
 
   <input file="portal_newsCategory.csv" separator=";"
     type="com.axelor.apps.portal.db.PortalNewsCategory" search="self.importId = :importId"
-    call="com.axelor.csv.script.ImportNewsCategory:importNewsCategory"/>
+    call="com.axelor.csv.script.ImportNews:importNewsCategory"/>
 
   <input file="portal_event.csv" separator=";" type="com.axelor.apps.portal.db.PortalEvent"
     search="self.importId = :importId" call="com.axelor.csv.script.ImportEvent:importEvent">
@@ -90,6 +90,56 @@
     <bind to="contactWorkspaceConfigSet" column="contactWorkspaceConfigSet"
       search="self.importId in :contactWorkspaceConfigSet"
       eval="contactWorkspaceConfigSet?.split('\\|') as List" update="true"/>
+  </input>
+
+  <input file="portal_forumGroupConfig.csv" separator=";"
+    type="com.axelor.apps.portal.db.ForumGroupConfig" search="self.importId = :importId"/>
+
+  <input file="portal_forumGroup.csv" separator=";"
+    type="com.axelor.apps.portal.db.ForumGroup" search="self.importId = :importId"
+    call="com.axelor.csv.script.ImportForum:importForumGroup"/>
+
+  <input file="portal_forumPost.csv" separator=";" type="com.axelor.apps.portal.db.ForumPost"
+    search="self.importId = :importId">
+    <bind to="postDateT" column="postDateT"
+      eval="call:com.axelor.csv.script.ImportDateTime:importDateTime(postDateT)"/>
+  </input>
+
+  <input file="auth_user.csv" separator=";" type="com.axelor.auth.db.User"
+    search="self.importId = :importId">
+    <bind to="companySet" column="companySet" search="self.importId in :companySet"
+      eval="companySet?.split('\\|') as List" update="true"/>
+  </input>
+
+  <input file="project_project.csv" separator=";" type="com.axelor.apps.project.db.Project"
+    search="self.importId = :importId">
+    <bind to="projectTaskCategorySet" column="projectTaskCategorySet"
+      search="self.importId in :projectTaskCategorySet"
+      eval="projectTaskCategorySet?.split('\\|') as List" update="true"/>
+    <bind to="projectTaskPrioritySet" column="projectTaskPrioritySet"
+      search="self.importId in :projectTaskPrioritySet"
+      eval="projectTaskPrioritySet?.split('\\|') as List" update="true"/>
+    <bind to="projectTaskStatusSet" column="projectTaskStatusSet"
+      search="self.importId in :projectTaskStatusSet"
+      eval="projectTaskStatusSet?.split('\\|') as List" update="true"/>
+    <bind to="membersUserSet" column="membersUserSet" search="self.importId in :membersUserSet"
+      eval="membersUserSet?.split('\\|') as List" update="true"/>
+  </input>
+
+  <input file="project_projectTaskCategory.csv" separator=";"
+    type="com.axelor.apps.project.db.ProjectTaskCategory" search="self.importId = :importId"/>
+
+  <input file="project_projectTask.csv" separator=";"
+    type="com.axelor.apps.project.db.ProjectTask" search="self.importId = :importId">
+    <bind to="taskDate" column="taskDate"
+      eval="call:com.axelor.csv.script.ImportDateTime:importDate(taskDate)"/>
+  </input>
+
+  <input file="project_projectConfig.csv" separator=";"
+    type="com.axelor.apps.project.db.ProjectConfig" search="self.importId = :importId">
+    <bind to="defaultTaskStatusSet" column="defaultTaskStatusSet"
+      search="self.importId in :defaultTaskStatusSet"
+      eval="defaultTaskStatusSet?.split('\\|') as List" update="true"/>
   </input>
 
 </csv-inputs>
