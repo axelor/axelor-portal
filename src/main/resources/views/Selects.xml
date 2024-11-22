@@ -102,4 +102,9 @@
     <option value="3" order="3">Customer chat</option>
   </selection>
 
+  <selection name="dms.file.permission.select">
+    <option value="write">Can write</option>
+    <option value="upload">Can upload</option>
+  </selection>
+
 </object-views>

@@ -8,9 +8,8 @@
   <entity name="DMSFile" table="DMS_FILE" repository="none">
 
     <string name="description" large="true"/>
+    <string name="permissionSelect" selection="dms.file.permission.select" title="Permission"/>
     <boolean name="isPrivate" title="Private"/>
-    <boolean name="canWrite"/>
-    <boolean name="canUpload"/>
     <many-to-one ref="com.axelor.apps.base.db.Partner" name="author"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspaceSet"
       title="Workspaces"/>

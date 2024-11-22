@@ -11,8 +11,7 @@
           <field name="author"/>
           <field name="workspaceSet" widget="TagSelect"/>
           <field name="isPrivate"/>
-          <field name="canWrite" showIf="isPrivate" colSpan="6"/>
-          <field name="canUpload" showIf="isPrivate" colSpan="6"/>
+          <field name="permissionSelect"/>
           <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
           <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
           <field name="description"/>
@@ -27,8 +26,7 @@
       <insert position="after">
         <field name="workspaceSet" widget="TagSelect"/>
         <field name="isPrivate"/>
-        <field name="canWrite" showIf="isPrivate" colSpan="6"/>
-        <field name="canUpload" showIf="isPrivate" colSpan="6"/>
+        <field name="permissionSelect"/>
         <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
         <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
         <field name="description"/>
