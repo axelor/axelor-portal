@@ -5,9 +5,9 @@
 
   <form name="partner-form" id="portal-partner-form" title="Partner"
     model="com.axelor.apps.base.db.Partner" extension="true">
-    <extend target="//field[@name='customerShippingCarriagePaidList']">
-      <insert position="before">
-        <panel name="portalPanel" colSpan="12">
+    <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
+      <insert position="after">
+        <panel title="Portal" name="portalPanel" colSpan="12">
           <field name="portalPassword" widget="password"/>
           <field name="isRegisteredOnPortal" colSpan="3"/>
           <field name="isActivatedOnPortal" colSpan="3"/>
