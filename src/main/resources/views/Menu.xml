@@ -42,6 +42,15 @@
     <view type="form" name="portal-contact-workspace-config-form"/>
   </action-view>
 
+  <menuitem title="Invitations" name="menu-invitation" parent="menu-portal-root"
+    action="action.portal.invitation" order="112"/>
+
+  <action-view name="action.portal.invitation" title="Invitation"
+    model="com.axelor.apps.portal.db.Invitation">
+    <view type="grid" name="portal-invitation-grid"/>
+    <view type="form" name="portal-invitation-form"/>
+  </action-view>
+
   <menuitem title="News app" name="menu-portal-portal-news-root" parent="menu-portal-root"
     order="115"/>
 
