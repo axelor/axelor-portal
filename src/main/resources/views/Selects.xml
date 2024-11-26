@@ -14,7 +14,8 @@
   </selection>
 
   <selection name="allow.registration.select">
-    <option value="yes">Yes</option>
+    <option value="yesForAll">Yes for all</option>
+    <option value="yesForAOS">Yes if registered on AOS</option>
     <option value="no">No</option>
   </selection>
 
