@@ -8,7 +8,10 @@
   <entity name="Partner">
 
     <string name="portalPassword" title="Password" encrypted="true"/>
+    <string name="createdFromSelect" title="Created from"
+      selection="partner.created.from.select"/>
     <boolean name="isRegisteredOnPortal"/>
+    <boolean name="isActivatedOnPortal"/>
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"

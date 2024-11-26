@@ -107,4 +107,9 @@
     <option value="upload">Can upload</option>
   </selection>
 
+  <selection name="partner.created.from.select">
+    <option value="backend">Back-end</option>
+    <option value="portal">Portal</option>
+  </selection>
+
 </object-views>
