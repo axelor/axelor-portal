@@ -16,16 +16,16 @@
     <many-to-many ref="com.axelor.auth.db.User" name="externalWatchers"
       title="External Watchers"/>
 
-    <many-to-one ref="com.axelor.apps.base.db.Partner" name="assignedToContact"
-      title="Assigned to contact"/>
-    <many-to-one ref="com.axelor.apps.base.db.Partner" name="requestedByContact"
-      title="Requested by contact"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="managedByContact"
+      title="Managed by contact"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="createdByContact"
+      title="Created by contact"/>
     <boolean name="displayFinancialData" title="Display financial data" default="false"/>
 
     <track>
       <field name="note"/>
       <field name="priority"/>
-      <field name="assignedToContact"/>
+      <field name="managedByContact"/>
     </track>
 
   </entity>
