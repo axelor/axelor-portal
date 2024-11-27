@@ -20,9 +20,11 @@
     <extend target="//panel-tabs[@name='mainPanelTab']">
       <insert position="inside">
         <panel name="portalPanel" title="Portal">
-          <field name="assignedToContact" title="Contact"
-            onSelect="action-project-task-attrs-assigned-to-contact-domain" canNew="false"
+          <field name="managedByContact"
+            onSelect="action-project-task-attrs-managed-by-contact-domain" canNew="false"
             canView="false" canEdit="false"/>
+          <field name="createdByContact" canView="false" showIf="createdByContact"
+            readonly="true"/>
           <field name="displayFinancialData" widget="boolean-switch"
             help="To dispaly or hide financial data on customer side"/>
         </panel>
@@ -109,8 +111,8 @@
     <attribute name="value" for="isPublicNote" expr="eval: _isPublicNote"/>
   </action-attrs>
 
-  <action-attrs name="action-project-task-attrs-assigned-to-contact-domain">
-    <attribute name="domain" for="assignedToContact"
+  <action-attrs name="action-project-task-attrs-managed-by-contact-domain">
+    <attribute name="domain" for="managedByContact"
       expr="eval: &quot;self.isRegisteredOnPortal = true AND (self.id = ${project?.clientPartner?.id} OR self.id IN (${project?.clientPartner?.contactPartnerSet?.collect{it.id}?.join(',')}))&quot;"/>
   </action-attrs>
 
