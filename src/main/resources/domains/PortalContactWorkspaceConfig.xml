@@ -8,6 +8,7 @@
   <entity name="PortalContactWorkspaceConfig">
 
     <string name="name"/>
+    <boolean name="isAdmin" title="Admin"/>
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
     <one-to-many name="contactAppPermissionList" title="App permissions"

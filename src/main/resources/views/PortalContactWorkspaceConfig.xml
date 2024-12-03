@@ -10,12 +10,13 @@
   </grid>
 
   <form name="portal-contact-workspace-config-form" title="Contact workspace config"
-    model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"
+    model="com.axelor.apps.portal.db.PortalContactWorkspaceConfig" width="large"
     onSave="action-portal-contact-workspace-config-method-update-contact-access-to-chat">
     <panel name="mainPanel">
       <field name="name"/>
-      <field name="portalWorkspace"/>
-      <field name="contactAppPermissionList" colSpan="12"/>
+      <field name="portalWorkspace" colSpan="5"/>
+      <field name="isAdmin" colSpan="1"/>
+      <field name="contactAppPermissionList" colSpan="12" hideIf="isAdmin"/>
     </panel>
   </form>
 
