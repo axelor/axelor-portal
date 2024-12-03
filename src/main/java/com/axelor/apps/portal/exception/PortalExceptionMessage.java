@@ -30,4 +30,6 @@ public final class PortalExceptionMessage {
   public static final String COMPANY_MISSING = /*$$(*/ "Company not found" /*)*/;
 
   public static final String PRODUCT_LIST_EMPTY = /*$$(*/ "Products empty" /*)*/;
+
+  public static final String INVOICE_NOT_FOUND = /*$$(*/ "Invoice not found" /*)*/;
 }
