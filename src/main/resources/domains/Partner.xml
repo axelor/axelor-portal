@@ -7,7 +7,7 @@
 
   <entity name="Partner">
 
-    <string name="portalPassword" title="Password" encrypted="true"/>
+    <string name="portalPassword" title="Password"/>
     <string name="createdFromSelect" title="Created from"
       selection="partner.created.from.select"/>
     <boolean name="isRegisteredOnPortal"/>
