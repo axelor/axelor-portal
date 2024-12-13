@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="directory-category-grid" title="Directory categories"
+    model="com.axelor.apps.portal.db.DirectoryCategory">
+    <field name="directoryCategoryTitle"/>
+    <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
+  </grid>
+
+  <form name="directory-category-form" title="Directory category"
+    model="com.axelor.apps.portal.db.DirectoryCategory">
+    <panel name="mainPanel">
+      <panel name="imagePanel" colSpan="2" title="Icon">
+        <field name="directoryCategoryIcon" widget="Image" colSpan="12" showTitle="false"/>
+      </panel>
+      <panel name="infoPanel" colSpan="10" itemSpan="12">
+        <field name="directoryCategoryTitle" required="true"/>
+        <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
+      </panel>
+    </panel>
+  </form>
+
+</object-views>
