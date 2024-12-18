@@ -113,4 +113,11 @@
     <option value="portal">Portal</option>
   </selection>
 
+  <selection name="no.more.stock.select">
+    <option value="1">Normal display of articles</option>
+    <option value="2">Display 'out of stock' but product can be ordered</option>
+    <option value="3">Display 'out of stock' and product not can be ordered</option>
+    <option value="4">Not display the articles</option>
+  </selection>
+
 </object-views>

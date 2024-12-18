@@ -10,7 +10,7 @@
     <field name="requestQuotation"/>
     <field name="confirmOrder"/>
     <field name="displayPrices"/>
-    <field name="displayOutOfStock"/>
+    <field name="noMoreStockSelect"/>
   </grid>
 
   <form name="portal-app-config-form" title="Portal app config"
@@ -23,7 +23,8 @@
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
-        <field name="displayOutOfStock"/>
+        <field name="noMoreStockSelect"/>
+        <field name="outOfStockQty"/>
         <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
           <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>

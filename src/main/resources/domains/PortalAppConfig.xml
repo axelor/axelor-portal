@@ -43,10 +43,12 @@
     <string name="resourcesHeroOverlayColorSelect" selection="color.name.selection"/>
     <many-to-one name="resourcesHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
 
+    <integer name="noMoreStockSelect" title="if no more stock" selection="no.more.stock.select"/>
+    <integer name="outOfStockQty" title="Out of stock when there is less than"
+      help="Qty which will be considered as out of stock"/>
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
-    <boolean name="displayOutOfStock" title="Display 'out of stock' for product"/>
 
     <boolean name="payInAdvance" title="Pay in advance"/>
     <boolean name="eSignature" title="E signature"/>
