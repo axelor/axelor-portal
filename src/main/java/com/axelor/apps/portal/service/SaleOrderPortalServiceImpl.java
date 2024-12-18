@@ -35,6 +35,8 @@ import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.FiscalPositionService;
 import com.axelor.apps.base.service.tax.TaxService;
 import com.axelor.apps.portal.db.PartnerPortalWorkspace;
+import com.axelor.apps.portal.db.PortalWorkspace;
+import com.axelor.apps.portal.db.repo.PortalWorkspaceRepository;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
@@ -88,6 +90,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected PartnerRepository partnerRepo;
   protected ProductRepository productRepo;
   protected SaleOrderRepository saleOrderRepo;
+  protected PortalWorkspaceRepository portalWorkspaceRepo;
 
   @Inject
   public SaleOrderPortalServiceImpl(
@@ -108,7 +111,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       TaxService taxService,
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
-      SaleOrderRepository saleOrderRepo) {
+      SaleOrderRepository saleOrderRepo,
+      PortalWorkspaceRepository portalWorkspaceRepo) {
     this.saleOrdeCreateService = saleOrdeCreateService;
     this.saleOrderLinePricingService = saleOrderLinePricingService;
     this.saleOrderLinePriceService = saleOrderLinePriceService;
@@ -127,6 +131,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.partnerRepo = partnerRepo;
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
+    this.portalWorkspaceRepo = portalWorkspaceRepo;
   }
 
   @Override
@@ -204,6 +209,14 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
     if (saleOrder != null) {
       saleOrder.setInAti((Boolean) values.get("inAti"));
+
+      PortalWorkspace portalWorkspace = null;
+      if (values.containsKey("workspaceId") && ObjectUtils.notEmpty(values.get("workspaceId"))) {
+        portalWorkspace =
+            portalWorkspaceRepo.find(Long.parseLong(values.get("workspaceId").toString()));
+      }
+      values.get("workspaceId");
+      saleOrder.setPortalWorkspace(portalWorkspace);
     }
 
     return saleOrder;
