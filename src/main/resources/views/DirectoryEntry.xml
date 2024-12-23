@@ -18,15 +18,18 @@
         <field name="directoryEntryTitle" required="true" colSpan="12"/>
         <field name="directoryEntryAddress" colSpan="12"/>
         <field name="directoryEntryCity"/>
-        <field name="directoryEntryZipcode"/>
-        <field name="directoryEntryLinkedIn"/>
-        <field name="directoryEntryX"/>
-        <field name="directoryEntryWebsite" widget="url"/>
-        <field name="isdirectoryMap"/>
+        <field name="directoryEntryZipcode" colSpan="4"/>
+        <field name="isdirectoryMap" colSpan="2"/>
       </panel>
     </panel>
     <panel name="detailsPanel">
-      <field name="directoryEntryDescription" colSpan="12"/>
+      <field name="directoryEntryLinkedIn"/>
+      <field name="directoryEntryInstagram"/>
+      <field name="directoryEntryX"/>
+      <field name="directoryEntryWebsite" widget="url"/>
+      <field name="directoryEntryCategorySet" colSpan="12" widget="TagSelect"/>
+      <field name="directoryContactSet" colSpan="12" widget="TagSelect"/>
+      <field name="directoryEntryDescription" colSpan="12" widget="html"/>
     </panel>
   </form>
 

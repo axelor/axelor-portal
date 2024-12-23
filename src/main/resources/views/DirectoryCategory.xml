@@ -18,6 +18,7 @@
       <panel name="infoPanel" colSpan="10" itemSpan="12">
         <field name="directoryCategoryTitle" required="true"/>
         <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
+        <field name="directoryCategorySet" widget="TagSelect"/>
       </panel>
     </panel>
   </form>

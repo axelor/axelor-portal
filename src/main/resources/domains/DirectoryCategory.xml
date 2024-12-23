@@ -12,6 +12,8 @@
       title="Icon"/>
     <string name="directoryCategoryColorSelect" title="Color"
       selection="color.name.selection"/>
+    <many-to-many ref="com.axelor.apps.portal.db.DirectoryCategory"
+      name="directoryCategorySet" title="Categories"/>
 
   </entity>
 
