@@ -23,7 +23,7 @@
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
-        <field name="noMoreStockSelect"/>
+        <field name="noMoreStockSelect" selection-in="[1,2,3,4]"/>
         <field name="outOfStockQty"/>
         <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>

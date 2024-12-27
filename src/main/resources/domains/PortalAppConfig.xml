@@ -49,9 +49,8 @@
     <many-to-one name="directoryHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
 
     <integer name="noMoreStockSelect" title="If no more stock"
-      selection="no.more.stock.select"/>
-    <integer name="outOfStockQty" title="Out of stock when there is less than"
-      help="Qty which will be considered as out of stock"/>
+      selection="no.more.stock.select" default="3" nullable="true"/>
+    <decimal name="outOfStockQty" title="Out of stock qty"/>
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>

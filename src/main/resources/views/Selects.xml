@@ -114,10 +114,11 @@
   </selection>
 
   <selection name="no.more.stock.select">
-    <option value="1">Normal display of articles</option>
-    <option value="2">Display 'out of stock' but product can be ordered</option>
-    <option value="3">Display 'out of stock' and product not can be ordered</option>
-    <option value="4">Not display the articles</option>
+    <option value="1">Allow to buy and don't show message "out of stock"</option>
+    <option value="2">Allow to buy and show message to alert buyer</option>
+    <option value="3">Don't allow to buy and hide product</option>
+    <option value="4">Don't allow to buy and show "out of stock"</option>
+    <option value="5">Use as per portal</option>
   </selection>
 
 </object-views>
