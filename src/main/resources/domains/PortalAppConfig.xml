@@ -48,7 +48,7 @@
     <string name="directoryHeroOverlayColorSelect" selection="color.name.selection"/>
     <many-to-one name="directoryHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
 
-    <integer name="noMoreStockSelect" title="if no more stock"
+    <integer name="noMoreStockSelect" title="If no more stock"
       selection="no.more.stock.select"/>
     <integer name="outOfStockQty" title="Out of stock when there is less than"
       help="Qty which will be considered as out of stock"/>
@@ -84,6 +84,12 @@
 
     <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
       mappedBy="portalAppConfig"/>
+
+    <many-to-one ref="com.axelor.message.db.EmailAccount" name="emailAccount"/>
+    <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate"
+      name="invitationTemplateList" title="Invitation templates" mappedBy="invitationPortalConfig"/>
+    <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate" name="otpTemplateList"
+      title="OTP templates" mappedBy="otpPortalConfig"/>
 
     <extra-code>
     	<![CDATA[
