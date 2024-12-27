@@ -101,6 +101,15 @@
           <field name="resourcesHeroDescription" colSpan="12" title="Description"/>
         </panel>
       </panel>
+      <panel name="directoryPanel" title="Directory">
+        <panel name="directoryHeroPanel" colSpan="12" title="Directory hero details">
+          <field name="directoryHeroTitle" title="Title"/>
+          <field name="directoryHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="directoryHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="directoryHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="directoryHeroDescription" colSpan="12" title="Description"/>
+        </panel>
+      </panel>
       <panel name="ticketingPanel" title="Ticketing">
         <field name="ticketStatusChangeMethodSelect"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">

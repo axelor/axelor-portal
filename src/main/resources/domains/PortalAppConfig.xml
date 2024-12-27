@@ -43,7 +43,13 @@
     <string name="resourcesHeroOverlayColorSelect" selection="color.name.selection"/>
     <many-to-one name="resourcesHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
 
-    <integer name="noMoreStockSelect" title="if no more stock" selection="no.more.stock.select"/>
+    <string name="directoryHeroTitle"/>
+    <string name="directoryHeroDescription" large="true"/>
+    <string name="directoryHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="directoryHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <integer name="noMoreStockSelect" title="if no more stock"
+      selection="no.more.stock.select"/>
     <integer name="outOfStockQty" title="Out of stock when there is less than"
       help="Qty which will be considered as out of stock"/>
     <boolean name="requestQuotation" title="Request quotation"/>
