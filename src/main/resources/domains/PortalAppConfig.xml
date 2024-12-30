@@ -73,6 +73,7 @@
     <boolean name="enableNewsComment" default="true"/>
     <boolean name="enableEventComment" default="true"/>
 
+    <boolean name="canInviteMembers" title="Invite members"/>
     <boolean name="enableRecommendedNews" default="true"/>
     <boolean name="enableSocialMediaSharing" default="true"/>
     <string name="socialMediaSelect" selection="social.media.select"/>

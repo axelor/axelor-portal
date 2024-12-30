@@ -125,6 +125,9 @@
         <field name="invitationTemplateList" colSpan="12"/>
         <field name="otpTemplateList" colSpan="12"/>
       </panel>
+      <panel name="settingsPanel" title="Settings">
+        <field name="canInviteMembers"/>
+      </panel>
     </panel-tabs>
   </form>
 
