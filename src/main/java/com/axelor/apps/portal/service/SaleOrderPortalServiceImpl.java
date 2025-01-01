@@ -44,7 +44,6 @@ import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
-import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
 import com.axelor.apps.sale.service.saleorder.pricing.SaleOrderLinePricingService;
 import com.axelor.apps.sale.service.saleorder.status.SaleOrderConfirmService;
@@ -53,6 +52,9 @@ import com.axelor.apps.sale.service.saleorderline.SaleOrderLineComputeService;
 import com.axelor.apps.sale.service.saleorderline.SaleOrderLinePriceService;
 import com.axelor.apps.sale.service.saleorderline.product.SaleOrderLineComplementaryProductService;
 import com.axelor.apps.sale.service.saleorderline.product.SaleOrderLineProductService;
+import com.axelor.apps.stock.db.StockLocation;
+import com.axelor.apps.stock.db.repo.StockLocationRepository;
+import com.axelor.apps.supplychain.service.saleorder.SaleOrderCreateSupplychainService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
@@ -71,7 +73,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
-  protected SaleOrderCreateService saleOrdeCreateService;
+  protected SaleOrderCreateSupplychainService saleOrdeCreateService;
   protected SaleOrderLinePricingService saleOrderLinePricingService;
   protected SaleOrderLinePriceService saleOrderLinePriceService;
   protected SaleOrderLineProductService saleOrderLineProductService;
@@ -91,10 +93,11 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected ProductRepository productRepo;
   protected SaleOrderRepository saleOrderRepo;
   protected PortalWorkspaceRepository portalWorkspaceRepo;
+  protected StockLocationRepository stockLocationRepository;
 
   @Inject
   public SaleOrderPortalServiceImpl(
-      SaleOrderCreateService saleOrdeCreateService,
+      SaleOrderCreateSupplychainService saleOrdeCreateService,
       SaleOrderLinePricingService saleOrderLinePricingService,
       SaleOrderLinePriceService saleOrderLinePriceService,
       SaleOrderLineProductService saleOrderLineProductService,
@@ -112,7 +115,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
       SaleOrderRepository saleOrderRepo,
-      PortalWorkspaceRepository portalWorkspaceRepo) {
+      PortalWorkspaceRepository portalWorkspaceRepo,
+      StockLocationRepository stockLocationRepository) {
     this.saleOrdeCreateService = saleOrdeCreateService;
     this.saleOrderLinePricingService = saleOrderLinePricingService;
     this.saleOrderLinePriceService = saleOrderLinePriceService;
@@ -132,6 +136,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
     this.portalWorkspaceRepo = portalWorkspaceRepo;
+    this.stockLocationRepository = stockLocationRepository;
   }
 
   @Override
@@ -179,6 +184,13 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       contactPartner = partnerRepo.find(Long.parseLong(values.get("contactId").toString()));
     }
 
+    StockLocation stockLocation = null;
+    if (values.containsKey("stockLocationId")
+        && ObjectUtils.notEmpty(values.get("stockLocationId"))) {
+      stockLocation =
+          stockLocationRepository.find(Long.parseLong(values.get("stockLocationId").toString()));
+    }
+
     if (clientPartner == null) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
@@ -199,13 +211,18 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
             null,
             null,
             null,
+            stockLocation,
             Beans.get(PartnerPriceListService.class)
                 .getDefaultPriceList(clientPartner, PriceListRepository.TYPE_SALE),
             clientPartner,
             null,
             null,
+            null,
             clientPartner.getFiscalPosition(),
-            null);
+            null,
+            null,
+            clientPartner,
+            clientPartner);
 
     if (saleOrder != null) {
       saleOrder.setInAti((Boolean) values.get("inAti"));

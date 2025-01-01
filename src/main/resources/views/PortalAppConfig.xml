@@ -17,7 +17,8 @@
     model="com.axelor.apps.portal.db.PortalAppConfig" width="large">
     <panel name="mainPanel">
       <field name="name" required="true"/>
-      <field name="company" required="true"/>
+      <field name="company" required="true"
+        onChange="action-portal-app-config-attrs-company-onchange"/>
       <field name="enableComment" onChange="action-record-portal-enable-comment-onchange"/>
     </panel>
     <panel-tabs name="mainPanelTab">
@@ -25,6 +26,7 @@
         <field name="publicEshop"/>
         <field name="noMoreStockSelect" selection-in="[1,2,3,4]"/>
         <field name="outOfStockQty"/>
+        <field name="defaultStockLocation" domain="self.company = :company"/>
         <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
           <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
@@ -136,5 +138,10 @@
     <field name="enableNewsComment" expr="eval: enableComment" if="enableComment"/>
     <field name="enableEventComment" expr="eval: enableComment" if="enableComment"/>
   </action-record>
+
+  <action-attrs name="action-portal-app-config-attrs-company-onchange">
+    <attribute name="value" for="defaultStockLocation"
+      expr="eval:company?.stockConfig?.pickupDefaultStockLocation"/>
+  </action-attrs>
 
 </object-views>
