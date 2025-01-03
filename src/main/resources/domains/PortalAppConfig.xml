@@ -10,7 +10,7 @@
     <string name="name"/>
     <string name="mainPriceSelect" title="Which is the main price to display ?"
       selection="main.price.select" default="at"/>
-    <string name="displayTwoPricesSelect" title="Display 2 prices : with and withou taxes ?"
+    <string name="displayTwoPricesSelect" title="Display 2 prices : with and without taxes ?"
       selection="display.two.prices.select"/>
     <string name="priceAfterLoginSelect" title="Price After Login"
       selection="price.after.login.select"/>
