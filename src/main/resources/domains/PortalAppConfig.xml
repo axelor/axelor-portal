@@ -85,7 +85,6 @@
     <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
       mappedBy="portalAppConfig"/>
 
-    <many-to-one ref="com.axelor.message.db.EmailAccount" name="emailAccount"/>
     <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate"
       name="invitationTemplateList" title="Invitation templates" mappedBy="invitationPortalConfig"/>
     <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate" name="otpTemplateList"

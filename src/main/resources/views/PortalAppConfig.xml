@@ -123,7 +123,6 @@
         </panel>
       </panel>
       <panel name="emailPanel" title="Email">
-        <field name="emailAccount"/>
         <field name="invitationTemplateList" colSpan="12"/>
         <field name="otpTemplateList" colSpan="12"/>
       </panel>
