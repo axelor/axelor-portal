@@ -24,7 +24,7 @@
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
-        <field name="noMoreStockSelect" selection-in="[1,2,3,4]"/>
+        <field name="noMoreStockSelect"/>
         <field name="outOfStockQty"/>
         <field name="defaultStockLocation" domain="self.company = :company"/>
         <panel name="priceConfigPanel" title="Price config" colSpan="12">

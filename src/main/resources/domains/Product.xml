@@ -15,10 +15,6 @@
     <boolean name="sellOutOfStock" title="Continue selling out of stock"/>
     <boolean name="allowCustomNote" title="Allow custom note"/>
     <boolean name="isPrivate" title="Private"/>
-    <boolean name="isOutOfStockConfig" title="Config out of stock qty"/>
-    <decimal name="outOfStockQty" title="Out of stock qty"/>
-    <integer name="noMoreStockSelect" title="If no more stock"
-      selection="no.more.stock.select" default="5" nullable="true"/>
     <many-to-one ref="com.axelor.apps.portal.db.Brand" name="brand" title="Brand"/>
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>

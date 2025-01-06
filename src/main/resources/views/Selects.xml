@@ -118,7 +118,6 @@
     <option value="2">Allow to buy and show message to alert buyer</option>
     <option value="3">Don't allow to buy and hide product</option>
     <option value="4">Don't allow to buy and show "out of stock"</option>
-    <option value="5">Use as per portal</option>
   </selection>
 
 </object-views>

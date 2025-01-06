@@ -18,9 +18,6 @@
           <field name="allowCustomNote" colSpan="3"/>
           <field name="sellOutOfStock" colSpan="3"/>
           <field name="isPrivate" colSpan="3"/>
-          <field name="isOutOfStockConfig" colSpan="3"/>
-          <field name="outOfStockQty" colSpan="3"/>
-          <field name="noMoreStockSelect"/>
           <field name="leftQty" readonly="true"/>
           <field name="brand"/>
           <field name="portalWorkspace"/>
