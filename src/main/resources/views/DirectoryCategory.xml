@@ -6,20 +6,17 @@
   <grid name="directory-category-grid" title="Directory categories"
     model="com.axelor.apps.portal.db.DirectoryCategory">
     <field name="directoryCategoryTitle"/>
+    <field name="directoryCategoryIcon"/>
     <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
   </grid>
 
   <form name="directory-category-form" title="Directory category"
-    model="com.axelor.apps.portal.db.DirectoryCategory">
+    model="com.axelor.apps.portal.db.DirectoryCategory" width="large">
     <panel name="mainPanel">
-      <panel name="imagePanel" colSpan="2" title="Icon">
-        <field name="directoryCategoryIcon" widget="Image" colSpan="12" showTitle="false"/>
-      </panel>
-      <panel name="infoPanel" colSpan="10" itemSpan="12">
-        <field name="directoryCategoryTitle" required="true"/>
-        <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
-        <field name="directoryCategorySet" widget="TagSelect"/>
-      </panel>
+      <field name="directoryCategoryTitle" required="true" colSpan="12"/>
+      <field name="directoryCategoryIcon"/>
+      <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
+      <field name="directoryCategorySet" widget="TagSelect" colSpan="12"/>
     </panel>
   </form>
 

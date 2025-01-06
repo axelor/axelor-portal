@@ -9,9 +9,6 @@
 
     <string name="directoryEntryTitle" namecolumn="true" title="Title"/>
     <string name="directoryEntryDescription" title="Description" large="true"/>
-    <string name="directoryEntryAddress" title="Address"/>
-    <string name="directoryEntryCity" title="City"/>
-    <string name="directoryEntryZipcode" title="Zip code"/>
     <string name="directoryEntryLinkedIn" title="LinkedIn"/>
     <string name="directoryEntryX" title="X"/>
     <string name="directoryEntryInstagram" title="Instagram"/>
@@ -19,10 +16,14 @@
     <boolean name="isdirectoryMap" title="Show map"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="directoryEntryImage"
       title="Image"/>
+    <many-to-one ref="com.axelor.apps.base.db.Address" name="directoryEntryAddress"
+      title="Address"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
+      title="Workspace"/>
     <many-to-many ref="com.axelor.apps.portal.db.DirectoryCategory"
       name="directoryEntryCategorySet" title="Categories"/>
-    <many-to-many ref="com.axelor.apps.portal.db.DirectoryContact"
-      name="directoryContactSet" title="Contacts"/>
+    <many-to-many ref="com.axelor.apps.base.db.Partner" name="directoryContactSet"
+      title="Contacts"/>
     <many-to-many ref="com.axelor.meta.db.MetaJsonField"
       name="directoryEntryCustomFields" title="Custom fields"/>
 

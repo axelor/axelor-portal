@@ -252,15 +252,6 @@
     <view type="form" name="directory-entry-form"/>
   </action-view>
 
-  <menuitem title="Directory contact" name="menu-portal-directory-contact"
-    parent="menu-portal-directory-root" action="action.portal.directory.contact"/>
-
-  <action-view name="action.portal.directory.contact" title="Directory contact"
-    model="com.axelor.apps.portal.db.DirectoryContact">
-    <view type="grid" name="directory-contact-grid"/>
-    <view type="form" name="directory-contact-form"/>
-  </action-view>
-
   <menuitem title="Directory category" name="menu-portal-directory-category"
     parent="menu-portal-directory-root" action="action.portal.directory.category"/>
 

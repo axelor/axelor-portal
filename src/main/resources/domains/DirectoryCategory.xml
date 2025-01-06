@@ -8,8 +8,7 @@
   <entity name="DirectoryCategory">
 
     <string name="directoryCategoryTitle" namecolumn="true" title="Title"/>
-    <many-to-one ref="com.axelor.meta.db.MetaFile" name="directoryCategoryIcon"
-      title="Icon"/>
+    <string name="directoryCategoryIcon" title="Icon"/>
     <string name="directoryCategoryColorSelect" title="Color"
       selection="color.name.selection"/>
     <many-to-many ref="com.axelor.apps.portal.db.DirectoryCategory"

@@ -10,6 +10,7 @@
     <string name="portalPassword" title="Password"/>
     <string name="createdFromSelect" title="Created from"
       selection="partner.created.from.select"/>
+    <string name="linkedinLink"/>
     <boolean name="isRegisteredOnPortal"/>
     <boolean name="isActivatedOnPortal"/>
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
