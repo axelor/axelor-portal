@@ -46,6 +46,8 @@
       <panel-dashlet action="action-portal-portal-event-display-comment" colSpan="12"
         title=""/>
     </panel>
+    <panel-related name="registrationPanel" field="registrationList" readonly="true"
+      colSpan="12"/>
   </form>
 
   <action-view name="action-portal-portal-event-display-comment" title="Comments"
