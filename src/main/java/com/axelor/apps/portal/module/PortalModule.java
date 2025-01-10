@@ -39,9 +39,11 @@ import com.axelor.apps.portal.service.ProjectTaskLinkPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderInvoicePortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.SaleOrderPortalServiceImpl;
+import com.axelor.apps.portal.service.SaleOrderStockPortalServiceImpl;
 import com.axelor.apps.portal.service.StockMovePortalServiceImpl;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.project.service.taskLink.ProjectTaskLinkServiceImpl;
+import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
 import com.axelor.dms.db.repo.DMSFileRepository;
 import com.axelor.mail.db.repo.MailMessageRepository;
 
@@ -63,5 +65,6 @@ public class PortalModule extends AxelorModule {
     bind(MattermostPortalService.class).to(MattermostPortalServiceImpl.class);
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderInvoiceProjectServiceImpl.class).to(SaleOrderInvoicePortalServiceImpl.class);
+    bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
   }
 }
