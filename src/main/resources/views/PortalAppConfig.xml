@@ -24,9 +24,11 @@
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
-        <field name="noMoreStockSelect"/>
-        <field name="outOfStockQty"/>
-        <field name="defaultStockLocation" domain="self.company = :company"/>
+        <panel name="stockPanel" title="Stock" colSpan="12">
+          <field name="noMoreStockSelect"/>
+          <field name="outOfStockQty"/>
+          <field name="defaultStockLocation" domain="self.company = :company"/>
+        </panel>
         <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
           <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
