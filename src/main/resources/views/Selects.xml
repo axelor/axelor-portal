@@ -120,4 +120,8 @@
     <option value="4">Don't allow to buy and show "out of stock"</option>
   </selection>
 
+  <selection name="portal.icon.select">
+    <option value="OutlinePerson">Outline Person</option>
+  </selection>
+
 </object-views>
