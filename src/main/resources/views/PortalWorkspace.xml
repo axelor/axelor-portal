@@ -20,6 +20,7 @@
       <field name="defaultPartnerWorkspace"/>
       <field name="allowRegistrationSelect"/>
       <field name="defaultGuestWorkspace"/>
+      <field name="user"/>
     </panel>
   </form>
 
