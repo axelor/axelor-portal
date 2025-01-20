@@ -21,9 +21,9 @@ package com.axelor.apps.portal.db.repo;
 import com.axelor.auth.AuthUtils;
 import com.axelor.auth.db.User;
 import com.axelor.dms.db.DMSFile;
-import com.axelor.dms.db.repo.DMSFileRepository;
+import com.axelor.template.db.repo.DmsFileTemplateRepository;
 
-public class DMSFilePortalRepository extends DMSFileRepository {
+public class DMSFilePortalRepository extends DmsFileTemplateRepository {
 
   @Override
   public DMSFile save(DMSFile entity) {

@@ -26,14 +26,14 @@ import com.axelor.apps.project.db.ProjectTask;
 import com.axelor.apps.project.db.repo.ProjectTaskRepository;
 import com.axelor.inject.Beans;
 import com.axelor.mail.db.MailMessage;
-import com.axelor.mail.db.repo.MailMessageRepository;
 import com.axelor.meta.db.MetaFile;
+import com.axelor.template.db.repo.MailMessageTemplateRepository;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 
-public class MailMessagePortalRepository extends MailMessageRepository {
+public class MailMessagePortalRepository extends MailMessageTemplateRepository {
 
   @Override
   public MailMessage save(MailMessage entity) {

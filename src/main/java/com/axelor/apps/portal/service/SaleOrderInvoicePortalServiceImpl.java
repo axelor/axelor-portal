@@ -26,7 +26,13 @@ import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.service.CurrencyScaleService;
 import com.axelor.apps.base.service.app.AppBaseService;
-import com.axelor.apps.businessproject.service.SaleOrderInvoiceProjectServiceImpl;
+import com.axelor.apps.budget.service.AppBudgetService;
+import com.axelor.apps.budget.service.BudgetDistributionService;
+import com.axelor.apps.budget.service.BudgetService;
+import com.axelor.apps.budget.service.BudgetToolsService;
+import com.axelor.apps.budget.service.invoice.InvoiceToolBudgetService;
+import com.axelor.apps.budget.service.saleorder.SaleOrderBudgetServiceImpl;
+import com.axelor.apps.budget.service.saleorderline.SaleOrderLineBudgetService;
 import com.axelor.apps.businessproject.service.app.AppBusinessProjectService;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
@@ -47,7 +53,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public class SaleOrderInvoicePortalServiceImpl extends SaleOrderInvoiceProjectServiceImpl {
+public class SaleOrderInvoicePortalServiceImpl extends SaleOrderBudgetServiceImpl {
 
   @Inject
   public SaleOrderInvoicePortalServiceImpl(
@@ -66,7 +72,13 @@ public class SaleOrderInvoicePortalServiceImpl extends SaleOrderInvoiceProjectSe
       CurrencyScaleService currencyScaleService,
       OrderInvoiceService orderInvoiceService,
       InvoiceTaxService invoiceTaxService,
-      AppBusinessProjectService appBusinessProjectService) {
+      AppBusinessProjectService appBusinessProjectService,
+      AppBudgetService appBudgetService,
+      BudgetDistributionService budgetDistributionService,
+      SaleOrderLineBudgetService saleOrderLineBudgetService,
+      BudgetService budgetService,
+      BudgetToolsService budgetToolsService,
+      InvoiceToolBudgetService invoiceToolBudgetService) {
     super(
         appBaseService,
         appStockService,
@@ -83,7 +95,13 @@ public class SaleOrderInvoicePortalServiceImpl extends SaleOrderInvoiceProjectSe
         currencyScaleService,
         orderInvoiceService,
         invoiceTaxService,
-        appBusinessProjectService);
+        appBusinessProjectService,
+        appBudgetService,
+        budgetDistributionService,
+        saleOrderLineBudgetService,
+        budgetService,
+        budgetToolsService,
+        invoiceToolBudgetService);
   }
 
   @Override
