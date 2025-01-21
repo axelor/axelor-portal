@@ -144,8 +144,21 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
     String seq = super.realize(stockMove);
     updateProductLeftQty(stockMove);
 
-    File reportFile = printStockMove(stockMove, false);
-    updateReport(stockMove, reportFile);
+    DMSFile report =
+        dmsFileRepo
+            .all()
+            .filter(
+                "self.relatedId = :stockMoveId AND relatedModel = :model AND COALESCE(isDirectory, false) IS FALSE")
+            .bind("stockMoveId", stockMove.getId())
+            .bind("model", StockMove.class.getName())
+            .order("-createdOn")
+            .fetchOne();
+    if (report == null) {
+      printStockMove(stockMove, true);
+    } else {
+      File reportFile = printStockMove(stockMove, true);
+      updateReport(stockMove, report, reportFile);
+    }
 
     return seq;
   }
@@ -173,23 +186,11 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
   }
 
   @Transactional
-  public void updateReport(StockMove stockMove, File reportFile) {
-
-    DMSFile report =
-        dmsFileRepo
-            .all()
-            .filter(
-                "self.relatedId = :stockMoveId AND relatedModel = :model AND COALESCE(isDirectory, false) IS FALSE")
-            .bind("stockMoveId", stockMove.getId())
-            .bind("model", StockMove.class.getName())
-            .order("-createdOn")
-            .fetchOne();
-    if (report != null) {
-      try {
-        report.setMetaFile(metaFiles.upload(reportFile));
-        dmsFileRepo.save(report);
-      } catch (IOException e) {
-      }
+  public void updateReport(StockMove stockMove, DMSFile report, File reportFile) {
+    try {
+      report.setMetaFile(metaFiles.upload(reportFile));
+      dmsFileRepo.save(report);
+    } catch (IOException e) {
     }
   }
 
