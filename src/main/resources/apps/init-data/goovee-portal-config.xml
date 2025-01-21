@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/data-import http://axelor.com/xml/ns/data-import/data-import_7.2.xsd">
 
-  <input file="meta_selectItem.csv" separator=";"
-    type="com.axelor.meta.db.MetaSelectItem" search="self.value = :value AND self.select.name = 'portal.icon.select'"/>
+  <input file="meta_selectItem.csv" separator=";" type="com.axelor.meta.db.MetaSelectItem"
+    search="self.value = :value AND self.select.name = 'portal.icon.select'"/>
 
 </csv-inputs>
