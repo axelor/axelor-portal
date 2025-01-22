@@ -14,6 +14,7 @@
           <field name="partnerWorkspaceSet" widget="TagSelect" colSpan="12"/>
           <field name="defaultWorkspace" domain="self IN (:partnerWorkspaceSet)"/>
           <field name="createdFromSelect"/>
+          <field name="portalUserPreferenceList" colSpan="12"/>
         </panel>
       </insert>
     </extend>
@@ -33,6 +34,7 @@
           <field name="isActivatedOnPortal" colSpan="3"/>
           <field name="createdFromSelect"/>
           <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"/>
+          <field name="portalUserPreferenceList" colSpan="12"/>
         </panel>
       </insert>
     </extend>

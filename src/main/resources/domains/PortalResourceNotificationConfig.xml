@@ -9,6 +9,8 @@
 
     <boolean name="activateNotification"/>
     <many-to-one ref="com.axelor.dms.db.DMSFile" name="folder" title="Folder"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalUserPreference"
+      name="portalUserPreference"/>
 
   </entity>
 

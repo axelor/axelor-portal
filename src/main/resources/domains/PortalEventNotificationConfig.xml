@@ -10,6 +10,8 @@
     <boolean name="activateNotification"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalEventCategory"
       name="eventCategory" title="Category"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalUserPreference"
+      name="portalUserPreference"/>
 
   </entity>
 

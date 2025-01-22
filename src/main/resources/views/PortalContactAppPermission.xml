@@ -14,16 +14,6 @@
     <panel name="mainPanel">
       <field name="app"/>
       <field name="roleSelect"/>
-      <field name="activateNotification"/>
-      <field name="app.code" hidden="true"/>
-      <field name="newsNotificationConfigs"
-        showIf="activateNotification &amp;&amp; app.code == 'news'" colSpan="12"/>
-      <field name="eventNotificationConfigs"
-        showIf="activateNotification &amp;&amp; app.code == 'events'" colSpan="12"/>
-      <field name="resourceNotificationConfigs"
-        showIf="activateNotification &amp;&amp; app.code == 'resources'" colSpan="12"/>
-      <field name="forumNotificationConfigs"
-        showIf="activateNotification &amp;&amp; app.code == 'forum'" colSpan="12"/>
     </panel>
   </form>
 

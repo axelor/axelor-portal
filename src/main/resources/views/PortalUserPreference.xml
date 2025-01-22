@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-user-preference-grid" title="Notification preferences"
+    model="com.axelor.apps.portal.db.PortalUserPreference">
+    <field name="app"/>
+  </grid>
+
+  <form name="portal-user-preference-form" title="Notification preference"
+    model="com.axelor.apps.portal.db.PortalUserPreference">
+    <panel name="mainPanel">
+      <field name="app"/>
+      <field name="activateNotification"/>
+      <field name="app.code" hidden="true"/>
+      <field name="newsNotificationConfigs"
+        showIf="activateNotification &amp;&amp; app.code == 'news'" colSpan="12"/>
+      <field name="eventNotificationConfigs"
+        showIf="activateNotification &amp;&amp; app.code == 'events'" colSpan="12"/>
+      <field name="resourceNotificationConfigs"
+        showIf="activateNotification &amp;&amp; app.code == 'resources'" colSpan="12"/>
+      <field name="forumNotificationConfigs"
+        showIf="activateNotification &amp;&amp; app.code == 'forum'" colSpan="12"/>
+    </panel>
+  </form>
+
+</object-views>

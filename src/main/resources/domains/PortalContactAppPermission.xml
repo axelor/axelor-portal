@@ -12,16 +12,6 @@
       ref="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"/>
     <string name="roleSelect" selection="portal.role.select" title="Role"/>
 
-    <boolean name="activateNotification"/>
-    <one-to-many ref="com.axelor.apps.portal.db.PortalNewsNotificationConfig"
-      name="newsNotificationConfigs" title="Notification config"/>
-    <one-to-many ref="com.axelor.apps.portal.db.PortalEventNotificationConfig"
-      name="eventNotificationConfigs" title="Notification config"/>
-    <one-to-many ref="com.axelor.apps.portal.db.PortalResourceNotificationConfig"
-      name="resourceNotificationConfigs" title="Notification config"/>
-    <one-to-many ref="com.axelor.apps.portal.db.PortalForumNotificationConfig"
-      name="forumNotificationConfigs" title="Notification config"/>
-
   </entity>
 
 </domain-models>
