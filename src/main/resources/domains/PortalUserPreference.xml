@@ -9,6 +9,7 @@
 
     <many-to-one name="app" ref="com.axelor.apps.portal.db.PortalApp" title="App"/>
     <boolean name="activateNotification"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalNewsNotificationConfig"
       name="newsNotificationConfigs" title="Notification config" mappedBy="portalUserPreference"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalEventNotificationConfig"

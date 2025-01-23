@@ -6,12 +6,15 @@
   <grid name="portal-user-preference-grid" title="Notification preferences"
     model="com.axelor.apps.portal.db.PortalUserPreference">
     <field name="app"/>
+    <field name="workspace"/>
+    <field name="activateNotification"/>
   </grid>
 
   <form name="portal-user-preference-form" title="Notification preference"
     model="com.axelor.apps.portal.db.PortalUserPreference">
     <panel name="mainPanel">
       <field name="app"/>
+      <field name="workspace"/>
       <field name="activateNotification"/>
       <field name="app.code" hidden="true"/>
       <field name="newsNotificationConfigs"
