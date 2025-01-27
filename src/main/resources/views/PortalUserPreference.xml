@@ -14,7 +14,8 @@
     model="com.axelor.apps.portal.db.PortalUserPreference">
     <panel name="mainPanel">
       <field name="app"/>
-      <field name="workspace"/>
+      <field name="workspace"
+        onSelect="action-portal-portal-user-preferences-workspace-onselect"/>
       <field name="activateNotification"/>
       <field name="app.code" hidden="true"/>
       <field name="newsNotificationConfigs"
@@ -27,5 +28,13 @@
         showIf="activateNotification &amp;&amp; app.code == 'forum'" colSpan="12"/>
     </panel>
   </form>
+
+  <action-attrs name="action-portal-portal-user-preferences-workspace-onselect">
+    <attribute name="domain" for="workspace" expr="self.id IN (0)"
+      if="!__parent__?.partnerWorkspaceSet || __parent__.partnerWorkspaceSet.isEmpty()"/>
+    <attribute name="domain" for="workspace"
+      expr="eval: 'self.id IN (SELECT workspace FROM PartnerPortalWorkspace pw WHERE pw.id IN (' + __parent__?.partnerWorkspaceSet?.collect{ it.id }.join(',') + '))'"
+      if="__parent__?.partnerWorkspaceSet &amp;&amp; !__parent__.partnerWorkspaceSet.isEmpty()"/>
+  </action-attrs>
 
 </object-views>
