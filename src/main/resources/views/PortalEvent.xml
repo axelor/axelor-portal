@@ -19,6 +19,7 @@
       </panel>
       <panel name="infoPanel" colSpan="10">
         <field name="eventTitle" required="true" colSpan="12"/>
+        <field name="slug" colSpan="12"/>
         <field name="eventStartDateTime"/>
         <field name="eventEndDateTime" showIf="!eventAllDay"
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
@@ -33,8 +34,12 @@
       <field name="eventDegressiveNumberPartcipant" min="0"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
       <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
-      <field name="isPrivate" onChange="portal-action-portal-event-record-isprivate-onchange"/>
-      <field name="isPublic" onChange="portal-action-portal-event-record-ispublic-onchange"/>
+      <field name="isPrivate" onChange="portal-action-portal-event-record-isprivate-onchange"
+        colSpan="3"/>
+      <field name="isPublic" onChange="portal-action-portal-event-record-ispublic-onchange"
+        colSpan="3"/>
+      <field name="isLoginNotNeeded" colSpan="3"/>
+      <field name="isHidden" colSpan="3"/>
       <field name="partnerSet" colSpan="12" showIf="isPrivate" form-view="partner-form"
         grid-view="partner-grid"/>
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>

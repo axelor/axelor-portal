@@ -11,12 +11,15 @@
     <string name="eventPlace"/>
     <string name="eventLink"/>
     <string name="eventDescription" large="true"/>
+    <string name="slug" unique="true"/>
     <integer name="eventDegressiveNumberPartcipant"/>
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
     <boolean name="eventAllowMultipleRegistrations"/>
     <boolean name="isPrivate" title="Private"/>
     <boolean name="isPublic" title="Public"/>
+    <boolean name="isLoginNotNeeded" title="Login not needed"/>
+    <boolean name="isHidden" title="Hidden"/>
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
