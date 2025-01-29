@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalEventFacility">
+
+    <string name="facility" title="Title" namecolumn="true"/>
+    <decimal name="price" min="0"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalEvent" name="event"/>
+
+  </entity>
+
+</domain-models>

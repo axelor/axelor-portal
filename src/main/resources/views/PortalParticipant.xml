@@ -19,11 +19,18 @@
       <field name="emailAddress" widget="email"/>
       <field name="phone" widget="phone" x-placeholder-number-type="FIXED_LINE"/>
       <field name="contact" form-view="partner-contact-form" grid-view="partner-contact-grid"/>
-      <field name="company"/>
+      <field name="companyName"/>
       <field name="registration.event"/>
       <field name="registration" hidden="true"/>
+      <field name="subscriptionSet" widget="TagSelect" colSpan="12"
+        onSelect="action-portal-attrs-portal-participant-subscriptionset-onselect"/>
       <field name="contactAttrs" colSpan="12"/>
     </panel>
   </form>
+
+  <action-attrs name="action-portal-attrs-portal-participant-subscriptionset-onselect">
+    <attribute name="domain" for="subscriptionSet"
+      expr="eval: &quot;self.id IN (${registration?.event?.facilityList?.collect{it.id}?.join(',')})&quot;"/>
+  </action-attrs>
 
 </object-views>

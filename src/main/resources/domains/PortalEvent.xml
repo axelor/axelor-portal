@@ -13,6 +13,7 @@
     <string name="eventDescription" large="true"/>
     <string name="slug" unique="true"/>
     <integer name="eventDegressiveNumberPartcipant"/>
+    <decimal name="defaultPrice" min="0" title="Price"/>
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
     <boolean name="eventAllowMultipleRegistrations"/>
@@ -26,6 +27,8 @@
     <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
     <one-to-many ref="com.axelor.apps.portal.db.Registration" name="registrationList"
       mappedBy="event" title="Registrations"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalEventFacility" name="facilityList"
+      title="Facilities" mappedBy="event"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
       name="eventCategorySet" title="Event categories"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"

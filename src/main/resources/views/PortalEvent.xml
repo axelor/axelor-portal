@@ -19,7 +19,8 @@
       </panel>
       <panel name="infoPanel" colSpan="10">
         <field name="eventTitle" required="true" colSpan="12"/>
-        <field name="slug" colSpan="12"/>
+        <field name="slug"/>
+        <field name="defaultPrice"/>
         <field name="eventStartDateTime"/>
         <field name="eventEndDateTime" showIf="!eventAllDay"
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
@@ -43,6 +44,7 @@
       <field name="partnerSet" colSpan="12" showIf="isPrivate" form-view="partner-form"
         grid-view="partner-grid"/>
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+      <field name="facilityList" colSpan="12"/>
       <field name="eventDescription" colSpan="12" widget="html"/>
     </panel>
     <panel name="commentPanel" title="Comments">
