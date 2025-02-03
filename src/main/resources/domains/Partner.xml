@@ -11,8 +11,11 @@
     <string name="createdFromSelect" title="Created from"
       selection="partner.created.from.select"/>
     <string name="linkedinLink"/>
+    <string name="portalCompanyName" title="Company"/>
     <boolean name="isRegisteredOnPortal"/>
     <boolean name="isActivatedOnPortal"/>
+    <boolean name="isPublicPartner" title="Portal public"/>
+    <boolean name="canSubscribeNoPublicEvent" title="Subscribe to no public events"/>
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"

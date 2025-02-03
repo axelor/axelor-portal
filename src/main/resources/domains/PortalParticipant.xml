@@ -14,6 +14,7 @@
     <string name="phone"/>
     <string name="company"/>
     <string name="contactAttrs" json="true" title="Contact infos"/>
+    <integer name="sequence"/>
     <many-to-one name="contact" ref="com.axelor.apps.base.db.Partner"/>
     <many-to-one ref="com.axelor.apps.portal.db.Registration" name="registration"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalEventFacility"

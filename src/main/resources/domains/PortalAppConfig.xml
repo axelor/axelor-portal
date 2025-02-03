@@ -92,6 +92,13 @@
     <many-to-one name="defaultStockLocation" title="Stock location"
       ref="com.axelor.apps.stock.db.StockLocation"/>
 
+    <many-to-one ref="com.axelor.apps.base.db.Product" name="defaultEventProduct"
+      title="Default product for registration invoice"/>
+    <many-to-one ref="com.axelor.apps.account.db.PaymentMode"
+      name="defaultEventPaymentMode" title="Default payment mode for registration invoice"/>
+    <many-to-one ref="com.axelor.apps.account.db.PaymentCondition"
+      name="defaultEventPaymentCondition" title="Default payment condition for registration invoice"/>
+
     <extra-code>
     	<![CDATA[
     		public static final String NO_INVOICE = "no";

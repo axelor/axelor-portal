@@ -30,6 +30,8 @@ import com.axelor.apps.portal.db.repo.PortalEventRepository;
 import com.axelor.apps.portal.db.repo.PortalNewsPortalRepository;
 import com.axelor.apps.portal.db.repo.PortalNewsRepository;
 import com.axelor.apps.portal.db.repo.ProjectTaskPortalRepository;
+import com.axelor.apps.portal.db.repo.RegistrationPortalRepository;
+import com.axelor.apps.portal.db.repo.RegistrationRepository;
 import com.axelor.apps.portal.mattermost.service.MattermostPortalService;
 import com.axelor.apps.portal.mattermost.service.MattermostPortalServiceImpl;
 import com.axelor.apps.portal.service.MailMessageFileService;
@@ -37,6 +39,8 @@ import com.axelor.apps.portal.service.MailMessageFileServiceImpl;
 import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.portal.service.MailMessagePortalServiceImpl;
 import com.axelor.apps.portal.service.MailServicePortalImpl;
+import com.axelor.apps.portal.service.PortalEventRegistrationService;
+import com.axelor.apps.portal.service.PortalEventregistrationServiceImpl;
 import com.axelor.apps.portal.service.ProjectTaskLinkPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderInvoicePortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
@@ -61,6 +65,7 @@ public class PortalModule extends AxelorModule {
     bind(ProjectTaskBusinessSupportRepository.class).to(ProjectTaskPortalRepository.class);
     bind(PortalNewsRepository.class).to(PortalNewsPortalRepository.class);
     bind(PortalEventRepository.class).to(PortalEventPortalRepository.class);
+    bind(RegistrationRepository.class).to(RegistrationPortalRepository.class);
     bind(MailMessagePortalService.class).to(MailMessagePortalServiceImpl.class);
     bind(MailMessageFileService.class).to(MailMessageFileServiceImpl.class);
     bind(MailServiceHelpDeskImpl.class).to(MailServicePortalImpl.class);
@@ -69,5 +74,6 @@ public class PortalModule extends AxelorModule {
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderBudgetServiceImpl.class).to(SaleOrderInvoicePortalServiceImpl.class);
     bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
+    bind(PortalEventRegistrationService.class).to(PortalEventregistrationServiceImpl.class);
   }
 }

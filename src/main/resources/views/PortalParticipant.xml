@@ -4,11 +4,12 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
 
   <grid name="portal-portal-participant-grid" title="Portal participants"
-    model="com.axelor.apps.portal.db.PortalParticipant">
+    model="com.axelor.apps.portal.db.PortalParticipant" canMove="true" orderBy="sequence">
     <field name="name"/>
     <field name="surname"/>
     <field name="registration.event"/>
     <field name="categorySet" widget="TagSelect"/>
+    <field name="sequence" hidden="true"/>
   </grid>
 
   <form name="portal-portal-participant-form" title="Portal participant"
@@ -25,6 +26,7 @@
       <field name="subscriptionSet" widget="TagSelect" colSpan="12"
         onSelect="action-portal-attrs-portal-participant-subscriptionset-onselect"/>
       <field name="contactAttrs" colSpan="12"/>
+      <field name="sequence" hidden="true"/>
     </panel>
   </form>
 
