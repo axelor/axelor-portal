@@ -73,7 +73,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.xml.datatype.DatatypeConfigurationException;
 
-public class PortalEventregistrationServiceImpl implements PortalEventRegistrationService {
+public class PortalEventRegistrationServiceImpl implements PortalEventRegistrationService {
 
   protected RegistrationRepository registrationRepo;
   protected PartnerPortalWorkspaceRepository partnerPortalWorkspaceRepo;
@@ -94,7 +94,7 @@ public class PortalEventregistrationServiceImpl implements PortalEventRegistrati
   protected InvoicePaymentValidateService invoicePaymentValidateService;
 
   @Inject
-  public PortalEventregistrationServiceImpl(
+  public PortalEventRegistrationServiceImpl(
       RegistrationRepository registrationRepo,
       PartnerPortalWorkspaceRepository partnerPortalWorkspaceRepo,
       InvoiceRepository invoiceRepo,

@@ -60,7 +60,7 @@
       </field>
       <field name="note" title="Note" widget="html" hideIf="$readonly() &amp;&amp; !note"
         colSpan="12"/>
-      <field name="isPublicNote" hidden="true"/>
+      <field name="isPublicNote" widget="boolean-switch"/>
       <field name="mailMessageFileList" title="Files" colSpan="12" hideIf="id">
         <editor x-viewer="true">
           <field name="attachmentFile" showTitle="false"

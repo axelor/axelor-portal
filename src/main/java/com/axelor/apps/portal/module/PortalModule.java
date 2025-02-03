@@ -40,7 +40,7 @@ import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.portal.service.MailMessagePortalServiceImpl;
 import com.axelor.apps.portal.service.MailServicePortalImpl;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
-import com.axelor.apps.portal.service.PortalEventregistrationServiceImpl;
+import com.axelor.apps.portal.service.PortalEventRegistrationServiceImpl;
 import com.axelor.apps.portal.service.ProjectTaskLinkPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderInvoicePortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
@@ -74,6 +74,6 @@ public class PortalModule extends AxelorModule {
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderBudgetServiceImpl.class).to(SaleOrderInvoicePortalServiceImpl.class);
     bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
-    bind(PortalEventRegistrationService.class).to(PortalEventregistrationServiceImpl.class);
+    bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
   }
 }

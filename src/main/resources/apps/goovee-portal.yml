@@ -10,7 +10,9 @@ modules:
    axelor-portal
 dependsOn:
   - production
-  - project
+  - business-support
   - helpdesk
+  - budget
   - mattermost
+  - template
 sequence: 57
