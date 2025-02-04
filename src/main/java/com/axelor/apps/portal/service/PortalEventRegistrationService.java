@@ -20,9 +20,12 @@ package com.axelor.apps.portal.service;
 
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.portal.service.response.PortalPricingResponse;
 import java.util.Map;
 
 public interface PortalEventRegistrationService {
 
   Invoice createEventInvoice(Map<String, Object> values) throws AxelorException;
+
+  PortalPricingResponse fetchEventPricing(Map<String, Object> values) throws AxelorException;
 }

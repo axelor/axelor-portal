@@ -39,6 +39,7 @@ import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Currency;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.Product;
+import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.db.repo.PriceListLineRepository;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.base.service.CurrencyService;
@@ -55,10 +56,15 @@ import com.axelor.apps.portal.db.PortalEventFacility;
 import com.axelor.apps.portal.db.PortalParticipant;
 import com.axelor.apps.portal.db.Registration;
 import com.axelor.apps.portal.db.repo.PartnerPortalWorkspaceRepository;
+import com.axelor.apps.portal.db.repo.PortalEventRepository;
 import com.axelor.apps.portal.db.repo.RegistrationRepository;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
+import com.axelor.apps.portal.service.response.PortalPricingResponse;
 import com.axelor.common.ObjectUtils;
+import com.axelor.db.JpaSecurity;
+import com.axelor.db.JpaSecurity.AccessType;
 import com.axelor.i18n.I18n;
+import com.axelor.inject.Beans;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import jakarta.xml.bind.JAXBException;
@@ -80,6 +86,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   protected InvoiceRepository invoiceRepo;
   protected PaymentModeRepository paymentModeRepo;
   protected InvoicePaymentRepository invoicePaymentRepo;
+  protected PortalEventRepository portalEventRepo;
+  protected PartnerRepository partnerRepo;
   protected TaxService taxService;
   protected PartnerService partnerService;
   protected InvoiceService invoiceService;
@@ -100,6 +108,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       InvoiceRepository invoiceRepo,
       PaymentModeRepository paymentModeRepo,
       InvoicePaymentRepository invoicePaymentRepo,
+      PortalEventRepository portalEventRepo,
+      PartnerRepository partnerRepo,
       TaxService taxService,
       PartnerService partnerService,
       InvoiceService invoiceService,
@@ -117,6 +127,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     this.invoiceRepo = invoiceRepo;
     this.paymentModeRepo = paymentModeRepo;
     this.invoicePaymentRepo = invoicePaymentRepo;
+    this.portalEventRepo = portalEventRepo;
+    this.partnerRepo = partnerRepo;
     this.taxService = taxService;
     this.partnerService = partnerService;
     this.invoiceService = invoiceService;
@@ -425,5 +437,118 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     }
 
     return invoicePayment;
+  }
+
+  @Override
+  public PortalPricingResponse fetchEventPricing(Map<String, Object> values)
+      throws AxelorException {
+
+    if (ObjectUtils.isEmpty(values)) {
+      return null;
+    }
+
+    Long eventId = null;
+    PortalEvent event = null;
+    if (values.containsKey("eventId") && ObjectUtils.notEmpty(values.get("eventId"))) {
+      eventId = Long.parseLong(values.get("eventId").toString());
+      Beans.get(JpaSecurity.class).check(AccessType.READ, PortalEvent.class, eventId);
+      event = portalEventRepo.find(eventId);
+    }
+    if (event == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
+          I18n.get(PortalExceptionMessage.EVENT_MISSING));
+    }
+
+    PartnerPortalWorkspace partnerWorkspace = null;
+    if (values.containsKey("partnerWorkspaceId")
+        && ObjectUtils.notEmpty(values.get("partnerWorkspaceId"))) {
+      partnerWorkspace =
+          partnerPortalWorkspaceRepo.find(
+              Long.parseLong(values.get("partnerWorkspaceId").toString()));
+    }
+    if (partnerWorkspace == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
+          I18n.get(PortalExceptionMessage.WORKSPACE_MISSING));
+    }
+
+    Partner partner = null;
+    if (values.containsKey("partnerId") && ObjectUtils.notEmpty(values.get("partnerId"))) {
+      partner = partnerRepo.find(Long.parseLong(values.get("partnerId").toString()));
+    }
+    if (partner == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
+          I18n.get(PortalExceptionMessage.CUSTOMER_MISSING));
+    }
+
+    Company company = partnerWorkspace.getPortalAppConfig().getCompany();
+    LocalDate todayDate = appBaseService.getTodayDate(company);
+    Currency toCurrency = partner.getCurrency();
+    Set<TaxLine> taxLineSet =
+        accountManagementAccountService.getTaxLineSet(
+            todayDate, event.getEventProduct(), company, partner.getFiscalPosition(), false);
+
+    PortalPricingResponse response =
+        fetchProductPrices(
+            eventId,
+            event.getEventProduct(),
+            event.getDefaultPrice(),
+            company,
+            toCurrency,
+            taxLineSet,
+            todayDate);
+    for (PortalEventFacility item : event.getFacilityList()) {
+      response.addFacilityPricingListItem(
+          fetchProductPrices(
+              item.getId(),
+              item.getProduct(),
+              item.getPrice(),
+              company,
+              toCurrency,
+              taxLineSet,
+              todayDate));
+    }
+
+    return response;
+  }
+
+  protected PortalPricingResponse fetchProductPrices(
+      Long id,
+      Product product,
+      BigDecimal price,
+      Company company,
+      Currency toCurrency,
+      Set<TaxLine> taxLineSet,
+      LocalDate todayDate)
+      throws AxelorException {
+
+    PortalPricingResponse response = new PortalPricingResponse();
+
+    Currency fromCurrency = (Currency) productCompanyService.get(product, "saleCurrency", company);
+    if (fromCurrency == null) {
+      fromCurrency = company.getCurrency();
+    }
+
+    BigDecimal priceWT =
+        currencyService
+            .getAmountCurrencyConvertedAtDate(fromCurrency, toCurrency, price, todayDate)
+            .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+    BigDecimal priceATI =
+        currencyService
+            .getAmountCurrencyConvertedAtDate(
+                fromCurrency,
+                toCurrency,
+                taxService.convertUnitPrice(
+                    false, taxLineSet, price, appBaseService.getNbDecimalDigitForUnitPrice()),
+                todayDate)
+            .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+
+    response.setId(id);
+    response.setPriceWT(priceWT);
+    response.setPriceATI(priceATI);
+
+    return response;
   }
 }
