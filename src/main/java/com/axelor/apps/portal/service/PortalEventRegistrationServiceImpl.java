@@ -18,6 +18,7 @@
  */
 package com.axelor.apps.portal.service;
 
+import com.axelor.apps.account.db.FiscalPosition;
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.account.db.InvoiceLine;
 import com.axelor.apps.account.db.InvoicePayment;
@@ -144,7 +145,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackOn = Exception.class)
   public Invoice createEventInvoice(Map<String, Object> values) throws AxelorException {
 
     Registration registration = null;
@@ -263,6 +264,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     Address address = partnerService.getInvoicingAddress(partner);
     if (address == null) {
       address = partner.getMainAddress();
+      if (address == null && ObjectUtils.notEmpty(partner.getPartnerAddressList())) {
+        address = partner.getPartnerAddressList().get(0).getAddress();
+      }
     }
     invoice.setAddressStr(
         String.format("%s\n%s", addressPrefix, addressService.computeAddressStr(address)).trim());
@@ -477,18 +481,20 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     if (values.containsKey("partnerId") && ObjectUtils.notEmpty(values.get("partnerId"))) {
       partner = partnerRepo.find(Long.parseLong(values.get("partnerId").toString()));
     }
-    if (partner == null) {
-      throw new AxelorException(
-          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
-          I18n.get(PortalExceptionMessage.CUSTOMER_MISSING));
-    }
 
     Company company = partnerWorkspace.getPortalAppConfig().getCompany();
+
+    Currency toCurrency = company.getCurrency();
+    FiscalPosition fiscalPosition = null;
+    if (partner != null) {
+      toCurrency = partner.getCurrency();
+      fiscalPosition = partner.getFiscalPosition();
+    }
+
     LocalDate todayDate = appBaseService.getTodayDate(company);
-    Currency toCurrency = partner.getCurrency();
     Set<TaxLine> taxLineSet =
         accountManagementAccountService.getTaxLineSet(
-            todayDate, event.getEventProduct(), company, partner.getFiscalPosition(), false);
+            todayDate, event.getEventProduct(), company, fiscalPosition, false);
 
     PortalPricingResponse response =
         fetchProductPrices(
