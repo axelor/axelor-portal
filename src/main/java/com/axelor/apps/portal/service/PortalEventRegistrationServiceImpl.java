@@ -40,6 +40,7 @@ import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Currency;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.Product;
+import com.axelor.apps.base.db.repo.CurrencyRepository;
 import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.db.repo.PriceListLineRepository;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
@@ -90,6 +91,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   protected InvoicePaymentRepository invoicePaymentRepo;
   protected PortalEventRepository portalEventRepo;
   protected PartnerRepository partnerRepo;
+  protected CurrencyRepository currencyRepo;
   protected TaxService taxService;
   protected PartnerService partnerService;
   protected InvoiceService invoiceService;
@@ -112,6 +114,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       InvoicePaymentRepository invoicePaymentRepo,
       PortalEventRepository portalEventRepo,
       PartnerRepository partnerRepo,
+      CurrencyRepository currencyRepo,
       TaxService taxService,
       PartnerService partnerService,
       InvoiceService invoiceService,
@@ -131,6 +134,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     this.invoicePaymentRepo = invoicePaymentRepo;
     this.portalEventRepo = portalEventRepo;
     this.partnerRepo = partnerRepo;
+    this.currencyRepo = currencyRepo;
     this.taxService = taxService;
     this.partnerService = partnerService;
     this.invoiceService = invoiceService;
@@ -160,6 +164,10 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       partnerWorkspace =
           partnerPortalWorkspaceRepo.find(
               Long.parseLong(values.get("partnerWorkspaceId").toString()));
+    }
+    Currency currency = null;
+    if (values.containsKey("currencyCode") && ObjectUtils.notEmpty(values.get("currencyCode"))) {
+      currency = currencyRepo.findByCode(values.get("currencyCode").toString());
     }
 
     if (registration == null || registration.getEvent() == null) {
@@ -201,7 +209,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
           I18n.get(PortalExceptionMessage.INVOICE_EXISTS));
     }
 
-    Invoice invoice = createInvoice(participant, registration, portalAppConfig);
+    Invoice invoice = createInvoice(participant, registration, portalAppConfig, currency);
     registration.setInvoice(invoice);
     registrationRepo.save(registration);
 
@@ -209,7 +217,10 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   }
 
   protected Invoice createInvoice(
-      PortalParticipant participant, Registration registration, PortalAppConfig portalAppConfig)
+      PortalParticipant participant,
+      Registration registration,
+      PortalAppConfig portalAppConfig,
+      Currency currency)
       throws AxelorException {
 
     Company company = portalAppConfig.getCompany();
@@ -224,7 +235,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
             .collect(Collectors.joining("\n"));
 
     Invoice invoice = new Invoice();
-    setInvoiceDetails(invoice, company, partner, portalAppConfig, addressPrefix);
+    setInvoiceDetails(invoice, company, partner, portalAppConfig, currency, addressPrefix);
     createInvoiceLines(
         invoice, partner, company, portalAppConfig.getDefaultEventProduct(), registration);
     invoiceService.compute(invoice);
@@ -244,6 +255,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       Company company,
       Partner partner,
       PortalAppConfig portalAppConfig,
+      Currency currency,
       String addressPrefix) {
 
     invoice.setOperationTypeSelect(InvoiceRepository.OPERATION_TYPE_CLIENT_SALE);
@@ -253,9 +265,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoice.setCompany(company);
     invoice.setPartner(partner);
 
-    Currency currency = partner.getCurrency();
     if (currency == null) {
-      currency = company.getCurrency();
+      currency = partner.getCurrency() != null ? partner.getCurrency() : company.getCurrency();
     }
     invoice.setCurrency(currency);
 
@@ -560,7 +571,10 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     response.setId(id);
     response.setPriceWT(priceWT);
     response.setPriceATI(priceATI);
-
+    if (toCurrency != null) {
+      response.setCurrencyCode(toCurrency.getCodeISO());
+      response.setCurrencyId(toCurrency.getId());
+    }
     return response;
   }
 }

@@ -30,6 +30,8 @@ public class PortalPricingResponse {
   private Long id;
   private BigDecimal priceWT;
   private BigDecimal priceATI;
+  private Long currencyId;
+  private String currencyCode;
   private List<PortalPricingResponse> facilityPricingList;
 
   public Long getId() {
@@ -54,6 +56,22 @@ public class PortalPricingResponse {
 
   public void setPriceATI(BigDecimal priceATI) {
     this.priceATI = priceATI;
+  }
+
+  public Long getCurrencyId() {
+    return currencyId;
+  }
+
+  public void setCurrencyId(Long currencyId) {
+    this.currencyId = currencyId;
+  }
+
+  public String getCurrencyCode() {
+    return currencyCode;
+  }
+
+  public void setCurrencyCode(String currencyCode) {
+    this.currencyCode = currencyCode;
   }
 
   public List<PortalPricingResponse> getFacilityPricingList() {
