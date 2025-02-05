@@ -73,6 +73,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -492,9 +493,6 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     }
 
     LocalDate todayDate = appBaseService.getTodayDate(company);
-    Set<TaxLine> taxLineSet =
-        accountManagementAccountService.getTaxLineSet(
-            todayDate, event.getEventProduct(), company, fiscalPosition, false);
 
     PortalPricingResponse response =
         fetchProductPrices(
@@ -503,7 +501,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
             event.getDefaultPrice(),
             company,
             toCurrency,
-            taxLineSet,
+            fiscalPosition,
             todayDate);
     for (PortalEventFacility item : event.getFacilityList()) {
       response.addFacilityPricingListItem(
@@ -513,7 +511,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
               item.getPrice(),
               company,
               toCurrency,
-              taxLineSet,
+              fiscalPosition,
               todayDate));
     }
 
@@ -526,15 +524,23 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       BigDecimal price,
       Company company,
       Currency toCurrency,
-      Set<TaxLine> taxLineSet,
+      FiscalPosition fiscalPosition,
       LocalDate todayDate)
       throws AxelorException {
 
     PortalPricingResponse response = new PortalPricingResponse();
 
-    Currency fromCurrency = (Currency) productCompanyService.get(product, "saleCurrency", company);
-    if (fromCurrency == null) {
-      fromCurrency = company.getCurrency();
+    Currency fromCurrency = null;
+    Set<TaxLine> taxLineSet = new HashSet<TaxLine>();
+    if (product != null) {
+      taxLineSet =
+          accountManagementAccountService.getTaxLineSet(
+              todayDate, product, company, fiscalPosition, false);
+
+      fromCurrency = (Currency) productCompanyService.get(product, "saleCurrency", company);
+      if (fromCurrency == null) {
+        fromCurrency = company.getCurrency();
+      }
     }
 
     BigDecimal priceWT =
