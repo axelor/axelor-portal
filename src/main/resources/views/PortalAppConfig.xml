@@ -69,6 +69,7 @@
         <field name="defaultEventProduct"/>
         <field name="defaultEventPaymentMode"/>
         <field name="defaultEventPaymentCondition"/>
+        <field name="nonPublicEmailNotFoundMessage" colSpan="12"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="eventHeroTitle" title="Title"/>
           <field name="eventHeroOverlayColorSelect" widget="SingleSelect"
