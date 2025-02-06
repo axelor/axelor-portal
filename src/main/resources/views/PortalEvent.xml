@@ -33,7 +33,9 @@
         showIf="eventAllowRegistration"/>
       <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
         onChange="portal-action-portal-event-record-product-onchange"/>
-      <field name="eventDegressiveNumberPartcipant" min="0"
+      <field name="maxParticipantPerEvent" colSpan="3"
+        showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
+      <field name="maxParticipantPerRegistration" colSpan="3"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
       <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
       <field name="isPrivate" onChange="portal-action-portal-event-record-isprivate-onchange"
@@ -69,6 +71,7 @@
   <action-record name="portal-action-portal-event-record-isprivate-onchange"
     model="com.axelor.apps.portal.db.PortalEvent">
     <field name="isPublic" expr="eval: false" if="isPrivate"/>
+    <field name="isLoginNotNeeded" expr="eval: false" if="isPrivate"/>
   </action-record>
 
   <action-record name="portal-action-portal-event-record-ispublic-onchange"
