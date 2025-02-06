@@ -23,7 +23,6 @@ import com.axelor.apps.budget.service.saleorder.SaleOrderBudgetServiceImpl;
 import com.axelor.apps.businesssupport.db.repo.ProjectTaskBusinessSupportRepository;
 import com.axelor.apps.helpdesk.service.MailServiceHelpDeskImpl;
 import com.axelor.apps.mattermost.mattermost.service.MattermostServiceImpl;
-import com.axelor.apps.portal.db.repo.DMSFilePortalRepository;
 import com.axelor.apps.portal.db.repo.MailMessagePortalRepository;
 import com.axelor.apps.portal.db.repo.PortalEventPortalRepository;
 import com.axelor.apps.portal.db.repo.PortalEventRepository;
@@ -50,8 +49,7 @@ import com.axelor.apps.portal.service.StockMovePortalServiceImpl;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.project.service.taskLink.ProjectTaskLinkServiceImpl;
 import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
-import com.axelor.template.db.repo.DmsFileTemplateRepository;
-import com.axelor.template.db.repo.MailMessageTemplateRepository;
+import com.axelor.mail.db.repo.MailMessageRepository;
 
 public class PortalModule extends AxelorModule {
 
@@ -60,8 +58,7 @@ public class PortalModule extends AxelorModule {
 
     bind(SaleOrderPortalService.class).to(SaleOrderPortalServiceImpl.class);
     bind(StockMoveServiceProductionImpl.class).to(StockMovePortalServiceImpl.class);
-    bind(DmsFileTemplateRepository.class).to(DMSFilePortalRepository.class);
-    bind(MailMessageTemplateRepository.class).to(MailMessagePortalRepository.class);
+    bind(MailMessageRepository.class).to(MailMessagePortalRepository.class);
     bind(ProjectTaskBusinessSupportRepository.class).to(ProjectTaskPortalRepository.class);
     bind(PortalNewsRepository.class).to(PortalNewsPortalRepository.class);
     bind(PortalEventRepository.class).to(PortalEventPortalRepository.class);
@@ -71,8 +68,8 @@ public class PortalModule extends AxelorModule {
     bind(MailServiceHelpDeskImpl.class).to(MailServicePortalImpl.class);
     bind(ProjectTaskLinkServiceImpl.class).to(ProjectTaskLinkPortalServiceImpl.class);
     bind(MattermostPortalService.class).to(MattermostPortalServiceImpl.class);
-    bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderBudgetServiceImpl.class).to(SaleOrderInvoicePortalServiceImpl.class);
+    bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
     bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
   }

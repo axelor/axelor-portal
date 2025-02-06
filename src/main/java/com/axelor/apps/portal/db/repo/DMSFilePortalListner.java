@@ -21,22 +21,17 @@ package com.axelor.apps.portal.db.repo;
 import com.axelor.auth.AuthUtils;
 import com.axelor.auth.db.User;
 import com.axelor.dms.db.DMSFile;
-import com.axelor.template.db.repo.DmsFileTemplateRepository;
+import javax.persistence.PostPersist;
 
-public class DMSFilePortalRepository extends DmsFileTemplateRepository {
+public class DMSFilePortalListner {
 
-  @Override
-  public DMSFile save(DMSFile entity) {
-
-    entity = super.save(entity);
-
-    if (entity.getVersion() == 0 && entity.getAuthor() == null) {
+  @PostPersist
+  protected void onPostPersist(DMSFile dmsFile) {
+    if (dmsFile.getVersion() == 0 && dmsFile.getAuthor() == null) {
       User user = AuthUtils.getUser();
       if (user != null && user.getActiveCompany() != null) {
-        entity.setAuthor(user.getActiveCompany().getPartner());
+        dmsFile.setAuthor(user.getActiveCompany().getPartner());
       }
     }
-
-    return entity;
   }
 }

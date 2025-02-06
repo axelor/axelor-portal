@@ -14,5 +14,4 @@ dependsOn:
   - helpdesk
   - budget
   - mattermost
-  - template
 sequence: 57

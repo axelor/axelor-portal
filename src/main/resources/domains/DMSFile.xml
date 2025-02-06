@@ -19,6 +19,9 @@
       name="partnerCategorySet" title="Categories"/>
     <one-to-many ref="com.axelor.dms.db.DMSFile" name="children" mappedBy="parent"
       title="Children"/>
+
+    <entity-listener class="com.axelor.apps.portal.db.repo.DMSFilePortalListner"/>
+
   </entity>
 
 </domain-models>
