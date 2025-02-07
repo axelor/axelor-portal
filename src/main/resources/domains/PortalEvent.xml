@@ -15,7 +15,7 @@
     <integer name="maxParticipantPerEvent" min="1" default="1"
       title="Maximum participant per event"/>
     <integer name="maxParticipantPerRegistration" min="1" default="1"
-      title="Maximum participant per registartion"/>
+      title="Maximum participant per registration"/>
     <decimal name="defaultPrice" min="0" title="Price"/>
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
