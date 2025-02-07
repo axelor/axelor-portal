@@ -40,7 +40,8 @@
       <field name="isPrivate" onChange="portal-action-portal-event-record-isprivate-onchange"
         colSpan="3"/>
       <field name="isHidden" colSpan="3"/>
-      <field name="isLoginNotNeeded" colSpan="3"/>
+      <field name="isLoginNotNeeded" colSpan="3"
+        onChange="portal-action-portal-event-record-isloginnotneeded-onchange"/>
       <field name="isPublic" onChange="portal-action-portal-event-record-ispublic-onchange"
         colSpan="3" showIf="isLoginNotNeeded"/>
       <field name="partnerSet" colSpan="12" showIf="isPrivate" form-view="partner-form"
@@ -81,6 +82,11 @@
   <action-record name="portal-action-portal-event-record-product-onchange"
     model="com.axelor.apps.portal.db.PortalEvent">
     <field name="defaultPrice" expr="eval: eventProduct?.salePrice"/>
+  </action-record>
+
+  <action-record name="portal-action-portal-event-record-isloginnotneeded-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="isPrivate" expr="eval: false" if="isLoginNotNeeded"/>
   </action-record>
 
 </object-views>
