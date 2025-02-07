@@ -16,7 +16,6 @@ usage() {
   printf "Usage : ./release [OPTION]\n\n"
   printf "This script does following steps :\n"
   printf "   * Update CHANGELOG.md\n"
-  printf "   * Update version in Dockerfile\n"
   printf "   * Create commit release and tag\n"
   printf "   * Merge into release (release/x.y) branch\n\n"
   printf "Options :\n"
@@ -132,11 +131,6 @@ check_prerequisites() {
 
 prepare() {
   print_step "Preparing sources for $tag..."
-
-  # Update version in files
-  print_sub_step "  * Update version in files"
-  #sed -i "s|application.version =.*$|application.version = $tag|g" src/main/resources/axelor-config.properties
-  sed -i "s|ARG PROJECT_VERSION=.*$|ARG PROJECT_VERSION=$tag|g" Dockerfile
 
   if [[ -f "CHANGELOG.md" ]]; then
     print_sub_step "  * Update CHANGELOG.md"
