@@ -8,8 +8,11 @@ if(!file("../../gradle/style.gradle").exists()) {
 }
 
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(11)
+  }
+}
 
 group = "com.axelor.apps.enterprise"
 
