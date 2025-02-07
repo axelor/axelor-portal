@@ -56,6 +56,7 @@ import com.axelor.apps.portal.db.PortalAppConfig;
 import com.axelor.apps.portal.db.PortalEvent;
 import com.axelor.apps.portal.db.PortalEventFacility;
 import com.axelor.apps.portal.db.PortalParticipant;
+import com.axelor.apps.portal.db.PortalWorkspace;
 import com.axelor.apps.portal.db.Registration;
 import com.axelor.apps.portal.db.repo.PartnerPortalWorkspaceRepository;
 import com.axelor.apps.portal.db.repo.PortalEventRepository;
@@ -209,7 +210,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
           I18n.get(PortalExceptionMessage.INVOICE_EXISTS));
     }
 
-    Invoice invoice = createInvoice(participant, registration, portalAppConfig, currency);
+    Invoice invoice =
+        createInvoice(
+            participant, registration, portalAppConfig, currency, partnerWorkspace.getWorkspace());
     registration.setInvoice(invoice);
     registrationRepo.save(registration);
 
@@ -220,7 +223,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       PortalParticipant participant,
       Registration registration,
       PortalAppConfig portalAppConfig,
-      Currency currency)
+      Currency currency,
+      PortalWorkspace workspace)
       throws AxelorException {
 
     Company company = portalAppConfig.getCompany();
@@ -241,6 +245,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoiceService.compute(invoice);
     invoiceTermService.computeInvoiceTerms(invoice);
 
+    invoice.setPortalWorkspace(workspace);
     invoiceRepo.save(invoice);
 
     invoiceService.validate(invoice);
