@@ -33,8 +33,7 @@
         showIf="eventAllowRegistration"/>
       <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
         onChange="portal-action-portal-event-record-product-onchange"/>
-      <field name="maxParticipantPerEvent" colSpan="3"
-        showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
+      <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
       <field name="maxParticipantPerRegistration" colSpan="3"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
       <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
