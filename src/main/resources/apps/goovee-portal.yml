@@ -12,6 +12,5 @@ dependsOn:
   - production
   - business-support
   - helpdesk
-  - budget
   - mattermost
 sequence: 57

@@ -19,7 +19,6 @@
 package com.axelor.apps.portal.module;
 
 import com.axelor.app.AxelorModule;
-import com.axelor.apps.budget.service.saleorder.SaleOrderBudgetServiceImpl;
 import com.axelor.apps.businesssupport.db.repo.ProjectTaskBusinessSupportRepository;
 import com.axelor.apps.helpdesk.service.MailServiceHelpDeskImpl;
 import com.axelor.apps.mattermost.mattermost.service.MattermostServiceImpl;
@@ -41,7 +40,6 @@ import com.axelor.apps.portal.service.MailServicePortalImpl;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
 import com.axelor.apps.portal.service.PortalEventRegistrationServiceImpl;
 import com.axelor.apps.portal.service.ProjectTaskLinkPortalServiceImpl;
-import com.axelor.apps.portal.service.SaleOrderInvoicePortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.SaleOrderPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderStockPortalServiceImpl;
@@ -68,7 +66,6 @@ public class PortalModule extends AxelorModule {
     bind(MailServiceHelpDeskImpl.class).to(MailServicePortalImpl.class);
     bind(ProjectTaskLinkServiceImpl.class).to(ProjectTaskLinkPortalServiceImpl.class);
     bind(MattermostPortalService.class).to(MattermostPortalServiceImpl.class);
-    bind(SaleOrderBudgetServiceImpl.class).to(SaleOrderInvoicePortalServiceImpl.class);
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
     bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
