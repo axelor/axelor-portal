@@ -11,8 +11,6 @@
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
 
-    <entity-listener class="com.axelor.apps.portal.db.repo.InvoicePortalListner"/>
-
   </entity>
 
 </domain-models>
