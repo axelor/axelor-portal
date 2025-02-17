@@ -285,6 +285,10 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
         address = partner.getPartnerAddressList().get(0).getAddress();
       }
     }
+    // TODO
+    if (address == null) {
+      address = company.getAddress();
+    }
     invoice.setAddressStr(
         String.format("%s\n%s", addressPrefix, addressService.computeAddressStr(address)).trim());
     invoice.setAddress(address);
