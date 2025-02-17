@@ -5,6 +5,9 @@
 
   <form id="portal-stock-move-form" name="stock-move-form" title="Stock move"
     model="com.axelor.apps.stock.db.StockMove" extension="true">
+    <extend target="/">
+      <attribute name="onNew" value="action-portal-group-stockmove-onnew"/>
+    </extend>
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
@@ -13,5 +16,15 @@
       </insert>
     </extend>
   </form>
+
+  <action-attrs name="action-stockmove-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+  <action-group name="action-portal-group-stockmove-onnew">
+    <action name="action-group-stock-stockmove-onnew"/>
+    <action name="action-stock-move-attrs-fill-ctx"/>
+    <action name="action-stockmove-attrs-set-workspace"/>
+  </action-group>
 
 </object-views>

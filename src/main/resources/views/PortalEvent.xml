@@ -12,7 +12,8 @@
   </grid>
 
   <form name="portal-portal-event-form" title="Portal event"
-    model="com.axelor.apps.portal.db.PortalEvent" width="large">
+    model="com.axelor.apps.portal.db.PortalEvent" width="large"
+    onNew="action-portal-event-attrs-set-workspace">
     <panel name="mainPanel">
       <panel name="imagePanel" colSpan="2">
         <field name="eventImage" widget="Image" colSpan="12" showTitle="false"/>
@@ -99,5 +100,9 @@
       expr="eval: #{eventStartDateTime.toLocalDate().atTime(23, 59, 59)}"
       if="eventAllDay &amp;&amp; eventStartDateTime != null"/>
   </action-record>
+
+  <action-attrs name="action-portal-event-attrs-set-workspace">
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

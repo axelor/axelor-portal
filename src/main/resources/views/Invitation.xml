@@ -12,7 +12,8 @@
   </grid>
 
   <form name="portal-invitation-form" title="Portal invitation"
-    model="com.axelor.apps.portal.db.Invitation" width="large">
+    model="com.axelor.apps.portal.db.Invitation" width="large"
+    onNew="action-invitation-attrs-set-workspace">
     <panel name="mainPanel">
       <field name="emailAddress">
         <editor x-viewer="true" x-show-titles="false">
@@ -24,5 +25,9 @@
       <field name="contactAppPermissionList" colSpan="12" widget="TagSelect"/>
     </panel>
   </form>
+
+  <action-attrs name="action-invitation-attrs-set-workspace">
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

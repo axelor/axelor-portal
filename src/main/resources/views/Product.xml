@@ -6,7 +6,8 @@
   <form name="product-form" id="portal-product-form" title="Product"
     model="com.axelor.apps.base.db.Product" extension="true">
     <extend target="/">
-      <attribute name="onLoad" value="action-portal-group-product-onload"/>
+      <attribute name="onNew"
+        value="action-product-group-production-onnew,action-product-attrs-set-workspace"/>
     </extend>
     <extend target="//panel-tabs[@name='productSpecificAttributes']/*[last()]">
       <insert position="after">
@@ -47,5 +48,9 @@
     <action name="action-group-product-onload"/>
     <action name="action-product-set-left-qty"/>
   </action-group>
+
+  <action-attrs name="action-product-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

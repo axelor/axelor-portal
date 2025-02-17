@@ -5,6 +5,10 @@
 
   <form id="portal-sale-order-form" name="sale-order-form" title="Sale order"
     model="com.axelor.apps.sale.db.SaleOrder" extension="true">
+    <extend target="/">
+      <attribute name="onNew"
+        value="action-sale-order-method-onnew,action-saleorder-attrs-set-workspace"/>
+    </extend>
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
@@ -13,5 +17,9 @@
       </insert>
     </extend>
   </form>
+
+  <action-attrs name="action-saleorder-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

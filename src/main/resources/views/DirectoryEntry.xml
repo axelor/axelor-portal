@@ -9,7 +9,8 @@
   </grid>
 
   <form name="directory-entry-form" title="Directory entry"
-    model="com.axelor.apps.portal.db.DirectoryEntry" width="large">
+    model="com.axelor.apps.portal.db.DirectoryEntry" width="large"
+    onNew="action-directory-entry-attrs-set-workspace">
     <panel name="mainPanel">
       <panel name="imagePanel" colSpan="2">
         <field name="directoryEntryImage" widget="Image" colSpan="12" showTitle="false"/>
@@ -32,5 +33,9 @@
       <field name="directoryEntryDescription" colSpan="12" widget="html"/>
     </panel>
   </form>
+
+  <action-attrs name="action-directory-entry-attrs-set-workspace">
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

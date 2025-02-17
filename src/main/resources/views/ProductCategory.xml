@@ -5,6 +5,9 @@
 
   <form name="product-category-form" id="portal-product-category-form" title="Product category"
     model="com.axelor.apps.base.db.ProductCategory" extension="true">
+    <extend target="/">
+      <attribute name="onNew" value="action-product-category-attrs-set-workspace"/>
+    </extend>
     <extend target="//panel[@name='mainPanel']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal" colSpan="12">
@@ -27,5 +30,9 @@
       </insert>
     </extend>
   </form>
+
+  <action-attrs name="action-product-category-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

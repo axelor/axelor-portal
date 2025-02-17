@@ -10,7 +10,7 @@
   </grid>
 
   <form model="com.axelor.apps.portal.db.ForumGroup" title="Forum group"
-    name="forum-group-form" width="large">
+    name="forum-group-form" width="large" onNew="action-forum-group-attrs-set-workspace">
     <panel name="mainPanel" colSpan="12">
       <panel name="imagePanel" colSpan="2">
         <field name="image" widget="image"/>
@@ -26,5 +26,9 @@
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
     </panel>
   </form>
+
+  <action-attrs name="action-forum-group-attrs-set-workspace">
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>
