@@ -33,11 +33,13 @@
         showIf="eventAllowRegistration"/>
       <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
         onChange="portal-action-portal-event-record-product-onchange"
-        requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0"/>
+        requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0" colSpan="3"/>
+      <field name="workspace" required="true"/>
       <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
       <field name="maxParticipantPerRegistration" colSpan="3"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
-      <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
+      <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"
+        domain="self.workspace = :workspace"/>
       <field name="isPrivate" onChange="portal-action-portal-event-record-isprivate-onchange"
         colSpan="3"/>
       <field name="isHidden" colSpan="3"/>

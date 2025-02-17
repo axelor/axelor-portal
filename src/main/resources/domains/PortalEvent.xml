@@ -28,6 +28,8 @@
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
     <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
+      title="Workspace"/>
     <one-to-many ref="com.axelor.apps.portal.db.Registration" name="registrationList"
       mappedBy="event" title="Registrations"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalEventFacility" name="facilityList"
