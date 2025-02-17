@@ -32,7 +32,8 @@
       <field name="eventAllowMultipleRegistrations" colSpan="3"
         showIf="eventAllowRegistration"/>
       <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
-        onChange="portal-action-portal-event-record-product-onchange"/>
+        onChange="portal-action-portal-event-record-product-onchange"
+        requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0"/>
       <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
       <field name="maxParticipantPerRegistration" colSpan="3"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
