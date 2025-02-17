@@ -9,7 +9,6 @@
 
     <string name="name"/>
     <string name="surname"/>
-    <string name="companyName" title="Company"/>
     <string name="emailAddress"/>
     <string name="phone"/>
     <string name="company"/>

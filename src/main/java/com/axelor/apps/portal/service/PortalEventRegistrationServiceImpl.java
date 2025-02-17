@@ -229,17 +229,15 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
 
     Company company = portalAppConfig.getCompany();
     Partner partner = participant.getContact();
-    String name =
-        Stream.of(participant.getName(), participant.getSurname())
-            .filter(s -> s != null && !s.isEmpty())
-            .collect(Collectors.joining(" "));
-    String addressPrefix =
-        Stream.of(name, participant.getCompanyName())
-            .filter(s -> s != null && !s.isEmpty())
-            .collect(Collectors.joining("\n"));
+    String addressStr =
+        ObjectUtils.notEmpty(participant.getCompany())
+            ? participant.getCompany()
+            : Stream.of(participant.getName(), participant.getSurname())
+                .filter(s -> s != null && !s.isEmpty())
+                .collect(Collectors.joining(" "));
 
     Invoice invoice = new Invoice();
-    setInvoiceDetails(invoice, company, partner, portalAppConfig, currency, addressPrefix);
+    setInvoiceDetails(invoice, company, partner, portalAppConfig, currency, addressStr);
     createInvoiceLines(
         invoice, partner, company, portalAppConfig.getDefaultEventProduct(), registration);
     invoiceService.compute(invoice);
@@ -261,7 +259,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       Partner partner,
       PortalAppConfig portalAppConfig,
       Currency currency,
-      String addressPrefix) {
+      String addressStr) {
 
     invoice.setOperationTypeSelect(InvoiceRepository.OPERATION_TYPE_CLIENT_SALE);
     invoice.setOperationSubTypeSelect(InvoiceRepository.OPERATION_SUB_TYPE_DEFAULT);
@@ -285,12 +283,11 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
         address = partner.getPartnerAddressList().get(0).getAddress();
       }
     }
-    // TODO
     if (address == null) {
       address = company.getAddress();
     }
-    invoice.setAddressStr(
-        String.format("%s\n%s", addressPrefix, addressService.computeAddressStr(address)).trim());
+
+    invoice.setAddressStr(addressStr);
     invoice.setAddress(address);
     invoice.setPartnerTaxNbr(partner.getTaxNbr());
     invoice.setBankDetails(getPartnerBankDetails(partner));

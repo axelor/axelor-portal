@@ -20,7 +20,7 @@
       <field name="emailAddress" widget="email"/>
       <field name="phone" widget="phone" x-placeholder-number-type="FIXED_LINE"/>
       <field name="contact" form-view="partner-contact-form" grid-view="partner-contact-grid"/>
-      <field name="companyName"/>
+      <field name="company" title="Company/Address"/>
       <field name="registration.event"/>
       <field name="registration" hidden="true"/>
       <field name="subscriptionSet" widget="TagSelect" colSpan="12"
