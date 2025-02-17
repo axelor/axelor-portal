@@ -27,7 +27,8 @@
         <field name="eventPlace"/>
         <field name="eventLink" widget="url"/>
       </panel>
-      <field name="eventAllDay" colSpan="3"/>
+      <field name="eventAllDay" colSpan="3"
+        onChange="action-portal-event-record-event-all-day-onchange"/>
       <field name="eventAllowRegistration" colSpan="3"/>
       <field name="eventAllowMultipleRegistrations" colSpan="3"
         showIf="eventAllowRegistration"/>
@@ -90,6 +91,13 @@
   <action-record name="portal-action-portal-event-record-isloginnotneeded-onchange"
     model="com.axelor.apps.portal.db.PortalEvent">
     <field name="isPrivate" expr="eval: false" if="isLoginNotNeeded"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-event-all-day-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="eventEndDateTime"
+      expr="eval: #{eventStartDateTime.toLocalDate().atTime(23, 59, 59)}"
+      if="eventAllDay &amp;&amp; eventStartDateTime != null"/>
   </action-record>
 
 </object-views>
