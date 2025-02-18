@@ -342,6 +342,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
         partner,
         company,
         portalEvent.getEventProduct(),
+        registration.getEvent().getEventTitle(),
         sequence,
         new BigDecimal(registration.getParticipantList().size()),
         portalEvent.getDefaultPrice());
@@ -353,7 +354,14 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
                   .filter(p -> p.getSubscriptionSet().contains(item))
                   .count());
       createInvoiceLine(
-          invoice, partner, company, item.getProduct(), ++sequence, qty, item.getPrice());
+          invoice,
+          partner,
+          company,
+          item.getProduct(),
+          item.getFacility(),
+          ++sequence,
+          qty,
+          item.getPrice());
     }
     try {
       invoiceLineService.updateLinesAfterFiscalPositionChange(invoice);
@@ -369,12 +377,17 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       Partner partner,
       Company company,
       Product product,
+      String productName,
       Integer sequence,
       BigDecimal qty,
       BigDecimal priceWT)
       throws AxelorException {
 
     priceWT = priceWT.multiply(qty);
+    if (priceWT.compareTo(BigDecimal.ZERO) <= 0) {
+      return null;
+    }
+
     InvoiceLine invoiceLine = new InvoiceLine();
 
     invoiceLine.setTypeSelect(InvoiceLineRepository.TYPE_NORMAL);
@@ -389,13 +402,14 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoiceLine.setPriceDiscounted(priceWT);
     invoiceLine.setInTaxPrice(priceWT);
     invoiceLine.setInTaxTotal(priceWT);
-    setProductDetails(invoice, invoiceLine, product);
+    setProductDetails(invoice, invoiceLine, product, productName);
     invoice.addInvoiceLineListItem(invoiceLine);
 
     return invoiceLine;
   }
 
-  protected InvoiceLine setProductDetails(Invoice invoice, InvoiceLine invoiceLine, Product product)
+  protected InvoiceLine setProductDetails(
+      Invoice invoice, InvoiceLine invoiceLine, Product product, String productName)
       throws AxelorException {
 
     if (product == null) {
@@ -403,7 +417,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     }
 
     invoiceLine.setProduct(product);
-    invoiceLine.setProductName(product.getName());
+    invoiceLine.setProductName(productName);
     invoiceLine.setProductCode(product.getCode());
     invoiceLine.setUnit(product.getUnit());
 
