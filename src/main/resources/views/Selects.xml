@@ -124,4 +124,9 @@
     <option value="OutlinePerson">Outline Person</option>
   </selection>
 
+  <selection name="portal.event.status.select">
+    <option value="0">Draft</option>
+    <option value="1">Published</option>
+  </selection>
+
 </object-views>

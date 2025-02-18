@@ -19,15 +19,16 @@
         <field name="eventImage" widget="Image" colSpan="12" showTitle="false"/>
       </panel>
       <panel name="infoPanel" colSpan="10">
+        <field name="statusSelect" readonly="true" widget="NavSelect" colSpan="12"/>
         <field name="eventTitle" required="true" colSpan="12"/>
         <field name="slug"/>
         <field name="defaultPrice"/>
         <field name="eventStartDateTime"/>
         <field name="eventEndDateTime" showIf="!eventAllDay"
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
-        <field name="eventPlace"/>
-        <field name="eventLink" widget="url"/>
       </panel>
+      <field name="eventPlace"/>
+      <field name="eventLink" widget="url"/>
       <field name="eventAllDay" colSpan="3"
         onChange="action-portal-event-record-event-all-day-onchange"/>
       <field name="eventAllowRegistration" colSpan="3"/>
@@ -64,6 +65,12 @@
     </panel>
     <panel-related name="registrationPanel" field="registrationList" readonly="true"
       colSpan="12"/>
+    <panel sidebar="true" name="actionPanel">
+      <button onClick="action-portal-event-record-draft-onclick,save" name="draftBtn"
+        title="Back to draft" showIf="statusSelect == 1"/>
+      <button onClick="action-portal-event-record-publish-onclick,save" name="publishBtn"
+        title="Publish" showIf="statusSelect == 0"/>
+    </panel>
   </form>
 
   <action-view name="action-portal-portal-event-display-comment" title="Comments"
@@ -72,6 +79,16 @@
     <view type="form" name="mail-message-form"/>
     <domain>self.relatedId = :id AND self.relatedModel = 'com.axelor.apps.portal.db.PortalEvent'</domain>
   </action-view>
+
+  <action-record name="action-portal-event-record-draft-onclick"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="statusSelect" expr="eval: PortalEventRepository.STATUS_DRAFT"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-publish-onclick"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="statusSelect" expr="eval: PortalEventRepository.STATUS_PUBLISHED"/>
+  </action-record>
 
   <action-record name="portal-action-portal-event-record-isprivate-onchange"
     model="com.axelor.apps.portal.db.PortalEvent">

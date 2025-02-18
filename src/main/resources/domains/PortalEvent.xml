@@ -16,6 +16,7 @@
       title="Maximum participant per event"/>
     <integer name="maxParticipantPerRegistration" min="1" default="1"
       title="Maximum participant per registration"/>
+    <integer name="statusSelect" selection="portal.event.status.select" title="Status"/>
     <decimal name="defaultPrice" min="0" title="Price"/>
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
@@ -40,6 +41,13 @@
       title="Partners"/>
     <many-to-many name="partnerCategorySet"
       ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
+
+    <extra-code>
+      <![CDATA[
+        public static final int STATUS_DRAFT = 0;
+        public static final int STATUS_PUBLISHED = 1;
+      ]]>
+    </extra-code>
 
   </entity>
 
