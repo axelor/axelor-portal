@@ -44,6 +44,8 @@ import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.SaleOrderPortalServiceImpl;
 import com.axelor.apps.portal.service.SaleOrderStockPortalServiceImpl;
 import com.axelor.apps.portal.service.StockMovePortalServiceImpl;
+import com.axelor.apps.portal.service.app.AppGooveePortalService;
+import com.axelor.apps.portal.service.app.AppGooveePortalServiceImpl;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.project.service.taskLink.ProjectTaskLinkServiceImpl;
 import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
@@ -69,5 +71,6 @@ public class PortalModule extends AxelorModule {
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
     bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
     bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
+    bind(AppGooveePortalService.class).to(AppGooveePortalServiceImpl.class);
   }
 }

@@ -62,12 +62,15 @@ import com.axelor.apps.portal.db.repo.PartnerPortalWorkspaceRepository;
 import com.axelor.apps.portal.db.repo.PortalEventRepository;
 import com.axelor.apps.portal.db.repo.RegistrationRepository;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
+import com.axelor.apps.portal.service.app.AppGooveePortalService;
 import com.axelor.apps.portal.service.response.PortalPricingResponse;
 import com.axelor.common.ObjectUtils;
 import com.axelor.db.JpaSecurity;
 import com.axelor.db.JpaSecurity.AccessType;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
+import com.axelor.message.db.Template;
+import com.axelor.message.service.TemplateMessageService;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import jakarta.xml.bind.JAXBException;
@@ -105,6 +108,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   protected AccountManagementAccountService accountManagementAccountService;
   protected InvoiceTermPaymentService invoiceTermPaymentService;
   protected InvoicePaymentValidateService invoicePaymentValidateService;
+  protected AppGooveePortalService appGooveePortalService;
+  protected TemplateMessageService templateMessageService;
 
   @Inject
   public PortalEventRegistrationServiceImpl(
@@ -127,7 +132,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       CurrencyService currencyService,
       AccountManagementAccountService accountManagementAccountService,
       InvoiceTermPaymentService invoiceTermPaymentService,
-      InvoicePaymentValidateService invoicePaymentValidateService) {
+      InvoicePaymentValidateService invoicePaymentValidateService,
+      AppGooveePortalService appGooveePortalService,
+      TemplateMessageService templateMessageService) {
     this.registrationRepo = registrationRepo;
     this.partnerPortalWorkspaceRepo = partnerPortalWorkspaceRepo;
     this.invoiceRepo = invoiceRepo;
@@ -148,6 +155,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     this.accountManagementAccountService = accountManagementAccountService;
     this.invoiceTermPaymentService = invoiceTermPaymentService;
     this.invoicePaymentValidateService = invoicePaymentValidateService;
+    this.appGooveePortalService = appGooveePortalService;
+    this.templateMessageService = templateMessageService;
   }
 
   @Override
@@ -215,6 +224,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
             participant, registration, portalAppConfig, currency, partnerWorkspace.getWorkspace());
     registration.setInvoice(invoice);
     registrationRepo.save(registration);
+
+    sendRegistrationNotification(registration);
 
     return invoice;
   }
@@ -582,5 +593,19 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       response.setCurrencyId(toCurrency.getId());
     }
     return response;
+  }
+
+  protected void sendRegistrationNotification(Registration registration) {
+
+    Template template = appGooveePortalService.getAppGooveePortal().getRegistrationTemplate();
+    if (template == null) {
+      return;
+    }
+
+    try {
+      templateMessageService.generateAndSendMessage(registration, template);
+    } catch (Exception e) {
+      TraceBackService.trace(e);
+    }
   }
 }
