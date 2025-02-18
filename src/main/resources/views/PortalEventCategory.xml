@@ -24,7 +24,11 @@
   </form>
 
   <action-attrs name="action-portal-event-category-attrs-set-workspace">
-    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"
+      if="__user__.workspace != null"/>
+    <attribute name="value" for="workspace" expr="eval: __parent__.workspace"
+      if="__parent__.workspace != null"/>
+    <attribute name="readonly" for="workspace" expr="eval: __parent__ != null"/>
   </action-attrs>
 
 </object-views>

@@ -37,7 +37,8 @@
       <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
         onChange="portal-action-portal-event-record-product-onchange"
         requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0" colSpan="3"/>
-      <field name="workspace" required="true"/>
+      <field name="workspace" required="true"
+        onChange="action-portal-event-record-workspace-onchange"/>
       <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
       <field name="maxParticipantPerRegistration" colSpan="3"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
@@ -109,6 +110,11 @@
   <action-record name="portal-action-portal-event-record-isloginnotneeded-onchange"
     model="com.axelor.apps.portal.db.PortalEvent">
     <field name="isPrivate" expr="eval: false" if="isLoginNotNeeded"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-workspace-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="eventCategorySet" expr="eval: null"/>
   </action-record>
 
   <action-record name="action-portal-event-record-event-all-day-onchange"
