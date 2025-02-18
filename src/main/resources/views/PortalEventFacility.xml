@@ -5,8 +5,8 @@
 
   <grid name="portal-portal-event-facility-grid" title="Portal event facilities"
     model="com.axelor.apps.portal.db.PortalEventFacility" editable="true">
-    <field name="facility"/>
-    <field name="product" canNew="true" requiredIf="price != 0"/>
+    <field name="facility" required="true"/>
+    <field name="product" canNew="true" requiredIf="price != 0" domain="self.isEvent IS TRUE"/>
     <field name="price"/>
   </grid>
 
@@ -14,7 +14,8 @@
     model="com.axelor.apps.portal.db.PortalEventFacility" width="large">
     <panel name="mainPanel">
       <field name="facility" required="true"/>
-      <field name="product" canNew="true" requiredIf="price != 0"/>
+      <field name="product" canNew="true" requiredIf="price != 0"
+        domain="self.isEvent IS TRUE"/>
       <field name="price"/>
     </panel>
   </form>

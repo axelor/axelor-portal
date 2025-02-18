@@ -36,7 +36,8 @@
         showIf="eventAllowRegistration"/>
       <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
         onChange="portal-action-portal-event-record-product-onchange"
-        requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0" colSpan="3"/>
+        requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0" colSpan="3"
+        domain="self.isEvent IS TRUE"/>
       <field name="workspace" required="true"
         onChange="action-portal-event-record-workspace-onchange"/>
       <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
