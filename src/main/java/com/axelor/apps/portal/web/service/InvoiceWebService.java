@@ -19,12 +19,14 @@
 package com.axelor.apps.portal.web.service;
 
 import com.axelor.apps.account.db.Invoice;
+import com.axelor.apps.account.db.InvoicePayment;
 import com.axelor.apps.account.db.repo.InvoiceRepository;
 import com.axelor.apps.account.service.config.AccountConfigService;
 import com.axelor.apps.account.service.invoice.print.InvoicePrintService;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.PrintingTemplate;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
+import com.axelor.apps.portal.service.PortalInvoiceService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
 import com.axelor.db.JpaSecurity;
 import com.axelor.db.JpaSecurity.AccessType;
@@ -63,6 +65,26 @@ public class InvoiceWebService {
         .entity(report)
         .header("Content-Disposition", "attachment;filename=" + report.getName() + ".pdf")
         .build();
+  }
+
+  @POST
+  @Path("/payment")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public PortalRestResponse payInvoice(Map<String, Object> values) throws AxelorException {
+
+    try {
+      Beans.get(JpaSecurity.class).check(AccessType.WRITE, Invoice.class);
+      InvoicePayment invoicePayment = Beans.get(PortalInvoiceService.class).payInvoice(values);
+
+      PortalRestResponse response = new PortalRestResponse();
+      return response.setData(invoicePayment.getId()).success();
+
+    } catch (Exception e) {
+      PortalRestResponse response = new PortalRestResponse();
+      response.setException(e);
+      return response.fail();
+    }
   }
 
   @POST

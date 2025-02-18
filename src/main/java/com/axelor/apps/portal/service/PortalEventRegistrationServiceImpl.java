@@ -21,18 +21,13 @@ package com.axelor.apps.portal.service;
 import com.axelor.apps.account.db.FiscalPosition;
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.account.db.InvoiceLine;
-import com.axelor.apps.account.db.InvoicePayment;
 import com.axelor.apps.account.db.TaxLine;
 import com.axelor.apps.account.db.repo.InvoiceLineRepository;
-import com.axelor.apps.account.db.repo.InvoicePaymentRepository;
 import com.axelor.apps.account.db.repo.InvoiceRepository;
-import com.axelor.apps.account.db.repo.PaymentModeRepository;
 import com.axelor.apps.account.service.AccountManagementAccountService;
 import com.axelor.apps.account.service.invoice.InvoiceLineService;
 import com.axelor.apps.account.service.invoice.InvoiceService;
 import com.axelor.apps.account.service.invoice.InvoiceTermService;
-import com.axelor.apps.account.service.payment.invoice.payment.InvoicePaymentValidateService;
-import com.axelor.apps.account.service.payment.invoice.payment.InvoiceTermPaymentService;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Address;
 import com.axelor.apps.base.db.BankDetails;
@@ -73,8 +68,6 @@ import com.axelor.message.db.Template;
 import com.axelor.message.service.TemplateMessageService;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import jakarta.xml.bind.JAXBException;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -84,15 +77,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.xml.datatype.DatatypeConfigurationException;
 
 public class PortalEventRegistrationServiceImpl implements PortalEventRegistrationService {
 
   protected RegistrationRepository registrationRepo;
   protected PartnerPortalWorkspaceRepository partnerPortalWorkspaceRepo;
   protected InvoiceRepository invoiceRepo;
-  protected PaymentModeRepository paymentModeRepo;
-  protected InvoicePaymentRepository invoicePaymentRepo;
   protected PortalEventRepository portalEventRepo;
   protected PartnerRepository partnerRepo;
   protected CurrencyRepository currencyRepo;
@@ -106,18 +96,15 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   protected ProductCompanyService productCompanyService;
   protected CurrencyService currencyService;
   protected AccountManagementAccountService accountManagementAccountService;
-  protected InvoiceTermPaymentService invoiceTermPaymentService;
-  protected InvoicePaymentValidateService invoicePaymentValidateService;
   protected AppGooveePortalService appGooveePortalService;
   protected TemplateMessageService templateMessageService;
+  protected PortalInvoiceService portalInvoiceService;
 
   @Inject
   public PortalEventRegistrationServiceImpl(
       RegistrationRepository registrationRepo,
       PartnerPortalWorkspaceRepository partnerPortalWorkspaceRepo,
       InvoiceRepository invoiceRepo,
-      PaymentModeRepository paymentModeRepo,
-      InvoicePaymentRepository invoicePaymentRepo,
       PortalEventRepository portalEventRepo,
       PartnerRepository partnerRepo,
       CurrencyRepository currencyRepo,
@@ -131,15 +118,12 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       ProductCompanyService productCompanyService,
       CurrencyService currencyService,
       AccountManagementAccountService accountManagementAccountService,
-      InvoiceTermPaymentService invoiceTermPaymentService,
-      InvoicePaymentValidateService invoicePaymentValidateService,
       AppGooveePortalService appGooveePortalService,
-      TemplateMessageService templateMessageService) {
+      TemplateMessageService templateMessageService,
+      PortalInvoiceService portalInvoiceService) {
     this.registrationRepo = registrationRepo;
     this.partnerPortalWorkspaceRepo = partnerPortalWorkspaceRepo;
     this.invoiceRepo = invoiceRepo;
-    this.paymentModeRepo = paymentModeRepo;
-    this.invoicePaymentRepo = invoicePaymentRepo;
     this.portalEventRepo = portalEventRepo;
     this.partnerRepo = partnerRepo;
     this.currencyRepo = currencyRepo;
@@ -153,10 +137,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     this.productCompanyService = productCompanyService;
     this.currencyService = currencyService;
     this.accountManagementAccountService = accountManagementAccountService;
-    this.invoiceTermPaymentService = invoiceTermPaymentService;
-    this.invoicePaymentValidateService = invoicePaymentValidateService;
     this.appGooveePortalService = appGooveePortalService;
     this.templateMessageService = templateMessageService;
+    this.portalInvoiceService = portalInvoiceService;
   }
 
   @Override
@@ -259,7 +242,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
 
     invoiceService.validate(invoice);
     invoiceService.ventilate(invoice);
-    createInvoiePayment(invoice);
+    portalInvoiceService.createInvoiePayment(invoice, null);
 
     return invoice;
   }
@@ -438,38 +421,6 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoiceLine.setTaxCode(taxService.computeTaxCode(taxLineSet));
 
     return invoiceLine;
-  }
-
-  protected InvoicePayment createInvoiePayment(Invoice invoice) throws AxelorException {
-
-    if (invoice.getInTaxTotal().compareTo(BigDecimal.ZERO) <= 0) {
-      return null;
-    }
-
-    InvoicePayment invoicePayment = new InvoicePayment();
-    invoicePayment.setTypeSelect(InvoicePaymentRepository.TYPE_PAYMENT);
-    invoicePayment.setStatusSelect(InvoicePaymentRepository.STATUS_DRAFT);
-
-    invoicePayment.setCompanyBankDetails(invoice.getCompanyBankDetails());
-    invoicePayment.setCurrency(invoice.getCurrency());
-    invoicePayment.setAmount(invoice.getInTaxTotal());
-    invoicePayment.setPaymentDate(invoice.getInvoiceDate());
-    invoicePayment.setPaymentMode(paymentModeRepo.findByCode("IN_WEB"));
-    invoicePayment.setTotalAmountWithFinancialDiscount(invoice.getInTaxTotal());
-    invoicePayment.setMove(invoice.getMove());
-    invoiceTermPaymentService.createInvoicePaymentTerms(
-        invoicePayment, invoice.getInvoiceTermList());
-
-    invoice.addInvoicePaymentListItem(invoicePayment);
-    invoicePaymentRepo.save(invoicePayment);
-
-    try {
-      invoicePaymentValidateService.validate(invoicePayment);
-    } catch (AxelorException | JAXBException | IOException | DatatypeConfigurationException e) {
-      TraceBackService.trace(e);
-    }
-
-    return invoicePayment;
   }
 
   @Override
