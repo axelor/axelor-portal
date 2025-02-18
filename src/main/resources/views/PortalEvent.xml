@@ -13,7 +13,8 @@
 
   <form name="portal-portal-event-form" title="Portal event"
     model="com.axelor.apps.portal.db.PortalEvent" width="large"
-    onNew="action-portal-event-attrs-set-workspace">
+    onNew="action-portal-event-attrs-set-workspace"
+    onLoad="action-portal-event-attrs-set-event-link">
     <panel name="mainPanel">
       <panel name="imagePanel" colSpan="2">
         <field name="eventImage" widget="Image" colSpan="12" showTitle="false"/>
@@ -28,7 +29,7 @@
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
       </panel>
       <field name="eventPlace"/>
-      <field name="eventLink" widget="url"/>
+      <field name="$eventLink" widget="url" title="Link"/>
       <field name="eventAllDay" colSpan="3"
         onChange="action-portal-event-record-event-all-day-onchange"/>
       <field name="eventAllowRegistration" colSpan="3"/>
@@ -127,6 +128,11 @@
 
   <action-attrs name="action-portal-event-attrs-set-workspace">
     <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+  <action-attrs name="action-portal-event-attrs-set-event-link">
+    <attribute name="value" for="$eventLink"
+      expr="eval: workspace?.url + '/events/' + slug"/>
   </action-attrs>
 
 </object-views>

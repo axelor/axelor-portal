@@ -9,7 +9,6 @@
 
     <string name="eventTitle" title="Title" namecolumn="true"/>
     <string name="eventPlace"/>
-    <string name="eventLink"/>
     <string name="eventDescription" large="true"/>
     <string name="slug" unique="true"/>
     <integer name="maxParticipantPerEvent" min="1" default="1"
