@@ -270,19 +270,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoice.setCompanyBankDetails(company.getDefaultBankDetails());
     invoice.setPrintingSettings(company.getPrintingSettings());
 
-    Address address = partnerService.getInvoicingAddress(partner);
-    if (address == null) {
-      address = partner.getMainAddress();
-      if (address == null && ObjectUtils.notEmpty(partner.getPartnerAddressList())) {
-        address = partner.getPartnerAddressList().get(0).getAddress();
-      }
-    }
-    if (address == null) {
-      address = company.getAddress();
-    }
-
     invoice.setAddressStr(addressStr);
-    invoice.setAddress(address);
+    invoice.setAddress(getAddress(partner, company, portalAppConfig));
     invoice.setPartnerTaxNbr(partner.getTaxNbr());
     invoice.setBankDetails(getPartnerBankDetails(partner));
     invoice.setPaymentCondition(
@@ -296,6 +285,31 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoice.setFiscalPosition(partner.getFiscalPosition());
 
     return invoice;
+  }
+
+  protected Address getAddress(Partner partner, Company company, PortalAppConfig portalAppConfig) {
+    Address address = partnerService.getInvoicingAddress(partner);
+    if (address != null) {
+      return address;
+    }
+
+    if (partner.getMainAddress() != null) {
+      return partner.getMainAddress();
+    }
+
+    if (ObjectUtils.notEmpty(partner.getPartnerAddressList())) {
+      return partner.getPartnerAddressList().get(0).getAddress();
+    }
+
+    if (portalAppConfig.getDefaultInvoicingAddress() != null) {
+      return portalAppConfig.getDefaultInvoicingAddress();
+    }
+
+    if (company.getAddress() != null) {
+      return company.getAddress();
+    }
+
+    return null;
   }
 
   protected BankDetails getPartnerBankDetails(Partner partner) {

@@ -100,6 +100,8 @@
       name="defaultEventPaymentMode" title="Default payment mode for registration invoice"/>
     <many-to-one ref="com.axelor.apps.account.db.PaymentCondition"
       name="defaultEventPaymentCondition" title="Default payment condition for registration invoice"/>
+    <many-to-one ref="com.axelor.apps.base.db.Address" name="defaultInvoicingAddress"
+      title="Default invoicing address"/>
 
     <extra-code>
     	<![CDATA[

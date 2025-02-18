@@ -45,7 +45,6 @@
         </panel>
         <panel name="paymentPanel" title="Payment" colSpan="12">
           <field name="allowOnlinePaymentForEcommerce"/>
-          <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
         </panel>
         <panel name="orderPanel" title="Order/Quotation" colSpan="12">
           <field name="requestQuotation"/>
@@ -69,6 +68,7 @@
         <field name="defaultEventProduct"/>
         <field name="defaultEventPaymentMode"/>
         <field name="defaultEventPaymentCondition"/>
+        <field name="defaultInvoicingAddress"/>
         <field name="nonPublicEmailNotFoundMessage" colSpan="12"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="eventHeroTitle" title="Title"/>
@@ -134,6 +134,9 @@
       </panel>
       <panel name="settingsPanel" title="Settings">
         <field name="canInviteMembers"/>
+      </panel>
+      <panel title="Payment" name="paymentPanel">
+        <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
       </panel>
     </panel-tabs>
   </form>
