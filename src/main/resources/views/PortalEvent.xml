@@ -29,7 +29,7 @@
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
       </panel>
       <field name="eventPlace"/>
-      <field name="$eventLink" widget="url" title="Link"/>
+      <field name="$eventLink" widget="url" title="Link" readonly="true"/>
       <field name="eventAllDay" colSpan="3"
         onChange="action-portal-event-record-event-all-day-onchange"/>
       <field name="eventAllowRegistration" colSpan="3"/>
@@ -40,7 +40,7 @@
         requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0" colSpan="3"
         domain="self.isEvent IS TRUE"/>
       <field name="workspace" required="true"
-        onChange="action-portal-event-record-workspace-onchange"/>
+        onChange="action-portal-event-group-workspace-onchange"/>
       <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
       <field name="maxParticipantPerRegistration" colSpan="3"
         showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
@@ -134,5 +134,10 @@
     <attribute name="value" for="$eventLink"
       expr="eval: workspace?.url + '/events/' + slug"/>
   </action-attrs>
+
+  <action-group name="action-portal-event-group-workspace-onchange">
+    <action name="action-portal-event-attrs-set-event-link"/>
+    <action name="action-portal-event-record-workspace-onchange"/>
+  </action-group>
 
 </object-views>
