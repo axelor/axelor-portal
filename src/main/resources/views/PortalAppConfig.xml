@@ -43,9 +43,6 @@
           <field name="byMostExpensive"/>
           <field name="byLessExpensive"/>
         </panel>
-        <panel name="paymentPanel" title="Payment" colSpan="12">
-          <field name="allowOnlinePaymentForEcommerce"/>
-        </panel>
         <panel name="orderPanel" title="Order/Quotation" colSpan="12">
           <field name="requestQuotation"/>
           <field name="confirmOrder"/>
@@ -136,6 +133,7 @@
         <field name="canInviteMembers"/>
       </panel>
       <panel title="Payment" name="paymentPanel">
+        <field name="allowOnlinePaymentForEcommerce"/>
         <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
       </panel>
     </panel-tabs>
