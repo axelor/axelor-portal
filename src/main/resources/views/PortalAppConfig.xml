@@ -63,7 +63,7 @@
         <field name="allowGuestEventRegistration"/>
         <field name="enableEventComment"/>
         <field name="defaultEventProduct"/>
-        <field name="defaultEventPaymentMode"/>
+        <field name="defaultEventPaymentMode" domain="self.inOutSelect = 1"/>
         <field name="defaultEventPaymentCondition"/>
         <field name="defaultInvoicingAddress"/>
         <field name="nonPublicEmailNotFoundMessage" colSpan="12"/>
