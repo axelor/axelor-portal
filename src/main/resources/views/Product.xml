@@ -53,10 +53,16 @@
     <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
   </action-attrs>
 
+  <action-attrs name="action-product-attrs-set-isEvent">
+    <attribute name="value" for="isEvent"
+      expr="eval: __parent__?._model == 'com.axelor.apps.portal.db.PortalEvent' || __parent__?._model == 'com.axelor.apps.portal.db.PortalEventFacility'"/>
+  </action-attrs>
+
   <action-group name="action-portal-group-product-onnew">
     <action name="action-product-group-production-onnew"
-      if="__parent__.model == 'com.axelor.apps.production.db.BillOfMaterialImportLine'"/>
+      if="__parent__?._model == 'com.axelor.apps.production.db.BillOfMaterialImportLine'"/>
     <action name="action-product-attrs-set-workspace"/>
+    <action name="action-product-attrs-set-isEvent"/>
   </action-group>
 
 
