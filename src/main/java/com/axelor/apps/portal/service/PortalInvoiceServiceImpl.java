@@ -27,6 +27,7 @@ import com.axelor.apps.account.service.payment.invoice.payment.InvoicePaymentVal
 import com.axelor.apps.account.service.payment.invoice.payment.InvoiceTermPaymentService;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
+import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.common.ObjectUtils;
@@ -44,6 +45,7 @@ public class PortalInvoiceServiceImpl implements PortalInvoiceService {
   protected InvoiceRepository invoiceRepo;
   protected PaymentModeRepository paymentModeRepo;
   protected InvoicePaymentRepository invoicePaymentRepo;
+  protected AppBaseService appBaseService;
   protected InvoiceTermPaymentService invoiceTermPaymentService;
   protected InvoicePaymentValidateService invoicePaymentValidateService;
 
@@ -52,11 +54,13 @@ public class PortalInvoiceServiceImpl implements PortalInvoiceService {
       InvoiceRepository invoiceRepo,
       PaymentModeRepository paymentModeRepo,
       InvoicePaymentRepository invoicePaymentRepo,
+      AppBaseService appBaseService,
       InvoiceTermPaymentService invoiceTermPaymentService,
       InvoicePaymentValidateService invoicePaymentValidateService) {
     this.invoiceRepo = invoiceRepo;
     this.paymentModeRepo = paymentModeRepo;
     this.invoicePaymentRepo = invoicePaymentRepo;
+    this.appBaseService = appBaseService;
     this.invoiceTermPaymentService = invoiceTermPaymentService;
     this.invoicePaymentValidateService = invoicePaymentValidateService;
   }
@@ -107,7 +111,7 @@ public class PortalInvoiceServiceImpl implements PortalInvoiceService {
     invoicePayment.setCompanyBankDetails(invoice.getCompanyBankDetails());
     invoicePayment.setCurrency(invoice.getCurrency());
     invoicePayment.setAmount(amount);
-    invoicePayment.setPaymentDate(invoice.getInvoiceDate());
+    invoicePayment.setPaymentDate(appBaseService.getTodayDate(invoice.getCompany()));
     invoicePayment.setPaymentMode(paymentModeRepo.findByCode("IN_WEB"));
     invoicePayment.setTotalAmountWithFinancialDiscount(amount);
     invoicePayment.setMove(invoice.getMove());
