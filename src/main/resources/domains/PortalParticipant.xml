@@ -7,6 +7,7 @@
 
   <entity name="PortalParticipant">
 
+    <string name="titleSelect" title="Title" selection="partner.title.type.select"/>
     <string name="name"/>
     <string name="surname"/>
     <string name="emailAddress"/>

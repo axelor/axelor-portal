@@ -5,18 +5,30 @@
 
   <grid name="portal-portal-participant-grid" title="Portal participants"
     model="com.axelor.apps.portal.db.PortalParticipant" canMove="true" orderBy="sequence">
-    <field name="name"/>
-    <field name="surname"/>
+    <field name="titleSelect"/>
+    <field name="name" title="First name"/>
+    <field name="surname" title="Last name"/>
     <field name="registration.event"/>
     <field name="categorySet" widget="TagSelect"/>
     <field name="sequence" hidden="true"/>
   </grid>
 
+  <grid name="portal-portal-participant-event-grid" title="Portal participants"
+    model="com.axelor.apps.portal.db.PortalParticipant">
+    <field name="titleSelect"/>
+    <field name="name" title="First name"/>
+    <field name="surname" title="Last name"/>
+    <field name="emailAddress" widget="email"/>
+    <field name="phone" widget="phone"/>
+    <field name="subscriptionSet" widget="TagSelect"/>
+  </grid>
+
   <form name="portal-portal-participant-form" title="Portal participant"
     model="com.axelor.apps.portal.db.PortalParticipant">
     <panel name="mainPanel">
-      <field name="name" required="true"/>
-      <field name="surname"/>
+      <field name="titleSelect" colSpan="2"/>
+      <field name="name" required="true" colSpan="5"/>
+      <field name="surname" colSpan="5"/>
       <field name="emailAddress" widget="email"/>
       <field name="phone" widget="phone" x-placeholder-number-type="FIXED_LINE"/>
       <field name="contact" form-view="partner-contact-form" grid-view="partner-contact-grid"/>
