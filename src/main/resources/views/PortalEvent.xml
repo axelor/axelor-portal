@@ -41,7 +41,8 @@
         <field name="slug" onChange="action-portal-event-attrs-set-event-link"/>
         <field name="$eventLink" widget="url" title="Link" readonly="true" colSpan="12"
           showIf="id"/>
-        <field name="eventStartDateTime"/>
+        <field name="eventStartDateTime"
+          onChange="action-portal-event-record-startdatetime-onchange"/>
         <field name="eventEndDateTime" showIf="!eventAllDay"
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
         <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"
@@ -53,7 +54,7 @@
         <field name="eventAllowRegistration" colSpan="3"/>
         <field name="eventAllowMultipleRegistrations" colSpan="3"
           showIf="eventAllowRegistration"/>
-        <field name="registrationDeadlineDate" colSpan="3" showIf="eventAllowRegistration"/>
+        <field name="registrationDeadlineDateTime" colSpan="3" showIf="eventAllowRegistration"/>
         <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
           onChange="portal-action-portal-event-record-product-onchange"
           requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0"
@@ -136,6 +137,12 @@
   <action-record name="action-portal-event-record-publish-onclick"
     model="com.axelor.apps.portal.db.PortalEvent">
     <field name="statusSelect" expr="eval: PortalEventRepository.STATUS_PUBLISHED"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-startdatetime-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="registrationDeadlineDateTime" expr="eval: eventStartDateTime"
+      if="eventStartDateTime"/>
   </action-record>
 
   <action-record name="portal-action-portal-event-record-isprivate-onchange"

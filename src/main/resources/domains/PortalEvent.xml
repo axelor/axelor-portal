@@ -24,7 +24,7 @@
     <boolean name="isPublic" title="Public"/>
     <boolean name="isLoginNotNeeded" title="Login not needed"/>
     <boolean name="isHidden" title="Hidden"/>
-    <date name="registrationDeadlineDate" title="Registration deadline"/>
+    <datetime name="registrationDeadlineDateTime" title="Registration deadline"/>
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
