@@ -11,15 +11,17 @@
     <field name="registration.event"/>
     <field name="categorySet" widget="TagSelect"/>
     <field name="sequence" hidden="true"/>
+    <field name="isAttended"/>
   </grid>
 
   <grid name="portal-portal-participant-event-grid" title="Portal participants"
-    model="com.axelor.apps.portal.db.PortalParticipant">
+    model="com.axelor.apps.portal.db.PortalParticipant" width="large">
     <field name="titleSelect"/>
     <field name="name" title="First name"/>
     <field name="surname" title="Last name"/>
     <field name="emailAddress" widget="email"/>
     <field name="phone" widget="phone"/>
+    <field name="isAttended"/>
     <field name="subscriptionSet" widget="TagSelect"/>
   </grid>
 
@@ -34,6 +36,7 @@
       <field name="contact" form-view="partner-contact-form" grid-view="partner-contact-grid"/>
       <field name="company" title="Company/Address"/>
       <field name="registration.event"/>
+      <field name="isAttended"/>
       <field name="registration" hidden="true"/>
       <field name="subscriptionSet" widget="TagSelect" colSpan="12"
         onSelect="action-portal-attrs-portal-participant-subscriptionset-onselect"/>
