@@ -53,6 +53,7 @@
         <field name="eventAllowRegistration" colSpan="3"/>
         <field name="eventAllowMultipleRegistrations" colSpan="3"
           showIf="eventAllowRegistration"/>
+        <field name="registrationDeadlineDate" colSpan="3" showIf="eventAllowRegistration"/>
         <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
           onChange="portal-action-portal-event-record-product-onchange"
           requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0"
