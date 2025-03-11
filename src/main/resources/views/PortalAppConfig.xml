@@ -117,6 +117,13 @@
       </panel>
       <panel name="ticketingPanel" title="Ticketing">
         <field name="ticketStatusChangeMethodSelect"/>
+        <panel name="cardsVisibilityPanel" colSpan="12" title="Filters">
+          <field name="isShowAllTickets" colSpan="4"/>
+          <field name="isShowMyTickets" colSpan="4"/>
+          <field name="isShowManagedTicket" colSpan="4"/>
+          <field name="isShowCreatedTicket" colSpan="4"/>
+          <field name="isShowResolvedTicket" colSpan="4"/>
+        </panel>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="ticketHeroTitle" title="Title"/>
           <field name="ticketHeroOverlayColorSelect" widget="SingleSelect"
