@@ -22,7 +22,9 @@ import com.axelor.apps.base.db.MailMessageFile;
 import com.axelor.apps.base.db.repo.MailMessageFileRepository;
 import com.axelor.apps.businessproject.service.projecttask.ProjectTaskProgressUpdateService;
 import com.axelor.apps.businesssupport.db.repo.ProjectTaskBusinessSupportRepository;
+import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.apps.project.db.ProjectTask;
+import com.axelor.apps.project.db.repo.ProjectTaskRepository;
 import com.axelor.inject.Beans;
 import com.google.inject.Inject;
 import java.util.List;
@@ -34,6 +36,24 @@ public class ProjectTaskPortalRepository extends ProjectTaskBusinessSupportRepos
   public ProjectTaskPortalRepository(
       ProjectTaskProgressUpdateService projectTaskProgressUpdateService) {
     super(projectTaskProgressUpdateService);
+  }
+
+  @Override
+  public ProjectTask save(ProjectTask projectTask) {
+    projectTask = super.save(projectTask);
+
+    if (projectTask.getTypeSelect().equals(ProjectTaskRepository.TYPE_TICKET)
+        && projectTask.getProject() != null
+        && projectTask.getProject().getPortalWorkspace() != null) {
+      Beans.get(NotificationService.class)
+          .notifyUser(
+              "ticketing",
+              projectTask.getId(),
+              projectTask.getClass().getName(),
+              projectTask.getProject().getPortalWorkspace());
+    }
+
+    return projectTask;
   }
 
   @Override

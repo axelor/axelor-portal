@@ -18,19 +18,38 @@
  */
 package com.axelor.apps.portal.db.repo;
 
+import com.axelor.apps.portal.db.PortalWorkspace;
+import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.auth.db.User;
+import com.axelor.common.ObjectUtils;
 import com.axelor.dms.db.DMSFile;
+import com.axelor.inject.Beans;
 import javax.persistence.PostPersist;
 
 public class DMSFilePortalListner {
 
   @PostPersist
   protected void onPostPersist(DMSFile dmsFile) {
-    if (dmsFile.getVersion() == 0 && dmsFile.getAuthor() == null) {
-      User user = AuthUtils.getUser();
-      if (user != null && user.getActiveCompany() != null) {
-        dmsFile.setAuthor(user.getActiveCompany().getPartner());
+
+    if (dmsFile.getVersion() == 0) {
+      if (dmsFile.getAuthor() == null) {
+        User user = AuthUtils.getUser();
+        if (user != null && user.getActiveCompany() != null) {
+          dmsFile.setAuthor(user.getActiveCompany().getPartner());
+        }
+      }
+
+      if (dmsFile.getParent() != null
+          && ObjectUtils.notEmpty(dmsFile.getParent().getWorkspaceSet())) {
+        for (PortalWorkspace portalWorkspace : dmsFile.getParent().getWorkspaceSet()) {
+          Beans.get(NotificationService.class)
+              .notifyUser(
+                  "resources",
+                  dmsFile.getParent().getId(),
+                  dmsFile.getClass().getName(),
+                  portalWorkspace);
+        }
       }
     }
   }

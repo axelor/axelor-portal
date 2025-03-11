@@ -125,9 +125,18 @@
     <option value="OutlinePerson">Outline Person</option>
   </selection>
 
+
   <selection name="portal.event.status.select">
     <option value="0">Draft</option>
     <option value="1">Published</option>
+  </selection>
+
+  <selection name="message.related.to.select" id="portal.message.related.to.select">
+    <option value="com.axelor.apps.portal.db.PortalEvent">Portal event</option>
+    <option value="com.axelor.apps.portal.db.PortalNews">Portal news</option>
+    <option value="com.axelor.apps.portal.db.ForumPost">Portal forum post</option>
+    <option value="com.axelor.apps.project.db.ProjectTask">Project task</option>
+    <option value="com.axelor.dms.db.DMSFile">DMS file</option>
   </selection>
 
 </object-views>
