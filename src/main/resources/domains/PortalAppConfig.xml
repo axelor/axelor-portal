@@ -109,6 +109,9 @@
     <many-to-one ref="com.axelor.apps.base.db.Address" name="defaultInvoicingAddress"
       title="Default invoicing address"/>
 
+    <many-to-many ref="com.axelor.meta.db.MetaField" name="ticketingFieldSet"
+      title="Fields for listing"/>
+
     <extra-code>
     	<![CDATA[
     		public static final String NO_INVOICE = "no";

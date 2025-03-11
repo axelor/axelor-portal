@@ -130,6 +130,8 @@
             x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
           <field name="ticketHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="ticketHeroDescription" colSpan="12" title="Description"/>
+          <field name="ticketingFieldSet" colSpan="12" widget="TagSelect"
+            domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('id','createdByContact','managedByContact','status','priority','projectTaskCategory','assignment','updatedOn')"/>
         </panel>
       </panel>
       <panel name="emailPanel" title="Email">
