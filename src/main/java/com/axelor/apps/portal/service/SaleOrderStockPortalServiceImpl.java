@@ -7,7 +7,9 @@ import com.axelor.apps.base.service.UnitConversionService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.TaxService;
 import com.axelor.apps.sale.db.SaleOrder;
+import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.service.saleorder.SaleOrderDeliveryAddressService;
 import com.axelor.apps.stock.db.StockMove;
 import com.axelor.apps.stock.db.repo.StockMoveLineRepository;
 import com.axelor.apps.stock.service.PartnerStockSettingsService;
@@ -21,6 +23,7 @@ import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
 import com.axelor.apps.supplychain.service.saleorderline.SaleOrderLineServiceSupplyChain;
 import com.google.inject.Inject;
 import java.time.LocalDate;
+import java.util.List;
 
 public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
 
@@ -39,7 +42,8 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
       SupplyChainConfigService supplyChainConfigService,
       ProductCompanyService productCompanyService,
       PartnerStockSettingsService partnerStockSettingsService,
-      TaxService taxService) {
+      TaxService taxService,
+      SaleOrderDeliveryAddressService saleOrderDeliveryAddressService) {
     super(
         stockMoveService,
         stockMoveLineService,
@@ -54,14 +58,21 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
         supplyChainConfigService,
         productCompanyService,
         partnerStockSettingsService,
-        taxService);
+        taxService,
+        saleOrderDeliveryAddressService);
   }
 
   @Override
   public StockMove createStockMove(
-      SaleOrder saleOrder, Company company, LocalDate estimatedDeliveryDate)
+      SaleOrder saleOrder,
+      Company company,
+      List<SaleOrderLine> saleOrderLineList,
+      String deliveryAddressStr,
+      LocalDate estimatedDeliveryDate)
       throws AxelorException {
-    StockMove stockMove = super.createStockMove(saleOrder, company, estimatedDeliveryDate);
+    StockMove stockMove =
+        super.createStockMove(
+            saleOrder, company, saleOrderLineList, deliveryAddressStr, estimatedDeliveryDate);
     stockMove.setPortalWorkspace(saleOrder.getPortalWorkspace());
     return stockMove;
   }

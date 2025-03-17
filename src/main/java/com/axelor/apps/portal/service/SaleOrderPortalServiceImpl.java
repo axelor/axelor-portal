@@ -42,6 +42,7 @@ import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.service.MarginComputeService;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
@@ -88,6 +89,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected SaleOrderMarginService saleOrderMarginService;
   protected CurrencyScaleService currencyScaleService;
   protected TaxService taxService;
+  protected MarginComputeService marginComputeService;
 
   protected PartnerRepository partnerRepo;
   protected ProductRepository productRepo;
@@ -112,6 +114,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       SaleOrderMarginService saleOrderMarginService,
       CurrencyScaleService currencyScaleService,
       TaxService taxService,
+      MarginComputeService marginComputeService,
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
       SaleOrderRepository saleOrderRepo,
@@ -132,6 +135,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.saleOrderMarginService = saleOrderMarginService;
     this.currencyScaleService = currencyScaleService;
     this.taxService = taxService;
+    this.marginComputeService = marginComputeService;
     this.partnerRepo = partnerRepo;
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
@@ -409,7 +413,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     line.setCompanyInTaxTotal(companyInTaxTotal);
     line.setCompanyExTaxTotal(companyExTaxTotal);
     line.setSubTotalCostPrice(subTotalCostPrice);
-    saleOrderMarginService.getSaleOrderLineComputedMarginInfo(order, line);
+    marginComputeService.getComputedMarginInfo(order, line, line.getExTaxTotal());
 
     return line;
   }
