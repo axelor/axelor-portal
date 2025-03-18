@@ -8,7 +8,6 @@
     <extend target="//panel-tabs[@name='mainPanelTab']">
       <insert position="inside">
         <panel title="Portal" name="portalPanel" colSpan="12">
-          <field name="portalPassword" widget="password"/>
           <field name="isRegisteredOnPortal" colSpan="3"/>
           <field name="isActivatedOnPortal" colSpan="3"/>
           <field name="isPublicPartner" colSpan="3"/>
@@ -31,7 +30,6 @@
     <extend target="//panel-tabs[@name='mainPanelTab']">
       <insert position="inside">
         <panel title="Portal" name="portalPanel">
-          <field name="portalPassword" widget="password"/>
           <field name="linkedinLink"/>
           <field name="isRegisteredOnPortal" colSpan="3"/>
           <field name="isActivatedOnPortal" colSpan="3"/>
