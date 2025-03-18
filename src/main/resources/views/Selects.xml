@@ -37,7 +37,7 @@
   <selection name="payment.config.type.select">
     <option value="paypal">Paypal</option>
     <option value="stripe">Stripe</option>
-    <option value="paybox">paybox</option>
+    <option value="paybox">Paybox</option>
   </selection>
 
   <selection name="main.price.select">

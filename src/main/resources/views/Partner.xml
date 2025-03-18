@@ -5,8 +5,8 @@
 
   <form name="partner-form" id="portal-partner-form" title="Partner"
     model="com.axelor.apps.base.db.Partner" extension="true">
-    <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
-      <insert position="after">
+    <extend target="//panel-tabs[@name='mainPanelTab']">
+      <insert position="inside">
         <panel title="Portal" name="portalPanel" colSpan="12">
           <field name="portalPassword" widget="password"/>
           <field name="isRegisteredOnPortal" colSpan="3"/>
@@ -28,8 +28,8 @@
     <extend target="/">
       <attribute name="onSave" value="action-contact-group-on-save"/>
     </extend>
-    <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
-      <insert position="after">
+    <extend target="//panel-tabs[@name='mainPanelTab']">
+      <insert position="inside">
         <panel title="Portal" name="portalPanel">
           <field name="portalPassword" widget="password"/>
           <field name="linkedinLink"/>

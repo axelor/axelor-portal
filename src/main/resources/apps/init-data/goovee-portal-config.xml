@@ -5,5 +5,7 @@
 
   <input file="meta_selectItem.csv" separator=";" type="com.axelor.meta.db.MetaSelectItem"
     search="self.value = :value AND self.select.name = 'portal.icon.select'"/>
+  <input file="portal_portalApp.csv" separator=";" type="com.axelor.apps.portal.db.PortalApp"
+    search="self.code = :code"/>
 
 </csv-inputs>

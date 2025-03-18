@@ -6,9 +6,6 @@
   <input file="portal_theme.csv" separator=";" type="com.axelor.apps.portal.db.PortalTheme"
     search="self.name = :name"/>
 
-  <input file="portal_app.csv" separator=";" type="com.axelor.apps.portal.db.PortalApp"
-    search="self.importId = :importId"/>
-
   <input file="portal_carousel.csv" separator=";" type="com.axelor.apps.portal.db.Carousel"
     search="self.importId = :importId"/>
 
