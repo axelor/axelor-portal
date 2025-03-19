@@ -8,7 +8,7 @@
     <extend target="//panel-tabs[@name='mainPanelTab']">
       <insert position="inside">
         <panel title="Portal" name="portalPanel" colSpan="12">
-          <field name="isRegisteredOnPortal" colSpan="3"/>
+          <field name="isAllowedToRegister" colSpan="3"/>
           <field name="isActivatedOnPortal" colSpan="3"/>
           <field name="isPublicPartner" colSpan="3"/>
           <field name="canSubscribeNoPublicEvent" colSpan="3"/>
@@ -31,7 +31,7 @@
       <insert position="inside">
         <panel title="Portal" name="portalPanel">
           <field name="linkedinLink"/>
-          <field name="isRegisteredOnPortal" colSpan="3"/>
+          <field name="isAllowedToRegister" colSpan="3"/>
           <field name="isActivatedOnPortal" colSpan="3"/>
           <field name="isPublicPartner" colSpan="3"/>
           <field name="canSubscribeNoPublicEvent" colSpan="3"/>

@@ -113,7 +113,7 @@
 
   <action-attrs name="action-project-task-attrs-managed-by-contact-domain">
     <attribute name="domain" for="managedByContact"
-      expr="eval: &quot;self.isRegisteredOnPortal = true AND (self.id = ${project?.clientPartner?.id} OR self.id IN (${project?.clientPartner?.contactPartnerSet?.collect{it.id}?.join(',')}))&quot;"/>
+      expr="eval: &quot;self.isAllowedToRegister = true AND (self.id = ${project?.clientPartner?.id} OR self.id IN (${project?.clientPartner?.contactPartnerSet?.collect{it.id}?.join(',')}))&quot;"/>
   </action-attrs>
 
   <!-- Portal change: update filter to fetch tasks with same type -->

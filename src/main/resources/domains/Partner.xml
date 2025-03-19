@@ -12,7 +12,7 @@
       selection="partner.created.from.select"/>
     <string name="linkedinLink"/>
     <string name="portalCompanyName" title="Company"/>
-    <boolean name="isRegisteredOnPortal" title="Is allowed to register"/>
+    <boolean name="isAllowedToRegister" title="Is allowed to register"/>
     <boolean name="isActivatedOnPortal"/>
     <boolean name="isPublicPartner" title="Portal public"/>
     <boolean name="canSubscribeNoPublicEvent" title="Subscribe to no public events"/>
