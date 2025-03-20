@@ -167,6 +167,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     URL url = new URL(notificationUrl);
     String tenantId = TenantResolver.currentTenantIdentifier();
+    if (ObjectUtils.isEmpty(tenantId)) {
+      tenantId = AppSettings.get().get("portal.ws.tenantId");
+    }
 
     Map<String, Object> headers = new HashMap<String, Object>();
     headers.put("Accept", "application/json");
