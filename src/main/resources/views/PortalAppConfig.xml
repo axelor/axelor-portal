@@ -123,6 +123,9 @@
           <field name="isShowManagedTicket" colSpan="4"/>
           <field name="isShowCreatedTicket" colSpan="4"/>
           <field name="isShowResolvedTicket" colSpan="4"/>
+          <field name="isDisplayTicketParent" colSpan="4"/>
+          <field name="isDisplayChildTicket" colSpan="4"/>
+          <field name="isDisplayRelatedTicket" colSpan="4"/>
         </panel>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="ticketHeroTitle" title="Title"/>

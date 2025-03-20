@@ -80,6 +80,9 @@
     <boolean name="isShowManagedTicket" default="true" title="Managed tickets"/>
     <boolean name="isShowCreatedTicket" default="true" title="Created tickets"/>
     <boolean name="isShowResolvedTicket" default="true" title="Resolved tickets"/>
+    <boolean name="isDisplayTicketParent" default="true" title="Dispaly parent ticket"/>
+    <boolean name="isDisplayChildTicket" default="true" title="Dispaly child ticket"/>
+    <boolean name="isDisplayRelatedTicket" default="true" title="Dispaly related ticket"/>
 
     <boolean name="canInviteMembers" title="Invite members"/>
     <boolean name="enableRecommendedNews" default="true"/>
