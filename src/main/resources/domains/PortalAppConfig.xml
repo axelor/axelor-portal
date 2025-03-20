@@ -85,6 +85,7 @@
     <boolean name="isDisplayRelatedTicket" default="true" title="Display related ticket"/>
 
     <boolean name="canInviteMembers" title="Invite members"/>
+    <boolean name="isExistingContactsOnly" title="Only existing contacts"/>
     <boolean name="enableRecommendedNews" default="true"/>
     <boolean name="enableSocialMediaSharing" default="true"/>
     <string name="socialMediaSelect" selection="social.media.select"/>
