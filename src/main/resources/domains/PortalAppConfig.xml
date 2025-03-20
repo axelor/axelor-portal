@@ -114,6 +114,8 @@
 
     <many-to-many ref="com.axelor.meta.db.MetaField" name="ticketingFieldSet"
       title="Fields for listing"/>
+    <many-to-many ref="com.axelor.meta.db.MetaField" name="ticketingFormFieldSet"
+      title="Fields for detailing"/>
 
     <extra-code>
     	<![CDATA[

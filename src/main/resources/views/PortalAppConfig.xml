@@ -135,6 +135,8 @@
           <field name="ticketHeroDescription" colSpan="12" title="Description"/>
           <field name="ticketingFieldSet" colSpan="12" widget="TagSelect"
             domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('id','createdByContact','managedByContact','status','priority','projectTaskCategory','assignment','updatedOn')"/>
+          <field name="ticketingFormFieldSet" colSpan="12" widget="TagSelect"
+            domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('targetVersion','progress','taskEndDate','managedByContact','createdByContact','createdOn','projectTaskCategory','priority','status','assignment')"/>
         </panel>
       </panel>
       <panel name="emailPanel" title="Email">
