@@ -22,6 +22,8 @@ import com.axelor.app.AxelorModule;
 import com.axelor.apps.businesssupport.db.repo.ProjectTaskBusinessSupportRepository;
 import com.axelor.apps.helpdesk.service.MailServiceHelpDeskImpl;
 import com.axelor.apps.mattermost.mattermost.service.MattermostServiceImpl;
+import com.axelor.apps.portal.db.repo.ForumPostPortalRepository;
+import com.axelor.apps.portal.db.repo.ForumPostRepository;
 import com.axelor.apps.portal.db.repo.MailMessagePortalRepository;
 import com.axelor.apps.portal.db.repo.PortalEventPortalRepository;
 import com.axelor.apps.portal.db.repo.PortalEventRepository;
@@ -37,6 +39,8 @@ import com.axelor.apps.portal.service.MailMessageFileServiceImpl;
 import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.portal.service.MailMessagePortalServiceImpl;
 import com.axelor.apps.portal.service.MailServicePortalImpl;
+import com.axelor.apps.portal.service.NotificationService;
+import com.axelor.apps.portal.service.NotificationServiceImpl;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
 import com.axelor.apps.portal.service.PortalEventRegistrationServiceImpl;
 import com.axelor.apps.portal.service.PortalInvoiceService;
@@ -65,6 +69,7 @@ public class PortalModule extends AxelorModule {
     bind(PortalNewsRepository.class).to(PortalNewsPortalRepository.class);
     bind(PortalEventRepository.class).to(PortalEventPortalRepository.class);
     bind(RegistrationRepository.class).to(RegistrationPortalRepository.class);
+    bind(ForumPostRepository.class).to(ForumPostPortalRepository.class);
     bind(MailMessagePortalService.class).to(MailMessagePortalServiceImpl.class);
     bind(MailMessageFileService.class).to(MailMessageFileServiceImpl.class);
     bind(MailServiceHelpDeskImpl.class).to(MailServicePortalImpl.class);
@@ -75,5 +80,6 @@ public class PortalModule extends AxelorModule {
     bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
     bind(AppGooveePortalService.class).to(AppGooveePortalServiceImpl.class);
     bind(PortalInvoiceService.class).to(PortalInvoiceServiceImpl.class);
+    bind(NotificationService.class).to(NotificationServiceImpl.class);
   }
 }

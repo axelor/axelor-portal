@@ -19,7 +19,10 @@
 package com.axelor.apps.portal.db.repo;
 
 import com.axelor.apps.portal.db.PortalNews;
+import com.axelor.apps.portal.db.PortalNewsCategory;
+import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.common.ObjectUtils;
+import com.axelor.inject.Beans;
 import java.util.HashSet;
 import java.util.List;
 
@@ -30,16 +33,30 @@ public class PortalNewsPortalRepository extends PortalNewsRepository {
 
     entity = super.save(entity);
 
-    if (ObjectUtils.notEmpty(entity.getCategorySet())
-        && ObjectUtils.isEmpty(entity.getRelatedNewsSet())) {
-      List<PortalNews> relatedNews =
-          all()
-              .filter(
-                  "self.id IN (SELECT news.id FROM PortalNews news LEFT JOIN news.categorySet category WHERE category IN :categories)")
-              .bind("categories", entity.getCategorySet())
-              .order("-createdOn")
-              .fetch(5);
-      entity.setRelatedNewsSet(new HashSet<PortalNews>(relatedNews));
+    if (ObjectUtils.notEmpty(entity.getCategorySet())) {
+      if (ObjectUtils.isEmpty(entity.getRelatedNewsSet())) {
+        List<PortalNews> relatedNews =
+            all()
+                .filter(
+                    "self.id IN (SELECT news.id FROM PortalNews news LEFT JOIN news.categorySet category WHERE category IN :categories)")
+                .bind("categories", entity.getCategorySet())
+                .order("-createdOn")
+                .fetch(5);
+        entity.setRelatedNewsSet(new HashSet<PortalNews>(relatedNews));
+      }
+
+      if (entity.getVersion() == 0) {
+        for (PortalNewsCategory portalNewsCategory : entity.getCategorySet()) {
+          if (portalNewsCategory.getWorkspace() != null) {
+            Beans.get(NotificationService.class)
+                .notifyUser(
+                    "news",
+                    portalNewsCategory.getId(),
+                    entity.getClass().getName(),
+                    portalNewsCategory.getWorkspace());
+          }
+        }
+      }
     }
 
     return entity;
