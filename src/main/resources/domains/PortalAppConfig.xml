@@ -83,6 +83,9 @@
     <boolean name="isDisplayTicketParent" default="true" title="Display parent ticket"/>
     <boolean name="isDisplayChildTicket" default="true" title="Display child ticket"/>
     <boolean name="isDisplayRelatedTicket" default="true" title="Display related ticket"/>
+    <boolean name="isDisplayCancelBtn" default="true" title="Display cancel ticket button"/>
+    <boolean name="isDisplayCloseBtn" default="true" title="Display close ticket button"/>
+    <boolean name="isDisplayAssignmentBtn" default="true" title="Display assignment button"/>
 
     <boolean name="canInviteMembers" title="Invite members"/>
     <boolean name="isExistingContactsOnly" title="Only existing contacts"/>

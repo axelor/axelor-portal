@@ -126,6 +126,9 @@
           <field name="isDisplayTicketParent" colSpan="4"/>
           <field name="isDisplayChildTicket" colSpan="4"/>
           <field name="isDisplayRelatedTicket" colSpan="4"/>
+          <field name="isDisplayCancelBtn" colSpan="4"/>
+          <field name="isDisplayCloseBtn" colSpan="4"/>
+          <field name="isDisplayAssignmentBtn" colSpan="4"/>
         </panel>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="ticketHeroTitle" title="Title"/>
