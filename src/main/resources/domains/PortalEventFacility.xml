@@ -11,6 +11,8 @@
     <decimal name="price" min="0"/>
     <many-to-one ref="com.axelor.apps.base.db.Product" name="product"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalEvent" name="event"/>
+    <many-to-many ref="com.axelor.meta.db.MetaJsonField"
+      name="additionalFieldSet" title="Additional fields"/>
 
   </entity>
 
