@@ -17,6 +17,9 @@
       <field name="product" canNew="true" requiredIf="price != 0"
         domain="self.isEvent IS TRUE"/>
       <field name="price"/>
+      <panel-related name="additionalFieldSetPanel" field="additionalFieldSet" domain="self.model = 'com.axelor.apps.portal.db.PortalParticipant'"
+        grid-view="json-field-portal-grid" form-view="json-field-portal-form"
+        canSelect="true" colSpan="12"/>
     </panel>
   </form>
 

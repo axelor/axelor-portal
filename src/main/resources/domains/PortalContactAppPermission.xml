@@ -12,6 +12,10 @@
       ref="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"/>
     <string name="roleSelect" selection="portal.role.select" title="Role"/>
 
+    <extra-code><![CDATA[
+      public static String PORTAL_CONTACT_APP_PERMISSION_ROLE_RESTRICTED = "restricted";
+      public static String PORTAL_CONTACT_APP_PERMISSION_ROLE_TOTAL = "total";
+    ]]></extra-code>
   </entity>
 
 </domain-models>

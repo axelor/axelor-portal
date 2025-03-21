@@ -20,7 +20,7 @@
     <panel name="mainPanel">
       <field name="event" required="true"/>
       <field name="invoice" readonly="true" showIf="invoice"/>
-      <field name="participantList" colSpan="12"/>
+      <field name="participantList" colSpan="12" grid-view="portal-portal-participant-event-grid"/>
     </panel>
   </form>
 

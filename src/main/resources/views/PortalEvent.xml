@@ -74,10 +74,13 @@
           grid-view="partner-grid"/>
         <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
         <field name="eventDescription" colSpan="12" widget="html"/>
+        <panel-related name="additionalFieldSetPanel" field="additionalFieldSet" domain="self.model = 'com.axelor.apps.portal.db.PortalParticipant'"
+          grid-view="json-field-portal-grid" form-view="json-field-portal-form"
+          canSelect="true" colSpan="12"/>
       </panel>
       <panel name="participantPanel" title="Participants">
         <panel-dashlet action="portal-action-portal-event-view-show-participant"
-          name="participantDashlet" colSpan="12"/>
+          name="participantDashlet" colSpan="12" grid-view="portal-portal-participant-event-editable-grid"/>
         <spacer name="registrationSpacer" colSpan="11"/>
         <button onClick="save,action-portal-event-view-add-registration"
           name="addRegistrationBtn" title="Register" colSpan="1" icon="plus-lg"
@@ -104,7 +107,7 @@
 
   <action-view name="portal-action-portal-event-view-show-participant"
     title="Participants" model="com.axelor.apps.portal.db.PortalParticipant">
-    <view type="grid" name="portal-portal-participant-event-grid"/>
+    <view type="grid" name="portal-portal-participant-event-editable-grid"/>
     <view type="form" name="portal-portal-participant-form"/>
     <view-param name="limit" value="20"/>
     <domain>self.registration.event.id = :_id</domain>
