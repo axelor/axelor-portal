@@ -33,8 +33,8 @@
       title="Workspace"/>
     <one-to-many ref="com.axelor.apps.portal.db.Registration" name="registrationList"
       mappedBy="event" title="Registrations"/>
-    <many-to-many ref="com.axelor.meta.db.MetaJsonField"
-      name="additionalFieldSet" title="Additional fields"/>
+    <many-to-many ref="com.axelor.meta.db.MetaJsonField" name="additionalFieldSet"
+      title="Additional fields"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalEventFacility" name="facilityList"
       title="Facilities" mappedBy="event"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
