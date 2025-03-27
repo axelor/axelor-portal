@@ -4,8 +4,7 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
 
   <grid name="portal-portal-participant-grid" title="Portal participants"
-    model="com.axelor.apps.portal.db.PortalParticipant" canMove="true" orderBy="sequence"
-    editable="true">
+    model="com.axelor.apps.portal.db.PortalParticipant" canMove="true" orderBy="sequence">
     <field name="titleSelect"/>
     <field name="name" title="First name"/>
     <field name="surname" title="Last name"/>
@@ -79,7 +78,7 @@
     <attribute for="$subscriptionAdditionalFieldsSet" name="value"
       expr="eval: subscriptionSet == null || subscriptionSet.empty ? null : subscriptionSet.collectMany{it.additionalFieldSet}"/>
     <attribute for="$eventAdditionalFieldsSet" name="value"
-      expr="eval: registration?.event?.additionalFieldSet?.empty ? null : registration.event.additionalFieldSet"/>
+      expr="eval: registration?.event?.additionalFieldSet?.empty ? null : registration.event.additionalFieldSet" if="registration?.event"/>
   </action-attrs>
 
   <action-record
