@@ -22,11 +22,11 @@ import com.axelor.apps.account.db.AccountManagement;
 import com.axelor.apps.account.db.Tax;
 import com.axelor.apps.account.db.TaxEquiv;
 import com.axelor.apps.base.AxelorException;
-import com.axelor.apps.base.db.Address;
 import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Partner;
+import com.axelor.apps.base.db.PartnerAddress;
 import com.axelor.apps.base.db.Product;
-import com.axelor.apps.base.db.repo.AddressRepository;
+import com.axelor.apps.base.db.repo.PartnerAddressRepository;
 import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.db.repo.PriceListRepository;
 import com.axelor.apps.base.db.repo.ProductRepository;
@@ -98,7 +98,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected SaleOrderRepository saleOrderRepo;
   protected PortalWorkspaceRepository portalWorkspaceRepo;
   protected StockLocationRepository stockLocationRepository;
-  protected AddressRepository addressRepo;
+  protected PartnerAddressRepository partnerAddressRepo;
 
   @Inject
   public SaleOrderPortalServiceImpl(
@@ -123,7 +123,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       SaleOrderRepository saleOrderRepo,
       PortalWorkspaceRepository portalWorkspaceRepo,
       StockLocationRepository stockLocationRepository,
-      AddressRepository addressRepo) {
+      PartnerAddressRepository partnerAddressRepo) {
     this.saleOrdeCreateService = saleOrdeCreateService;
     this.saleOrderLinePricingService = saleOrderLinePricingService;
     this.saleOrderLinePriceService = saleOrderLinePriceService;
@@ -145,7 +145,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.saleOrderRepo = saleOrderRepo;
     this.portalWorkspaceRepo = portalWorkspaceRepo;
     this.stockLocationRepository = stockLocationRepository;
-    this.addressRepo = addressRepo;
+    this.partnerAddressRepo = partnerAddressRepo;
   }
 
   @Override
@@ -243,21 +243,24 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       }
       saleOrder.setPortalWorkspace(portalWorkspace);
 
-      Address deliveryAddress = null;
-      if (values.containsKey("deliveryAddressId")
-          && ObjectUtils.notEmpty(values.get("deliveryAddressId"))) {
+      PartnerAddress deliveryAddress = null;
+      if (values.containsKey("deliveryPartnerAddressId")
+          && ObjectUtils.notEmpty(values.get("deliveryPartnerAddressId"))) {
         deliveryAddress =
-            addressRepo.find(Long.parseLong(values.get("deliveryAddressId").toString()));
+            partnerAddressRepo.find(
+                Long.parseLong(values.get("deliveryPartnerAddressId").toString()));
+        saleOrder.setDeliveryAddress(deliveryAddress != null ? deliveryAddress.getAddress() : null);
       }
-      saleOrder.setDeliveryAddress(deliveryAddress);
 
-      Address invocingAddress = null;
-      if (values.containsKey("invocingAddressId")
-          && ObjectUtils.notEmpty(values.get("invocingAddressId"))) {
+      PartnerAddress invocingAddress = null;
+      if (values.containsKey("invocingPartnerAddressId")
+          && ObjectUtils.notEmpty(values.get("invocingPartnerAddressId"))) {
         invocingAddress =
-            addressRepo.find(Long.parseLong(values.get("invocingAddressId").toString()));
+            partnerAddressRepo.find(
+                Long.parseLong(values.get("invocingPartnerAddressId").toString()));
+        saleOrder.setMainInvoicingAddress(
+            invocingAddress != null ? invocingAddress.getAddress() : null);
       }
-      saleOrder.setMainInvoicingAddress(invocingAddress);
     }
 
     return saleOrder;
