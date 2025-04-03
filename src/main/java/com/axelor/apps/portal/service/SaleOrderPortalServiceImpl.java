@@ -33,6 +33,7 @@ import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.base.service.CurrencyScaleService;
 import com.axelor.apps.base.service.PartnerPriceListService;
+import com.axelor.apps.base.service.address.AddressService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.FiscalPositionService;
 import com.axelor.apps.base.service.tax.TaxService;
@@ -92,6 +93,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected CurrencyScaleService currencyScaleService;
   protected TaxService taxService;
   protected MarginComputeService marginComputeService;
+  protected AddressService addressService;
 
   protected PartnerRepository partnerRepo;
   protected ProductRepository productRepo;
@@ -118,6 +120,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       CurrencyScaleService currencyScaleService,
       TaxService taxService,
       MarginComputeService marginComputeService,
+      AddressService addressService,
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
       SaleOrderRepository saleOrderRepo,
@@ -140,6 +143,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.currencyScaleService = currencyScaleService;
     this.taxService = taxService;
     this.marginComputeService = marginComputeService;
+    this.addressService = addressService;
     this.partnerRepo = partnerRepo;
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
@@ -250,6 +254,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
             partnerAddressRepo.find(
                 Long.parseLong(values.get("deliveryPartnerAddressId").toString()));
         saleOrder.setDeliveryAddress(deliveryAddress != null ? deliveryAddress.getAddress() : null);
+        saleOrder.setDeliveryAddressStr(
+            addressService.computeAddressStr(saleOrder.getDeliveryAddress()));
       }
 
       PartnerAddress invocingAddress = null;
@@ -260,6 +266,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
                 Long.parseLong(values.get("invocingPartnerAddressId").toString()));
         saleOrder.setMainInvoicingAddress(
             invocingAddress != null ? invocingAddress.getAddress() : null);
+        saleOrder.setMainInvoicingAddressStr(
+            addressService.computeAddressStr(saleOrder.getMainInvoicingAddress()));
       }
     }
 
