@@ -19,8 +19,7 @@
       <field name="price"/>
       <panel-related name="additionalFieldSetPanel" field="additionalFieldSet"
         domain="self.model = 'com.axelor.apps.portal.db.PortalParticipant'"
-        grid-view="json-field-portal-grid" form-view="json-field-portal-form"
-        colSpan="12"/>
+        grid-view="json-field-portal-grid" form-view="json-field-portal-form" colSpan="12"/>
     </panel>
   </form>
 

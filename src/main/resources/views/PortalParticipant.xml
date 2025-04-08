@@ -78,7 +78,8 @@
     <attribute for="$subscriptionAdditionalFieldsSet" name="value"
       expr="eval: subscriptionSet == null || subscriptionSet.empty ? null : subscriptionSet.collectMany{it.additionalFieldSet}"/>
     <attribute for="$eventAdditionalFieldsSet" name="value"
-      expr="eval: registration?.event?.additionalFieldSet?.empty ? null : registration.event.additionalFieldSet" if="registration?.event"/>
+      expr="eval: registration?.event?.additionalFieldSet?.empty ? null : registration.event.additionalFieldSet"
+      if="registration?.event"/>
   </action-attrs>
 
   <action-record

@@ -76,8 +76,7 @@
         <field name="eventDescription" colSpan="12" widget="html"/>
         <panel-related name="additionalFieldSetPanel" field="additionalFieldSet"
           domain="self.model = 'com.axelor.apps.portal.db.PortalParticipant'"
-          grid-view="json-field-portal-grid" form-view="json-field-portal-form"
-          colSpan="12"/>
+          grid-view="json-field-portal-grid" form-view="json-field-portal-form" colSpan="12"/>
       </panel>
       <panel name="participantPanel" title="Participants">
         <panel-dashlet action="portal-action-portal-event-view-show-participant"
