@@ -20,6 +20,7 @@ package com.axelor.apps.portal.service;
 
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.sale.db.SaleOrder;
+import java.io.IOException;
 import java.util.Map;
 
 public interface SaleOrderPortalService {
@@ -27,4 +28,6 @@ public interface SaleOrderPortalService {
   public SaleOrder createQuotation(Map<String, Object> values) throws AxelorException;
 
   public SaleOrder createOrder(Map<String, Object> values) throws AxelorException;
+
+  public void attachReport(SaleOrder saleOrder) throws AxelorException, IOException;
 }

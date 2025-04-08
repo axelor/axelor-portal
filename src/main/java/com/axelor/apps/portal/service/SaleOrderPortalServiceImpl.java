@@ -47,9 +47,11 @@ import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.service.MarginComputeService;
 import com.axelor.apps.sale.service.app.AppSaleService;
+import com.axelor.apps.sale.service.config.SaleConfigService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
 import com.axelor.apps.sale.service.saleorder.pricing.SaleOrderLinePricingService;
+import com.axelor.apps.sale.service.saleorder.print.SaleOrderPrintService;
 import com.axelor.apps.sale.service.saleorder.status.SaleOrderConfirmService;
 import com.axelor.apps.sale.service.saleorder.status.SaleOrderFinalizeService;
 import com.axelor.apps.sale.service.saleorderline.SaleOrderLineComputeService;
@@ -64,9 +66,13 @@ import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
+import com.axelor.meta.MetaFiles;
+import com.axelor.meta.db.MetaFile;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -94,6 +100,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected TaxService taxService;
   protected MarginComputeService marginComputeService;
   protected AddressService addressService;
+  protected SaleOrderPrintService saleOrderPrintService;
+  protected SaleConfigService saleConfigService;
 
   protected PartnerRepository partnerRepo;
   protected ProductRepository productRepo;
@@ -121,6 +129,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       TaxService taxService,
       MarginComputeService marginComputeService,
       AddressService addressService,
+      SaleOrderPrintService saleOrderPrintService,
+      SaleConfigService saleConfigService,
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
       SaleOrderRepository saleOrderRepo,
@@ -144,6 +154,8 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.taxService = taxService;
     this.marginComputeService = marginComputeService;
     this.addressService = addressService;
+    this.saleOrderPrintService = saleOrderPrintService;
+    this.saleConfigService = saleConfigService;
     this.partnerRepo = partnerRepo;
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
@@ -462,5 +474,33 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     saleOrderConfirmService.confirmSaleOrder(order);
 
     return order;
+  }
+
+  @Transactional
+  public void attachReport(SaleOrder saleOrder) throws AxelorException, IOException {
+
+    saleOrder = saleOrderRepo.find(saleOrder.getId());
+    if (saleOrder.getStatusSelect().equals(SaleOrderRepository.STATUS_FINALIZED_QUOTATION)
+        && ObjectUtils.isEmpty(saleOrder.getFinalizedReport())) {
+      MetaFile file = getPrintReport(saleOrder);
+      saleOrder.setFinalizedReport(file);
+      saleOrderRepo.save(saleOrder);
+    } else if (saleOrder.getStatusSelect().equals(SaleOrderRepository.STATUS_ORDER_CONFIRMED)
+        && ObjectUtils.isEmpty(saleOrder.getConfimedReport())) {
+      MetaFile file = getPrintReport(saleOrder);
+      saleOrder.setConfimedReport(file);
+      saleOrderRepo.save(saleOrder);
+    }
+  }
+
+  protected MetaFile getPrintReport(SaleOrder saleOrder) throws AxelorException, IOException {
+
+    File file =
+        saleOrderPrintService.print(
+            saleOrder,
+            false,
+            saleConfigService.getSaleOrderPrintTemplate(saleOrder.getCompany()),
+            false);
+    return Beans.get(MetaFiles.class).upload(file);
   }
 }
