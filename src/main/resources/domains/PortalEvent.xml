@@ -10,7 +10,7 @@
     <string name="eventTitle" title="Title" namecolumn="true"/>
     <string name="eventPlace"/>
     <string name="eventDescription" large="true"/>
-    <string name="slug" unique="true"/>
+    <string name="slug" unique="true" copy="false"/>
     <integer name="maxParticipantPerEvent" min="1" default="1"
       title="Maximum participant per event"/>
     <integer name="maxParticipantPerRegistration" min="1" default="1"

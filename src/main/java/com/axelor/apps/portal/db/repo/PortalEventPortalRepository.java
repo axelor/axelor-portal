@@ -49,11 +49,4 @@ public class PortalEventPortalRepository extends PortalEventRepository {
     }
     return event;
   }
-
-  @Override
-  public PortalEvent copy(PortalEvent event, boolean deep) {
-    event = super.copy(event, deep);
-    event.setSlug(UUID.randomUUID().toString());
-    return event;
-  }
 }
