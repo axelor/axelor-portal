@@ -479,28 +479,15 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   @Transactional
   public void attachReport(SaleOrder saleOrder) throws AxelorException, IOException {
 
-    saleOrder = saleOrderRepo.find(saleOrder.getId());
-    if (saleOrder.getStatusSelect().equals(SaleOrderRepository.STATUS_FINALIZED_QUOTATION)
-        && ObjectUtils.isEmpty(saleOrder.getFinalizedReport())) {
-      MetaFile file = getPrintReport(saleOrder);
-      saleOrder.setFinalizedReport(file);
-      saleOrderRepo.save(saleOrder);
-    } else if (saleOrder.getStatusSelect().equals(SaleOrderRepository.STATUS_ORDER_CONFIRMED)
-        && ObjectUtils.isEmpty(saleOrder.getConfimedReport())) {
-      MetaFile file = getPrintReport(saleOrder);
-      saleOrder.setConfimedReport(file);
-      saleOrderRepo.save(saleOrder);
-    }
-  }
-
-  protected MetaFile getPrintReport(SaleOrder saleOrder) throws AxelorException, IOException {
-
     File file =
         saleOrderPrintService.print(
             saleOrder,
             false,
             saleConfigService.getSaleOrderPrintTemplate(saleOrder.getCompany()),
             false);
-    return Beans.get(MetaFiles.class).upload(file);
+    MetaFile metafile = Beans.get(MetaFiles.class).upload(file);
+    saleOrder = saleOrderRepo.find(saleOrder.getId());
+    saleOrder.setOrderReport(metafile);
+    saleOrderRepo.save(saleOrder);
   }
 }

@@ -9,10 +9,8 @@
 
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
-    <many-to-one ref="com.axelor.meta.db.MetaFile" name="finalizedReport"
-      title="Finalized report" readonly="true" copy="false"/>
-    <many-to-one ref="com.axelor.meta.db.MetaFile" name="confimedReport"
-      title="Confirmed report" readonly="true" copy="false"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="orderReport"
+      title="Order report" readonly="true" copy="false"/>
 
   </entity>
 

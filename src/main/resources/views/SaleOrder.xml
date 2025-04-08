@@ -13,9 +13,8 @@
       <insert position="after">
         <panel name="portalPanel" title="Portal">
           <field name="portalWorkspace"/>
-          <spacer/>
-          <field name="finalizedReport" widget="binary-link" showIf="statusSelect == 2"/>
-          <field name="confimedReport" widget="binary-link" showIf="statusSelect == 3"/>
+          <field name="orderReport" widget="binary-link"
+            showIf="statusSelect == 2 || statusSelect == 3"/>
         </panel>
       </insert>
     </extend>
