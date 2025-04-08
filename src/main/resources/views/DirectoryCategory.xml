@@ -16,7 +16,8 @@
       <field name="directoryCategoryTitle" required="true" colSpan="12"/>
       <field name="directoryCategoryIcon"/>
       <field name="directoryCategoryColorSelect" widget="SingleSelect"/>
-      <field name="directoryCategorySet" widget="TagSelect" colSpan="12"/>
+      <field name="directoryCategorySet" widget="TagSelect" colSpan="12"
+        domain="self.id != :id"/>
     </panel>
   </form>
 
