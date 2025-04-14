@@ -17,6 +17,11 @@
       <attribute name="onSave" value="action-project-task-group-on-save"/>
     </extend>
 
+    <extend target="/">
+      <attribute name="onNew"
+        value="portal-action-business-project-project-task-group-onnew"/>
+    </extend>
+
     <extend target="//panel-tabs[@name='mainPanelTab']">
       <insert position="inside">
         <panel name="portalPanel" title="Portal">
@@ -180,6 +185,16 @@
   <action-group name="action-project-task-group-delete-mail-message-file">
     <action name="action-mail-message-validate-delete"/>
     <action name="action-project-task-method-delete-file"/>
+  </action-group>
+
+  <action-record name="portal-action-project-task-record-set-managedbycontact"
+    model="com.axelor.apps.project.db.ProjectTask">
+    <field name="managedByContact" expr="eval: __user__?.partner"/>
+  </action-record>
+
+  <action-group name="portal-action-business-project-project-task-group-onnew">
+    <action name="action-business-project-project-task-group-on-new"/>
+    <action name="portal-action-project-task-record-set-managedbycontact"/>
   </action-group>
 
 </object-views>
