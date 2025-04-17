@@ -136,9 +136,11 @@
             x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
           <field name="ticketHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="ticketHeroDescription" colSpan="12" title="Description"/>
-          <field name="ticketingFieldSet" colSpan="12" widget="TagSelect"
+          <field name="ticketingFieldSet" colSpan="12" widget="TagSelect" canNew="false"
+            canEdit="false"
             domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('id','createdByContact','managedByContact','status','priority','projectTaskCategory','assignment','updatedOn')"/>
-          <field name="ticketingFormFieldSet" colSpan="12" widget="TagSelect"
+          <field name="ticketingFormFieldSet" colSpan="12" widget="TagSelect" canNew="false"
+            canEdit="false"
             domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('id','targetVersion','progress','taskEndDate','managedByContact','createdByContact','createdOn','projectTaskCategory','priority','status','assignment')"/>
         </panel>
       </panel>
