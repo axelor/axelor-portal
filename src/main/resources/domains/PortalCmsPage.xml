@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="PortalCmsPage">
+    <string name="title" namecolumn="true"/>
+    <string name="slug"/>
+    <string name="seoTitle" title="SEO title"/>
+    <string name="seoDescription" title="SEO description" large="true"/>
+    <string name="seoKeyword" title="SEO keyword"/>
+    <string name="statusSelect" title="Status" selection="portal.cms.page.status.select"
+      default="0"/>
+    <boolean name="isPrivate" title="Private"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsSite" name="website"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalCmsContentLine"
+      name="contentLines"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
+    <many-to-many name="partnerCategorySet"
+      ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
+
+    <unique-constraint columns="slug,website"/>
+  </entity>
+
+</domain-models>

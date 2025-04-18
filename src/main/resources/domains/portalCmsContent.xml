@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="PortalCmsContent">
+    <string name="title" namecolumn="true"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsComponent" name="component"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalCmsContentLine"
+      name="contentLines" mappedBy="content"/>
+  </entity>
+
+</domain-models>

@@ -261,4 +261,46 @@
     <view type="form" name="directory-category-form"/>
   </action-view>
 
+  <menuitem title="CMS app" name="menu-portal-cms-root" parent="menu-portal-root"
+    order="137"/>
+
+  <menuitem title="Website" name="menu-portal-cms-site" parent="menu-portal-cms-root"
+    action="action.portal.cms.site"/>
+
+  <action-view name="action.portal.cms.site" title="Website"
+    model="com.axelor.apps.portal.db.PortalCmsSite">
+    <view type="grid" name="portal-portal-cms-site-grid"/>
+    <view type="form" name="portal-portal-cms-site-form"/>
+  </action-view>
+
+  <menuitem title="Website pages" name="menu-portal-cms-page" parent="menu-portal-cms-root"
+    action="action.portal.cms.page"/>
+
+  <action-view name="action.portal.cms.page" title="Website pages"
+    model="com.axelor.apps.portal.db.PortalCmsPage">
+    <view type="grid" name="portal-portal-cms-page-grid"/>
+    <view type="form" name="portal-portal-cms-page-form"/>
+  </action-view>
+
+  <menuitem title="Configuration" name="menu-portal-cms-configuration"
+    parent="menu-portal-cms-root"/>
+
+  <menuitem title="Components" name="menu-portal-cms-component"
+    parent="menu-portal-cms-configuration" action="action.portal.cms.component"/>
+
+  <action-view name="action.portal.cms.component" title="Components"
+    model="com.axelor.apps.portal.db.PortalCmsComponent">
+    <view type="grid" name="portal-portal-cms-component-grid"/>
+    <view type="form" name="portal-portal-cms-component-form"/>
+  </action-view>
+
+  <menuitem title="Contents" name="menu-portal-cms-content"
+    parent="menu-portal-cms-configuration" action="action.portal.cms.content"/>
+
+  <action-view name="action.portal.cms.content" title="Contents"
+    model="com.axelor.apps.portal.db.PortalCmsContent">
+    <view type="grid" name="portal-portal-cms-content-grid"/>
+    <view type="form" name="portal-portal-cms-content-form"/>
+  </action-view>
+
 </object-views>

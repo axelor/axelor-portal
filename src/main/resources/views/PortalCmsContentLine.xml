@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.PortalCmsContentLine" title="CMS content lines"
+    name="portal-portal-cms-content-line-grid" orderBy="content,sequence">
+    <field name="content"/>
+    <field name="sequence"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.PortalCmsContentLine" title="CMS content line"
+    name="portal-portal-cms-content-line-form" width="large">
+    <panel name="mainPanel" colSpan="12">
+      <field name="content" required="true"/>
+      <field name="sequence"/>
+    </panel>
+  </form>
+
+</object-views>

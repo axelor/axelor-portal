@@ -139,4 +139,9 @@
     <option value="com.axelor.dms.db.DMSFile">DMS file</option>
   </selection>
 
+  <selection name="portal.cms.page.status.select">
+    <option value="0">Draft</option>
+    <option value="1">Published</option>
+  </selection>
+
 </object-views>

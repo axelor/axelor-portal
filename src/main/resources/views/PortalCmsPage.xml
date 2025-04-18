@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid model="com.axelor.apps.portal.db.PortalCmsPage" title="CMS pages"
+    name="portal-portal-cms-page-grid">
+    <field name="title"/>
+    <field name="statusSelect"/>
+    <field name="isPrivate"/>
+  </grid>
+
+  <form model="com.axelor.apps.portal.db.PortalCmsPage" title="CMS page"
+    name="portal-portal-cms-page-form" width="large">
+    <panel name="mainPanel" colSpan="12">
+      <field name="statusSelect" widget="NavSelect" colSpan="10"/>
+      <field name="isPrivate" colSpan="2"/>
+      <field name="title" colSpan="12" required="true"/>
+      <field name="slug"/>
+      <field name="website"/>
+      <field name="seoTitle"/>
+      <field name="seoKeyword"/>
+      <field name="seoDescription" colSpan="12"/>
+      <panel-related name="contentLinePanel" field="contentLines" colSpan="12"
+        canMove="true" orderBy="sequence" form-view="portal-portal-cms-content-line-form"
+        grid-view="portal-portal-cms-content-line-grid"/>
+      <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
+      <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+    </panel>
+  </form>
+
+</object-views>
