@@ -9,7 +9,7 @@
     <field name="code"/>
   </grid>
 
-  <form model="com.axelor.apps.portal.db.PortalCmsComponent" title="CMS site"
+  <form model="com.axelor.apps.portal.db.PortalCmsComponent" title="CMS component"
     name="portal-portal-cms-component-form" width="large">
     <panel name="mainPanel" colSpan="12">
       <field name="title" required="true"/>

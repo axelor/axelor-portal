@@ -8,6 +8,7 @@
   <entity name="PortalCmsContentLine">
     <integer name="sequence" title="order"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContent" name="content"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsPage" name="page"/>
   </entity>
 
 </domain-models>
