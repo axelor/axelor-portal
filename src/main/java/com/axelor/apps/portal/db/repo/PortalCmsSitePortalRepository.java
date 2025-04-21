@@ -28,11 +28,19 @@ public class PortalCmsSitePortalRepository extends PortalCmsSiteRepository {
   public PortalCmsSite save(PortalCmsSite portalCmsSite) {
 
     portalCmsSite = super.save(portalCmsSite);
-    String slug = portalCmsSite.getName().replaceAll("\\s+", "-");
     if (ObjectUtils.isEmpty(portalCmsSite.getSlug())) {
-      slug = UUID.randomUUID().toString();
+      String slug = portalCmsSite.getName().replaceAll("\\s+", "-").toLowerCase();
+      long count =
+          all()
+              .filter("self.slug = :slug AND self.id != :id")
+              .bind("slug", slug)
+              .bind("id", portalCmsSite.getId())
+              .count();
+      if (count > 0) {
+        slug = UUID.randomUUID().toString();
+      }
+      portalCmsSite.setSlug(slug);
     }
-    portalCmsSite.setSlug(slug);
 
     return portalCmsSite;
   }
