@@ -472,6 +472,10 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
     saleOrderFinalizeService.finalizeQuotation(order);
     saleOrderConfirmService.confirmSaleOrder(order);
+    try {
+      attachReport(order);
+    } catch (IOException e) {
+    }
 
     return order;
   }
