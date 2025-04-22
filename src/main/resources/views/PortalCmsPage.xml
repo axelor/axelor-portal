@@ -7,6 +7,7 @@
     name="portal-portal-cms-page-grid">
     <field name="title"/>
     <field name="statusSelect"/>
+    <field name="language"/>
     <field name="isPrivate"/>
   </grid>
 
@@ -15,9 +16,10 @@
     <panel name="mainPanel" colSpan="12">
       <field name="statusSelect" widget="NavSelect" colSpan="10"/>
       <field name="isPrivate" colSpan="2"/>
-      <field name="title" colSpan="12" required="true"/>
+      <field name="title" required="true"/>
       <field name="slug"/>
       <field name="website"/>
+      <field name="language"/>
       <field name="seoTitle"/>
       <field name="seoKeyword"/>
       <field name="seoDescription" colSpan="12"/>

@@ -15,6 +15,7 @@
       default="0"/>
     <boolean name="isPrivate" title="Private"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsSite" name="website"/>
+    <many-to-one ref="com.axelor.apps.base.db.Localization" name="language"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalCmsContentLine"
       name="contentLines" mappedBy="page"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"

@@ -11,10 +11,12 @@
     <boolean name="isGuestUserAllow" title="Available for guest user"/>
     <boolean name="isPrivate" title="Private"/>
     <boolean name="isWiki" title="Wiki"/>
-    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContent" name="header"/>
-    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContent" name="footer"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContentLine" name="header"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContentLine" name="footer"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsPage" name="homepage"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsMenu" name="menu"/>
+    <many-to-one ref="com.axelor.apps.base.db.Localization" name="language"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalCmsPage" name="pages"
       mappedBy="website"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"

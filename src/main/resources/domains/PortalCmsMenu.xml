@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="PortalCmsMenu">
+    <string name="title" namecolumn="true"/>
+    <string name="code"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsMenuDesign" name="design"/>
+    <many-to-one ref="com.axelor.apps.base.db.Localization" name="language"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalCmsMenuLine" name="menuList"
+      title="Menus" mappedBy="menu"/>
+  </entity>
+
+</domain-models>

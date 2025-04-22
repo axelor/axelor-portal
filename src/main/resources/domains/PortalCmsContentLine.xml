@@ -6,9 +6,10 @@
   <module package="com.axelor.apps.portal.db" name="portal"/>
 
   <entity name="PortalCmsContentLine">
-    <integer name="sequence" title="order"/>
+    <integer name="sequence" title="Order"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContent" name="content"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsPage" name="page"/>
+    <many-to-one ref="com.axelor.apps.base.db.Localization" name="language"/>
   </entity>
 
 </domain-models>
