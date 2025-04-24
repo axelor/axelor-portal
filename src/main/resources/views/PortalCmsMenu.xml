@@ -6,7 +6,7 @@
   <grid model="com.axelor.apps.portal.db.PortalCmsMenu" title="CMS menus"
     name="portal-portal-cms-menu-grid">
     <field name="title"/>
-    <field name="design"/>
+    <field name="component"/>
     <field name="language"/>
   </grid>
 
@@ -14,7 +14,7 @@
     name="portal-portal-cms-menu-form" width="large">
     <panel name="mainPanel" colSpan="12">
       <field name="title"/>
-      <field name="design"/>
+      <field name="component"/>
       <field name="language"/>
       <field name="menuList" colSpan="12"/>
     </panel>

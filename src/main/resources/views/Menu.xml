@@ -264,8 +264,17 @@
   <menuitem title="CMS app" name="menu-portal-cms-root" parent="menu-portal-root"
     order="137"/>
 
+  <menuitem title="Main website" name="menu-portal-cms-maiun-website" order="1371"
+    parent="menu-portal-cms-root" action="action.portal.cms.main.website"/>
+
+  <action-view name="action.portal.cms.main.website" title="Main website"
+    model="com.axelor.apps.portal.db.PortalCmsMainWebsite">
+    <view type="grid" name="portal-portal-cms-main-website-grid"/>
+    <view type="form" name="portal-portal-cms-main-website-form"/>
+  </action-view>
+
   <menuitem title="Website" name="menu-portal-cms-site" parent="menu-portal-cms-root"
-    action="action.portal.cms.site"/>
+    action="action.portal.cms.site" order="1375"/>
 
   <action-view name="action.portal.cms.site" title="Website"
     model="com.axelor.apps.portal.db.PortalCmsSite">
@@ -274,7 +283,7 @@
   </action-view>
 
   <menuitem title="Website pages" name="menu-portal-cms-page" parent="menu-portal-cms-root"
-    action="action.portal.cms.page"/>
+    action="action.portal.cms.page" order="1380"/>
 
   <action-view name="action.portal.cms.page" title="Website pages"
     model="com.axelor.apps.portal.db.PortalCmsPage">
@@ -283,7 +292,7 @@
   </action-view>
 
   <menuitem title="Configuration" name="menu-portal-cms-configuration"
-    parent="menu-portal-cms-root"/>
+    parent="menu-portal-cms-root" order="1385"/>
 
   <menuitem title="Components" name="menu-portal-cms-component"
     parent="menu-portal-cms-configuration" action="action.portal.cms.component"/>
@@ -310,15 +319,6 @@
     model="com.axelor.apps.portal.db.PortalCmsMenu">
     <view type="grid" name="portal-portal-cms-menu-grid"/>
     <view type="form" name="portal-portal-cms-menu-form"/>
-  </action-view>
-
-  <menuitem title="Menu designs" name="menu-portal-cms-menu-design"
-    parent="menu-portal-cms-configuration" action="action.portal.cms.menu.design"/>
-
-  <action-view name="action.portal.cms.menu.design" title="Menu designs"
-    model="com.axelor.apps.portal.db.PortalCmsMenuDesign">
-    <view type="grid" name="portal-portal-cms-menu-design-grid"/>
-    <view type="form" name="portal-portal-cms-menu-design-form"/>
   </action-view>
 
 </object-views>

@@ -7,6 +7,7 @@
     name="portal-portal-cms-page-grid">
     <field name="title"/>
     <field name="statusSelect"/>
+    <field name="website"/>
     <field name="language"/>
     <field name="isPrivate"/>
   </grid>
@@ -26,9 +27,19 @@
       <panel-related name="contentLinePanel" field="contentLines" colSpan="12"
         canMove="true" orderBy="sequence" form-view="portal-portal-cms-content-line-form"
         grid-view="portal-portal-cms-content-line-grid"/>
+      <field name="pageSet" colSpan="12"
+        onSelect="action-portal-attrs-portal-cms-page-onselect"
+        domain="self.website.mainWebsite = :website.mainWebsite"/>
       <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
     </panel>
   </form>
+
+  <action-attrs name="action-portal-attrs-portal-cms-page-onselect">
+    <attribute name="domain" for="pageSet" if="website?.mainWebsite != null"
+      expr="eval: &quot;self.website.mainWebsite.id = ${website?.mainWebsite?.id}&quot;"/>
+    <attribute name="domain" for="pageSet" if="website?.mainWebsite == null"
+      expr="eval: &quot;self.id IN (-1)&quot;"/>
+  </action-attrs>
 
 </object-views>

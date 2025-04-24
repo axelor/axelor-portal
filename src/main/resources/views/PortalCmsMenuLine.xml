@@ -6,7 +6,7 @@
   <grid model="com.axelor.apps.portal.db.PortalCmsMenuLine" title="CMS menu lines"
     name="portal-portal-cms-menu-line-grid">
     <field name="title"/>
-    <field name="code"/>
+    <field name="externalPage" widget="url"/>
     <field name="page"/>
   </grid>
 
@@ -14,7 +14,7 @@
     name="portal-portal-cms-menu-line-form" width="large">
     <panel name="mainPanel" colSpan="12">
       <field name="title" required="true"/>
-      <field name="code"/>
+      <field name="externalPage" widget="url"/>
       <field name="page"/>
       <field name="subMenuList" colSpan="12"/>
     </panel>

@@ -6,31 +6,23 @@
   <grid model="com.axelor.apps.portal.db.PortalCmsSite" title="CMS sites"
     name="portal-portal-cms-site-grid">
     <field name="name"/>
-    <field name="workspace"/>
-    <field name="language"/>
   </grid>
 
   <form model="com.axelor.apps.portal.db.PortalCmsSite" title="CMS site"
-    name="portal-portal-cms-site-form" width="large" onNew="action-forum-group-attrs-set-workspace">
+    name="portal-portal-cms-site-form" width="large">
     <panel name="mainPanel" colSpan="12">
       <field name="name" required="true"/>
       <field name="slug"/>
-      <field name="isPrivate" colSpan="3"/>
+      <field name="mainWebsite"/>
       <field name="isGuestUserAllow" colSpan="3"/>
-      <field name="isWiki" colSpan="3"/>
+      <field name="isPrivate" colSpan="3"/>
       <field name="menu"/>
-      <field name="language"/>
       <field name="header"/>
       <field name="footer"/>
       <field name="homepage"/>
-      <field name="workspace"/>
       <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
     </panel>
   </form>
-
-  <action-attrs name="action-portal-cms-site-attrs-set-workspace">
-    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
-  </action-attrs>
 
 </object-views>

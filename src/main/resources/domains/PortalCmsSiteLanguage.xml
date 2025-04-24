@@ -5,9 +5,9 @@
 
   <module package="com.axelor.apps.portal.db" name="portal"/>
 
-  <entity name="PortalCmsMenuDesign">
-    <string name="title" namecolumn="true"/>
-    <string name="code"/>
+  <entity name="PortalCmsSiteLanguage">
+    <many-to-one ref="com.axelor.apps.base.db.Localization" name="language"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsSite" name="website"/>
   </entity>
 
 </domain-models>
