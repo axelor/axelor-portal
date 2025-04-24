@@ -8,6 +8,7 @@
   <entity name="PortalCmsSiteLanguage">
     <many-to-one ref="com.axelor.apps.base.db.Localization" name="language"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsSite" name="website"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsMainWebsite" name="mainWebsite"/>
   </entity>
 
 </domain-models>
