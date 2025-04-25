@@ -18,7 +18,7 @@
       selection="ticket.status.change.method.select"/>
     <string name="canPayInvoice" title="Can pay invoice?" selection="can.pay.invoice.select"/>
     <string name="nonPublicEmailNotFoundMessage" large="true"
-      title="Registration error message for non publc event" translatable="true"/>
+      title="Registration error message for non public event" translatable="true"/>
 
     <string name="eventHeroTitle"/>
     <string name="eventHeroDescription" large="true"/>
