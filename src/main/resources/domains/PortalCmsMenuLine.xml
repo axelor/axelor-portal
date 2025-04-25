@@ -13,6 +13,8 @@
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsMenuLine" name="parentMenu"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalCmsMenuLine" name="subMenuList"
       mappedBy="parentMenu" title="Sub menus"/>
+
+    <entity-listener class="com.axelor.apps.portal.db.repo.PortalCmsMenuLineListner"/>
   </entity>
 
 </domain-models>
