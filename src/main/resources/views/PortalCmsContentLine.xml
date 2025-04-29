@@ -11,7 +11,8 @@
   </grid>
 
   <form model="com.axelor.apps.portal.db.PortalCmsContentLine" title="CMS content line"
-    name="portal-portal-cms-content-line-form" width="large">
+    name="portal-portal-cms-content-line-form" width="large"
+    onNew="portal-action-record-portal-cms-content-line-onnew">
     <panel name="mainPanel" colSpan="12">
       <field name="content" required="true" domain="self.language = :language"/>
       <field name="sequence"/>
