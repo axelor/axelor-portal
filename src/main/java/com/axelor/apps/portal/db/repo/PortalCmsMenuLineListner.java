@@ -18,12 +18,12 @@
  */
 package com.axelor.apps.portal.db.repo;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import com.axelor.apps.portal.db.PortalCmsMenuLine;
 import com.axelor.common.ObjectUtils;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
-public class PortalCmsMenuLineListner{
+public class PortalCmsMenuLineListner {
 
   @PreUpdate
   protected void onPreUpdate(PortalCmsMenuLine portalCmsMenuLine) {
@@ -32,7 +32,7 @@ public class PortalCmsMenuLineListner{
       portalCmsMenuLine.setMenu(portalCmsMenuLine.getParentMenu().getMenu());
     }
   }
-  
+
   @PrePersist
   protected void onrePersist(PortalCmsMenuLine portalCmsMenuLine) {
 

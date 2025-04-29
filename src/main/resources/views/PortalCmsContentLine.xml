@@ -13,10 +13,15 @@
   <form model="com.axelor.apps.portal.db.PortalCmsContentLine" title="CMS content line"
     name="portal-portal-cms-content-line-form" width="large">
     <panel name="mainPanel" colSpan="12">
-      <field name="content" required="true"/>
+      <field name="content" required="true" domain="self.language = :language"/>
       <field name="sequence"/>
-      <field name="language"/>
+      <field name="language" readonlyIf="$popup()"/>
     </panel>
   </form>
+
+  <action-record name="portal-action-record-portal-cms-content-line-onnew"
+    model="com.axelor.apps.portal.db.PortalCmsContentLine">
+    <field name="language" expr="eval: __parent__?.language"/>
+  </action-record>
 
 </object-views>
