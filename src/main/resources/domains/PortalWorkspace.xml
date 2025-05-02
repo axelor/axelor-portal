@@ -18,6 +18,7 @@
       name="defaultGuestWorkspace" title="Default guest workspace"/>
     <many-to-one name="user" column="user_id" ref="com.axelor.auth.db.User"
       title="Comments user"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="workspaceLogo"/>
     <string name="navigationSelect" title="Navigation" selection="navigation.select"/>
 
     <extra-code>

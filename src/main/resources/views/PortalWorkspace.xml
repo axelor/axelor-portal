@@ -13,9 +13,16 @@
   <form name="portal-workspace-form" title="Workspace"
     model="com.axelor.apps.portal.db.PortalWorkspace">
     <panel name="mainPanel">
-      <field name="name"/>
-      <field name="navigationSelect"/>
-      <field name="url" widget="url" colSpan="12"/>
+      <panel name="imagePanel" colSpan="2">
+        <field name="workspaceLogo" widget="Image" colSpan="12" showTitle="false"/>
+      </panel>
+      <panel name="infoPanel" colSpan="10">
+        <field name="name"/>
+        <field name="navigationSelect"/>
+        <field name="url" widget="url" colSpan="12"/>
+      </panel>
+    </panel>
+    <panel name="detailPanel">
       <field name="defaultTheme"/>
       <field name="defaultPartnerWorkspace"/>
       <field name="allowRegistrationSelect"/>
