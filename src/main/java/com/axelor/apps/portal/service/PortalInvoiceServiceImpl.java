@@ -28,17 +28,13 @@ import com.axelor.apps.account.service.payment.invoice.payment.InvoiceTermPaymen
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.base.service.app.AppBaseService;
-import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.common.ObjectUtils;
 import com.axelor.i18n.I18n;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import jakarta.xml.bind.JAXBException;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
-import javax.xml.datatype.DatatypeConfigurationException;
 
 public class PortalInvoiceServiceImpl implements PortalInvoiceService {
 
@@ -105,6 +101,7 @@ public class PortalInvoiceServiceImpl implements PortalInvoiceService {
     }
 
     InvoicePayment invoicePayment = new InvoicePayment();
+    invoicePayment.setInvoice(invoice);
     invoicePayment.setTypeSelect(InvoicePaymentRepository.TYPE_PAYMENT);
     invoicePayment.setStatusSelect(InvoicePaymentRepository.STATUS_DRAFT);
 
@@ -117,15 +114,8 @@ public class PortalInvoiceServiceImpl implements PortalInvoiceService {
     invoicePayment.setMove(invoice.getMove());
     invoiceTermPaymentService.createInvoicePaymentTerms(
         invoicePayment, invoice.getInvoiceTermList());
-
     invoice.addInvoicePaymentListItem(invoicePayment);
     invoicePaymentRepo.save(invoicePayment);
-
-    try {
-      invoicePaymentValidateService.validate(invoicePayment);
-    } catch (AxelorException | JAXBException | IOException | DatatypeConfigurationException e) {
-      TraceBackService.trace(e);
-    }
 
     return invoicePayment;
   }
