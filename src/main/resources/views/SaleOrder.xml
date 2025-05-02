@@ -45,6 +45,17 @@
     <action name="portal-action-sale-order-method-attach-report"/>
   </action-group>
 
+  <action-group id="portal-action-group-sale-order-validate-changes"
+    name="action-group-sale-order-validate-changes">
+    <action name="action-supplychain-saleorder-onsave"/>
+    <action name="save"/>
+    <action name="action-method-sale-order-validate-changes"/>
+    <action
+      if="__config__.app.isApp('supplychain') &amp;&amp; __config__.app.getApp('supplychain')?.customerStockMoveGenerationAuto "
+      name="action-sale-order-method-notify-stock-move-created"/>
+    <action name="portal-action-sale-order-method-attach-report"/>
+  </action-group>
+
   <action-method name="portal-action-sale-order-method-attach-report">
     <call class="com.axelor.apps.portal.web.SaleOrderPortalController" method="attachReport"/>
   </action-method>
