@@ -14,7 +14,9 @@
     onNew="action-portal-news-category-attrs-set-workspace">
     <panel name="mainPanel">
       <panel name="imagePanel" colSpan="2">
-        <field name="image" widget="Image" colSpan="12" showTitle="false"/>
+        <field name="image" widget="Image" colSpan="12" showTitle="false"
+          onChange="action-portal-news-category-record-create-thumbnail-image"/>
+        <field name="thumbnailImage" hidden="true" colSpan="12"/>
       </panel>
       <panel name="infoPanel" colSpan="10">
         <field name="name" required="true" colSpan="11"/>
@@ -33,5 +35,11 @@
   <action-attrs name="action-portal-news-category-attrs-set-workspace">
     <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
   </action-attrs>
+
+  <action-record name="action-portal-news-category-record-create-thumbnail-image"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <field name="thumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(image)"/>
+  </action-record>
 
 </object-views>

@@ -28,6 +28,7 @@
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventThumbnailImage"/>
     <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
       title="Workspace"/>

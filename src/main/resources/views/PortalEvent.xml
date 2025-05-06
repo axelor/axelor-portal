@@ -18,7 +18,9 @@
     <panel name="mainPanel">
       <panel name="headerDetailsPanel" colSpan="9">
         <panel name="imagePanel" colSpan="2">
-          <field name="eventImage" widget="Image" colSpan="12" showTitle="false"/>
+          <field name="eventImage" widget="Image" colSpan="12" showTitle="false"
+            onChange="action-portal-event-record-create-thumbnail-image"/>
+          <field name="eventThumbnailImage" hidden="true" colSpan="12"/>
         </panel>
         <panel name="infoPanel" colSpan="10">
           <field name="statusSelect" readonly="true" widget="NavSelect" colSpan="12"/>
@@ -195,5 +197,11 @@
     <action name="action-portal-event-attrs-set-event-link"/>
     <action name="action-portal-event-record-workspace-onchange"/>
   </action-group>
+
+  <action-record name="action-portal-event-record-create-thumbnail-image"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="eventThumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(eventImage)"/>
+  </action-record>
 
 </object-views>

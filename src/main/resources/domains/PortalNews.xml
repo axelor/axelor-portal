@@ -18,6 +18,7 @@
       title="Parent news categories"/>
     <many-to-one name="author" ref="com.axelor.apps.base.db.Partner"/>
     <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+    <many-to-one name="thumbnailImage" ref="com.axelor.meta.db.MetaFile"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalNews" name="relatedNewsSet"
       title="Related news"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"

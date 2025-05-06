@@ -8,6 +8,13 @@
     <extend target="/">
       <attribute name="onNew" value="action-portal-group-product-onnew"/>
     </extend>
+    <extend target="//field[@name='picture']">
+      <attribute name="onChange"
+        value="action-portal-product-record-create-thumbnail-image"/>
+      <insert position="after">
+        <field name="thumbnailImage" hidden="true" colSpan="12"/>
+      </insert>
+    </extend>
     <extend target="//panel-tabs[@name='productSpecificAttributes']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
@@ -65,5 +72,10 @@
     <action name="action-product-attrs-set-isEvent"/>
   </action-group>
 
+  <action-record name="action-portal-product-record-create-thumbnail-image"
+    model="com.axelor.apps.base.db.Product">
+    <field name="thumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(picture)"/>
+  </action-record>
 
 </object-views>
