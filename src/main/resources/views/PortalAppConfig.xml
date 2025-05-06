@@ -80,6 +80,9 @@
         <field name="enableRecommendedNews"/>
         <field name="enableSocialMediaSharing"/>
         <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
+        <field name="isShowPublicationDate"/>
+        <field name="isShowPublicationTime" showIf="isShowPublicationDate"/>
+        <field name="isShowPublicationAuthor"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="newsHeroTitle" title="Title"/>
           <field name="newsHeroOverlayColorSelect" widget="SingleSelect"

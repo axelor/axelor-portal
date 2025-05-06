@@ -91,6 +91,9 @@
     <boolean name="isExistingContactsOnly" title="Only existing contacts"/>
     <boolean name="enableRecommendedNews" default="true"/>
     <boolean name="enableSocialMediaSharing" default="true"/>
+    <boolean name="isShowPublicationDate" title="Show publication date"/>
+    <boolean name="isShowPublicationTime" title="Show publication time"/>
+    <boolean name="isShowPublicationAuthor" title="Show publication author"/>
     <string name="socialMediaSelect" selection="social.media.select"/>
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
