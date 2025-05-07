@@ -13,7 +13,9 @@
     name="forum-group-form" width="large" onNew="action-forum-group-attrs-set-workspace">
     <panel name="mainPanel" colSpan="12">
       <panel name="imagePanel" colSpan="2">
-        <field name="image" widget="image"/>
+        <field name="image" widget="image"
+          onChange="action-portal-forum-group-record-create-thumbnail-image"/>
+        <field name="thumbnailImage" hidden="true"/>
       </panel>
       <panel name="fieldsPanel" colSpan="10" itemSpan="12">
         <field name="name" colSpan="11"/>
@@ -30,5 +32,11 @@
   <action-attrs name="action-forum-group-attrs-set-workspace">
     <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
   </action-attrs>
+
+  <action-record name="action-portal-forum-group-record-create-thumbnail-image"
+    model="com.axelor.apps.portal.db.ForumGroup">
+    <field name="thumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(image)"/>
+  </action-record>
 
 </object-views>
