@@ -32,6 +32,7 @@ import com.axelor.inject.Beans;
 import com.axelor.message.db.Message;
 import com.axelor.message.db.repo.MessageRepository;
 import com.axelor.studio.db.AppGooveePortal;
+import com.axelor.studio.db.repo.AppGooveePortalRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
@@ -55,11 +56,16 @@ public class NotificationServiceImpl implements NotificationService {
 
   protected AppBaseService appBaseService;
   protected MessageRepository messageRepo;
+  protected AppGooveePortalRepository appGooveePortalRepo;
 
   @Inject
-  public NotificationServiceImpl(AppBaseService appBaseService, MessageRepository messageRepo) {
+  public NotificationServiceImpl(
+      AppBaseService appBaseService,
+      MessageRepository messageRepo,
+      AppGooveePortalRepository appGooveePortalRepo) {
     this.appBaseService = appBaseService;
     this.messageRepo = messageRepo;
+    this.appGooveePortalRepo = appGooveePortalRepo;
   }
 
   @Override
@@ -69,7 +75,7 @@ public class NotificationServiceImpl implements NotificationService {
       return;
     }
 
-    AppGooveePortal appGooveePortal = (AppGooveePortal) appBaseService.getApp("goovee-portal");
+    AppGooveePortal appGooveePortal = appGooveePortalRepo.all().fetchOne();
     if (appGooveePortal == null) {
       return;
     }

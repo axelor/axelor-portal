@@ -38,6 +38,8 @@ import com.axelor.apps.portal.db.repo.RegistrationPortalRepository;
 import com.axelor.apps.portal.db.repo.RegistrationRepository;
 import com.axelor.apps.portal.mattermost.service.MattermostPortalService;
 import com.axelor.apps.portal.mattermost.service.MattermostPortalServiceImpl;
+import com.axelor.apps.portal.service.DMSFilePortalService;
+import com.axelor.apps.portal.service.DMSFilePortalServiceImpl;
 import com.axelor.apps.portal.service.MailMessageFileService;
 import com.axelor.apps.portal.service.MailMessageFileServiceImpl;
 import com.axelor.apps.portal.service.MailMessagePortalService;
@@ -87,5 +89,6 @@ public class PortalModule extends AxelorModule {
     bind(AppGooveePortalService.class).to(AppGooveePortalServiceImpl.class);
     bind(PortalInvoiceService.class).to(PortalInvoiceServiceImpl.class);
     bind(NotificationService.class).to(NotificationServiceImpl.class);
+    bind(DMSFilePortalService.class).to(DMSFilePortalServiceImpl.class);
   }
 }

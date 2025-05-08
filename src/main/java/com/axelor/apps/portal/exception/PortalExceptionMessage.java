@@ -39,4 +39,5 @@ public final class PortalExceptionMessage {
   public static final String INVOICE_EXISTS = /*$$(*/
       "Invoice already created for this registration" /*)*/;
   public static final String INVALID_INVOICE = /*$$(*/ "Invoice is not valid for payment" /*)*/;
+  public static final String DMS_FILE_DETAILS_UPDATED = /*$$(*/ "File details updated" /*)*/;
 }

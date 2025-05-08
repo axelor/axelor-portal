@@ -19,6 +19,7 @@
 package com.axelor.apps.portal.db.repo;
 
 import com.axelor.apps.portal.db.PortalWorkspace;
+import com.axelor.apps.portal.service.DMSFilePortalService;
 import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.auth.db.User;
@@ -40,16 +41,19 @@ public class DMSFilePortalListner {
         }
       }
 
-      if (dmsFile.getParent() != null
-          && ObjectUtils.notEmpty(dmsFile.getParent().getWorkspaceSet())) {
-        for (PortalWorkspace portalWorkspace : dmsFile.getParent().getWorkspaceSet()) {
-          Beans.get(NotificationService.class)
-              .notifyUser(
-                  "resources",
-                  dmsFile.getParent().getId(),
-                  dmsFile.getClass().getName(),
-                  portalWorkspace);
+      if (dmsFile.getParent() != null) {
+        if (ObjectUtils.notEmpty(dmsFile.getParent().getWorkspaceSet())) {
+          for (PortalWorkspace portalWorkspace : dmsFile.getParent().getWorkspaceSet()) {
+            Beans.get(NotificationService.class)
+                .notifyUser(
+                    "resources",
+                    dmsFile.getParent().getId(),
+                    dmsFile.getClass().getName(),
+                    portalWorkspace);
+          }
         }
+
+        Beans.get(DMSFilePortalService.class).assignParentDetails(dmsFile, dmsFile.getParent());
       }
     }
   }

@@ -8,6 +8,8 @@
     <extend target="//panel[@name='tagsPanel']">
       <insert position="after">
         <panel name="portalPanel" sidebar="true">
+          <button onClick="save,action-portal-dms-file-method-update-children"
+            name="updateChildrenBtn" title="Apply to children"/>
           <field name="author"/>
           <field name="workspaceSet" widget="TagSelect"/>
           <field name="isPrivate"/>
@@ -24,6 +26,8 @@
     model="com.axelor.dms.db.DMSFile" extension="true">
     <extend target="//panel[@name='Overview']/*[last()]">
       <insert position="after">
+        <button onClick="save,action-portal-dms-file-method-update-children"
+          name="updateChildrenBtn" title="Apply to children"/>
         <field name="workspaceSet" widget="TagSelect"/>
         <field name="isPrivate"/>
         <field name="permissionSelect"/>
@@ -33,5 +37,9 @@
       </insert>
     </extend>
   </form>
+
+  <action-method name="action-portal-dms-file-method-update-children">
+    <call class="com.axelor.apps.portal.web.DMSFileController" method="updateChildren"/>
+  </action-method>
 
 </object-views>
