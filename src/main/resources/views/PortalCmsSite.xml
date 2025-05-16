@@ -14,8 +14,9 @@
       <field name="name" required="true"/>
       <field name="slug"/>
       <field name="mainWebsite"/>
-      <field name="isGuestUserAllow" colSpan="3"/>
-      <field name="isPrivate" colSpan="3"/>
+      <field name="isGuestUserAllow" colSpan="2"/>
+      <field name="isPrivate" colSpan="2"/>
+      <field name="isWiki" colSpan="2"/>
       <field name="menu"/>
       <field name="header"/>
       <field name="footer"/>
