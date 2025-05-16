@@ -52,10 +52,22 @@
       <field name="required" widget="inline-checkbox"/>
       <field name="readonly" widget="inline-checkbox" hidden="true"/>
       <field name="visibleInGrid" widget="inline-checkbox" hidden="true"/>
+      <field name="isVisibleInPortal" widget="inline-checkbox"
+        if="__config__.app.isApp('goovee-portal')"/>
     </panel>
     <panel-mail name="mailPanel">
       <mail-messages limit="4"/>
     </panel-mail>
+  </form>
+
+  <form name="json-field-form-base" id="portal-json-field-form-base" title="Custom field"
+    model="com.axelor.meta.db.MetaJsonField" extension="true">
+    <extend target="//field[@name='visibleInGrid']">
+      <insert position="after">
+        <field name="isVisibleInPortal" widget="inline-checkbox"
+          if="__config__.app.isApp('goovee-portal')"/>
+      </insert>
+    </extend>
   </form>
 
   <action-record name="action-meta-json-field-record-fill-model"
