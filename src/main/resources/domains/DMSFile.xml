@@ -9,11 +9,10 @@
 
     <string name="description" large="true"/>
     <string name="permissionSelect" selection="dms.file.permission.select" title="Permission"/>
-    <string name="colorSelect" selection="color.name.selection" title="color"/>
+    <string name="colorSelect" selection="color.name.selection" title="Color"/>
+    <string name="logoSelect" selection="portal.dms.file.logo.select" title="Logo"/>
     <boolean name="isPrivate" title="Private"/>
     <many-to-one ref="com.axelor.apps.base.db.Partner" name="author"/>
-    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
-    <many-to-one name="thumbnailImage" ref="com.axelor.meta.db.MetaFile"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspaceSet"
       title="Workspaces"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
