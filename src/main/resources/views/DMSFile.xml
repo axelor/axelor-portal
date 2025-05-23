@@ -14,9 +14,13 @@
           <field name="workspaceSet" widget="TagSelect"/>
           <field name="isPrivate"/>
           <field name="permissionSelect"/>
+          <field name="colorSelect" widget="SingleSelect"/>
           <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
           <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
+          <field name="image" widget="Image" colSpan="12" showTitle="false"
+            onChange="action-portal-dms-file-record-create-thumbnail-image"/>
           <field name="description"/>
+          <field name="thumbnailImage" hidden="true" colSpan="12"/>
         </panel>
       </insert>
     </extend>
@@ -31,9 +35,13 @@
         <field name="workspaceSet" widget="TagSelect"/>
         <field name="isPrivate"/>
         <field name="permissionSelect"/>
+        <field name="colorSelect" widget="SingleSelect"/>
         <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
         <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
+        <field name="image" widget="Image" colSpan="12" showTitle="false"
+          onChange="action-portal-dms-file-record-create-thumbnail-image"/>
         <field name="description"/>
+        <field name="thumbnailImage" hidden="true" colSpan="12"/>
       </insert>
     </extend>
   </form>
@@ -41,5 +49,11 @@
   <action-method name="action-portal-dms-file-method-update-children">
     <call class="com.axelor.apps.portal.web.DMSFileController" method="updateChildren"/>
   </action-method>
+
+  <action-record name="action-portal-dms-file-record-create-thumbnail-image"
+    model="com.axelor.dms.db.DMSFile">
+    <field name="thumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(image)"/>
+  </action-record>
 
 </object-views>
