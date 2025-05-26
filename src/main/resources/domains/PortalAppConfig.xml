@@ -96,6 +96,12 @@
     <boolean name="isShowPublicationAuthor" title="Show publication author"/>
     <string name="socialMediaSelect" selection="social.media.select"/>
 
+    <boolean name="isDisplayContact" title="show contact"/>
+    <string name="contactName" title="Name"/>
+    <one-to-one name="contactEmailAddress" ref="com.axelor.message.db.EmailAddress"
+      title="Email"/>
+    <string name="contactPhone" title="Phone"/>
+
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
       name="paymentOptionSet" title="Payment options" mappedBy="portalAppConfigSet"/>

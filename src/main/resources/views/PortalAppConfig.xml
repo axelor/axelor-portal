@@ -154,6 +154,19 @@
       <panel name="settingsPanel" title="Settings">
         <field name="canInviteMembers"/>
         <field name="isExistingContactsOnly" showIf="canInviteMembers"/>
+        <panel name="contactDetailsPanel" colSpan="12" title="Contact details">
+          <field name="isDisplayContact"/>
+          <field name="contactName" showIf="isDisplayContact"/>
+          <field name="contactEmailAddress" showIf="isDisplayContact" canSelect="false"
+            form-view="email-address-simple-form" x-show-icons="false">
+            <editor x-show-titles="false" x-viewer="true">
+              <field name="address" colSpan="12" placeholder="whatever@example.com"
+                pattern="^[a-z0-9A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2,})$"/>
+            </editor>
+          </field>
+          <field name="contactPhone" showIf="isDisplayContact" widget="phone"
+            x-placeholder-number-type="FIXED_LINE"/>
+        </panel>
       </panel>
       <panel title="Payment" name="paymentPanel">
         <field name="allowOnlinePaymentForEcommerce"/>
