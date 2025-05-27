@@ -218,4 +218,10 @@
     <option value="md-Dangerous">md-Dangerous</option>
   </selection>
 
+  <selection name="cms.component.type.select">
+    <option value="1">Block</option>
+    <option value="2">Top menu</option>
+    <option value="3">Left/Right menu</option>
+  </selection>
+
 </object-views>

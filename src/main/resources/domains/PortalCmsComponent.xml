@@ -8,6 +8,9 @@
   <entity name="PortalCmsComponent">
     <string name="title" namecolumn="true"/>
     <string name="code"/>
+    <integer name="typeSelect" title="Type" selection="cms.component.type.select"/>
+    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+    <many-to-one name="thumbnailImage" ref="com.axelor.meta.db.MetaFile"/>
   </entity>
 
 </domain-models>

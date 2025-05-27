@@ -11,10 +11,24 @@
 
   <form model="com.axelor.apps.portal.db.PortalCmsComponent" title="CMS component"
     name="portal-portal-cms-component-form" width="large">
-    <panel name="mainPanel" colSpan="12">
-      <field name="title" required="true"/>
-      <field name="code"/>
+    <panel name="mainPanel">
+      <panel name="imagePanel" colSpan="2">
+        <field name="image" widget="Image" colSpan="12" showTitle="false"
+          onChange="action-portal-cms-component-record-create-thumbnail-image"/>
+        <field name="thumbnailImage" hidden="true" colSpan="12"/>
+      </panel>
+      <panel name="infoPanel" colSpan="10">
+        <field name="title" required="true"/>
+        <field name="code"/>
+        <field name="typeSelect"/>
+      </panel>
     </panel>
   </form>
+
+  <action-record name="action-portal-cms-component-record-create-thumbnail-image"
+    model="com.axelor.apps.portal.db.PortalNewsCategory">
+    <field name="thumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(image)"/>
+  </action-record>
 
 </object-views>

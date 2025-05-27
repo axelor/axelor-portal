@@ -10,7 +10,6 @@
     <string name="slug" unique="true"/>
     <boolean name="isGuestUserAllow" title="Available for guest user"/>
     <boolean name="isPrivate" title="Private"/>
-    <boolean name="isWiki" title="Wiki"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContent" name="header"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsContent" name="footer"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalCmsPage" name="homepage"/>

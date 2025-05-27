@@ -14,7 +14,7 @@
     name="portal-portal-cms-menu-form" width="large">
     <panel name="mainPanel" colSpan="12">
       <field name="title"/>
-      <field name="component"/>
+      <field name="component" domain="COALESCE(self.typeSelect, 1) != 1"/>
       <field name="language"/>
       <field name="menuList" colSpan="12"/>
     </panel>
