@@ -8,6 +8,7 @@
   <entity name="Product">
 
     <string name="subtitle" title="Subtitle"/>
+    <string name="slug" required="true" unique="true"/>
     <string name="longDescription" large="true" title="Long description"/>
     <boolean name="homepage" title="Homepage"/>
     <many-to-many ref="com.axelor.apps.base.db.ProductCategory"

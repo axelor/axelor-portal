@@ -8,6 +8,9 @@
     <extend target="/">
       <attribute name="onNew" value="action-portal-group-product-onnew"/>
     </extend>
+    <extend target="//field[@name='name']">
+      <attribute name="onChange" value="action-portal-product-record-assign-slug"/>
+    </extend>
     <extend target="//field[@name='picture']">
       <attribute name="onChange"
         value="action-portal-product-record-create-thumbnail-image"/>
@@ -29,6 +32,7 @@
           <field name="leftQty" readonly="true" colSpan="3"/>
           <field name="brand"/>
           <field name="portalWorkspace"/>
+          <field name="slug" pattern="^[a-z0-9-]*$"/>
           <field name="portalCategorySet" widget="TagSelect"/>
           <field name="portalAvailableOptionSet" widget="TagSelect"/>
           <field name="portalAssociatedProductSet" widget="TagSelect"/>
@@ -76,6 +80,12 @@
     model="com.axelor.apps.base.db.Product">
     <field name="thumbnailImage"
       expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(picture)"/>
+  </action-record>
+
+  <action-record name="action-portal-product-record-assign-slug"
+    model="com.axelor.apps.base.db.Product">
+    <field name="slug"
+      expr="eval: name?.toLowerCase()?.replaceAll(/[^a-z0-9]+/, '-').replaceAll(/(^-+|-+$)/, '')"/>
   </action-record>
 
 </object-views>

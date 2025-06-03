@@ -8,6 +8,9 @@
     <extend target="/">
       <attribute name="onNew" value="action-product-category-attrs-set-workspace"/>
     </extend>
+    <extend target="//field[@name='name']">
+      <attribute name="onChange" value="action-portal-product-category-record-assign-slug"/>
+    </extend>
     <extend target="//panel[@name='mainPanel']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal" colSpan="12">
@@ -19,6 +22,7 @@
             <field name="filterOnBrand" colSpan="3"/>
             <field name="isFeatured" colSpan="3"/>
             <field name="isPrivate" colSpan="3"/>
+            <field name="slug" pattern="^[a-z0-9-]*$"/>
             <field name="productList" colSpan="12" widget="TagSelect"/>
             <field name="productVariantAttrSet" widget="TagSelect" colSpan="12"/>
           </panel>
@@ -34,5 +38,11 @@
   <action-attrs name="action-product-category-attrs-set-workspace">
     <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
   </action-attrs>
+
+  <action-record name="action-portal-product-category-record-assign-slug"
+    model="com.axelor.apps.base.db.ProductCategory">
+    <field name="slug"
+      expr="eval: name?.toLowerCase()?.replaceAll(/[^a-z0-9]+/, '-').replaceAll(/(^-+|-+$)/, '')"/>
+  </action-record>
 
 </object-views>

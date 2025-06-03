@@ -16,6 +16,7 @@
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>
     <string name="subtitle" title="Subtitle"/>
+    <string name="slug" required="true" unique="true"/>
     <boolean name="filterOnBrand" title="Filter On Brands"/>
     <boolean name="isFeatured" title="Featured ?"/>
     <boolean name="isPrivate" title="Private"/>
