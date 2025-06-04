@@ -12,6 +12,7 @@
             name="updateChildrenBtn" title="Apply to children"/>
           <field name="author"/>
           <field name="workspaceSet" widget="TagSelect"/>
+          <field name="isHomepage"/>
           <field name="isPrivate"/>
           <field name="permissionSelect"/>
           <field name="colorSelect" widget="SingleSelect"/>
@@ -31,6 +32,7 @@
         <button onClick="save,action-portal-dms-file-method-update-children"
           name="updateChildrenBtn" title="Apply to children"/>
         <field name="workspaceSet" widget="TagSelect"/>
+        <field name="isHomepage"/>
         <field name="isPrivate"/>
         <field name="permissionSelect"/>
         <field name="colorSelect" widget="SingleSelect"/>
