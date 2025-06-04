@@ -42,6 +42,8 @@ public class DMSFilePortalListner {
       }
 
       if (dmsFile.getParent() != null) {
+        Beans.get(DMSFilePortalService.class).assignParentDetails(dmsFile, dmsFile.getParent());
+
         if (ObjectUtils.notEmpty(dmsFile.getParent().getWorkspaceSet())) {
           for (PortalWorkspace portalWorkspace : dmsFile.getParent().getWorkspaceSet()) {
             Beans.get(NotificationService.class)
@@ -52,8 +54,6 @@ public class DMSFilePortalListner {
                     portalWorkspace);
           }
         }
-
-        Beans.get(DMSFilePortalService.class).assignParentDetails(dmsFile, dmsFile.getParent());
       }
     }
   }
