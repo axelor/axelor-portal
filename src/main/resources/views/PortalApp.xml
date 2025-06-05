@@ -27,4 +27,9 @@
     </panel>
   </form>
 
+  <action-attrs name="portal-action-attrs-portal-app-required-slug">
+    <attribute name="required" for="slug"
+      expr="eval: __repo__(PortalApp).all().filter('self.code = ?1 AND self.installed = ?2', 'shop', 'yes').count() > 0"/>
+  </action-attrs>
+
 </object-views>

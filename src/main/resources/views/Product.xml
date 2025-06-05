@@ -7,6 +7,8 @@
     model="com.axelor.apps.base.db.Product" extension="true">
     <extend target="/">
       <attribute name="onNew" value="action-portal-group-product-onnew"/>
+      <attribute name="onLoad" value="action-portal-group-product-onload"/>
+      <attribute name="onSave" value="action-portal-group-product-onsave"/>
     </extend>
     <extend target="//field[@name='name']">
       <attribute name="onChange" value="action-portal-product-record-assign-slug"/>
@@ -52,12 +54,13 @@
   <action-record name="action-product-set-left-qty"
     model="com.axelor.apps.base.db.Product">
     <field name="leftQty"
-      expr="call:com.axelor.apps.stock.service.StockLocationService:getRealQtyOfProductInStockLocations(id, null,null)"/>
+      expr="call:com.axelor.apps.stock.utils.StockLocationUtilsService:getRealQtyOfProductInStockLocations(id, null,null)"/>
   </action-record>
 
   <action-group name="action-portal-group-product-onload">
     <action name="action-group-product-onload"/>
     <action name="action-product-set-left-qty"/>
+    <action name="portal-action-attrs-portal-app-required-slug"/>
   </action-group>
 
   <action-attrs name="action-product-attrs-set-workspace">
@@ -74,6 +77,7 @@
       if="__parent__?._model == 'com.axelor.apps.production.db.BillOfMaterialImportLine'"/>
     <action name="action-product-attrs-set-workspace"/>
     <action name="action-product-attrs-set-isEvent"/>
+    <action name="portal-action-attrs-portal-app-required-slug"/>
   </action-group>
 
   <action-record name="action-portal-product-record-create-thumbnail-image"
@@ -87,5 +91,17 @@
     <field name="slug"
       expr="eval: name?.toLowerCase()?.replaceAll(/[^a-z0-9]+/, '-').replaceAll(/(^-+|-+$)/, '')"/>
   </action-record>
+
+  <action-group name="action-portal-group-product-onsave">
+    <action name="action-group-product-onsave"/>
+    <action name="portal-action-product-validate-slug"/>
+  </action-group>
+
+  <action-validate name="portal-action-product-validate-slug">
+    <error message="Slug must be unique"
+      if="__repo__(PortalApp).all().filter('self.code = ?1 AND self.installed = ?2', 'shop', 'yes').count() > 0 &amp;&amp;
+      	((id != null &amp;&amp; __repo__(Product).all().filter('self.slug = ?1 AND (self.id != ?2)', slug, id).count() > 0) ||
+  		(id == null &amp;&amp; __repo__(Product).all().filter('self.slug = ?1', slug).count() > 0))"/>
+  </action-validate>
 
 </object-views>
