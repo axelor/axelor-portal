@@ -31,7 +31,8 @@
           <field name="createdByContact" canView="false" showIf="createdByContact"
             readonly="true"/>
           <field name="displayFinancialData" widget="boolean-switch"
-            help="To dispaly or hide financial data on customer side"/>
+            help="To dispaly or hide financial data on customer side" colSpan="3"/>
+          <field name="isInternal" widget="boolean-switch" colSpan="3"/>
         </panel>
       </insert>
     </extend>

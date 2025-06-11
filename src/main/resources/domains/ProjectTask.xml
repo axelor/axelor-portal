@@ -21,6 +21,7 @@
     <many-to-one ref="com.axelor.apps.base.db.Partner" name="createdByContact"
       title="Created by contact"/>
     <boolean name="displayFinancialData" title="Display financial data" default="false"/>
+    <boolean name="isInternal" title="Internal" default="true"/>
 
     <track>
       <field name="note"/>
