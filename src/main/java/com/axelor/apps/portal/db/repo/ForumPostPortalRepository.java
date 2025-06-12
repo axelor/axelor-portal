@@ -19,6 +19,7 @@
 package com.axelor.apps.portal.db.repo;
 
 import com.axelor.apps.portal.db.ForumPost;
+import com.axelor.apps.portal.db.PostAttachment;
 import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.inject.Beans;
 
@@ -40,5 +41,20 @@ public class ForumPostPortalRepository extends ForumPostRepository {
     }
 
     return post;
+  }
+
+  @Override
+  public ForumPost copy(ForumPost entity, boolean deep) {
+
+    ForumPost copiedForumPost = super.copy(entity, deep);
+    PostAttachmentRepository attachmentRepo = Beans.get(PostAttachmentRepository.class);
+
+    copiedForumPost.clearAttachmentList();
+    for (PostAttachment attachment : entity.getAttachmentList()) {
+      PostAttachment copiedAttachment = attachmentRepo.copy(attachment, deep);
+      copiedForumPost.addAttachmentListItem(copiedAttachment);
+    }
+
+    return copiedForumPost;
   }
 }

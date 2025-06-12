@@ -18,6 +18,7 @@
  */
 package com.axelor.apps.portal.db.repo;
 
+import com.axelor.apps.portal.db.Attachment;
 import com.axelor.apps.portal.db.PortalNews;
 import com.axelor.apps.portal.db.PortalNewsCategory;
 import com.axelor.apps.portal.service.NotificationService;
@@ -60,5 +61,20 @@ public class PortalNewsPortalRepository extends PortalNewsRepository {
     }
 
     return entity;
+  }
+
+  @Override
+  public PortalNews copy(PortalNews entity, boolean deep) {
+
+    PortalNews copiedNews = super.copy(entity, deep);
+    AttachmentRepository attachmentRepo = Beans.get(AttachmentRepository.class);
+
+    copiedNews.clearAttachmentList();
+    for (Attachment attachment : entity.getAttachmentList()) {
+      Attachment copiedAttachment = attachmentRepo.copy(attachment, deep);
+      copiedNews.addAttachmentListItem(copiedAttachment);
+    }
+
+    return copiedNews;
   }
 }
