@@ -10,13 +10,15 @@
     <string name="name"/>
     <string name="mainPriceSelect" title="Which is the main price to display ?"
       selection="main.price.select" default="at"/>
-    <string name="displayTwoPricesSelect" title="Display 2 prices : with and withou taxes ?"
+    <string name="displayTwoPricesSelect" title="Display 2 prices : with and without taxes ?"
       selection="display.two.prices.select"/>
     <string name="priceAfterLoginSelect" title="Price After Login"
       selection="price.after.login.select"/>
     <string name="ticketStatusChangeMethodSelect" title="Ticket status change method"
       selection="ticket.status.change.method.select"/>
     <string name="canPayInvoice" title="Can pay invoice?" selection="can.pay.invoice.select"/>
+    <string name="nonPublicEmailNotFoundMessage" large="true"
+      title="Registration error message for non public event" translatable="true"/>
 
     <string name="eventHeroTitle"/>
     <string name="eventHeroDescription" large="true"/>
@@ -43,10 +45,17 @@
     <string name="resourcesHeroOverlayColorSelect" selection="color.name.selection"/>
     <many-to-one name="resourcesHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
 
+    <string name="directoryHeroTitle"/>
+    <string name="directoryHeroDescription" large="true"/>
+    <string name="directoryHeroOverlayColorSelect" selection="color.name.selection"/>
+    <many-to-one name="directoryHeroBgImage" ref="com.axelor.meta.db.MetaFile"/>
+
+    <integer name="noMoreStockSelect" title="If no more stock"
+      selection="no.more.stock.select" default="3" nullable="true"/>
+    <decimal name="outOfStockQty" title="Out of stock qty"/>
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
-    <boolean name="displayOutOfStock" title="Display 'out of stock' for product"/>
 
     <boolean name="payInAdvance" title="Pay in advance"/>
     <boolean name="eSignature" title="E signature"/>
@@ -61,13 +70,37 @@
     <boolean name="allowOnlinePaymentForInvoices" title="Allow online payment for invoices"/>
     <boolean name="allowOnlinePaymentForEcommerce"
       title="Allow online payment for ecommerce"/>
-    <boolean name="allowGuestEventRegistartion" title="Allow guests to register to events"/>
+    <boolean name="allowGuestEventRegistration" title="Allow guests to register to events"/>
+    <boolean name="enableComment" default="true"/>
     <boolean name="enableNewsComment" default="true"/>
     <boolean name="enableEventComment" default="true"/>
 
+    <boolean name="isShowAllTickets" default="true" title="All tickets"/>
+    <boolean name="isShowMyTickets" default="true" title="My tickets"/>
+    <boolean name="isShowManagedTicket" default="true" title="Managed tickets"/>
+    <boolean name="isShowCreatedTicket" default="true" title="Created tickets"/>
+    <boolean name="isShowResolvedTicket" default="true" title="Resolved tickets"/>
+    <boolean name="isDisplayTicketParent" default="true" title="Display parent ticket"/>
+    <boolean name="isDisplayChildTicket" default="true" title="Display child ticket"/>
+    <boolean name="isDisplayRelatedTicket" default="true" title="Display related ticket"/>
+    <boolean name="isDisplayCancelBtn" default="true" title="Display cancel ticket button"/>
+    <boolean name="isDisplayCloseBtn" default="true" title="Display close ticket button"/>
+    <boolean name="isDisplayAssignmentBtn" default="true" title="Display assignment button"/>
+
+    <boolean name="canInviteMembers" title="Invite members"/>
+    <boolean name="isExistingContactsOnly" title="Only existing contacts"/>
     <boolean name="enableRecommendedNews" default="true"/>
     <boolean name="enableSocialMediaSharing" default="true"/>
+    <boolean name="isShowPublicationDate" title="Show publication date"/>
+    <boolean name="isShowPublicationTime" title="Show publication time"/>
+    <boolean name="isShowPublicationAuthor" title="Show publication author"/>
     <string name="socialMediaSelect" selection="social.media.select"/>
+
+    <boolean name="isDisplayContact" title="show contact"/>
+    <string name="contactName" title="Name"/>
+    <one-to-one name="contactEmailAddress" ref="com.axelor.message.db.EmailAddress"
+      title="Email"/>
+    <string name="contactPhone" title="Phone"/>
 
     <many-to-one ref="com.axelor.apps.base.db.Company" name="company"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalPaymentConfig"
@@ -75,6 +108,27 @@
 
     <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
       mappedBy="portalAppConfig"/>
+
+    <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate"
+      name="invitationTemplateList" title="Invitation templates" mappedBy="invitationPortalConfig"/>
+    <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate" name="otpTemplateList"
+      title="OTP templates" mappedBy="otpPortalConfig"/>
+    <many-to-one name="defaultStockLocation" title="Stock location"
+      ref="com.axelor.apps.stock.db.StockLocation"/>
+
+    <many-to-one ref="com.axelor.apps.base.db.Product" name="defaultEventProduct"
+      title="Default product for registration invoice"/>
+    <many-to-one ref="com.axelor.apps.account.db.PaymentMode"
+      name="defaultEventPaymentMode" title="Default payment mode for registration invoice"/>
+    <many-to-one ref="com.axelor.apps.account.db.PaymentCondition"
+      name="defaultEventPaymentCondition" title="Default payment condition for registration invoice"/>
+    <many-to-one ref="com.axelor.apps.base.db.Address" name="defaultInvoicingAddress"
+      title="Default invoicing address"/>
+
+    <many-to-many ref="com.axelor.meta.db.MetaField" name="ticketingFieldSet"
+      title="Fields for listing"/>
+    <many-to-many ref="com.axelor.meta.db.MetaField" name="ticketingFormFieldSet"
+      title="Fields for detailing"/>
 
     <extra-code>
     	<![CDATA[

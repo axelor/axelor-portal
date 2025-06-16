@@ -8,10 +8,17 @@
     <extend target="//panel[@name='tagsPanel']">
       <insert position="after">
         <panel name="portalPanel" sidebar="true">
+          <button onClick="save,action-portal-dms-file-method-update-children"
+            name="updateChildrenBtn" title="Apply to children"/>
           <field name="author"/>
-          <field name="isSharedFolder"/>
           <field name="workspaceSet" widget="TagSelect"/>
-          <field name="partnerCategorySet" widget="TagSelect"/>
+          <field name="isHomepage"/>
+          <field name="isPrivate"/>
+          <field name="permissionSelect"/>
+          <field name="colorSelect" widget="SingleSelect"/>
+          <field name="logoSelect"/>
+          <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
+          <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
           <field name="description"/>
         </panel>
       </insert>
@@ -22,12 +29,23 @@
     model="com.axelor.dms.db.DMSFile" extension="true">
     <extend target="//panel[@name='Overview']/*[last()]">
       <insert position="after">
-        <field name="isSharedFolder"/>
+        <button onClick="save,action-portal-dms-file-method-update-children"
+          name="updateChildrenBtn" title="Apply to children"/>
         <field name="workspaceSet" widget="TagSelect"/>
-        <field name="partnerCategorySet" widget="TagSelect"/>
+        <field name="isHomepage"/>
+        <field name="isPrivate"/>
+        <field name="permissionSelect"/>
+        <field name="colorSelect" widget="SingleSelect"/>
+        <field name="logoSelect" selection-in=""/>
+        <field name="partnerSet" widget="TagSelect" showIf="isPrivate"/>
+        <field name="partnerCategorySet" widget="TagSelect" showIf="isPrivate"/>
         <field name="description"/>
       </insert>
     </extend>
   </form>
+
+  <action-method name="action-portal-dms-file-method-update-children">
+    <call class="com.axelor.apps.portal.web.DMSFileController" method="updateChildren"/>
+  </action-method>
 
 </object-views>

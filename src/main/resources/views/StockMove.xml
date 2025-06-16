@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <form id="portal-stock-move-form" name="stock-move-form" title="Stock move"
+    model="com.axelor.apps.stock.db.StockMove" extension="true">
+    <extend target="/">
+      <attribute name="onNew" value="action-portal-group-stockmove-onnew"/>
+    </extend>
+    <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
+      <insert position="after">
+        <panel name="portalPanel" title="Portal">
+          <field name="portalWorkspace"/>
+        </panel>
+      </insert>
+    </extend>
+  </form>
+
+  <action-attrs name="action-stockmove-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+  <action-group name="action-portal-group-stockmove-onnew">
+    <action name="action-group-stock-stockmove-onnew"/>
+    <action name="action-stock-move-attrs-fill-ctx"/>
+    <action name="action-stockmove-attrs-set-workspace"/>
+  </action-group>
+
+</object-views>

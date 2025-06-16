@@ -5,13 +5,59 @@
 
   <form id="portal-sale-order-form" name="sale-order-form" title="Sale order"
     model="com.axelor.apps.sale.db.SaleOrder" extension="true">
+    <extend target="/">
+      <attribute name="onNew"
+        value="action-sale-order-method-onnew,action-saleorder-attrs-set-workspace"/>
+    </extend>
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
           <field name="portalWorkspace"/>
+          <field name="orderReport" widget="binary-link"
+            showIf="statusSelect == 2 || statusSelect == 3"/>
         </panel>
       </insert>
     </extend>
   </form>
+
+  <action-attrs name="action-saleorder-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+  <action-group name="action-group-sale-order-finalize-quotation"
+    id="portal-action-group-sale-order-finalize-quotation">
+    <action name="save"/>
+    <action name="action-sale-order-method-check-before-finalize"/>
+    <action name="action-sale-order-method-finalize-quotation"/>
+    <action name="portal-action-sale-order-method-attach-report"/>
+  </action-group>
+
+  <action-group name="action-sale-group-confirmed"
+    id="portal-action-sale-group-confirmed">
+    <action name="action-sale-order-method-check-before-confirm"/>
+    <action if="!incoterm &amp;&amp; __config__.app.getApp('stock')?.isIncotermEnabled"
+      name="action-sale-order-method-fill-incoterm-if-required"/>
+    <action name="save"/>
+    <action
+      if="__config__.app.isApp('business-project') &amp;&amp; __config__.app.getApp('business-project').getAutomaticProject()"
+      name="action-business-project-method-generate-project"/>
+    <action name="action-sale-order-method-confirm"/>
+    <action name="portal-action-sale-order-method-attach-report"/>
+  </action-group>
+
+  <action-group id="portal-action-group-sale-order-validate-changes"
+    name="action-group-sale-order-validate-changes">
+    <action name="action-supplychain-saleorder-onsave"/>
+    <action name="save"/>
+    <action name="action-method-sale-order-validate-changes"/>
+    <action
+      if="__config__.app.isApp('supplychain') &amp;&amp; __config__.app.getApp('supplychain')?.customerStockMoveGenerationAuto "
+      name="action-sale-order-method-notify-stock-move-created"/>
+    <action name="portal-action-sale-order-method-attach-report"/>
+  </action-group>
+
+  <action-method name="portal-action-sale-order-method-attach-report">
+    <call class="com.axelor.apps.portal.web.SaleOrderPortalController" method="attachReport"/>
+  </action-method>
 
 </object-views>

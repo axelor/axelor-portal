@@ -30,4 +30,16 @@ public final class PortalExceptionMessage {
   public static final String COMPANY_MISSING = /*$$(*/ "Company not found" /*)*/;
 
   public static final String PRODUCT_LIST_EMPTY = /*$$(*/ "Products empty" /*)*/;
+
+  public static final String INVOICE_NOT_FOUND = /*$$(*/ "Invoice not found" /*)*/;
+
+  public static final String EVENT_MISSING = /*$$(*/ "Event not found" /*)*/;
+  public static final String WORKSPACE_MISSING = /*$$(*/ "Workspace not found" /*)*/;
+  public static final String PARTICIPANT_MISSING = /*$$(*/ "Participant not found" /*)*/;
+  public static final String INVOICE_EXISTS = /*$$(*/
+      "Invoice already created for this registration" /*)*/;
+  public static final String INVALID_INVOICE = /*$$(*/ "Invoice is not valid for payment" /*)*/;
+  public static final String DMS_FILE_DETAILS_UPDATED = /*$$(*/ "File details updated" /*)*/;
+
+  public static final String NOT_UNIQUE_SLUG = /*$$(*/ "Slug must be unique" /*)*/;
 }

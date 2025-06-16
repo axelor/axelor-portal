@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.1.xsd">
+
+  <form name="app-goovee-portal-config-form" title="App goovee portal"
+    model="com.axelor.studio.db.AppGooveePortal" canDelete="false" canNew="false" width="large">
+    <panel>
+      <field name="registrationTemplate" domain="self.metaModel.name = 'Registration'"/>
+      <field name="notificationWebhookUrl" widget="url"/>
+    </panel>
+  </form>
+
+</object-views>

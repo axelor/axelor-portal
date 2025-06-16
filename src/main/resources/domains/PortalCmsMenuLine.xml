@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="PortalCmsMenuLine">
+    <string name="title" namecolumn="true"/>
+    <string name="externalPage"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsPage" name="page"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsMenu" name="menu"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalCmsMenuLine" name="parentMenu"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalCmsMenuLine" name="subMenuList"
+      mappedBy="parentMenu" title="Sub menus"/>
+
+    <entity-listener class="com.axelor.apps.portal.db.repo.PortalCmsMenuLineListner"/>
+  </entity>
+
+</domain-models>

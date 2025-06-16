@@ -7,15 +7,27 @@
 
   <entity name="Partner">
 
-    <string name="portalPassword" title="Password" encrypted="true"/>
-    <boolean name="isRegisteredOnPortal"/>
+    <string name="portalPassword" title="Password"/>
+    <string name="createdFromSelect" title="Created from"
+      selection="partner.created.from.select"/>
+    <string name="linkedinLink"/>
+    <string name="portalCompanyName" title="Company"/>
+    <boolean name="isAllowedToRegister" title="Is allowed to register"/>
+    <boolean name="isActivatedOnPortal"/>
+    <boolean name="isPublicPartner" title="Portal public"/>
+    <boolean name="canSubscribeNoPublicEvent" title="Subscribe to no public events"/>
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"
       ref="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"/>
     <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
       name="defaultWorkspace" title="Default workspace"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalUserPreference"
+      name="portalUserPreferenceList" mappedBy="partner" title="Notification preferences"/>
 
+    <!-- MATTERMOST -->
+    <string name="mattermostUserId" title="Mattermost channel id" unique="true"/>
+    <entity-listener class="com.axelor.apps.portal.db.repo.PartnerListener"/>
   </entity>
 
 </domain-models>

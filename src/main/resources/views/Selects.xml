@@ -14,7 +14,8 @@
   </selection>
 
   <selection name="allow.registration.select">
-    <option value="yes">Yes</option>
+    <option value="yesForAll">Yes for all</option>
+    <option value="yesForAOS">Yes if registered on AOS</option>
     <option value="no">No</option>
   </selection>
 
@@ -36,6 +37,7 @@
   <selection name="payment.config.type.select">
     <option value="paypal">Paypal</option>
     <option value="stripe">Stripe</option>
+    <option value="paybox">Paybox</option>
   </selection>
 
   <selection name="main.price.select">
@@ -96,6 +98,130 @@
     <option value="twitter">Twitter</option>
     <option value="instagram">Instagram</option>
     <option value="whatsapp">Wjhatsapp</option>
+  </selection>
+
+  <selection name="project.chat.visibility" id="portal.project.chat.visibility">
+    <option value="3" order="3">Customer chat</option>
+  </selection>
+
+  <selection name="dms.file.permission.select">
+    <option value="write">Can write</option>
+    <option value="upload">Can upload</option>
+  </selection>
+
+  <selection name="partner.created.from.select">
+    <option value="backend">Back-end</option>
+    <option value="portal">Portal</option>
+  </selection>
+
+  <selection name="no.more.stock.select">
+    <option value="1">Allow to buy and don't show message "out of stock"</option>
+    <option value="2">Allow to buy and show message to alert buyer</option>
+    <option value="3">Don't allow to buy and hide product</option>
+    <option value="4">Don't allow to buy and show "out of stock"</option>
+  </selection>
+
+  <selection name="portal.icon.select">
+    <option value="OutlinePerson">Outline Person</option>
+  </selection>
+
+
+  <selection name="portal.event.status.select">
+    <option value="0">Draft</option>
+    <option value="1">Published</option>
+  </selection>
+
+  <selection name="message.related.to.select" id="portal.message.related.to.select">
+    <option value="com.axelor.apps.portal.db.PortalEvent">Portal event</option>
+    <option value="com.axelor.apps.portal.db.PortalNews">Portal news</option>
+    <option value="com.axelor.apps.portal.db.ForumPost">Portal forum post</option>
+    <option value="com.axelor.apps.project.db.ProjectTask">Project task</option>
+    <option value="com.axelor.dms.db.DMSFile">DMS file</option>
+  </selection>
+
+  <selection name="portal.cms.page.status.select">
+    <option value="0">Draft</option>
+    <option value="1">Published</option>
+  </selection>
+
+  <selection name="portal.dms.file.logo.select">
+    <option value="md-LocationOn">md-LocationOn</option>
+    <option value="md-BakeryDining">md-BakeryDining</option>
+    <option value="md-VpnKey">md-VpnKey</option>
+    <option value="md-BusinessCenter">md-BusinessCenter</option>
+    <option value="md-Soap">md-Soap</option>
+    <option value="md-EmojiEvents">md-EmojiEvents</option>
+    <option value="md-ArrowOutward">md-ArrowOutward</option>
+    <option value="md-ArrowRightAlt">md-ArrowRightAlt</option>
+    <option value="md-Article">md-Article</option>
+    <option value="md-AspectRatio">md-AspectRatio</option>
+    <option value="md-Assessment">md-Assessment</option>
+    <option value="md-AssignmentAdd">md-AssignmentAdd</option>
+    <option value="md-AssignmentInd">md-AssignmentInd</option>
+    <option value="md-AssignmentLate">md-AssignmentLate</option>
+    <option value="md-AssignmentReturn">md-AssignmentReturn</option>
+    <option value="md-AssignmentReturned">md-AssignmentReturned</option>
+    <option value="md-AssignmentTurnedIn">md-AssignmentTurnedIn</option>
+    <option value="md-Assignment">md-Assignment</option>
+    <option value="md-AssuredWorkload">md-AssuredWorkload</option>
+    <option value="md-Autorenew">md-Autorenew</option>
+    <option value="md-BackupTable">md-BackupTable</option>
+    <option value="md-Backup">md-Backup</option>
+    <option value="md-Balance">md-Balance</option>
+    <option value="md-BarcodeReader">md-BarcodeReader</option>
+    <option value="md-BatchPrediction">md-BatchPrediction</option>
+    <option value="md-BookOnline">md-BookOnline</option>
+    <option value="md-Book">md-Book</option>
+    <option value="md-BookmarkAdd">md-BookmarkAdd</option>
+    <option value="md-BookmarkAdded">md-BookmarkAdded</option>
+    <option value="md-BookmarkBorder">md-BookmarkBorder</option>
+    <option value="md-BookmarkRemove">md-BookmarkRemove</option>
+    <option value="md-Bookmark">md-Bookmark</option>
+    <option value="md-Bookmarks">md-Bookmarks</option>
+    <option value="md-BrowseGallery">md-BrowseGallery</option>
+    <option value="md-BugReport">md-BugReport</option>
+    <option value="md-BuildCircle">md-BuildCircle</option>
+    <option value="md-Build">md-Build</option>
+    <option value="md-Cached">md-Cached</option>
+    <option value="md-CalendarMonth">md-CalendarMonth</option>
+    <option value="md-CalendarToday">md-CalendarToday</option>
+    <option value="md-CalendarViewDay">md-CalendarViewDay</option>
+    <option value="md-CalendarViewMonth">md-CalendarViewMonth</option>
+    <option value="md-CalendarViewWeek">md-CalendarViewWeek</option>
+    <option value="md-CameraEnhance">md-CameraEnhance</option>
+    <option value="md-CancelScheduleSend">md-CancelScheduleSend</option>
+    <option value="md-CardGiftcard">md-CardGiftcard</option>
+    <option value="md-CardMembership">md-CardMembership</option>
+    <option value="md-CardTravel">md-CardTravel</option>
+    <option value="md-ChangeHistory">md-ChangeHistory</option>
+    <option value="md-CheckCircleOutline">md-CheckCircleOutline</option>
+    <option value="md-CheckCircle">md-CheckCircle</option>
+    <option value="md-ChromeReaderMode">md-ChromeReaderMode</option>
+    <option value="md-CircleNotifications">md-CircleNotifications</option>
+    <option value="md-Class">md-Class</option>
+    <option value="md-CloseFullscreen">md-CloseFullscreen</option>
+    <option value="md-CodeOff">md-CodeOff</option>
+    <option value="md-Code">md-Code</option>
+    <option value="md-CommentBank">md-CommentBank</option>
+    <option value="md-Commit">md-Commit</option>
+    <option value="md-Commute">md-Commute</option>
+    <option value="md-CompareArrows">md-CompareArrows</option>
+    <option value="md-Compress">md-Compress</option>
+    <option value="md-ContactPage">md-ContactPage</option>
+    <option value="md-ContactSupport">md-ContactSupport</option>
+    <option value="md-Contactless">md-Contactless</option>
+    <option value="md-Copyright">md-Copyright</option>
+    <option value="md-CreditCardOff">md-CreditCardOff</option>
+    <option value="md-CreditCard">md-CreditCard</option>
+    <option value="md-Css">md-Css</option>
+    <option value="md-CurrencyExchange">md-CurrencyExchange</option>
+    <option value="md-Dangerous">md-Dangerous</option>
+  </selection>
+
+  <selection name="cms.component.type.select">
+    <option value="1">Block</option>
+    <option value="2">Top menu</option>
+    <option value="3">Left/Right menu</option>
   </selection>
 
 </object-views>

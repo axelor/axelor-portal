@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="EmailTemplate">
+
+    <many-to-one ref="com.axelor.message.db.Template" name="template"/>
+    <many-to-one ref="com.axelor.apps.base.db.Localization" name="localization"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalAppConfig" name="otpPortalConfig"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalAppConfig"
+      name="invitationPortalConfig"/>
+
+    <unique-constraint columns="localization,otpPortalConfig"/>
+    <unique-constraint columns="localization,invitationPortalConfig"/>
+
+  </entity>
+
+</domain-models>

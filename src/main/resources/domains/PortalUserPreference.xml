@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="PortalUserPreference">
+
+    <many-to-one name="app" ref="com.axelor.apps.portal.db.PortalApp" title="App"/>
+    <boolean name="activateNotification"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalNewsNotificationConfig"
+      name="newsNotificationConfigs" title="Notification config" mappedBy="portalUserPreference"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalEventNotificationConfig"
+      name="eventNotificationConfigs" title="Notification config" mappedBy="portalUserPreference"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalResourceNotificationConfig"
+      name="resourceNotificationConfigs" title="Notification config" mappedBy="portalUserPreference"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalForumNotificationConfig"
+      name="forumNotificationConfigs" title="Notification config" mappedBy="portalUserPreference"/>
+
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="partner"/>
+
+  </entity>
+
+</domain-models>

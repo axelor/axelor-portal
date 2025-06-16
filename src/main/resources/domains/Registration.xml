@@ -8,6 +8,7 @@
   <entity name="Registration">
 
     <many-to-one name="event" ref="com.axelor.apps.portal.db.PortalEvent"/>
+    <many-to-one ref="com.axelor.apps.account.db.Invoice" name="invoice"/>
     <one-to-many ref="com.axelor.apps.portal.db.PortalParticipant"
       name="participantList" title="Event participants" mappedBy="registration"/>
 

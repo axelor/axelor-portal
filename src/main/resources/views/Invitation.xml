@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-invitation-grid" title="Portal invitations"
+    model="com.axelor.apps.portal.db.Invitation">
+    <field name="emailAddress"/>
+    <field name="partner"/>
+    <field name="workspace"/>
+    <field name="contactAppPermissionList" widget="TagSelect"/>
+  </grid>
+
+  <form name="portal-invitation-form" title="Portal invitation"
+    model="com.axelor.apps.portal.db.Invitation" width="large"
+    onNew="action-invitation-attrs-set-workspace">
+    <panel name="mainPanel">
+      <field name="emailAddress">
+        <editor x-viewer="true" x-show-titles="false">
+          <field name="address" colSpan="12" widget="email"/>
+        </editor>
+      </field>
+      <field name="partner"/>
+      <field name="workspace"/>
+      <field name="contactAppPermissionList" colSpan="12" widget="TagSelect"/>
+    </panel>
+  </form>
+
+  <action-attrs name="action-invitation-attrs-set-workspace">
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+</object-views>

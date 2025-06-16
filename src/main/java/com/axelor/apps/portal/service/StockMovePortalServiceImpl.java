@@ -22,11 +22,15 @@ import com.axelor.apps.account.db.repo.FixedAssetRepository;
 import com.axelor.apps.account.service.PfpService;
 import com.axelor.apps.account.service.app.AppAccountService;
 import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.db.PrintingTemplate;
 import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.base.service.ProductCompanyService;
 import com.axelor.apps.base.service.UnitConversionService;
 import com.axelor.apps.base.service.app.AppBaseService;
+import com.axelor.apps.base.service.printing.template.PrintingTemplatePrintService;
+import com.axelor.apps.base.service.printing.template.PrintingTemplateService;
+import com.axelor.apps.base.service.printing.template.model.PrintingGenFactoryContext;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.purchase.db.repo.PurchaseOrderRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
@@ -46,13 +50,27 @@ import com.axelor.apps.supplychain.service.PartnerSupplychainService;
 import com.axelor.apps.supplychain.service.ReservedQtyService;
 import com.axelor.apps.supplychain.service.StockMoveLineServiceSupplychain;
 import com.axelor.apps.supplychain.service.app.AppSupplychainService;
+import com.axelor.db.EntityHelper;
+import com.axelor.dms.db.DMSFile;
+import com.axelor.dms.db.repo.DMSFileRepository;
+import com.axelor.i18n.I18n;
+import com.axelor.inject.Beans;
+import com.axelor.meta.MetaFiles;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import org.apache.commons.collections.CollectionUtils;
 
 public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
 
   protected StockLocationUtilsService stockLocationUtilsService;
+  protected PrintingTemplateService printingTemplateService;
+  protected PrintingTemplatePrintService printingTemplatePrintService;
+
+  protected DMSFileRepository dmsFileRepo;
+  protected MetaFiles metaFiles;
 
   @Inject
   public StockMovePortalServiceImpl(
@@ -78,7 +96,11 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
       PfpService pfpService,
       SaleOrderConfirmService saleOrderConfirmService,
       StockMoveLineServiceSupplychain stockMoveLineServiceSupplychain,
-      StockLocationUtilsService stockLocationUtilsService) {
+      StockLocationUtilsService stockLocationUtilsService,
+      PrintingTemplateService printingTemplateService,
+      PrintingTemplatePrintService printingTemplatePrintService,
+      DMSFileRepository dmsFileRepo,
+      MetaFiles metaFiles) {
     super(
         stockMoveLineService,
         stockMoveToolService,
@@ -103,6 +125,17 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
         saleOrderConfirmService,
         stockMoveLineServiceSupplychain);
     this.stockLocationUtilsService = stockLocationUtilsService;
+    this.printingTemplateService = printingTemplateService;
+    this.printingTemplatePrintService = printingTemplatePrintService;
+    this.dmsFileRepo = dmsFileRepo;
+    this.metaFiles = metaFiles;
+  }
+
+  @Override
+  public void plan(StockMove stockMove) throws AxelorException {
+
+    super.plan(stockMove);
+    printStockMove(stockMove, true);
   }
 
   @Override
@@ -110,7 +143,55 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
 
     String seq = super.realize(stockMove);
     updateProductLeftQty(stockMove);
+
+    DMSFile report =
+        dmsFileRepo
+            .all()
+            .filter(
+                "self.relatedId = :stockMoveId AND relatedModel = :model AND COALESCE(isDirectory, false) IS FALSE")
+            .bind("stockMoveId", stockMove.getId())
+            .bind("model", StockMove.class.getName())
+            .order("-createdOn")
+            .fetchOne();
+    if (report == null) {
+      printStockMove(stockMove, true);
+    } else {
+      File reportFile = printStockMove(stockMove, true);
+      updateReport(stockMove, report, reportFile);
+    }
+
     return seq;
+  }
+
+  protected File printStockMove(StockMove stockMove, Boolean toAttach) throws AxelorException {
+
+    PrintingGenFactoryContext factoryContext =
+        new PrintingGenFactoryContext(EntityHelper.getEntity(stockMove));
+    PrintingTemplate printingTemplate =
+        printingTemplateService
+            .getActivePrintingTemplates(StockMove.class.getName())
+            .iterator()
+            .next();
+    String fileName =
+        String.format(
+            "%s-%s-%s",
+            stockMove.getStockMoveSeq(),
+            I18n.get("Customer delivery"),
+            Beans.get(AppBaseService.class)
+                .getTodayDate(stockMove.getCompany())
+                .format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+
+    return printingTemplatePrintService.getPrintFile(
+        printingTemplate, factoryContext, fileName, toAttach);
+  }
+
+  @Transactional
+  public void updateReport(StockMove stockMove, DMSFile report, File reportFile) {
+    try {
+      report.setMetaFile(metaFiles.upload(reportFile));
+      dmsFileRepo.save(report);
+    } catch (IOException e) {
+    }
   }
 
   @Transactional

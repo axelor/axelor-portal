@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <form name="address-form" id="portal-address-form" title="Address"
+    model="com.axelor.apps.base.db.Address" extension="true">
+    <extend target="//panel-include[@view='incl-address-main-panel-form']">
+      <insert position="before">
+        <panel name="nameDetailPanel" colSpan="12">
+          <field name="firstName"/>
+          <field name="lastName"/>
+          <field name="companyName" colSpan="12"/>
+        </panel>
+      </insert>
+    </extend>
+  </form>
+
+</object-views>

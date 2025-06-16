@@ -18,21 +18,105 @@
  */
 package com.axelor.apps.portal.db.repo;
 
-import com.axelor.apps.project.db.repo.MailMessageProjectRepository;
+import com.axelor.app.AppSettings;
+import com.axelor.apps.base.db.MailMessageFile;
+import com.axelor.apps.base.service.exception.TraceBackService;
+import com.axelor.apps.portal.service.MailMessagePortalService;
+import com.axelor.apps.project.db.ProjectTask;
+import com.axelor.apps.project.db.repo.ProjectTaskRepository;
+import com.axelor.inject.Beans;
 import com.axelor.mail.db.MailMessage;
+import com.axelor.mail.db.repo.MailMessageRepository;
+import com.axelor.meta.db.MetaFile;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.PersistenceException;
+import org.apache.commons.collections.CollectionUtils;
 
-public class MailMessagePortalRepository extends MailMessageProjectRepository {
+public class MailMessagePortalRepository extends MailMessageRepository {
 
   @Override
   public MailMessage save(MailMessage entity) {
 
     setRelatedRecord(entity, entity.getParentMailMessage());
 
-    if (entity.getRelatedModel() != null) {
-      entity = super.save(entity);
+    if (entity.getRelatedModel() != null
+        && ProjectTask.class.getName().equals(entity.getRelatedModel())) {
+
+      try {
+        ProjectTask projectTask =
+            Beans.get(ProjectTaskRepository.class).find(entity.getRelatedId());
+        entity = Beans.get(MailMessagePortalService.class).computeMailMessage(projectTask, entity);
+        clearProjectTaskTempFields(projectTask);
+      } catch (Exception e) {
+        TraceBackService.traceExceptionFromSaveMethod(e);
+        throw new PersistenceException(e.getMessage(), e);
+      }
     }
 
-    return entity;
+    return super.save(entity);
+  }
+
+  @Override
+  public Map<String, Object> populate(Map<String, Object> json, Map<String, Object> context) {
+
+    MailMessage mailMessage = find((Long) json.get("id"));
+
+    List<MailMessageFile> mailMessageFileList = mailMessage.getMailMessageFileList();
+
+    StringBuilder sb = new StringBuilder();
+
+    if (CollectionUtils.isNotEmpty(mailMessageFileList)) {
+      String baseURL = AppSettings.get().getBaseURL();
+      String urlFormat = "%s/ws/rest/com.axelor.meta.db.MetaFile/%d/content/download?v=%d";
+
+      for (MailMessageFile mailMessageFile : mailMessageFileList) {
+        MetaFile attachmentFile = mailMessageFile.getAttachmentFile();
+
+        if (attachmentFile != null) {
+          sb.append("<li> ")
+              .append("<a href='")
+              .append(
+                  String.format(
+                      urlFormat, baseURL, attachmentFile.getId(), attachmentFile.getVersion()))
+              .append("'>")
+              .append(attachmentFile.getFileName())
+              .append("</a></li>");
+        }
+      }
+    }
+
+    json.put("$mailMessageFiles", sb.toString());
+
+    return super.populate(json, context);
+  }
+
+  @Override
+  public void remove(MailMessage entity) {
+
+    List<MailMessage> mailMessageList =
+        all()
+            .filter(
+                "self.id != ?1 and self.relatedModel = ?2 and self.relatedId =?3",
+                entity.getId(),
+                entity.getRelatedModel(),
+                entity.getRelatedId())
+            .fetch();
+
+    if (CollectionUtils.isNotEmpty(mailMessageList)) {
+      mailMessageList.stream()
+          .filter(mailMessage -> entity.equals(mailMessage.getParentMailMessage()))
+          .peek(mailMessage -> mailMessage.setParentMailMessage(null))
+          .forEach(this::save);
+    }
+
+    super.remove(entity);
+  }
+
+  protected void clearProjectTaskTempFields(ProjectTask projectTask) {
+
+    projectTask.setNote("");
+    projectTask.clearMailMessageFileList();
   }
 
   protected void setRelatedRecord(MailMessage mailMessage, MailMessage parent) {

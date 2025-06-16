@@ -5,6 +5,14 @@
 
   <form name="product-category-form" id="portal-product-category-form" title="Product category"
     model="com.axelor.apps.base.db.ProductCategory" extension="true">
+    <extend target="/">
+      <attribute name="onNew" value="portal-action-product-category-group-onnew"/>
+      <attribute name="onLoad" value="portal-action-product-category-group-onload"/>
+      <attribute name="onSave" value="portal-action-product-category-validate-slug"/>
+    </extend>
+    <extend target="//field[@name='name']">
+      <attribute name="onChange" value="action-portal-product-category-record-assign-slug"/>
+    </extend>
     <extend target="//panel[@name='mainPanel']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal" colSpan="12">
@@ -16,16 +24,45 @@
             <field name="filterOnBrand" colSpan="3"/>
             <field name="isFeatured" colSpan="3"/>
             <field name="isPrivate" colSpan="3"/>
+            <field name="slug" pattern="^[a-z0-9-]*$"/>
             <field name="productList" colSpan="12" widget="TagSelect"/>
             <field name="productVariantAttrSet" widget="TagSelect" colSpan="12"/>
           </panel>
         </panel>
-        <panel name="visibilityPanel">
-          <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
-          <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+        <panel name="visibilityPanel" colSpan="12" itemSpan="12">
+          <field name="partnerSet" showIf="isPrivate"/>
+          <field name="partnerCategorySet" showIf="isPrivate"/>
         </panel>
       </insert>
     </extend>
   </form>
+
+  <action-attrs name="action-product-category-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+  <action-record name="action-portal-product-category-record-assign-slug"
+    model="com.axelor.apps.base.db.ProductCategory">
+    <field name="slug"
+      expr="eval: name?.toLowerCase()?.replaceAll(/[^a-z0-9]+/, '-').replaceAll(/(^-+|-+$)/, '')"/>
+  </action-record>
+
+  <action-group name="portal-action-product-category-group-onnew">
+    <action name="action-attrs-product-category-form-set-hidden"/>
+    <action name="action-product-category-attrs-set-workspace"/>
+    <action name="portal-action-attrs-portal-app-required-slug"/>
+  </action-group>
+
+  <action-group name="portal-action-product-category-group-onload">
+    <action name="action-attrs-product-category-form-set-hidden"/>
+    <action name="action-attrs-product-category-manage-slug"/>
+  </action-group>
+
+  <action-validate name="portal-action-product-category-validate-slug">
+    <error message="Slug must be unique"
+      if="__repo__(PortalApp).all().filter('self.code = ?1 AND self.installed = ?2', 'shop', 'yes').count() > 0 &amp;&amp;
+      	((id != null &amp;&amp; __repo__(ProductCategory).all().filter('self.slug = ?1 AND (self.id != ?2)', slug, id).count() > 0) ||
+  		(id == null &amp;&amp; __repo__(ProductCategory).all().filter('self.slug = ?1', slug).count() > 0))"/>
+  </action-validate>
 
 </object-views>

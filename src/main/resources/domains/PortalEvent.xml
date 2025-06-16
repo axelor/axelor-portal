@@ -9,24 +9,48 @@
 
     <string name="eventTitle" title="Title" namecolumn="true"/>
     <string name="eventPlace"/>
-    <string name="eventLink"/>
     <string name="eventDescription" large="true"/>
-    <integer name="eventDegressiveNumberPartcipant"/>
+    <string name="slug" unique="true" copy="false"/>
+    <integer name="maxParticipantPerEvent" min="1" default="1"
+      title="Maximum participant per event"/>
+    <integer name="maxParticipantPerRegistration" min="1" default="1"
+      title="Maximum participant per registration"/>
+    <integer name="statusSelect" selection="portal.event.status.select" title="Status"/>
+    <decimal name="defaultPrice" min="0" title="Price"/>
     <boolean name="eventAllDay"/>
     <boolean name="eventAllowRegistration"/>
     <boolean name="eventAllowMultipleRegistrations"/>
-    <boolean name="eventVisibility" default="true"/>
     <boolean name="isPrivate" title="Private"/>
+    <boolean name="isPublic" title="Public"/>
+    <boolean name="isLoginNotNeeded" title="Login not needed"/>
+    <boolean name="isHidden" title="Hidden"/>
+    <datetime name="registrationDeadlineDateTime" title="Registration deadline"/>
     <datetime name="eventStartDateTime" title="Event start date"/>
     <datetime name="eventEndDateTime" title="Event end date"/>
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventImage"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="eventThumbnailImage"/>
     <many-to-one ref="com.axelor.apps.base.db.Product" name="eventProduct"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
+      title="Workspace"/>
+    <one-to-many ref="com.axelor.apps.portal.db.Registration" name="registrationList"
+      mappedBy="event" title="Registrations"/>
+    <many-to-many ref="com.axelor.meta.db.MetaJsonField" name="additionalFieldSet"
+      title="Additional fields"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalEventFacility" name="facilityList"
+      title="Facilities" mappedBy="event"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalEventCategory"
       name="eventCategorySet" title="Event categories"/>
     <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
       title="Partners"/>
     <many-to-many name="partnerCategorySet"
       ref="com.axelor.apps.base.db.PartnerCategory" title="Partner categories"/>
+
+    <extra-code>
+      <![CDATA[
+        public static final int STATUS_DRAFT = 0;
+        public static final int STATUS_PUBLISHED = 1;
+      ]]>
+    </extra-code>
 
   </entity>
 

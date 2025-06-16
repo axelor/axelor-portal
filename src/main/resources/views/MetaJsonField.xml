@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.1.xsd">
+
+  <grid name="json-field-portal-grid" title="Fields" model="com.axelor.meta.db.MetaJsonField"
+    orderBy="model,sequence" edit-icon="true">
+    <field name="title"/>
+    <field name="sequence" hidden="true"/>
+    <field name="name"/>
+    <field name="type"/>
+    <field name="model" hidden="true"/>
+    <field name="modelField" hidden="true"/>
+    <field if="__config__.app?.getApp('studio')?.getEnableStudioApp()" name="studioApp"
+      hidden="true"/>
+  </grid>
+
+  <form name="json-field-portal-form" title="Custom field"
+    model="com.axelor.meta.db.MetaJsonField" onNew="action-meta-json-field-record-fill-model"
+    onSave="save,action-meta-json-field-record-fill-show-if,save">
+    <panel title="Overview">
+      <field name="name"
+        onChange="action-studio-meta-json-model-name-onchange-record,action-studio-meta-json-field-record-name"/>
+      <field name="type" selection-in="['string', 'boolean']"
+        onChange="action-json-field-record-set-visible-in-grid"/>
+      <field name="title" required="true"/>
+      <field name="defaultValue"/>
+      <field name="help" colSpan="12"/>
+      <field name="sequence" hidden="true"/>
+      <field name="columnSequence" hidden="true"/>
+      <field name="model" widget="ref-text"
+        x-domain="self.metaFields.json = true AND self.fullName NOT LIKE 'com.axelor.meta.db%'"
+        x-target-name="fullName" x-target="com.axelor.meta.db.MetaModel" hidden="true"/>
+      <field name="modelField" widget="ref-text"
+        x-domain="self.json = true AND self.metaModel.fullName = :model" x-target-name="name"
+        x-target="com.axelor.meta.db.MetaField" hidden="true"/>
+    </panel>
+    <panel-tabs hidden="true">
+      <panel title="Options">
+        <field name="minSize" title="Min" showIf="type.match('string|integer|decimal')"/>
+        <field name="maxSize" title="Max" showIf="type.match('string|integer|decimal')"/>
+        <field name="precision" showIf="type === 'decimal'"/>
+        <field name="scale" showIf="type === 'decimal'"/>
+        <field name="regex" showIf="type === 'string'" colSpan="12"/>
+      </panel>
+      <panel title="Conditions" itemSpan="12">
+        <field name="showIf" widget="code-editor" x-height="25" x-code-syntax="javascript"
+          hidden="true"/>
+      </panel>
+    </panel-tabs>
+    <panel title="Options" sidebar="true" itemSpan="12">
+      <field name="required" widget="inline-checkbox"/>
+      <field name="readonly" widget="inline-checkbox" hidden="true"/>
+      <field name="visibleInGrid" widget="inline-checkbox" hidden="true"/>
+      <field name="isVisibleInPortal" widget="inline-checkbox"
+        if="__config__.app.isApp('goovee-portal')"/>
+    </panel>
+    <panel-mail name="mailPanel">
+      <mail-messages limit="4"/>
+    </panel-mail>
+  </form>
+
+  <form name="json-field-form-base" id="portal-json-field-form-base" title="Custom field"
+    model="com.axelor.meta.db.MetaJsonField" extension="true">
+    <extend target="//field[@name='visibleInGrid']">
+      <insert position="after">
+        <field name="isVisibleInPortal" widget="inline-checkbox"
+          if="__config__.app.isApp('goovee-portal')"/>
+      </insert>
+    </extend>
+  </form>
+
+  <action-record name="action-meta-json-field-record-fill-model"
+    model="com.axelor.meta.db.MetaJsonField">
+    <field name="model" expr="eval: 'com.axelor.apps.portal.db.PortalParticipant'"/>
+    <field name="modelField" expr="eval: 'contactAttrs'"/>
+  </action-record>
+
+  <action-record name="action-meta-json-field-record-fill-show-if"
+    model="com.axelor.meta.db.MetaJsonField">
+    <field name="showIf"
+      expr="eval: 'Array.from($record.$eventAdditionalFieldsSet).map(additionalField => additionalField.id).some(fieldId => fieldId == ' + id + ') || Array.from($record.$subscriptionAdditionalFieldsSet).map(additionalField => additionalField.id).some(fieldId => fieldId == ' + id + ')'"/>
+  </action-record>
+
+</object-views>

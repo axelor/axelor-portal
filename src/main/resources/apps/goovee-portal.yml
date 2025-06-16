@@ -1,7 +1,7 @@
 ---
 name: Goovee portal
 code: goovee-portal
-typeSelect: addons
+typeSelect: standard
 installOrder: 2370
 description: |
    Portal configuration
@@ -10,6 +10,7 @@ modules:
    axelor-portal
 dependsOn:
   - production
-  - project
+  - business-support
   - helpdesk
+  - mattermost
 sequence: 57

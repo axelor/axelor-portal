@@ -8,8 +8,11 @@ if(!file("../../gradle/style.gradle").exists()) {
 }
 
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(11)
+  }
+}
 
 group = "com.axelor.apps.enterprise"
 
@@ -18,13 +21,16 @@ axelor {
 	description "Axelor Portal Module"
 }
 
-ext.aosVersion = '8.2.0-SNAPSHOT'
+ext.aosVersion = '8.3.1'
 
 dependencies {
 
   	api "com.axelor.apps:axelor-production:${aosVersion}"
-  	api "com.axelor.apps:axelor-project:${aosVersion}"
+  	api "com.axelor.apps:axelor-business-support:${aosVersion}"
   	api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
+  	api project(":modules:axelor-mattermost")
+
+  	api 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
 }
 
 apply plugin: 'maven-publish'

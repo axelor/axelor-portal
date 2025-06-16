@@ -16,27 +16,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.portal.db.repo;
+package com.axelor.csv.script;
 
-import com.axelor.auth.AuthUtils;
-import com.axelor.auth.db.User;
-import com.axelor.dms.db.DMSFile;
-import com.axelor.dms.db.repo.DMSFileRepository;
+import com.axelor.apps.portal.db.ForumGroup;
+import com.axelor.apps.portal.db.repo.ForumGroupRepository;
+import com.axelor.meta.db.MetaFile;
+import com.google.inject.Inject;
+import java.nio.file.Path;
+import java.util.Map;
 
-public class DMSFilePortalRepository extends DMSFileRepository {
+public class ImportForum {
 
-  @Override
-  public DMSFile save(DMSFile entity) {
+  @Inject private ForumGroupRepository groupRepo;
 
-    entity = super.save(entity);
-
-    if (entity.getVersion() == 0 && entity.getAuthor() == null) {
-      User user = AuthUtils.getUser();
-      if (user != null && user.getActiveCompany() != null) {
-        entity.setAuthor(user.getActiveCompany().getPartner());
-      }
+  public Object importForumGroup(Object bean, Map<String, Object> values) {
+    assert bean instanceof ForumGroup;
+    MetaFile metaFile =
+        ImportUtils.importFile((String) values.get("image_path"), (Path) values.get("__path__"));
+    if (metaFile == null) {
+      return bean;
     }
 
-    return entity;
+    ForumGroup group = (ForumGroup) bean;
+    group.setImage(metaFile);
+    return groupRepo.save(group);
   }
 }

@@ -6,6 +6,10 @@
   <form id="protal-project-form" name="project-form" title="Project"
     model="com.axelor.apps.project.db.Project" extension="true">
 
+    <extend target="/">
+      <attribute name="onNew"
+        value="action-project-group-on-new-project,action-project-attrs-set-workspace"/>
+    </extend>
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
@@ -15,5 +19,26 @@
     </extend>
 
   </form>
+
+  <form id="protal-business-project-form" name="business-project-form" title="Business project"
+    model="com.axelor.apps.project.db.Project" extension="true">
+
+    <extend target="/">
+      <attribute name="onNew"
+        value="action-project-group-on-new-project,action-project-attrs-set-workspace"/>
+    </extend>
+    <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
+      <insert position="after">
+        <panel name="portalPanel" title="Portal">
+          <field name="portalWorkspace"/>
+        </panel>
+      </insert>
+    </extend>
+
+  </form>
+
+  <action-attrs name="action-project-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>

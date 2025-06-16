@@ -8,14 +8,23 @@
   <entity name="DMSFile" table="DMS_FILE" repository="none">
 
     <string name="description" large="true"/>
-    <boolean name="isSharedFolder" title="Shared folder"/>
+    <string name="permissionSelect" selection="dms.file.permission.select" title="Permission"/>
+    <string name="colorSelect" selection="color.name.selection" title="Color"/>
+    <string name="logoSelect" selection="portal.dms.file.logo.select" title="Logo"/>
+    <boolean name="isPrivate" title="Private"/>
+    <boolean name="isHomepage" title="Homepage"/>
     <many-to-one ref="com.axelor.apps.base.db.Partner" name="author"/>
     <many-to-many ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspaceSet"
       title="Workspaces"/>
+    <many-to-many name="partnerSet" ref="com.axelor.apps.base.db.Partner"
+      title="Partners"/>
     <many-to-many ref="com.axelor.apps.base.db.PartnerCategory"
       name="partnerCategorySet" title="Categories"/>
     <one-to-many ref="com.axelor.dms.db.DMSFile" name="children" mappedBy="parent"
       title="Children"/>
+
+    <entity-listener class="com.axelor.apps.portal.db.repo.DMSFilePortalListner"/>
+
   </entity>
 
 </domain-models>

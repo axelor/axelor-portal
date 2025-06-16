@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="Invitation">
+
+    <one-to-one name="emailAddress" ref="com.axelor.message.db.EmailAddress"
+      title="Email"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
+      title="Workspace"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="partner"/>
+    <one-to-many ref="com.axelor.apps.portal.db.PortalContactWorkspaceConfig"
+      name="contactAppPermissionList" title="App permissions"/>
+
+  </entity>
+
+</domain-models>

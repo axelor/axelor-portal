@@ -42,6 +42,15 @@
     <view type="form" name="portal-contact-workspace-config-form"/>
   </action-view>
 
+  <menuitem title="Invitations" name="menu-invitation" parent="menu-portal-root"
+    action="action.portal.invitation" order="112"/>
+
+  <action-view name="action.portal.invitation" title="Invitation"
+    model="com.axelor.apps.portal.db.Invitation">
+    <view type="grid" name="portal-invitation-grid"/>
+    <view type="form" name="portal-invitation-form"/>
+  </action-view>
+
   <menuitem title="News app" name="menu-portal-portal-news-root" parent="menu-portal-root"
     order="115"/>
 
@@ -221,6 +230,95 @@
     model="com.axelor.mail.db.MailMessage">
     <view type="cards" name="mail-message-card"/>
     <view type="form" name="mail-message-form"/>
+  </action-view>
+
+  <menuitem title="Track project task fields" name="menu-track-project-task-fields"
+    parent="project-configurations" action="menu.track.project.task.fields" order="1700"/>
+
+  <action-method name="menu.track.project.task.fields">
+    <call class="com.axelor.apps.portal.web.ProjectMenuPortalController"
+      method="trackProjectTaskFields"/>
+  </action-method>
+
+  <menuitem title="Directory app" name="menu-portal-directory-root"
+    parent="menu-portal-root" order="135"/>
+
+  <menuitem title="Directory entry" name="menu-portal-directory-entry"
+    parent="menu-portal-directory-root" action="action.portal.directory.entry"/>
+
+  <action-view name="action.portal.directory.entry" title="Directory entry"
+    model="com.axelor.apps.portal.db.DirectoryEntry">
+    <view type="grid" name="directory-entry-grid"/>
+    <view type="form" name="directory-entry-form"/>
+  </action-view>
+
+  <menuitem title="Directory category" name="menu-portal-directory-category"
+    parent="menu-portal-directory-root" action="action.portal.directory.category"/>
+
+  <action-view name="action.portal.directory.category" title="Directory category"
+    model="com.axelor.apps.portal.db.DirectoryCategory">
+    <view type="grid" name="directory-category-grid"/>
+    <view type="form" name="directory-category-form"/>
+  </action-view>
+
+  <menuitem title="CMS app" name="menu-portal-cms-root" parent="menu-portal-root"
+    order="137"/>
+
+  <menuitem title="Main website" name="menu-portal-cms-maiun-website" order="1371"
+    parent="menu-portal-cms-root" action="action.portal.cms.main.website"/>
+
+  <action-view name="action.portal.cms.main.website" title="Main website"
+    model="com.axelor.apps.portal.db.PortalCmsMainWebsite">
+    <view type="grid" name="portal-portal-cms-main-website-grid"/>
+    <view type="form" name="portal-portal-cms-main-website-form"/>
+  </action-view>
+
+  <menuitem title="Website" name="menu-portal-cms-site" parent="menu-portal-cms-root"
+    action="action.portal.cms.site" order="1375"/>
+
+  <action-view name="action.portal.cms.site" title="Website"
+    model="com.axelor.apps.portal.db.PortalCmsSite">
+    <view type="grid" name="portal-portal-cms-site-grid"/>
+    <view type="form" name="portal-portal-cms-site-form"/>
+  </action-view>
+
+  <menuitem title="Website pages" name="menu-portal-cms-page" parent="menu-portal-cms-root"
+    action="action.portal.cms.page" order="1380"/>
+
+  <action-view name="action.portal.cms.page" title="Website pages"
+    model="com.axelor.apps.portal.db.PortalCmsPage">
+    <view type="grid" name="portal-portal-cms-page-grid"/>
+    <view type="form" name="portal-portal-cms-page-form"/>
+  </action-view>
+
+  <menuitem title="Configuration" name="menu-portal-cms-configuration"
+    parent="menu-portal-cms-root" order="1385"/>
+
+  <menuitem title="Components" name="menu-portal-cms-component"
+    parent="menu-portal-cms-configuration" action="action.portal.cms.component"/>
+
+  <action-view name="action.portal.cms.component" title="Components"
+    model="com.axelor.apps.portal.db.PortalCmsComponent">
+    <view type="grid" name="portal-portal-cms-component-grid"/>
+    <view type="form" name="portal-portal-cms-component-form"/>
+  </action-view>
+
+  <menuitem title="Contents" name="menu-portal-cms-content"
+    parent="menu-portal-cms-configuration" action="action.portal.cms.content"/>
+
+  <action-view name="action.portal.cms.content" title="Contents"
+    model="com.axelor.apps.portal.db.PortalCmsContent">
+    <view type="grid" name="portal-portal-cms-content-grid"/>
+    <view type="form" name="portal-portal-cms-content-form"/>
+  </action-view>
+
+  <menuitem title="Menus" name="menu-portal-cms-menu"
+    parent="menu-portal-cms-configuration" action="action.portal.cms.menu"/>
+
+  <action-view name="action.portal.cms.menu" title="Menus"
+    model="com.axelor.apps.portal.db.PortalCmsMenu">
+    <view type="grid" name="portal-portal-cms-menu-grid"/>
+    <view type="form" name="portal-portal-cms-menu-form"/>
   </action-view>
 
 </object-views>

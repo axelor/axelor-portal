@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.1.xsd">
+
+  <form id="portal-app-project-config-form" name="app-project-config-form" title="App project"
+    model="com.axelor.studio.db.AppProject" canDelete="false" canNew="false" width="large"
+    extension="true">
+
+    <extend target="//field[@name='completedTaskStatus']">
+      <insert position="after">
+        <field name="cancelledTaskStatus" grid-view="task-status-grid"
+          form-view="task-status-form"
+          onSelect="action-app-project-attrs-set-cancelled-task-status-domain"/>
+      </insert>
+    </extend>
+
+  </form>
+
+  <action-attrs name="action-app-project-attrs-set-cancelled-task-status-domain">
+    <attribute name="domain" for="cancelledTaskStatus"
+      expr="eval: 'self.isCompleted = true AND self.id IN (' + defaultTaskStatusSet?.collect{ it.id }?.join(',') + ')'"
+      if="defaultTaskStatusSet?.collect{it.id}?.size &gt; 0"/>
+    <attribute name="domain" for="cancelledTaskStatus" expr="eval: 'self.id = 0'"
+      if="defaultTaskStatusSet?.collect{it.id}?.size == 0"/>
+  </action-attrs>
+
+</object-views>

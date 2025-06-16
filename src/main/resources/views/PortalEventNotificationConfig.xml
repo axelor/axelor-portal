@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_7.0.xsd">
+
+  <grid name="portal-event-notification-config-grid" title="Notification configs"
+    model="com.axelor.apps.portal.db.PortalEventNotificationConfig" editable="true">
+    <field name="activateNotification"/>
+    <field name="eventCategory"/>
+  </grid>
+
+  <form name="portal-event-notification-config-form" title="Notification config"
+    model="com.axelor.apps.portal.db.PortalEventNotificationConfig">
+    <panel name="mainPanel">
+      <field name="activateNotification"/>
+      <field name="eventCategory"/>
+    </panel>
+  </form>
+
+</object-views>

@@ -8,13 +8,16 @@
   <entity name="Product">
 
     <string name="subtitle" title="Subtitle"/>
+    <string name="slug"/>
     <string name="longDescription" large="true" title="Long description"/>
     <boolean name="homepage" title="Homepage"/>
     <many-to-many ref="com.axelor.apps.base.db.ProductCategory"
       name="portalCategorySet" title="Portal Categories"/>
     <boolean name="sellOutOfStock" title="Continue selling out of stock"/>
     <boolean name="allowCustomNote" title="Allow custom note"/>
+    <boolean name="isEvent" title="Event"/>
     <boolean name="isPrivate" title="Private"/>
+    <many-to-one name="thumbnailImage" ref="com.axelor.meta.db.MetaFile"/>
     <many-to-one ref="com.axelor.apps.portal.db.Brand" name="brand" title="Brand"/>
     <many-to-one name="portalWorkspace" ref="com.axelor.apps.portal.db.PortalWorkspace"
       title="Workspace"/>

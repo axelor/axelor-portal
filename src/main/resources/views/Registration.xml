@@ -9,12 +9,25 @@
     <field name="participantList" widget="TagSelect"/>
   </grid>
 
-  <form name="portal-registration-form" title="Portal registration"
+  <grid name="portal-registration-event-grid" title="Portal registrations"
     model="com.axelor.apps.portal.db.Registration">
+    <field name="participantList" widget="TagSelect"/>
+    <field name="invoice.inTaxTotal"/>
+  </grid>
+
+  <form name="portal-registration-form" title="Portal registration"
+    model="com.axelor.apps.portal.db.Registration" onNew="action-registration-attrs-onnew">
     <panel name="mainPanel">
       <field name="event" required="true"/>
-      <field name="participantList" colSpan="12"/>
+      <field name="invoice" readonly="true" showIf="invoice"/>
+      <field name="participantList" colSpan="12"
+        grid-view="portal-portal-participant-event-grid"/>
     </panel>
   </form>
+
+  <action-attrs name="action-registration-attrs-onnew">
+    <attribute name="value" for="event" expr="eval: _event" if="_event"/>
+    <attribute name="readonly" for="event" expr="eval: true" if="_event"/>
+  </action-attrs>
 
 </object-views>

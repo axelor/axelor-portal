@@ -21,10 +21,11 @@
     </panel>
     <panel name="postAttachmentPanel">
       <field name="attachmentList" colSpan="12">
-        <editor x-viewer="true">
+        <editor x-viewer="true" colSpan="12">
           <field name="metaFile" showTitle="false" widget="binary-link"
-            form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4"/>
-          <field name="title" showTitle="false" colSpan="8"/>
+            form-view="meta-files-form" grid-view="meta-files-grid" colSpan="4" required="true"/>
+          <field name="title" showTitle="false" showIf="metaFile" colSpan="8"
+            requiredIf="metaFile"/>
         </editor>
       </field>
     </panel>

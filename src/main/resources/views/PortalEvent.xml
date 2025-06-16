@@ -12,40 +12,93 @@
   </grid>
 
   <form name="portal-portal-event-form" title="Portal event"
-    model="com.axelor.apps.portal.db.PortalEvent" width="large">
+    model="com.axelor.apps.portal.db.PortalEvent" width="large"
+    onNew="action-portal-event-attrs-set-workspace"
+    onLoad="action-portal-event-attrs-set-event-link">
     <panel name="mainPanel">
-      <panel name="imagePanel" colSpan="2">
-        <field name="eventImage" widget="Image" colSpan="12" showTitle="false"/>
+      <panel name="headerDetailsPanel" colSpan="9">
+        <panel name="imagePanel" colSpan="2">
+          <field name="eventImage" widget="Image" colSpan="12" showTitle="false"
+            onChange="action-portal-event-record-create-thumbnail-image"/>
+          <field name="eventThumbnailImage" hidden="true" colSpan="12"/>
+        </panel>
+        <panel name="infoPanel" colSpan="10">
+          <field name="statusSelect" readonly="true" widget="NavSelect" colSpan="12"/>
+          <field name="eventTitle" required="true" colSpan="12"/>
+        </panel>
       </panel>
-      <panel name="infoPanel" colSpan="10">
-        <field name="eventTitle" required="true" colSpan="11"/>
-        <field name="isPrivate" colSpan="1"/>
-        <field name="eventStartDateTime"/>
+      <panel name="actionPanel" colSpan="3" itemSpan="12">
+        <button onClick="action-portal-event-record-draft-onclick,save" name="draftBtn"
+          title="Back to draft" showIf="statusSelect == 1"/>
+        <button onClick="action-portal-event-record-publish-onclick,save" name="publishBtn"
+          title="Publish" showIf="statusSelect == 0"/>
+        <button onClick="portal-action-portal-event-view-show-participant"
+          name="showParticipanr" title="All participants"/>
+      </panel>
+    </panel>
+    <panel-tabs>
+      <panel name="detailsPanel" title="Main">
+        <field name="workspace" required="true"
+          onChange="action-portal-event-group-workspace-onchange"/>
+        <field name="slug" onChange="action-portal-event-attrs-set-event-link"/>
+        <field name="$eventLink" widget="url" title="Link" readonly="true" colSpan="12"
+          showIf="id"/>
+        <field name="eventStartDateTime"
+          onChange="action-portal-event-record-startdatetime-onchange"/>
         <field name="eventEndDateTime" showIf="!eventAllDay"
           validIf="eventStartDateTime == null || eventEndDateTime == null || $moment(eventEndDateTime) > $moment(eventStartDateTime)"/>
+        <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"
+          domain="self.workspace = :workspace"/>
         <field name="eventPlace"/>
-        <field name="eventLink" widget="url"/>
+        <field name="defaultPrice"/>
+        <field name="eventAllDay" colSpan="3"
+          onChange="action-portal-event-record-event-all-day-onchange"/>
+        <field name="eventAllowRegistration" colSpan="3"/>
+        <field name="eventAllowMultipleRegistrations" colSpan="3"
+          showIf="eventAllowRegistration"/>
+        <field name="registrationDeadlineDateTime" colSpan="3" showIf="eventAllowRegistration"/>
+        <field name="eventProduct" showIf="eventAllowRegistration" canNew="true"
+          onChange="portal-action-portal-event-record-product-onchange"
+          requiredIf="eventAllowRegistration &amp;&amp; defaultPrice != 0"
+          domain="self.isEvent IS TRUE"/>
+        <field name="maxParticipantPerEvent" colSpan="3" showIf="eventAllowRegistration"/>
+        <field name="maxParticipantPerRegistration" colSpan="3"
+          showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
+        <field name="facilityList" colSpan="12"/>
+        <field name="isPrivate"
+          onChange="portal-action-portal-event-record-isprivate-onchange" colSpan="3"/>
+        <field name="isHidden" colSpan="3"/>
+        <field name="isLoginNotNeeded" colSpan="3"
+          onChange="portal-action-portal-event-record-isloginnotneeded-onchange"/>
+        <field name="isPublic" onChange="portal-action-portal-event-record-ispublic-onchange"
+          colSpan="3" showIf="isLoginNotNeeded"/>
+        <field name="partnerSet" colSpan="12" showIf="isPrivate" form-view="partner-form"
+          grid-view="partner-grid"/>
+        <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
+        <field name="eventDescription" colSpan="12" widget="html"/>
+        <panel-related name="additionalFieldSetPanel" field="additionalFieldSet"
+          domain="self.model = 'com.axelor.apps.portal.db.PortalParticipant'"
+          grid-view="json-field-portal-grid" form-view="json-field-portal-form" colSpan="12"/>
       </panel>
-      <field name="eventAllDay" colSpan="3"/>
-      <field name="eventVisibility" colSpan="3"/>
-      <field name="eventAllowRegistration" colSpan="3"/>
-      <field name="eventAllowMultipleRegistrations" colSpan="3"
-        showIf="eventAllowRegistration"/>
-      <field name="eventProduct" showIf="eventAllowRegistration"/>
-      <field name="eventDegressiveNumberPartcipant" min="0"
-        showIf="eventAllowRegistration &amp;&amp; eventAllowMultipleRegistrations"/>
-      <field name="eventCategorySet" colSpan="12" widget="TagSelect" required="true"/>
-      <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
-      <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
-      <field name="eventDescription" colSpan="12" widget="html"/>
-    </panel>
-    <panel name="commentPanel" title="Comments">
-      <spacer name="commentSpacer" colSpan="11"/>
-      <button onClick="save,action-portal-portal-add-comment" name="addbtn" title="Add"
-        colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
-      <panel-dashlet action="action-portal-portal-event-display-comment" colSpan="12"
-        title=""/>
-    </panel>
+      <panel name="participantPanel" title="Participants">
+        <panel-dashlet action="portal-action-portal-event-view-show-participant"
+          name="participantDashlet" colSpan="12"
+          grid-view="portal-portal-participant-event-editable-grid"/>
+        <spacer name="registrationSpacer" colSpan="11"/>
+        <button onClick="save,action-portal-event-view-add-registration"
+          name="addRegistrationBtn" title="Register" colSpan="1" icon="plus-lg"
+          showIf="!$readonly()"/>
+        <panel-dashlet action="portal-action-portal-event-view-registration-dashlet"
+          name="registartionDashlet" colSpan="12"/>
+      </panel>
+      <panel name="commentPanel" title="Comments">
+        <spacer name="commentSpacer" colSpan="11"/>
+        <button onClick="save,action-portal-portal-add-comment" name="addbtn" title="Add"
+          colSpan="1" icon="plus-lg" showIf="!$readonly()"/>
+        <panel-dashlet action="action-portal-portal-event-display-comment"
+          colSpan="12" title=""/>
+      </panel>
+    </panel-tabs>
   </form>
 
   <action-view name="action-portal-portal-event-display-comment" title="Comments"
@@ -54,5 +107,101 @@
     <view type="form" name="mail-message-form"/>
     <domain>self.relatedId = :id AND self.relatedModel = 'com.axelor.apps.portal.db.PortalEvent'</domain>
   </action-view>
+
+  <action-view name="portal-action-portal-event-view-show-participant"
+    title="Participants" model="com.axelor.apps.portal.db.PortalParticipant">
+    <view type="grid" name="portal-portal-participant-event-editable-grid"/>
+    <view type="form" name="portal-portal-participant-form"/>
+    <view-param name="limit" value="20"/>
+    <domain>self.registration.event.id = :_id</domain>
+    <context name="_id" expr="eval: id"/>
+  </action-view>
+
+  <action-view name="portal-action-portal-event-view-registration-dashlet"
+    title="Registration" model="com.axelor.apps.portal.db.Registration">
+    <view type="grid" name="portal-registration-event-grid"/>
+    <view type="form" name="portal-registration-form"/>
+    <view-param name="limit" value="20"/>
+    <domain>self.event.id = :id</domain>
+  </action-view>
+
+  <action-view name="action-portal-event-view-add-registration"
+    model="com.axelor.apps.portal.db.Registration" title="Registration">
+    <view type="form" name="portal-registration-form"/>
+    <view type="grid" name="portal-registration-grid"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="forceEdit" value="true"/>
+    <context name="_event" expr="eval: __this__"/>
+  </action-view>
+
+  <action-record name="action-portal-event-record-draft-onclick"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="statusSelect" expr="eval: PortalEventRepository.STATUS_DRAFT"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-publish-onclick"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="statusSelect" expr="eval: PortalEventRepository.STATUS_PUBLISHED"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-startdatetime-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="registrationDeadlineDateTime" expr="eval: eventStartDateTime"
+      if="eventStartDateTime"/>
+  </action-record>
+
+  <action-record name="portal-action-portal-event-record-isprivate-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="isPublic" expr="eval: false" if="isPrivate"/>
+    <field name="isLoginNotNeeded" expr="eval: false" if="isPrivate"/>
+  </action-record>
+
+  <action-record name="portal-action-portal-event-record-ispublic-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="isPrivate" expr="eval: false" if="isPublic"/>
+  </action-record>
+
+  <action-record name="portal-action-portal-event-record-product-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="defaultPrice" expr="eval: eventProduct?.salePrice"/>
+  </action-record>
+
+  <action-record name="portal-action-portal-event-record-isloginnotneeded-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="isPrivate" expr="eval: false" if="isLoginNotNeeded"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-workspace-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="eventCategorySet" expr="eval: null"/>
+  </action-record>
+
+  <action-record name="action-portal-event-record-event-all-day-onchange"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="eventEndDateTime"
+      expr="eval: #{eventStartDateTime.toLocalDate().atTime(23, 59, 59)}"
+      if="eventAllDay &amp;&amp; eventStartDateTime != null"/>
+  </action-record>
+
+  <action-attrs name="action-portal-event-attrs-set-workspace">
+    <attribute name="value" for="workspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
+
+  <action-attrs name="action-portal-event-attrs-set-event-link">
+    <attribute name="value" for="$eventLink"
+      expr="eval: workspace?.url + '/events/' + slug"/>
+  </action-attrs>
+
+  <action-group name="action-portal-event-group-workspace-onchange">
+    <action name="action-portal-event-attrs-set-event-link"/>
+    <action name="action-portal-event-record-workspace-onchange"/>
+  </action-group>
+
+  <action-record name="action-portal-event-record-create-thumbnail-image"
+    model="com.axelor.apps.portal.db.PortalEvent">
+    <field name="eventThumbnailImage"
+      expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(eventImage)"/>
+  </action-record>
 
 </object-views>

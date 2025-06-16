@@ -24,41 +24,55 @@ import com.axelor.apps.account.db.TaxEquiv;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Partner;
+import com.axelor.apps.base.db.PartnerAddress;
 import com.axelor.apps.base.db.Product;
+import com.axelor.apps.base.db.repo.PartnerAddressRepository;
 import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.db.repo.PriceListRepository;
 import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.base.service.CurrencyScaleService;
 import com.axelor.apps.base.service.PartnerPriceListService;
+import com.axelor.apps.base.service.address.AddressService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.FiscalPositionService;
 import com.axelor.apps.base.service.tax.TaxService;
 import com.axelor.apps.portal.db.PartnerPortalWorkspace;
+import com.axelor.apps.portal.db.PortalWorkspace;
+import com.axelor.apps.portal.db.repo.PortalWorkspaceRepository;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.service.MarginComputeService;
 import com.axelor.apps.sale.service.app.AppSaleService;
+import com.axelor.apps.sale.service.config.SaleConfigService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
-import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderMarginService;
 import com.axelor.apps.sale.service.saleorder.pricing.SaleOrderLinePricingService;
+import com.axelor.apps.sale.service.saleorder.print.SaleOrderPrintService;
 import com.axelor.apps.sale.service.saleorder.status.SaleOrderConfirmService;
 import com.axelor.apps.sale.service.saleorder.status.SaleOrderFinalizeService;
 import com.axelor.apps.sale.service.saleorderline.SaleOrderLineComputeService;
 import com.axelor.apps.sale.service.saleorderline.SaleOrderLinePriceService;
 import com.axelor.apps.sale.service.saleorderline.product.SaleOrderLineComplementaryProductService;
 import com.axelor.apps.sale.service.saleorderline.product.SaleOrderLineProductService;
+import com.axelor.apps.stock.db.StockLocation;
+import com.axelor.apps.stock.db.repo.StockLocationRepository;
+import com.axelor.apps.supplychain.service.saleorder.SaleOrderCreateSupplychainService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
+import com.axelor.meta.MetaFiles;
+import com.axelor.meta.db.MetaFile;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -69,7 +83,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
-  protected SaleOrderCreateService saleOrdeCreateService;
+  protected SaleOrderCreateSupplychainService saleOrdeCreateService;
   protected SaleOrderLinePricingService saleOrderLinePricingService;
   protected SaleOrderLinePriceService saleOrderLinePriceService;
   protected SaleOrderLineProductService saleOrderLineProductService;
@@ -84,14 +98,21 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected SaleOrderMarginService saleOrderMarginService;
   protected CurrencyScaleService currencyScaleService;
   protected TaxService taxService;
+  protected MarginComputeService marginComputeService;
+  protected AddressService addressService;
+  protected SaleOrderPrintService saleOrderPrintService;
+  protected SaleConfigService saleConfigService;
 
   protected PartnerRepository partnerRepo;
   protected ProductRepository productRepo;
   protected SaleOrderRepository saleOrderRepo;
+  protected PortalWorkspaceRepository portalWorkspaceRepo;
+  protected StockLocationRepository stockLocationRepository;
+  protected PartnerAddressRepository partnerAddressRepo;
 
   @Inject
   public SaleOrderPortalServiceImpl(
-      SaleOrderCreateService saleOrdeCreateService,
+      SaleOrderCreateSupplychainService saleOrdeCreateService,
       SaleOrderLinePricingService saleOrderLinePricingService,
       SaleOrderLinePriceService saleOrderLinePriceService,
       SaleOrderLineProductService saleOrderLineProductService,
@@ -106,9 +127,16 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       SaleOrderMarginService saleOrderMarginService,
       CurrencyScaleService currencyScaleService,
       TaxService taxService,
+      MarginComputeService marginComputeService,
+      AddressService addressService,
+      SaleOrderPrintService saleOrderPrintService,
+      SaleConfigService saleConfigService,
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
-      SaleOrderRepository saleOrderRepo) {
+      SaleOrderRepository saleOrderRepo,
+      PortalWorkspaceRepository portalWorkspaceRepo,
+      StockLocationRepository stockLocationRepository,
+      PartnerAddressRepository partnerAddressRepo) {
     this.saleOrdeCreateService = saleOrdeCreateService;
     this.saleOrderLinePricingService = saleOrderLinePricingService;
     this.saleOrderLinePriceService = saleOrderLinePriceService;
@@ -124,9 +152,16 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.saleOrderMarginService = saleOrderMarginService;
     this.currencyScaleService = currencyScaleService;
     this.taxService = taxService;
+    this.marginComputeService = marginComputeService;
+    this.addressService = addressService;
+    this.saleOrderPrintService = saleOrderPrintService;
+    this.saleConfigService = saleConfigService;
     this.partnerRepo = partnerRepo;
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
+    this.portalWorkspaceRepo = portalWorkspaceRepo;
+    this.stockLocationRepository = stockLocationRepository;
+    this.partnerAddressRepo = partnerAddressRepo;
   }
 
   @Override
@@ -174,6 +209,13 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       contactPartner = partnerRepo.find(Long.parseLong(values.get("contactId").toString()));
     }
 
+    StockLocation stockLocation = null;
+    if (values.containsKey("stockLocationId")
+        && ObjectUtils.notEmpty(values.get("stockLocationId"))) {
+      stockLocation =
+          stockLocationRepository.find(Long.parseLong(values.get("stockLocationId").toString()));
+    }
+
     if (clientPartner == null) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
@@ -194,16 +236,51 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
             null,
             null,
             null,
+            stockLocation,
             Beans.get(PartnerPriceListService.class)
                 .getDefaultPriceList(clientPartner, PriceListRepository.TYPE_SALE),
             clientPartner,
             null,
             null,
+            null,
             clientPartner.getFiscalPosition(),
-            null);
+            null,
+            null,
+            clientPartner,
+            clientPartner);
 
     if (saleOrder != null) {
       saleOrder.setInAti((Boolean) values.get("inAti"));
+
+      PortalWorkspace portalWorkspace = null;
+      if (values.containsKey("workspaceId") && ObjectUtils.notEmpty(values.get("workspaceId"))) {
+        portalWorkspace =
+            portalWorkspaceRepo.find(Long.parseLong(values.get("workspaceId").toString()));
+      }
+      saleOrder.setPortalWorkspace(portalWorkspace);
+
+      PartnerAddress deliveryAddress = null;
+      if (values.containsKey("deliveryPartnerAddressId")
+          && ObjectUtils.notEmpty(values.get("deliveryPartnerAddressId"))) {
+        deliveryAddress =
+            partnerAddressRepo.find(
+                Long.parseLong(values.get("deliveryPartnerAddressId").toString()));
+        saleOrder.setDeliveryAddress(deliveryAddress != null ? deliveryAddress.getAddress() : null);
+        saleOrder.setDeliveryAddressStr(
+            addressService.computeAddressStr(saleOrder.getDeliveryAddress()));
+      }
+
+      PartnerAddress invocingAddress = null;
+      if (values.containsKey("invocingPartnerAddressId")
+          && ObjectUtils.notEmpty(values.get("invocingPartnerAddressId"))) {
+        invocingAddress =
+            partnerAddressRepo.find(
+                Long.parseLong(values.get("invocingPartnerAddressId").toString()));
+        saleOrder.setMainInvoicingAddress(
+            invocingAddress != null ? invocingAddress.getAddress() : null);
+        saleOrder.setMainInvoicingAddressStr(
+            addressService.computeAddressStr(saleOrder.getMainInvoicingAddress()));
+      }
     }
 
     return saleOrder;
@@ -379,7 +456,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     line.setCompanyInTaxTotal(companyInTaxTotal);
     line.setCompanyExTaxTotal(companyExTaxTotal);
     line.setSubTotalCostPrice(subTotalCostPrice);
-    saleOrderMarginService.getSaleOrderLineComputedMarginInfo(order, line);
+    marginComputeService.getComputedMarginInfo(order, line, line.getExTaxTotal());
 
     return line;
   }
@@ -395,7 +472,26 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
     saleOrderFinalizeService.finalizeQuotation(order);
     saleOrderConfirmService.confirmSaleOrder(order);
+    try {
+      attachReport(order);
+    } catch (IOException e) {
+    }
 
     return order;
+  }
+
+  @Transactional
+  public void attachReport(SaleOrder saleOrder) throws AxelorException, IOException {
+
+    File file =
+        saleOrderPrintService.print(
+            saleOrder,
+            false,
+            saleConfigService.getSaleOrderPrintTemplate(saleOrder.getCompany()),
+            false);
+    MetaFile metafile = Beans.get(MetaFiles.class).upload(file);
+    saleOrder = saleOrderRepo.find(saleOrder.getId());
+    saleOrder.setOrderReport(metafile);
+    saleOrderRepo.save(saleOrder);
   }
 }

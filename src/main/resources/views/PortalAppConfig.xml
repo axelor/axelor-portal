@@ -10,19 +10,25 @@
     <field name="requestQuotation"/>
     <field name="confirmOrder"/>
     <field name="displayPrices"/>
-    <field name="displayOutOfStock"/>
+    <field name="noMoreStockSelect"/>
   </grid>
 
   <form name="portal-app-config-form" title="Portal app config"
     model="com.axelor.apps.portal.db.PortalAppConfig" width="large">
     <panel name="mainPanel">
       <field name="name" required="true"/>
-      <field name="company" required="true"/>
+      <field name="company" required="true"
+        onChange="action-portal-app-config-attrs-company-onchange"/>
+      <field name="enableComment" onChange="action-record-portal-enable-comment-onchange"/>
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
         <field name="publicEshop"/>
-        <field name="displayOutOfStock"/>
+        <panel name="stockPanel" title="Stock" colSpan="12">
+          <field name="noMoreStockSelect"/>
+          <field name="outOfStockQty"/>
+          <field name="defaultStockLocation" domain="self.company = :company"/>
+        </panel>
         <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
           <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
@@ -37,17 +43,13 @@
           <field name="byMostExpensive"/>
           <field name="byLessExpensive"/>
         </panel>
-        <panel name="confirmOrderPanel" title="How to confirm an order ?" colSpan="12">
-          <field name="payInAdvance"/>
-          <field name="eSignature"/>
-        </panel>
         <panel name="orderPanel" title="Order/Quotation" colSpan="12">
           <field name="requestQuotation"/>
           <field name="confirmOrder"/>
         </panel>
-        <panel name="paymentPanel" title="Payment" colSpan="12">
-          <field name="allowOnlinePaymentForEcommerce"/>
-          <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
+        <panel name="confirmOrderPanel" title="How to confirm an order ?" colSpan="12">
+          <field name="payInAdvance"/>
+          <field name="eSignature"/>
         </panel>
         <panel name="carouselPanel" title="Carousel" colSpan="12">
           <panel-related field="carouselList" form-view="carousel-form" colSpan="12"/>
@@ -58,8 +60,13 @@
         <field name="canPayInvoice"/>
       </panel>
       <panel name="eventPanel" title="Event">
-        <field name="allowGuestEventRegistartion"/>
+        <field name="allowGuestEventRegistration"/>
         <field name="enableEventComment"/>
+        <field name="defaultEventProduct"/>
+        <field name="defaultEventPaymentMode" domain="self.inOutSelect = 1"/>
+        <field name="defaultEventPaymentCondition"/>
+        <field name="defaultInvoicingAddress"/>
+        <field name="nonPublicEmailNotFoundMessage" colSpan="12"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="eventHeroTitle" title="Title"/>
           <field name="eventHeroOverlayColorSelect" widget="SingleSelect"
@@ -70,6 +77,12 @@
       </panel>
       <panel name="newsPanel" title="News">
         <field name="enableNewsComment"/>
+        <field name="enableRecommendedNews"/>
+        <field name="enableSocialMediaSharing"/>
+        <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
+        <field name="isShowPublicationDate"/>
+        <field name="isShowPublicationTime" showIf="isShowPublicationDate"/>
+        <field name="isShowPublicationAuthor"/>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="newsHeroTitle" title="Title"/>
           <field name="newsHeroOverlayColorSelect" widget="SingleSelect"
@@ -96,22 +109,81 @@
           <field name="resourcesHeroDescription" colSpan="12" title="Description"/>
         </panel>
       </panel>
-      <panel name="newsPanel" title="News">
-        <field name="enableRecommendedNews"/>
-        <field name="enableSocialMediaSharing"/>
-        <field name="socialMediaSelect" showIf="enableSocialMediaSharing" widget="multiSelect"/>
+      <panel name="directoryPanel" title="Directory">
+        <panel name="directoryHeroPanel" colSpan="12" title="Directory hero details">
+          <field name="directoryHeroTitle" title="Title"/>
+          <field name="directoryHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="directoryHeroOverlayColorSelect" title="Overlay color"/>
+          <field name="directoryHeroBgImage" widget="binary-link" title="Background image"/>
+          <field name="directoryHeroDescription" colSpan="12" title="Description"/>
+        </panel>
       </panel>
       <panel name="ticketingPanel" title="Ticketing">
         <field name="ticketStatusChangeMethodSelect"/>
+        <panel name="cardsVisibilityPanel" colSpan="12" title="Filters">
+          <field name="isShowAllTickets" colSpan="4"/>
+          <field name="isShowMyTickets" colSpan="4"/>
+          <field name="isShowManagedTicket" colSpan="4"/>
+          <field name="isShowCreatedTicket" colSpan="4"/>
+          <field name="isShowResolvedTicket" colSpan="4"/>
+          <field name="isDisplayTicketParent" colSpan="4"/>
+          <field name="isDisplayChildTicket" colSpan="4"/>
+          <field name="isDisplayRelatedTicket" colSpan="4"/>
+          <field name="isDisplayCancelBtn" colSpan="4"/>
+          <field name="isDisplayCloseBtn" colSpan="4"/>
+          <field name="isDisplayAssignmentBtn" colSpan="4"/>
+        </panel>
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="ticketHeroTitle" title="Title"/>
           <field name="ticketHeroOverlayColorSelect" widget="SingleSelect"
             x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
           <field name="ticketHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="ticketHeroDescription" colSpan="12" title="Description"/>
+          <field name="ticketingFieldSet" colSpan="12" widget="TagSelect" canNew="false"
+            canEdit="false"
+            domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('id','createdByContact','managedByContact','status','priority','projectTaskCategory','assignment','updatedOn')"/>
+          <field name="ticketingFormFieldSet" colSpan="12" widget="TagSelect" canNew="false"
+            canEdit="false"
+            domain="self.metaModel.name = 'ProjectTask' AND self.name IN ('id','targetVersion','progress','taskEndDate','managedByContact','createdByContact','createdOn','projectTaskCategory','priority','status','assignment')"/>
         </panel>
+      </panel>
+      <panel name="emailPanel" title="Email">
+        <field name="invitationTemplateList" colSpan="12"/>
+        <field name="otpTemplateList" colSpan="12"/>
+      </panel>
+      <panel name="settingsPanel" title="Settings">
+        <field name="canInviteMembers"/>
+        <field name="isExistingContactsOnly" showIf="canInviteMembers"/>
+        <panel name="contactDetailsPanel" colSpan="12" title="Contact details">
+          <field name="isDisplayContact"/>
+          <field name="contactName" showIf="isDisplayContact"/>
+          <field name="contactEmailAddress" showIf="isDisplayContact" canSelect="false"
+            form-view="email-address-simple-form" x-show-icons="false">
+            <editor x-show-titles="false" x-viewer="true">
+              <field name="address" colSpan="12" placeholder="whatever@example.com"
+                pattern="^[a-z0-9A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9A-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2,})$"/>
+            </editor>
+          </field>
+          <field name="contactPhone" showIf="isDisplayContact" widget="phone"
+            x-placeholder-number-type="FIXED_LINE"/>
+        </panel>
+      </panel>
+      <panel title="Payment" name="paymentPanel">
+        <field name="allowOnlinePaymentForEcommerce"/>
+        <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
       </panel>
     </panel-tabs>
   </form>
+
+  <action-record name="action-record-portal-enable-comment-onchange"
+    model="com.axelor.apps.portal.db.PortalAppConfig">
+    <field name="enableNewsComment" expr="eval: enableComment" if="enableComment"/>
+    <field name="enableEventComment" expr="eval: enableComment" if="enableComment"/>
+  </action-record>
+
+  <action-attrs name="action-portal-app-config-attrs-company-onchange">
+    <attribute name="value" for="defaultStockLocation"
+      expr="eval:company?.stockConfig?.pickupDefaultStockLocation"/>
+  </action-attrs>
 
 </object-views>

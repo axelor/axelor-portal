@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module package="com.axelor.apps.portal.db" name="portal"/>
+
+  <entity name="PortalCmsComponent">
+    <string name="title" namecolumn="true"/>
+    <string name="code"/>
+    <integer name="typeSelect" title="Type" selection="cms.component.type.select"/>
+    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+    <many-to-one name="thumbnailImage" ref="com.axelor.meta.db.MetaFile"/>
+  </entity>
+
+</domain-models>

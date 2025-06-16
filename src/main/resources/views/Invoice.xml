@@ -5,6 +5,10 @@
 
   <form name="invoice-form" id="portal-invoice-form" title="Invoice"
     model="com.axelor.apps.account.db.Invoice" extension="true">
+    <extend target="/">
+      <attribute name="onNew"
+        value="action-account-invoice-onnew-group,action-invoice-attrs-set-workspace"/>
+    </extend>
     <extend target="//panel-tabs[@name='mainPanelTab']/*[last()]">
       <insert position="after">
         <panel name="portalPanel" title="Portal">
@@ -13,5 +17,9 @@
       </insert>
     </extend>
   </form>
+
+  <action-attrs name="action-invoice-attrs-set-workspace">
+    <attribute name="value" for="portalWorkspace" expr="eval: __user__.workspace"/>
+  </action-attrs>
 
 </object-views>
