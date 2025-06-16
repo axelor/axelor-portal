@@ -1,7 +1,7 @@
 ---
 name: Goovee portal
 code: goovee-portal
-typeSelect: addons
+typeSelect: standard
 installOrder: 2370
 description: |
    Portal configuration
