@@ -7,14 +7,13 @@ if(!file("../../gradle/style.gradle").exists()) {
     apply from: 'gradle/style.gradle'
 }
 
-
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(11)
   }
 }
 
-group = "com.axelor.apps.enterprise"
+group = "com.axelor.apps"
 
 axelor {
 	title "Axelor Portal"
@@ -24,7 +23,6 @@ axelor {
 ext.aosVersion = '8.3.1'
 
 dependencies {
-
   	api "com.axelor.apps:axelor-production:${aosVersion}"
   	api "com.axelor.apps:axelor-business-support:${aosVersion}"
   	api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
@@ -44,9 +42,9 @@ publishing {
     repositories {
         maven {
 			def repoPath = project.hasProperty("finalRelease")
-					? "maven-enterprise-releases"
-					: "maven-enterprise-snapshots";
-            name = "maven-enterprise"
+					? "maven-releases"
+					: "maven-snapshots";
+            name = "maven"
             url = "https://repository.axelor.com/nexus/repository/" + repoPath
             credentials {
                 username = project.mavenUsername
