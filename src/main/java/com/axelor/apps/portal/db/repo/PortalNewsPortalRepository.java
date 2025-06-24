@@ -39,8 +39,9 @@ public class PortalNewsPortalRepository extends PortalNewsRepository {
         List<PortalNews> relatedNews =
             all()
                 .filter(
-                    "self.id IN (SELECT news.id FROM PortalNews news LEFT JOIN news.categorySet category WHERE category IN :categories)")
+                    "self.id IN (SELECT news.id FROM PortalNews news LEFT JOIN news.categorySet category WHERE category IN :categories) AND self.id != :id")
                 .bind("categories", entity.getCategorySet())
+                .bind("id", entity.getId())
                 .order("-createdOn")
                 .fetch(5);
         entity.setRelatedNewsSet(new HashSet<PortalNews>(relatedNews));
@@ -76,5 +77,26 @@ public class PortalNewsPortalRepository extends PortalNewsRepository {
     }
 
     return copiedNews;
+  }
+
+  @Override
+  public void remove(PortalNews entity) {
+
+    List<PortalNews> relatedNews =
+        all().filter(":news MEMBER OF self.relatedNewsSet").bind("news", entity).fetch();
+    for (PortalNews relatedNew : relatedNews) {
+      System.out.println(relatedNew.getRelatedNewsSet().size());
+      relatedNew.removeRelatedNewsSetItem(entity);
+      save(relatedNew);
+      System.out.println(relatedNew.getRelatedNewsSet().size());
+    }
+
+    if (ObjectUtils.notEmpty(entity.getRelatedNewsSet())) {
+      entity.clearRelatedNewsSet();
+      entity.clearCategorySet();
+      save(entity);
+    }
+
+    super.remove(entity);
   }
 }
