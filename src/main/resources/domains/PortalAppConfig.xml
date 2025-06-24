@@ -74,6 +74,7 @@
     <boolean name="enableComment" default="true"/>
     <boolean name="enableNewsComment" default="true"/>
     <boolean name="enableEventComment" default="true"/>
+    <boolean name="isCompanyOrAddressRequired" title="Company/Address mandatory"/>
 
     <boolean name="isShowAllTickets" default="true" title="All tickets"/>
     <boolean name="isShowMyTickets" default="true" title="My tickets"/>

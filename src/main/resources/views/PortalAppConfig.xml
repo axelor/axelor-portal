@@ -60,7 +60,8 @@
         <field name="canPayInvoice"/>
       </panel>
       <panel name="eventPanel" title="Event">
-        <field name="allowGuestEventRegistration"/>
+        <field name="allowGuestEventRegistration" colSpan="3"/>
+        <field name="isCompanyOrAddressRequired" colSpan="3"/>
         <field name="enableEventComment"/>
         <field name="defaultEventProduct"/>
         <field name="defaultEventPaymentMode" domain="self.inOutSelect = 1"/>
