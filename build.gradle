@@ -27,8 +27,6 @@ dependencies {
   	api "com.axelor.apps:axelor-business-support:${aosVersion}"
   	api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
   	api project(":modules:axelor-mattermost")
-
-  	api 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
 }
 
 apply plugin: 'maven-publish'
