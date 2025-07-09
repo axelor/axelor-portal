@@ -13,8 +13,7 @@
       title="Workspace"/>
     <one-to-many name="contactAppPermissionList" title="App permissions"
       ref="com.axelor.apps.portal.db.PortalContactAppPermission" mappedBy="contactWorkspaceConfig"/>
-    <many-to-many ref="com.axelor.apps.base.db.Partner" name="partnerSet"
-      title="Partners"/>
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="partner" title="Partner"/>
 
   </entity>
 
