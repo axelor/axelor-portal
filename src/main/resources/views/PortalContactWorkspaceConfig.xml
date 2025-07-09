@@ -16,9 +16,9 @@
       <field name="name"/>
       <field name="portalWorkspace" colSpan="5"/>
       <field name="isAdmin" colSpan="1"/>
-      <field name="contactAppPermissionList" colSpan="12" hideIf="isAdmin"/>
-      <field name="partnerSet" colSpan="12" form-view="partner-form" grid-view="partner-grid"
+      <field name="partner" form-view="partner-form" grid-view="partner-grid"
         domain="self.isContact IS NOT TRUE"/>
+      <field name="contactAppPermissionList" colSpan="12" hideIf="isAdmin"/>
     </panel>
   </form>
 
