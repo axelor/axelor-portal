@@ -37,7 +37,9 @@
           <field name="canSubscribeNoPublicEvent" colSpan="3"/>
           <field name="portalCompanyName"/>
           <field name="createdFromSelect"/>
-          <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"/>
+          <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"
+            domain="self.id NOT IN (SELECT cwc.id FROM PortalContactWorkspaceConfig cwc WHERE cwc.partner IN (SELECT p.partner FROM PortalContactWorkspaceConfig p WHERE p IN :contactWorkspaceConfigSet)
+			  AND cwc.portalWorkspace IN (SELECT w.portalWorkspace FROM PortalContactWorkspaceConfig w WHERE w IN :contactWorkspaceConfigSet))"/>
           <field name="portalUserPreferenceList" colSpan="12"/>
         </panel>
       </insert>
