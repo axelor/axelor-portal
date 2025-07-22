@@ -27,7 +27,7 @@
 
   <form name="dms-folder-form" id="portal-dms-folder-form" title="Directory"
     model="com.axelor.dms.db.DMSFile" extension="true">
-    <extend target="//panel[@name='Overview']/*[last()]">
+    <extend target="//panel[@title='Overview']/*[last()]">
       <insert position="after">
         <button onClick="save,action-portal-dms-file-method-update-children"
           name="updateChildrenBtn" title="Apply to children"/>
