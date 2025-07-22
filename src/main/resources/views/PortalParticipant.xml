@@ -9,7 +9,6 @@
     <field name="name" title="First name"/>
     <field name="surname" title="Last name"/>
     <field name="registration.event"/>
-    <field name="categorySet" widget="TagSelect"/>
     <field name="sequence" hidden="true"/>
     <field name="isAttended"/>
   </grid>
