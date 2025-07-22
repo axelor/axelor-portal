@@ -20,7 +20,7 @@ axelor {
 	description "Axelor Portal Module"
 }
 
-ext.aosVersion = '8.3.1'
+ext.aosVersion = '8.3.11'
 
 dependencies {
   	api "com.axelor.apps:axelor-production:${aosVersion}"
