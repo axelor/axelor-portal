@@ -8,7 +8,7 @@
     <field name="eventTitle"/>
     <field name="eventStartDateTime"/>
     <field name="eventEndDateTime"/>
-    <field name="categorySet"/>
+    <field name="eventCategorySet" widget="TagSelect"/>
   </grid>
 
   <form name="portal-portal-event-form" title="Portal event"
