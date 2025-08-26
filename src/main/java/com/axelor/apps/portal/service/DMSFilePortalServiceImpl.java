@@ -44,6 +44,7 @@ public class DMSFilePortalServiceImpl implements DMSFilePortalService {
     dmsFile.setWorkspaceSet(new HashSet<PortalWorkspace>(parentFile.getWorkspaceSet()));
     dmsFile.setPartnerSet(new HashSet<Partner>(parentFile.getPartnerSet()));
     dmsFile.setPartnerCategorySet(new HashSet<PartnerCategory>(parentFile.getPartnerCategorySet()));
+    dmsFile.setLogoSelect(parentFile.getLogoSelect());
   }
 
   @Override
