@@ -16,6 +16,7 @@
     <boolean name="isActivatedOnPortal"/>
     <boolean name="isPublicPartner" title="Portal public"/>
     <boolean name="canSubscribeNoPublicEvent" title="Subscribe to no public events"/>
+    <boolean name="canEditWiki" title="Allow wiki edits"/>
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"
