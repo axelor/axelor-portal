@@ -13,6 +13,7 @@
           <field name="isPublicPartner" colSpan="3"/>
           <field name="canSubscribeNoPublicEvent" colSpan="3"/>
           <field name="portalCompanyName"/>
+          <field name="canEditWiki" colSpan="3"/>
           <field name="partnerWorkspaceSet" widget="TagSelect" colSpan="12"/>
           <field name="defaultWorkspace" domain="self IN (:partnerWorkspaceSet)"/>
           <field name="createdFromSelect"/>
@@ -36,6 +37,7 @@
           <field name="isPublicPartner" colSpan="3"/>
           <field name="canSubscribeNoPublicEvent" colSpan="3"/>
           <field name="portalCompanyName"/>
+          <field name="canEditWiki" colSpan="3"/>
           <field name="createdFromSelect"/>
           <field name="contactWorkspaceConfigSet" widget="TagSelect" colSpan="12"
             domain="self.id NOT IN (SELECT cwc.id FROM PortalContactWorkspaceConfig cwc WHERE cwc.partner IN (SELECT p.partner FROM PortalContactWorkspaceConfig p WHERE p IN :contactWorkspaceConfigSet)
