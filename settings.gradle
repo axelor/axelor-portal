@@ -9,9 +9,8 @@ pluginManagement {
             url 'https://repository.axelor.com/nexus/repository/maven-public/'
         }
     }
-    ext.aopVersion = '7.3.3'
     plugins {
-        id 'com.axelor.app' version aopVersion
+        id 'com.axelor.app' version '7.4.3'
     }
 }
 
