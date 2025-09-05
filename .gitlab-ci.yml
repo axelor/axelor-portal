@@ -1,9 +1,18 @@
 # Stages (ie phases) that can be used by jobs
 stages:
   - build
+  - test
   - publish
 
-image: axelor/app-builder:7.2
+.base-env:
+  image: axelor/app-builder:7.4
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -13,35 +22,56 @@ before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 # Add wrapper and caches folders in cache
-cache:
+.base_cache: &base_cache
   paths:
     - .gradle/wrapper
     - .gradle/caches
+  policy: pull-push
+
+.base_cache_pull: &base_cache_pull
+  <<: *base_cache
+  policy: pull
 
 # Build artifacts
 build:
+  extends: .base-env
   stage: build
+  cache:
+    - *base_cache
   script:
-    - ./gradlew -xtest clean build -PaxelorMavenUsername=${NEXUS_READER_USERNAME} -PaxelorMavenPassword=${NEXUS_READER_PASSWORD}
+    - ./gradlew clean assemble -PaxelorMavenUsername=${NEXUS_READER_USERNAME} -PaxelorMavenPassword=${NEXUS_READER_PASSWORD}
 
 .publish_template: &publish_configuration
+  image: axelor/app-builder:7.4
   stage: publish
   script:
-    - ./gradlew publish -PaxelorMavenUsername=${NEXUS_DEPLOYMENT_USERNAME} -PaxelorMavenPassword=${NEXUS_DEPLOYMENT_PASSWORD} -P${PUBLISH_TYPE}
+    - ./gradlew clean publish -PaxelorMavenUsername=${NEXUS_DEPLOYMENT_USERNAME} -PaxelorMavenPassword=${NEXUS_DEPLOYMENT_PASSWORD} -P${PUBLISH_TYPE}
+
+# Check code formatting
+spotless:
+  extends: .base-env
+  stage: test
+  needs:
+    - build
+  cache:
+    - *base_cache_pull
+  allow_failure: true
+  script:
+    - ./gradlew spotlessCheck -PaxelorMavenUsername=${NEXUS_READER_USERNAME} -PaxelorMavenPassword=${NEXUS_READER_PASSWORD}
 
 publish snapshot:
   <<: *publish_configuration
   variables:
     PUBLISH_TYPE: "snapshotRelease"
-  only:
-    - main
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
 
 publish release:
   <<: *publish_configuration
   variables:
     PUBLISH_TYPE: "finalRelease"
-  only:
-    - tags
+  rules:
+    - if: '$CI_COMMIT_TAG'
 
 create-release:
   stage: publish
@@ -55,4 +85,3 @@ create-release:
     - |
       RELEASE_DESCRIPTION=$(sed -n "/^## ${CI_COMMIT_TAG}/,/^## /p" CHANGELOG.md | sed '$d;$d')
       release-cli create --name "$CI_COMMIT_TAG" --description "$RELEASE_DESCRIPTION" --tag-name "$CI_COMMIT_TAG" --ref "$CI_COMMIT_TAG"
-
