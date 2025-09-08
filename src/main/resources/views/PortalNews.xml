@@ -25,7 +25,7 @@
         <field name="isFeaturedNews" colSpan="1"/>
         <field name="slug" pattern="^[a-z0-9-]*$" colSpan="11"/>
         <field name="isPrivate" colSpan="1"/>
-        <field name="publicationDateTime"/>
+        <field name="publicationDateTime" required="true"/>
         <field name="author"/>
       </panel>
       <field name="categorySet" colSpan="12" widget="TagSelect"/>
