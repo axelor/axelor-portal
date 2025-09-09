@@ -222,7 +222,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       throws AxelorException {
 
     Company company = portalAppConfig.getCompany();
-    Partner partner = participant.getContact();
+    Partner partner =
+        Optional.ofNullable(participant).map(PortalParticipant::getContact).orElse(null);
+    Partner mainPartner = Optional.ofNullable(partner).map(Partner::getMainPartner).orElse(null);
     String addressStr =
         ObjectUtils.notEmpty(participant.getCompany())
             ? participant.getCompany()
@@ -231,7 +233,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
                 .collect(Collectors.joining(" "));
 
     Invoice invoice = new Invoice();
-    setInvoiceDetails(invoice, company, partner, portalAppConfig, currency, addressStr);
+    setInvoiceDetails(
+        invoice, company, mainPartner, partner, portalAppConfig, currency, addressStr);
     createInvoiceLines(
         invoice, partner, company, portalAppConfig.getDefaultEventProduct(), registration);
     invoiceService.compute(invoice);
@@ -251,6 +254,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       Invoice invoice,
       Company company,
       Partner partner,
+      Partner contact,
       PortalAppConfig portalAppConfig,
       Currency currency,
       String addressStr) {
@@ -261,6 +265,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
 
     invoice.setCompany(company);
     invoice.setPartner(partner);
+    invoice.setContactPartner(contact);
 
     if (currency == null) {
       currency = partner.getCurrency() != null ? partner.getCurrency() : company.getCurrency();
