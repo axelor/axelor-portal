@@ -154,9 +154,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     PartnerPortalWorkspace partnerWorkspace = null;
     if (values.containsKey("partnerWorkspaceId")
         && ObjectUtils.notEmpty(values.get("partnerWorkspaceId"))) {
-      partnerWorkspace =
-          partnerPortalWorkspaceRepo.find(
-              Long.parseLong(values.get("partnerWorkspaceId").toString()));
+      partnerWorkspace = partnerPortalWorkspaceRepo.find(
+          Long.parseLong(values.get("partnerWorkspaceId").toString()));
     }
     Currency currency = null;
     if (values.containsKey("currencyCode") && ObjectUtils.notEmpty(values.get("currencyCode"))) {
@@ -179,10 +178,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
           I18n.get(PortalExceptionMessage.PARTICIPANT_MISSING));
     }
 
-    PortalParticipant participant =
-        registration.getParticipantList().stream()
-            .min((p1, p2) -> Integer.compare(p1.getSequence(), p2.getSequence()))
-            .get();
+    PortalParticipant participant = registration.getParticipantList().stream()
+        .min((p1, p2) -> Integer.compare(p1.getSequence(), p2.getSequence()))
+        .get();
     if (participant == null || participant.getContact() == null) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
@@ -202,9 +200,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
           I18n.get(PortalExceptionMessage.INVOICE_EXISTS));
     }
 
-    Invoice invoice =
-        createInvoice(
-            participant, registration, portalAppConfig, currency, partnerWorkspace.getWorkspace());
+    Invoice invoice = createInvoice(
+        participant, registration, portalAppConfig, currency, partnerWorkspace.getWorkspace());
     registration.setInvoice(invoice);
     registrationRepo.save(registration);
 
@@ -222,16 +219,16 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       throws AxelorException {
 
     Company company = portalAppConfig.getCompany();
-    Partner partner = participant.getContact();
-    String addressStr =
-        ObjectUtils.notEmpty(participant.getCompany())
-            ? participant.getCompany()
-            : Stream.of(participant.getName(), participant.getSurname())
-                .filter(s -> s != null && !s.isEmpty())
-                .collect(Collectors.joining(" "));
+    Partner partner = Optional.ofNullable(participant).map(PortalParticipant::getContact).orElse(null);
+    Partner mainPartner = Optional.ofNullable(partner).map(Partner::getMainPartner).orElse(null);
+    String addressStr = ObjectUtils.notEmpty(participant.getCompany())
+        ? participant.getCompany()
+        : Stream.of(participant.getName(), participant.getSurname())
+            .filter(s -> s != null && !s.isEmpty())
+            .collect(Collectors.joining(" "));
 
     Invoice invoice = new Invoice();
-    setInvoiceDetails(invoice, company, partner, portalAppConfig, currency, addressStr);
+    setInvoiceDetails(invoice, company, mainPartner, partner, portalAppConfig, currency, addressStr);
     createInvoiceLines(
         invoice, partner, company, portalAppConfig.getDefaultEventProduct(), registration);
     invoiceService.compute(invoice);
@@ -251,6 +248,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       Invoice invoice,
       Company company,
       Partner partner,
+      Partner contact,
       PortalAppConfig portalAppConfig,
       Currency currency,
       String addressStr) {
@@ -261,6 +259,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
 
     invoice.setCompany(company);
     invoice.setPartner(partner);
+    invoice.setContactPartner(contact);
 
     if (currency == null) {
       currency = partner.getCurrency() != null ? partner.getCurrency() : company.getCurrency();
@@ -315,10 +314,9 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
   protected BankDetails getPartnerBankDetails(Partner partner) {
 
     if (ObjectUtils.notEmpty(partner.getBankDetailsList())) {
-      Optional<BankDetails> optBankDetails =
-          partner.getBankDetailsList().stream()
-              .filter(bankDetails -> bankDetails.getActive())
-              .findFirst();
+      Optional<BankDetails> optBankDetails = partner.getBankDetailsList().stream()
+          .filter(bankDetails -> bankDetails.getActive())
+          .findFirst();
       if (optBankDetails.isPresent()) {
         return optBankDetails.get();
       }
@@ -348,11 +346,10 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
         portalEvent.getDefaultPrice());
 
     for (PortalEventFacility item : portalEvent.getFacilityList()) {
-      BigDecimal qty =
-          new BigDecimal(
-              registration.getParticipantList().stream()
-                  .filter(p -> p.getSubscriptionSet().contains(item))
-                  .count());
+      BigDecimal qty = new BigDecimal(
+          registration.getParticipantList().stream()
+              .filter(p -> p.getSubscriptionSet().contains(item))
+              .count());
       createInvoiceLine(
           invoice,
           partner,
@@ -422,26 +419,23 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     invoiceLine.setUnit(product.getUnit());
 
     LocalDate todayDate = appBaseService.getTodayDate(invoice.getCompany());
-    Set<TaxLine> taxLineSet =
-        accountManagementAccountService.getTaxLineSet(
-            todayDate,
-            product,
-            invoice.getCompany(),
-            invoice.getPartner().getFiscalPosition(),
-            false);
+    Set<TaxLine> taxLineSet = accountManagementAccountService.getTaxLineSet(
+        todayDate,
+        product,
+        invoice.getCompany(),
+        invoice.getPartner().getFiscalPosition(),
+        false);
 
-    Currency fromCurrency =
-        (Currency) productCompanyService.get(product, "saleCurrency", invoice.getCompany());
+    Currency fromCurrency = (Currency) productCompanyService.get(product, "saleCurrency", invoice.getCompany());
     if (fromCurrency == null) {
       fromCurrency = invoice.getCompany().getCurrency();
     }
     Currency toCurrency = invoice.getCurrency();
 
-    BigDecimal invoicePriceWT =
-        currencyService
-            .getAmountCurrencyConvertedAtDate(
-                fromCurrency, toCurrency, invoiceLine.getPrice(), todayDate)
-            .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+    BigDecimal invoicePriceWT = currencyService
+        .getAmountCurrencyConvertedAtDate(
+            fromCurrency, toCurrency, invoiceLine.getPrice(), todayDate)
+        .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
 
     invoiceLine.setExTaxTotal(invoicePriceWT);
     invoiceLine.setPrice(invoicePriceWT);
@@ -475,9 +469,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     PartnerPortalWorkspace partnerWorkspace = null;
     if (values.containsKey("partnerWorkspaceId")
         && ObjectUtils.notEmpty(values.get("partnerWorkspaceId"))) {
-      partnerWorkspace =
-          partnerPortalWorkspaceRepo.find(
-              Long.parseLong(values.get("partnerWorkspaceId").toString()));
+      partnerWorkspace = partnerPortalWorkspaceRepo.find(
+          Long.parseLong(values.get("partnerWorkspaceId").toString()));
     }
     if (partnerWorkspace == null) {
       throw new AxelorException(
@@ -501,15 +494,14 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
 
     LocalDate todayDate = appBaseService.getTodayDate(company);
 
-    PortalPricingResponse response =
-        fetchProductPrices(
-            eventId,
-            event.getEventProduct(),
-            event.getDefaultPrice(),
-            company,
-            toCurrency,
-            fiscalPosition,
-            todayDate);
+    PortalPricingResponse response = fetchProductPrices(
+        eventId,
+        event.getEventProduct(),
+        event.getDefaultPrice(),
+        company,
+        toCurrency,
+        fiscalPosition,
+        todayDate);
     for (PortalEventFacility item : event.getFacilityList()) {
       response.addFacilityPricingListItem(
           fetchProductPrices(
@@ -540,9 +532,8 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     Currency fromCurrency = null;
     Set<TaxLine> taxLineSet = new HashSet<TaxLine>();
     if (product != null) {
-      taxLineSet =
-          accountManagementAccountService.getTaxLineSet(
-              todayDate, product, company, fiscalPosition, false);
+      taxLineSet = accountManagementAccountService.getTaxLineSet(
+          todayDate, product, company, fiscalPosition, false);
 
       fromCurrency = (Currency) productCompanyService.get(product, "saleCurrency", company);
       if (fromCurrency == null) {
@@ -550,19 +541,17 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
       }
     }
 
-    BigDecimal priceWT =
-        currencyService
-            .getAmountCurrencyConvertedAtDate(fromCurrency, toCurrency, price, todayDate)
-            .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
-    BigDecimal priceATI =
-        currencyService
-            .getAmountCurrencyConvertedAtDate(
-                fromCurrency,
-                toCurrency,
-                taxService.convertUnitPrice(
-                    false, taxLineSet, price, appBaseService.getNbDecimalDigitForUnitPrice()),
-                todayDate)
-            .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+    BigDecimal priceWT = currencyService
+        .getAmountCurrencyConvertedAtDate(fromCurrency, toCurrency, price, todayDate)
+        .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
+    BigDecimal priceATI = currencyService
+        .getAmountCurrencyConvertedAtDate(
+            fromCurrency,
+            toCurrency,
+            taxService.convertUnitPrice(
+                false, taxLineSet, price, appBaseService.getNbDecimalDigitForUnitPrice()),
+            todayDate)
+        .setScale(appBaseService.getNbDecimalDigitForUnitPrice(), RoundingMode.HALF_UP);
 
     response.setId(id);
     response.setPriceWT(priceWT);
