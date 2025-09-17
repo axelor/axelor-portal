@@ -48,7 +48,6 @@
           <field name="confirmOrder"/>
         </panel>
         <panel name="confirmOrderPanel" title="How to confirm an order ?" colSpan="12">
-          <field name="payInAdvance"/>
           <field name="eSignature"/>
         </panel>
         <panel name="carouselPanel" title="Carousel" colSpan="12">
@@ -172,6 +171,9 @@
       <panel title="Payment" name="paymentPanel">
         <field name="allowOnlinePaymentForEcommerce"/>
         <field name="paymentOptionSet" colSpan="12" widget="TagSelect"/>
+        <field name="payInAdvance"/>
+        <field name="advancePaymentPercentage" showIf="payInAdvance"
+          validIf="(payInAdvance &amp;&amp; advancePaymentPercentage > 0) || !payInAdvance"/>
       </panel>
     </panel-tabs>
   </form>
