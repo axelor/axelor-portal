@@ -53,6 +53,7 @@
     <integer name="noMoreStockSelect" title="If no more stock"
       selection="no.more.stock.select" default="3" nullable="true"/>
     <decimal name="outOfStockQty" title="Out of stock qty"/>
+    <decimal name="advancePaymentPercentage" title="Advance payment percentage"/>
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
