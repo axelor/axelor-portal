@@ -19,8 +19,10 @@
 package com.axelor.apps.portal.service;
 
 import com.axelor.apps.account.db.AccountManagement;
+import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.account.db.Tax;
 import com.axelor.apps.account.db.TaxEquiv;
+import com.axelor.apps.account.service.invoice.InvoiceService;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Partner;
@@ -61,6 +63,7 @@ import com.axelor.apps.sale.service.saleorderline.product.SaleOrderLineProductSe
 import com.axelor.apps.stock.db.StockLocation;
 import com.axelor.apps.stock.db.repo.StockLocationRepository;
 import com.axelor.apps.supplychain.service.saleorder.SaleOrderCreateSupplychainService;
+import com.axelor.apps.supplychain.service.saleorder.SaleOrderInvoiceService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
@@ -102,6 +105,9 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   protected AddressService addressService;
   protected SaleOrderPrintService saleOrderPrintService;
   protected SaleConfigService saleConfigService;
+  protected SaleOrderInvoiceService saleOrderInvoiceService;
+  protected InvoiceService invoiceService;
+  protected PortalInvoiceService portalInvoiceService;
 
   protected PartnerRepository partnerRepo;
   protected ProductRepository productRepo;
@@ -131,6 +137,9 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       AddressService addressService,
       SaleOrderPrintService saleOrderPrintService,
       SaleConfigService saleConfigService,
+      SaleOrderInvoiceService saleOrderInvoiceService,
+      InvoiceService invoiceService,
+      PortalInvoiceService portalInvoiceService,
       PartnerRepository partnerRepo,
       ProductRepository productRepo,
       SaleOrderRepository saleOrderRepo,
@@ -156,6 +165,9 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     this.addressService = addressService;
     this.saleOrderPrintService = saleOrderPrintService;
     this.saleConfigService = saleConfigService;
+    this.saleOrderInvoiceService = saleOrderInvoiceService;
+    this.invoiceService = invoiceService;
+    this.portalInvoiceService = portalInvoiceService;
     this.partnerRepo = partnerRepo;
     this.productRepo = productRepo;
     this.saleOrderRepo = saleOrderRepo;
@@ -475,6 +487,17 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
     try {
       attachReport(order);
     } catch (IOException e) {
+    }
+
+    Invoice invoice = saleOrderInvoiceService.createInvoice(order);
+    if (ObjectUtils.notEmpty(invoice)) {
+      invoiceService.validate(invoice);
+      invoiceService.ventilate(invoice);
+
+      if (values.containsKey("paidAmount") && ObjectUtils.notEmpty(values.get("paidAmount"))) {
+        BigDecimal amount = new BigDecimal(values.get("paidAmount").toString());
+        portalInvoiceService.createInvoiePayment(invoice, amount);
+      }
     }
 
     return order;

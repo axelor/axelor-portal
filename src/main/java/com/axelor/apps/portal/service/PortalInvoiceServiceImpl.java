@@ -69,7 +69,8 @@ public class PortalInvoiceServiceImpl implements PortalInvoiceService {
       invoice = invoiceRepo.find(Long.parseLong(values.get("invoiceId").toString()));
     }
 
-    if (invoice.getStatusSelect() != InvoiceRepository.STATUS_VENTILATED
+    if (ObjectUtils.isEmpty(invoice)
+        || invoice.getStatusSelect() != InvoiceRepository.STATUS_VENTILATED
         || invoice.getInTaxTotal().compareTo(BigDecimal.ZERO) <= 0) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
