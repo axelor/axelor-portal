@@ -491,6 +491,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
 
     Invoice invoice = saleOrderInvoiceService.createInvoice(order);
     if (ObjectUtils.notEmpty(invoice)) {
+      invoice.setPortalWorkspace(order.getPortalWorkspace());
       invoiceService.validate(invoice);
       invoiceService.ventilate(invoice);
 
