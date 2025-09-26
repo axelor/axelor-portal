@@ -98,6 +98,10 @@
     <boolean name="isShowPublicationAuthor" title="Show publication author"/>
     <string name="socialMediaSelect" selection="social.media.select"/>
 
+    <boolean name="isAllowPartnerCreationWithSSO" title="Allow partner creation with SSO"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"
+      name="partnerPortalWorksapce" title="Default Partner Configuration"/>
+
     <boolean name="isDisplayContact" title="show contact"/>
     <string name="contactName" title="Name"/>
     <one-to-one name="contactEmailAddress" ref="com.axelor.message.db.EmailAddress"
