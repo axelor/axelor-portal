@@ -19,7 +19,10 @@
       <field name="name" required="true"/>
       <field name="company" required="true"
         onChange="action-portal-app-config-attrs-company-onchange"/>
-      <field name="enableComment" onChange="action-record-portal-enable-comment-onchange"/>
+      <field name="enableComment" onChange="action-record-portal-enable-comment-onchange"
+        colSpan="3"/>
+      <field name="isAllowPartnerCreationWithSSO" colSpan="3"/>
+      <field name="partnerPortalWorksapce" showIf="isAllowPartnerCreationWithSSO"/>
     </panel>
     <panel-tabs name="mainPanelTab">
       <panel title="Shop" name="shopPanel">
