@@ -18,15 +18,12 @@
  */
 package com.axelor.apps.portal.service;
 
-import com.axelor.apps.base.db.Partner;
-import com.axelor.apps.base.db.PartnerCategory;
-import com.axelor.apps.portal.db.PortalWorkspace;
 import com.axelor.common.ObjectUtils;
 import com.axelor.dms.db.DMSFile;
 import com.axelor.dms.db.repo.DMSFileRepository;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import java.util.HashSet;
+import java.util.Optional;
 
 public class DMSFilePortalServiceImpl implements DMSFilePortalService {
 
@@ -41,9 +38,12 @@ public class DMSFilePortalServiceImpl implements DMSFilePortalService {
 
     dmsFile.setAuthor(parentFile.getAuthor());
     dmsFile.setIsPrivate(parentFile.getIsPrivate());
-    dmsFile.setWorkspaceSet(new HashSet<PortalWorkspace>(parentFile.getWorkspaceSet()));
-    dmsFile.setPartnerSet(new HashSet<Partner>(parentFile.getPartnerSet()));
-    dmsFile.setPartnerCategorySet(new HashSet<PartnerCategory>(parentFile.getPartnerCategorySet()));
+    Optional.ofNullable(parentFile.getWorkspaceSet())
+        .ifPresent(set -> set.forEach(dmsFile::addWorkspaceSetItem));
+    Optional.ofNullable(parentFile.getPartnerSet())
+        .ifPresent(set -> set.forEach(dmsFile::addPartnerSetItem));
+    Optional.ofNullable(parentFile.getPartnerCategorySet())
+        .ifPresent(set -> set.forEach(dmsFile::addPartnerCategorySetItem));
     dmsFile.setLogoSelect(parentFile.getLogoSelect());
   }
 
