@@ -57,6 +57,9 @@
     <boolean name="requestQuotation" title="Request quotation"/>
     <boolean name="confirmOrder" title="Confirm order"/>
     <boolean name="displayPrices" title="Display prices"/>
+    <boolean name="hidePriceForEmptyPricelist"
+      title="Hide prices if no pricelist on partner"/>
+    <boolean name="applyTaxesDependingOnPartner" title="Apply taxes depending on partner"/>
 
     <boolean name="payInAdvance" title="Pay in advance"/>
     <boolean name="eSignature" title="E signature"/>
