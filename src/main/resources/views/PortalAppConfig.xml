@@ -35,7 +35,6 @@
         <panel name="priceConfigPanel" title="Price config" colSpan="12">
           <field name="displayPrices"/>
           <field name="priceAfterLoginSelect" showIf="displayPrices == true"/>
-          <field name="applyTaxesDependingOnPartner"/>
           <field name="hidePriceForEmptyPricelist"
             showIf="displayPrices &amp;&amp; priceAfterLoginSelect == 'fromWS'"/>
           <field name="mainPriceSelect"/>
