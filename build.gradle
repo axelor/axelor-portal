@@ -1,8 +1,11 @@
+import com.axelor.gradle.support.ChangelogSupport
+
 plugins {
 	id 'com.axelor.app'
 }
 
-apply from: "version.gradle"
+apply from: 'version.gradle'
+apply plugin: ChangelogSupport
 
 try {
     tasks.named('spotlessCheck')
@@ -21,6 +24,14 @@ group = "com.axelor.apps"
 axelor {
 	title "Axelor Portal"
 	description "Axelor Portal Module"
+}
+
+changelog {
+  version = baseVersion
+  output.set(file('CHANGELOG.md'))
+  inputPath.set(file('changelogs/unreleased'))
+  types.set(['Feature', 'Change', 'Deprecate', 'Remove', 'Fix', 'Security'])
+  header.set("${version.get()} (${new Date().format('yyyy-MM-dd')})")
 }
 
 ext.aosVersion = '8.4.0'
