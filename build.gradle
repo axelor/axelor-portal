@@ -58,7 +58,12 @@ dependencies {
     if (findProject(':modules:axelor-mattermost') != null) {
         api project(':modules:axelor-mattermost')
     } else {
-        implementation 'com.axelor.apps:axelor-mattermost:8.0.0'
+        api ('com.axelor.apps:axelor-mattermost') {
+            version {
+                require '[8.0, 8.1['
+                prefer '8.0.0'
+            }
+        }
     }
 }
 
