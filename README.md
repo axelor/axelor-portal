@@ -10,7 +10,7 @@ This module provide models and api support for the customer portal application.
 
 Axelor Portal Version | Compatible from AOS version | Compatible to AOS version
 --- |-----------------------------| --- 
-1.0 | 8.2.7                       | -
+8.0 | 8.2.7                       | -
 
 
 
