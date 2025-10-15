@@ -9,6 +9,7 @@
     <many-to-one ref="com.axelor.meta.db.MetaFile" name="image"/>
     <string name="title" title="Title"/>
     <string name="subTitle" title="Sub title"/>
+    <string name="buttonLabel"/>
     <string name="href"/>
     <many-to-one ref="com.axelor.apps.portal.db.PortalAppConfig" name="portalAppConfig"/>
   </entity>

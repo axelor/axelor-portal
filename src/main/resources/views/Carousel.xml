@@ -6,6 +6,7 @@
   <grid model="com.axelor.apps.portal.db.Carousel" title="Carousels" name="carousel-grid">
     <field name="title"/>
     <field name="subTitle"/>
+    <field name="buttonLabel"/>
     <field name="href"/>
   </grid>
 
@@ -17,6 +18,7 @@
       <panel name="fieldsPanel" colSpan="10" itemSpan="12">
         <field name="title"/>
         <field name="subTitle"/>
+        <field name="buttonLabel"/>
         <field name="href" widget="url" pattern="^(?:http(?:s)?://)?\S+(?:\.\S+)+$"/>
         <field name="portalAppConfig"/>
       </panel>

@@ -141,7 +141,7 @@
         <panel name="heroPanel" colSpan="12" title="Hero details">
           <field name="ticketHeroTitle" title="Title"/>
           <field name="ticketHeroOverlayColorSelect" widget="SingleSelect"
-            x-color-field="eventHeroOverlayColorSelect" title="Overlay color"/>
+            x-color-field="ticketHeroOverlayColorSelect" title="Overlay color"/>
           <field name="ticketHeroBgImage" widget="binary-link" title="Background image"/>
           <field name="ticketHeroDescription" colSpan="12" title="Description"/>
           <field name="ticketingFieldSet" colSpan="12" widget="TagSelect" canNew="false"
