@@ -18,7 +18,7 @@
  */
 package com.axelor.apps.portal.web.service;
 
-import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
 import com.axelor.inject.Beans;
@@ -36,13 +36,14 @@ public class EventWebService {
   @Path("/price")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public PortalRestResponse fetchrEventPrice(Map<String, Object> values) throws AxelorException {
+  public PortalRestResponse fetchrEventPrice(Map<String, Object> values) {
 
     try {
       return new PortalRestResponse()
           .setData(Beans.get(PortalEventRegistrationService.class).fetchEventPricing(values))
           .success();
     } catch (Exception e) {
+      TraceBackService.trace(e);
       PortalRestResponse response = new PortalRestResponse();
       response.setException(e);
       return response.fail();

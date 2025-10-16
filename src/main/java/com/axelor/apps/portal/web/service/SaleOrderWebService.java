@@ -19,6 +19,7 @@
 package com.axelor.apps.portal.web.service;
 
 import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.portal.service.SaleOrderPortalService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
 import com.axelor.apps.sale.db.SaleOrder;
@@ -49,6 +50,7 @@ public class SaleOrderWebService {
       return response.setData(saleOrder.getId()).success();
 
     } catch (Exception e) {
+      TraceBackService.trace(e);
       PortalRestResponse response = new PortalRestResponse();
       response.setException(e);
       return response.fail();
@@ -69,6 +71,7 @@ public class SaleOrderWebService {
       return response.setData(saleOrder.getId()).success();
 
     } catch (Exception e) {
+      TraceBackService.trace(e);
       PortalRestResponse response = new PortalRestResponse();
       response.setException(e);
       return response.fail();

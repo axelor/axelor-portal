@@ -25,6 +25,7 @@ import com.axelor.apps.account.service.config.AccountConfigService;
 import com.axelor.apps.account.service.invoice.print.InvoicePrintService;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.PrintingTemplate;
+import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
 import com.axelor.apps.portal.service.PortalInvoiceService;
 import com.axelor.apps.portal.service.response.PortalRestResponse;
@@ -49,29 +50,33 @@ public class InvoiceWebService {
   @Path("/print/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response printInvoice(@PathParam("id") Long id) throws AxelorException {
+    try {
+      Beans.get(JpaSecurity.class).check(AccessType.READ, Invoice.class, id);
+      Invoice invoice = Beans.get(InvoiceRepository.class).find(id);
+      if (invoice == null) {
+        return null;
+      }
 
-    Beans.get(JpaSecurity.class).check(AccessType.READ, Invoice.class, id);
-    Invoice invoice = Beans.get(InvoiceRepository.class).find(id);
-    if (invoice == null) {
-      return null;
+      PrintingTemplate invoicePrintTemplate =
+          Beans.get(AccountConfigService.class).getInvoicePrintTemplate(invoice.getCompany());
+      File report =
+          Beans.get(InvoicePrintService.class)
+              .getPrintedInvoice(invoice, true, 4, invoicePrintTemplate, null);
+      return Response.ok()
+          .entity(report)
+          .header("Content-Disposition", "attachment;filename=" + report.getName() + ".pdf")
+          .build();
+    } catch (Exception e) {
+      TraceBackService.trace(e);
+      throw e;
     }
-
-    PrintingTemplate invoicePrintTemplate =
-        Beans.get(AccountConfigService.class).getInvoicePrintTemplate(invoice.getCompany());
-    File report =
-        Beans.get(InvoicePrintService.class)
-            .getPrintedInvoice(invoice, true, 4, invoicePrintTemplate, null);
-    return Response.ok()
-        .entity(report)
-        .header("Content-Disposition", "attachment;filename=" + report.getName() + ".pdf")
-        .build();
   }
 
   @POST
   @Path("/payment")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public PortalRestResponse payInvoice(Map<String, Object> values) throws AxelorException {
+  public PortalRestResponse payInvoice(Map<String, Object> values) {
 
     try {
       Beans.get(JpaSecurity.class).check(AccessType.WRITE, Invoice.class);
@@ -81,6 +86,7 @@ public class InvoiceWebService {
       return response.setData(invoicePayment.getId()).success();
 
     } catch (Exception e) {
+      TraceBackService.trace(e);
       PortalRestResponse response = new PortalRestResponse();
       response.setException(e);
       return response.fail();
@@ -91,7 +97,7 @@ public class InvoiceWebService {
   @Path("/eventInvoice")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public PortalRestResponse createEventInvoice(Map<String, Object> values) throws AxelorException {
+  public PortalRestResponse createEventInvoice(Map<String, Object> values) {
 
     try {
       Beans.get(JpaSecurity.class).check(AccessType.CREATE, Invoice.class);
@@ -101,6 +107,7 @@ public class InvoiceWebService {
       return response.setData(invoice.getId()).success();
 
     } catch (Exception e) {
+      TraceBackService.trace(e);
       PortalRestResponse response = new PortalRestResponse();
       response.setException(e);
       return response.fail();
