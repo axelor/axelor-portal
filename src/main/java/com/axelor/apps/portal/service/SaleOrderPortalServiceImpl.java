@@ -24,6 +24,7 @@ import com.axelor.apps.account.db.Tax;
 import com.axelor.apps.account.db.TaxEquiv;
 import com.axelor.apps.account.service.invoice.InvoiceService;
 import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.db.Address;
 import com.axelor.apps.base.db.Company;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.PartnerAddress;
@@ -67,6 +68,7 @@ import com.axelor.apps.supplychain.service.saleorder.SaleOrderInvoiceService;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
 import com.axelor.common.StringUtils;
+import com.axelor.db.JPA;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
 import com.axelor.meta.MetaFiles;
@@ -271,31 +273,39 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       }
       saleOrder.setPortalWorkspace(portalWorkspace);
 
-      PartnerAddress deliveryAddress = null;
-      if (values.containsKey("deliveryPartnerAddressId")
-          && ObjectUtils.notEmpty(values.get("deliveryPartnerAddressId"))) {
-        deliveryAddress =
-            partnerAddressRepo.find(
-                Long.parseLong(values.get("deliveryPartnerAddressId").toString()));
-        saleOrder.setDeliveryAddress(deliveryAddress != null ? deliveryAddress.getAddress() : null);
-        saleOrder.setDeliveryAddressStr(
-            addressService.computeAddressStr(saleOrder.getDeliveryAddress()));
-      }
+      saleOrder.setDeliveryAddress(
+          getAddress(values, clientPartner, contactPartner, "deliveryPartnerAddressId"));
+      saleOrder.setDeliveryAddressStr(
+          addressService.computeAddressStr(saleOrder.getDeliveryAddress()));
 
-      PartnerAddress invocingAddress = null;
-      if (values.containsKey("invocingPartnerAddressId")
-          && ObjectUtils.notEmpty(values.get("invocingPartnerAddressId"))) {
-        invocingAddress =
-            partnerAddressRepo.find(
-                Long.parseLong(values.get("invocingPartnerAddressId").toString()));
-        saleOrder.setMainInvoicingAddress(
-            invocingAddress != null ? invocingAddress.getAddress() : null);
-        saleOrder.setMainInvoicingAddressStr(
-            addressService.computeAddressStr(saleOrder.getMainInvoicingAddress()));
-      }
+      saleOrder.setMainInvoicingAddress(
+          getAddress(values, clientPartner, contactPartner, "invocingPartnerAddressId"));
+      saleOrder.setMainInvoicingAddressStr(
+          addressService.computeAddressStr(saleOrder.getMainInvoicingAddress()));
     }
 
     return saleOrder;
+  }
+
+  protected Address getAddress(
+      Map<String, Object> values, Partner clientPartner, Partner contactPartner, String key)
+      throws AxelorException {
+
+    PartnerAddress partnerAddress = null;
+    if (values.containsKey(key) && ObjectUtils.notEmpty(values.get(key))) {
+      partnerAddress = partnerAddressRepo.find(Long.parseLong(values.get(key).toString()));
+
+      if (ObjectUtils.isEmpty(clientPartner.getPartnerAddressList())
+          || !clientPartner.getPartnerAddressList().contains(partnerAddress)) {
+        throw new AxelorException(
+            TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
+            I18n.get(PortalExceptionMessage.INVALID_ADDRESS));
+      }
+
+      return partnerAddress != null ? partnerAddress.getAddress() : null;
+    }
+
+    return null;
   }
 
   protected void createOrderLines(Map<String, Object> values, SaleOrder order)
@@ -474,11 +484,28 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
   }
 
   @Override
-  @Transactional
   public SaleOrder createOrder(Map<String, Object> values) throws AxelorException {
+
+    SaleOrder order = persistSaleOrder(values);
+
+    order = completeSaleOrder(order);
+    manageOrderPayment(order, values);
+
+    return order;
+  }
+
+  @Transactional
+  public SaleOrder persistSaleOrder(Map<String, Object> values) throws AxelorException {
 
     SaleOrder order = createSaleOrder(values);
     createOrderLines(values, order);
+
+    return JPA.save(order);
+  }
+
+  @Transactional
+  public SaleOrder completeSaleOrder(SaleOrder order) throws AxelorException {
+
     saleOrderComputeService.computeSaleOrder(order);
     saleOrderRepo.save(order);
 
@@ -488,6 +515,12 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       attachReport(order);
     } catch (IOException e) {
     }
+    return order;
+  }
+
+  @Transactional
+  public Invoice manageOrderPayment(SaleOrder order, Map<String, Object> values)
+      throws AxelorException {
 
     Invoice invoice = saleOrderInvoiceService.createInvoice(order);
     if (ObjectUtils.notEmpty(invoice)) {
@@ -501,7 +534,7 @@ public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {
       }
     }
 
-    return order;
+    return invoice;
   }
 
   @Transactional
