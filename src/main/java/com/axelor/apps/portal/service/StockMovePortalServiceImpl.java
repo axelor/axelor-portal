@@ -48,6 +48,7 @@ import com.axelor.apps.stock.service.app.AppStockService;
 import com.axelor.apps.stock.service.config.StockConfigService;
 import com.axelor.apps.stock.utils.StockLocationUtilsService;
 import com.axelor.apps.supplychain.service.PartnerSupplychainService;
+import com.axelor.apps.supplychain.service.PurchaseOrderReceiptStateService;
 import com.axelor.apps.supplychain.service.ReservedQtyService;
 import com.axelor.apps.supplychain.service.StockMoveLineServiceSupplychain;
 import com.axelor.apps.supplychain.service.app.AppSupplychainService;
@@ -97,6 +98,7 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
       PfpService pfpService,
       SaleOrderConfirmService saleOrderConfirmService,
       StockMoveLineServiceSupplychain stockMoveLineServiceSupplychain,
+      PurchaseOrderReceiptStateService purchaseOrderReceiptStateService,
       SaleOrderLineRepository saleOrderLineRepository,
       StockLocationUtilsService stockLocationUtilsService,
       PrintingTemplateService printingTemplateService,
@@ -126,6 +128,7 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
         pfpService,
         saleOrderConfirmService,
         stockMoveLineServiceSupplychain,
+        purchaseOrderReceiptStateService,
         saleOrderLineRepository);
     this.stockLocationUtilsService = stockLocationUtilsService;
     this.printingTemplateService = printingTemplateService;

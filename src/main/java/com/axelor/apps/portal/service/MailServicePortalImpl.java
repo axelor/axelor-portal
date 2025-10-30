@@ -29,6 +29,7 @@ import com.axelor.db.Model;
 import com.axelor.inject.Beans;
 import com.axelor.mail.db.MailMessage;
 import com.axelor.message.service.MailAccountService;
+import com.axelor.message.service.MailMessageActionService;
 import com.axelor.meta.db.MetaModel;
 import com.google.inject.Inject;
 import java.util.LinkedHashSet;
@@ -40,9 +41,10 @@ public class MailServicePortalImpl extends MailServiceHelpDeskImpl {
 
   @Inject
   public MailServicePortalImpl(
-      MailAccountService mailAccountService, AppBaseService appBaseService) {
-
-    super(mailAccountService, appBaseService);
+      MailAccountService mailAccountService,
+      AppBaseService appBaseService,
+      MailMessageActionService mailMessageActionService) {
+    super(mailAccountService, appBaseService, mailMessageActionService);
   }
 
   @Override

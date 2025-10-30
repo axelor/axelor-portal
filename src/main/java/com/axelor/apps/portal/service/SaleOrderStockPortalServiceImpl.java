@@ -14,7 +14,9 @@ import com.axelor.apps.stock.db.StockMove;
 import com.axelor.apps.stock.db.repo.StockMoveLineRepository;
 import com.axelor.apps.stock.service.PartnerStockSettingsService;
 import com.axelor.apps.stock.service.StockMoveLineService;
+import com.axelor.apps.stock.service.StockMoveLineStockLocationService;
 import com.axelor.apps.stock.service.StockMoveService;
+import com.axelor.apps.stock.service.app.AppStockService;
 import com.axelor.apps.stock.service.config.StockConfigService;
 import com.axelor.apps.supplychain.service.StockMoveLineServiceSupplychain;
 import com.axelor.apps.supplychain.service.app.AppSupplychainService;
@@ -45,7 +47,9 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
       PartnerStockSettingsService partnerStockSettingsService,
       TaxService taxService,
       SaleOrderDeliveryAddressService saleOrderDeliveryAddressService,
-      SaleOrderLineBlockingSupplychainService saleOrderLineBlockingSupplychainService) {
+      SaleOrderLineBlockingSupplychainService saleOrderLineBlockingSupplychainService,
+      AppStockService appStockService,
+      StockMoveLineStockLocationService stockMoveLineStockLocationService) {
     super(
         stockMoveService,
         stockMoveLineService,
@@ -62,7 +66,9 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
         partnerStockSettingsService,
         taxService,
         saleOrderDeliveryAddressService,
-        saleOrderLineBlockingSupplychainService);
+        saleOrderLineBlockingSupplychainService,
+        appStockService,
+        stockMoveLineStockLocationService);
   }
 
   @Override
