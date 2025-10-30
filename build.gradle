@@ -39,19 +39,19 @@ dependencies {
     if (findProject(':modules:axelor-project') != null) {
         api project(':modules:axelor-project')
     } else {
-        implementation "com.axelor.apps:axelor-project:${aosVersion}"
+        api "com.axelor.apps:axelor-project:${aosVersion}"
     }
 
     if (findProject(':modules:axelor-production') != null) {
         api project(':modules:axelor-production')
     } else {
-        implementation "com.axelor.apps:axelor-production:${aosVersion}"
+        api "com.axelor.apps:axelor-production:${aosVersion}"
     }
 
     if (findProject(':modules:axelor-helpdesk') != null) {
         api project(':modules:axelor-helpdesk')
     } else {
-        implementation "com.axelor.apps:axelor-helpdesk:${aosVersion}"
+        api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
     }
 
     if (findProject(":modules:axelor-human-resource") != null) {
@@ -59,7 +59,6 @@ dependencies {
     }else {
         api "com.axelor.apps:axelor-human-resource:${aosVersion}"
     }
-
 
     if (findProject(':modules:axelor-mattermost') != null) {
         api project(':modules:axelor-mattermost')
