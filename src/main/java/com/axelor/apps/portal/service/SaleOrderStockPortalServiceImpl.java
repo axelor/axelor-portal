@@ -20,7 +20,6 @@ import com.axelor.apps.supplychain.service.StockMoveLineServiceSupplychain;
 import com.axelor.apps.supplychain.service.app.AppSupplychainService;
 import com.axelor.apps.supplychain.service.config.SupplyChainConfigService;
 import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
-import com.axelor.apps.supplychain.service.saleorderline.SaleOrderLineBlockingSupplychainService;
 import com.axelor.apps.supplychain.service.saleorderline.SaleOrderLineServiceSupplyChain;
 import com.google.inject.Inject;
 import java.time.LocalDate;
@@ -44,8 +43,7 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
       ProductCompanyService productCompanyService,
       PartnerStockSettingsService partnerStockSettingsService,
       TaxService taxService,
-      SaleOrderDeliveryAddressService saleOrderDeliveryAddressService,
-      SaleOrderLineBlockingSupplychainService saleOrderLineBlockingSupplychainService) {
+      SaleOrderDeliveryAddressService saleOrderDeliveryAddressService) {
     super(
         stockMoveService,
         stockMoveLineService,
@@ -61,8 +59,7 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
         productCompanyService,
         partnerStockSettingsService,
         taxService,
-        saleOrderDeliveryAddressService,
-        saleOrderLineBlockingSupplychainService);
+        saleOrderDeliveryAddressService);
   }
 
   @Override
