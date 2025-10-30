@@ -34,8 +34,6 @@ changelog {
   header.set("${version.get()} (${new Date().format('yyyy-MM-dd')})")
 }
 
-ext.aosVersion = '8.4.0'
-
 dependencies {
     if (findProject(':modules:axelor-production') != null) {
         api project(':modules:axelor-production')
