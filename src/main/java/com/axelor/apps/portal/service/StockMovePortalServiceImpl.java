@@ -33,6 +33,7 @@ import com.axelor.apps.base.service.printing.template.PrintingTemplateService;
 import com.axelor.apps.base.service.printing.template.model.PrintingGenFactoryContext;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.purchase.db.repo.PurchaseOrderRepository;
+import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.service.saleorder.status.SaleOrderConfirmService;
 import com.axelor.apps.stock.db.StockMove;
@@ -96,6 +97,7 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
       PfpService pfpService,
       SaleOrderConfirmService saleOrderConfirmService,
       StockMoveLineServiceSupplychain stockMoveLineServiceSupplychain,
+      SaleOrderLineRepository saleOrderLineRepository,
       StockLocationUtilsService stockLocationUtilsService,
       PrintingTemplateService printingTemplateService,
       PrintingTemplatePrintService printingTemplatePrintService,
@@ -123,7 +125,8 @@ public class StockMovePortalServiceImpl extends StockMoveServiceProductionImpl {
         fixedAssetRepository,
         pfpService,
         saleOrderConfirmService,
-        stockMoveLineServiceSupplychain);
+        stockMoveLineServiceSupplychain,
+        saleOrderLineRepository);
     this.stockLocationUtilsService = stockLocationUtilsService;
     this.printingTemplateService = printingTemplateService;
     this.printingTemplatePrintService = printingTemplatePrintService;
