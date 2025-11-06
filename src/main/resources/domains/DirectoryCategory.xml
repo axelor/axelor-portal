@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="DirectoryCategory">
+
+    <string name="directoryCategoryTitle" namecolumn="true" title="Title"/>
+    <string name="directoryCategoryIcon" title="Icon" selection="portal.icon.select"/>
+    <string name="directoryCategoryColorSelect" title="Color"
+      selection="color.name.selection"/>
+    <many-to-many ref="com.axelor.apps.portal.db.DirectoryCategory"
+      name="directoryCategorySet" title="Categories"/>
+
+  </entity>
+
+</domain-models>
