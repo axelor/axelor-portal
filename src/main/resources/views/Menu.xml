@@ -240,6 +240,27 @@
       method="trackProjectTaskFields"/>
   </action-method>
 
+  <menuitem title="Directory app" name="menu-portal-directory-root"
+    parent="menu-portal-root" order="135"/>
+
+  <menuitem title="Directory entry" name="menu-portal-directory-entry"
+    parent="menu-portal-directory-root" action="action.portal.directory.entry"/>
+
+  <action-view name="action.portal.directory.entry" title="Directory entry"
+    model="com.axelor.apps.portal.db.DirectoryEntry">
+    <view type="grid" name="directory-entry-grid"/>
+    <view type="form" name="directory-entry-form"/>
+  </action-view>
+
+  <menuitem title="Directory category" name="menu-portal-directory-category"
+    parent="menu-portal-directory-root" action="action.portal.directory.category"/>
+
+  <action-view name="action.portal.directory.category" title="Directory category"
+    model="com.axelor.apps.portal.db.DirectoryCategory">
+    <view type="grid" name="directory-category-grid"/>
+    <view type="form" name="directory-category-form"/>
+  </action-view>
+
   <menuitem title="CMS app" name="menu-portal-cms-root" parent="menu-portal-root"
     order="137"/>
 

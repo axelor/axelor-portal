@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_7.0.xsd">
+
+  <module name="portal" package="com.axelor.apps.portal.db"/>
+
+  <entity name="DirectoryEntry">
+
+    <string name="directoryEntryTitle" namecolumn="true" title="Title"/>
+    <string name="directoryEntryDescription" title="Description" large="true"/>
+    <string name="directoryEntryLinkedIn" title="LinkedIn"/>
+    <string name="directoryEntryX" title="X"/>
+    <string name="directoryEntryInstagram" title="Instagram"/>
+    <string name="directoryEntryWebsite" title="Website"/>
+    <boolean name="isdirectoryMap" title="Show map"/>
+    <many-to-one ref="com.axelor.meta.db.MetaFile" name="directoryEntryImage"
+      title="Image"/>
+    <many-to-one ref="com.axelor.apps.base.db.Address" name="directoryEntryAddress"
+      title="Address"/>
+    <many-to-one ref="com.axelor.apps.portal.db.PortalWorkspace" name="workspace"
+      title="Workspace"/>
+    <many-to-many ref="com.axelor.apps.portal.db.DirectoryCategory"
+      name="directoryEntryCategorySet" title="Categories"/>
+    <many-to-many ref="com.axelor.apps.base.db.Partner" name="directoryContactSet"
+      title="Contacts"/>
+    <many-to-many ref="com.axelor.meta.db.MetaJsonField"
+      name="directoryEntryCustomFields" title="Custom fields"/>
+
+  </entity>
+
+</domain-models>
