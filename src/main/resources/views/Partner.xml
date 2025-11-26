@@ -18,6 +18,16 @@
           <field name="defaultWorkspace" domain="self IN (:partnerWorkspaceSet)"/>
           <field name="createdFromSelect"/>
           <field name="portalUserPreferenceList" colSpan="12"/>
+          <panel name="directoryPanel" colSpan="12">
+            <field name="isInDirectory" colSpan="3"/>
+            <field name="isEmailInDirectory" colSpan="3"/>
+            <field name="isPhoneInDirectory" colSpan="3"/>
+            <field name="isWebsiteInDirectory" colSpan="3"/>
+            <field name="isAddressInDirectory" colSpan="3"/>
+            <field name="isFunctionInDirectory" colSpan="3"/>
+            <field name="isLinkedinInDirectory" colSpan="3"/>
+            <field name="directoryCompanyDescription" colSpan="12"/>
+          </panel>
         </panel>
       </insert>
     </extend>
@@ -43,6 +53,15 @@
             domain="self.id NOT IN (SELECT cwc.id FROM PortalContactWorkspaceConfig cwc WHERE cwc.partner IN (SELECT p.partner FROM PortalContactWorkspaceConfig p WHERE p IN :contactWorkspaceConfigSet)
 			  AND cwc.portalWorkspace IN (SELECT w.portalWorkspace FROM PortalContactWorkspaceConfig w WHERE w IN :contactWorkspaceConfigSet))"/>
           <field name="portalUserPreferenceList" colSpan="12"/>
+          <panel name="directoryPanel" colSpan="12">
+            <field name="isInDirectory" colSpan="3"/>
+            <field name="isEmailInDirectory" colSpan="3"/>
+            <field name="isPhoneInDirectory" colSpan="3"/>
+            <field name="isWebsiteInDirectory" colSpan="3"/>
+            <field name="isAddressInDirectory" colSpan="3"/>
+            <field name="isFunctionInDirectory" colSpan="3"/>
+            <field name="isLinkedinInDirectory" colSpan="3"/>
+          </panel>
         </panel>
       </insert>
     </extend>
