@@ -19,8 +19,8 @@
 package com.axelor.apps.portal.module;
 
 import com.axelor.app.AxelorModule;
-import com.axelor.apps.helpdesk.service.MailServiceHelpDeskImpl;
-import com.axelor.apps.hr.db.repo.ProjectTaskHRRepository;
+import com.axelor.apps.businessproject.service.SaleOrderStockServiceProjectImpl;
+import com.axelor.apps.businesssupport.db.repo.ProjectTaskBusinessSupportRepository;
 import com.axelor.apps.mattermost.mattermost.service.MattermostServiceImpl;
 import com.axelor.apps.portal.db.repo.AttachmentPortalRepository;
 import com.axelor.apps.portal.db.repo.AttachmentRepository;
@@ -44,11 +44,11 @@ import com.axelor.apps.portal.mattermost.service.MattermostPortalService;
 import com.axelor.apps.portal.mattermost.service.MattermostPortalServiceImpl;
 import com.axelor.apps.portal.service.DMSFilePortalService;
 import com.axelor.apps.portal.service.DMSFilePortalServiceImpl;
+import com.axelor.apps.portal.service.MailMessageActionPortalImpl;
 import com.axelor.apps.portal.service.MailMessageFileService;
 import com.axelor.apps.portal.service.MailMessageFileServiceImpl;
 import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.portal.service.MailMessagePortalServiceImpl;
-import com.axelor.apps.portal.service.MailServicePortalImpl;
 import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.apps.portal.service.NotificationServiceImpl;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
@@ -64,8 +64,8 @@ import com.axelor.apps.portal.service.app.AppGooveePortalService;
 import com.axelor.apps.portal.service.app.AppGooveePortalServiceImpl;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.project.service.taskLink.ProjectTaskLinkServiceImpl;
-import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
 import com.axelor.mail.db.repo.MailMessageRepository;
+import com.axelor.message.service.MailMessageAction;
 
 public class PortalModule extends AxelorModule {
 
@@ -75,7 +75,7 @@ public class PortalModule extends AxelorModule {
     bind(SaleOrderPortalService.class).to(SaleOrderPortalServiceImpl.class);
     bind(StockMoveServiceProductionImpl.class).to(StockMovePortalServiceImpl.class);
     bind(MailMessageRepository.class).to(MailMessagePortalRepository.class);
-    bind(ProjectTaskHRRepository.class).to(ProjectTaskPortalRepository.class);
+    bind(ProjectTaskBusinessSupportRepository.class).to(ProjectTaskPortalRepository.class);
     bind(PortalNewsRepository.class).to(PortalNewsPortalRepository.class);
     bind(PortalEventRepository.class).to(PortalEventPortalRepository.class);
     bind(RegistrationRepository.class).to(RegistrationPortalRepository.class);
@@ -86,15 +86,15 @@ public class PortalModule extends AxelorModule {
     bind(AttachmentRepository.class).to(AttachmentPortalRepository.class);
     bind(PostAttachmentRepository.class).to(PostAttachmentPortalRepository.class);
     bind(MailMessageFileService.class).to(MailMessageFileServiceImpl.class);
-    bind(MailServiceHelpDeskImpl.class).to(MailServicePortalImpl.class);
     bind(ProjectTaskLinkServiceImpl.class).to(ProjectTaskLinkPortalServiceImpl.class);
     bind(MattermostPortalService.class).to(MattermostPortalServiceImpl.class);
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
-    bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
+    bind(SaleOrderStockServiceProjectImpl.class).to(SaleOrderStockPortalServiceImpl.class);
     bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
     bind(AppGooveePortalService.class).to(AppGooveePortalServiceImpl.class);
     bind(PortalInvoiceService.class).to(PortalInvoiceServiceImpl.class);
     bind(NotificationService.class).to(NotificationServiceImpl.class);
     bind(DMSFilePortalService.class).to(DMSFilePortalServiceImpl.class);
+    bind(MailMessageAction.class).to(MailMessageActionPortalImpl.class);
   }
 }

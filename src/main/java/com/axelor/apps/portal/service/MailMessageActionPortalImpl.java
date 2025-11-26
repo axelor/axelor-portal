@@ -19,42 +19,25 @@
 package com.axelor.apps.portal.service;
 
 import com.axelor.apps.base.db.Partner;
-import com.axelor.apps.base.service.app.AppBaseService;
-import com.axelor.apps.helpdesk.service.MailServiceHelpDeskImpl;
 import com.axelor.apps.project.db.ProjectTask;
-import com.axelor.apps.project.db.repo.ProjectTaskRepository;
 import com.axelor.auth.db.User;
-import com.axelor.common.ObjectUtils;
 import com.axelor.db.Model;
-import com.axelor.inject.Beans;
+import com.axelor.mail.db.MailAddress;
 import com.axelor.mail.db.MailMessage;
-import com.axelor.message.service.MailAccountService;
-import com.axelor.message.service.MailMessageActionService;
+import com.axelor.message.service.MailMessageAction;
 import com.axelor.meta.db.MetaModel;
-import com.google.inject.Inject;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 
-public class MailServicePortalImpl extends MailServiceHelpDeskImpl {
-
-  @Inject
-  public MailServicePortalImpl(
-      MailAccountService mailAccountService,
-      AppBaseService appBaseService,
-      MailMessageActionService mailMessageActionService) {
-    super(mailAccountService, appBaseService, mailMessageActionService);
-  }
+public class MailMessageActionPortalImpl implements MailMessageAction {
 
   @Override
-  protected Set<String> recipients(MailMessage message, Model entity) {
-
-    String entityName =
-        Optional.ofNullable(entity).map(Model::getClass).map(Class::getName).orElse(null);
-
-    if (!ObjectUtils.isEmpty(entityName) && entityName.equals(ProjectTask.class.getName())) {
-      ProjectTask projectTask = Beans.get(ProjectTaskRepository.class).find(message.getRelatedId());
+  public MailMessage preSendAction(MailMessage mailMessage, Model relatedRecord) {
+    if (relatedRecord instanceof ProjectTask) {
+      String entityName = relatedRecord.getClass().getName();
+      ProjectTask projectTask = (ProjectTask) relatedRecord;
       boolean isPublicNote = projectTask.getIsPublicNote();
 
       Set<String> recipients = new LinkedHashSet<>();
@@ -66,10 +49,22 @@ public class MailServicePortalImpl extends MailServiceHelpDeskImpl {
         recipients = getRecipients(projectTask.getInternalWatchers(), entityName, recipients);
       }
 
-      return recipients;
+      if (mailMessage.getRecipients() == null) {
+        mailMessage.setRecipients(new HashSet<>());
+      }
+
+      recipients.stream()
+          .forEach(
+              emailAddress -> mailMessage.getRecipients().add(createMailAddress(emailAddress)));
     }
 
-    return super.recipients(message, entity);
+    return mailMessage;
+  }
+
+  protected MailAddress createMailAddress(String emailAddress) {
+    MailAddress address = new MailAddress();
+    address.setAddress(emailAddress);
+    return address;
   }
 
   protected Set<String> getRecipients(

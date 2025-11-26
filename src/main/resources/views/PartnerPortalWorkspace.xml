@@ -16,8 +16,8 @@
     <panel name="mainPanel">
       <field name="name" required="true"/>
       <field name="workspace"/>
-      <field name="portalAppConfig"/>
-      <field name="apps" widget="TagSelect" colSpan="12"/>
+      <field name="portalAppConfig" required="true"/>
+      <field name="apps" widget="TagSelect" colSpan="12" required="true"/>
     </panel>
     <panel name="sidePanel" sidebar="true">
       <field name="isDefaultWorkspaceAfterLogin"/>

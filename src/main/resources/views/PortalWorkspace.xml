@@ -17,16 +17,17 @@
         <field name="workspaceLogo" widget="Image" colSpan="12" showTitle="false"/>
       </panel>
       <panel name="infoPanel" colSpan="10">
-        <field name="name"/>
+        <field name="name" required="true"/>
         <field name="navigationSelect"/>
-        <field name="url" widget="url" colSpan="12"/>
+        <field name="url" widget="url" colSpan="12" required="true"
+          placeholder="http://localhost:3000/d/worskpace"/>
       </panel>
     </panel>
     <panel name="detailPanel">
       <field name="defaultTheme"/>
-      <field name="defaultPartnerWorkspace"/>
+      <field name="defaultPartnerWorkspace" requiredIf="defaultGuestWorkspace == null"/>
       <field name="allowRegistrationSelect"/>
-      <field name="defaultGuestWorkspace"/>
+      <field name="defaultGuestWorkspace" requiredIf="defaultPartnerWorkspace == null"/>
       <field name="user"/>
     </panel>
   </form>
