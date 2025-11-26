@@ -10,7 +10,7 @@
     <string name="name"/>
     <string name="code" unique="true"/>
     <string name="description" large="true"/>
-    <string name="installed" selection="app.install.select"/>
+    <boolean name="isInstalled"/>
     <string name="color" selection="color.name.selection"/>
     <string name="background" selection="color.name.selection"/>
     <string name="icon"/>
