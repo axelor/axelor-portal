@@ -6,8 +6,6 @@ import com.axelor.apps.base.service.ProductCompanyService;
 import com.axelor.apps.base.service.UnitConversionService;
 import com.axelor.apps.base.service.app.AppBaseService;
 import com.axelor.apps.base.service.tax.TaxService;
-import com.axelor.apps.businessproject.service.SaleOrderLineProjectService;
-import com.axelor.apps.businessproject.service.SaleOrderStockServiceProjectImpl;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
@@ -23,13 +21,14 @@ import com.axelor.apps.stock.service.config.StockConfigService;
 import com.axelor.apps.supplychain.service.StockMoveLineServiceSupplychain;
 import com.axelor.apps.supplychain.service.app.AppSupplychainService;
 import com.axelor.apps.supplychain.service.config.SupplyChainConfigService;
+import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
 import com.axelor.apps.supplychain.service.saleorderline.SaleOrderLineBlockingSupplychainService;
 import com.axelor.apps.supplychain.service.saleorderline.SaleOrderLineServiceSupplyChain;
 import com.google.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
 
-public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceProjectImpl {
+public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceImpl {
 
   @Inject
   public SaleOrderStockPortalServiceImpl(
@@ -50,8 +49,7 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceProjec
       SaleOrderDeliveryAddressService saleOrderDeliveryAddressService,
       SaleOrderLineBlockingSupplychainService saleOrderLineBlockingSupplychainService,
       AppStockService appStockService,
-      StockMoveLineStockLocationService stockMoveLineStockLocationService,
-      SaleOrderLineProjectService saleOrderLineProjectService) {
+      StockMoveLineStockLocationService stockMoveLineStockLocationService) {
     super(
         stockMoveService,
         stockMoveLineService,
@@ -70,8 +68,7 @@ public class SaleOrderStockPortalServiceImpl extends SaleOrderStockServiceProjec
         saleOrderDeliveryAddressService,
         saleOrderLineBlockingSupplychainService,
         appStockService,
-        stockMoveLineStockLocationService,
-        saleOrderLineProjectService);
+        stockMoveLineStockLocationService);
   }
 
   @Override
