@@ -19,8 +19,7 @@
 package com.axelor.apps.portal.module;
 
 import com.axelor.app.AxelorModule;
-import com.axelor.apps.businessproject.service.SaleOrderStockServiceProjectImpl;
-import com.axelor.apps.businesssupport.db.repo.ProjectTaskBusinessSupportRepository;
+import com.axelor.apps.hr.db.repo.ProjectTaskHRRepository;
 import com.axelor.apps.mattermost.mattermost.service.MattermostServiceImpl;
 import com.axelor.apps.portal.db.repo.AttachmentPortalRepository;
 import com.axelor.apps.portal.db.repo.AttachmentRepository;
@@ -64,6 +63,7 @@ import com.axelor.apps.portal.service.app.AppGooveePortalService;
 import com.axelor.apps.portal.service.app.AppGooveePortalServiceImpl;
 import com.axelor.apps.production.service.StockMoveServiceProductionImpl;
 import com.axelor.apps.project.service.taskLink.ProjectTaskLinkServiceImpl;
+import com.axelor.apps.supplychain.service.saleorder.SaleOrderStockServiceImpl;
 import com.axelor.mail.db.repo.MailMessageRepository;
 import com.axelor.message.service.MailMessageAction;
 
@@ -75,7 +75,7 @@ public class PortalModule extends AxelorModule {
     bind(SaleOrderPortalService.class).to(SaleOrderPortalServiceImpl.class);
     bind(StockMoveServiceProductionImpl.class).to(StockMovePortalServiceImpl.class);
     bind(MailMessageRepository.class).to(MailMessagePortalRepository.class);
-    bind(ProjectTaskBusinessSupportRepository.class).to(ProjectTaskPortalRepository.class);
+    bind(ProjectTaskHRRepository.class).to(ProjectTaskPortalRepository.class);
     bind(PortalNewsRepository.class).to(PortalNewsPortalRepository.class);
     bind(PortalEventRepository.class).to(PortalEventPortalRepository.class);
     bind(RegistrationRepository.class).to(RegistrationPortalRepository.class);
@@ -89,7 +89,7 @@ public class PortalModule extends AxelorModule {
     bind(ProjectTaskLinkServiceImpl.class).to(ProjectTaskLinkPortalServiceImpl.class);
     bind(MattermostPortalService.class).to(MattermostPortalServiceImpl.class);
     bind(MattermostServiceImpl.class).to(MattermostPortalServiceImpl.class);
-    bind(SaleOrderStockServiceProjectImpl.class).to(SaleOrderStockPortalServiceImpl.class);
+    bind(SaleOrderStockServiceImpl.class).to(SaleOrderStockPortalServiceImpl.class);
     bind(PortalEventRegistrationService.class).to(PortalEventRegistrationServiceImpl.class);
     bind(AppGooveePortalService.class).to(AppGooveePortalServiceImpl.class);
     bind(PortalInvoiceService.class).to(PortalInvoiceServiceImpl.class);
