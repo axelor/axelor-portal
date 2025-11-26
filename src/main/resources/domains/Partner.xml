@@ -12,11 +12,23 @@
       selection="partner.created.from.select"/>
     <string name="linkedinLink"/>
     <string name="portalCompanyName" title="Company"/>
+    <string name="directoryCompanyDescription" title="Directory company description"
+      large="true"/>
+
     <boolean name="isAllowedToRegister" title="Is allowed to register"/>
     <boolean name="isActivatedOnPortal"/>
     <boolean name="isPublicPartner" title="Portal public"/>
     <boolean name="canSubscribeNoPublicEvent" title="Subscribe to no public events"/>
     <boolean name="canEditWiki" title="Allow wiki edits"/>
+
+    <boolean name="isInDirectory" title="In directory"/>
+    <boolean name="isEmailInDirectory" title="Email in directory"/>
+    <boolean name="isPhoneInDirectory" title="Phone in directory"/>
+    <boolean name="isWebsiteInDirectory" title="Website in directory"/>
+    <boolean name="isAddressInDirectory" title="Address in directory"/>
+    <boolean name="isFunctionInDirectory" title="Function in directory"/>
+    <boolean name="isLinkedinInDirectory" title="Linkedin in directory"/>
+
     <many-to-many name="partnerWorkspaceSet" title="Workspaces"
       ref="com.axelor.apps.portal.db.PartnerPortalWorkspace"/>
     <many-to-many name="contactWorkspaceConfigSet" title="Workspace configs"
