@@ -91,6 +91,11 @@
     <boolean name="isDisplayCloseBtn" default="true" title="Display close ticket button"/>
     <boolean name="isDisplayAssignmentBtn" default="true" title="Display assignment button"/>
 
+    <boolean name="isCreateMattermostUser"
+      title="Create a user mattermost each time a Goovee user is created"/>
+    <integer name="chatDisplayTypeSelect" title="Chat display type"
+      selection="chat.display.type.select"/>
+
     <boolean name="canInviteMembers" title="Invite members"/>
     <boolean name="isExistingContactsOnly" title="Only existing contacts"/>
     <boolean name="enableRecommendedNews" default="true"/>

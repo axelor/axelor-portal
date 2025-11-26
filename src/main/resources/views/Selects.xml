@@ -224,4 +224,9 @@
     <option value="3">Left/Right menu</option>
   </selection>
 
+  <selection name="chat.display.type.select">
+    <option value="0">Display chat</option>
+    <option value="1">Display a link to the Mattermost webapp</option>
+  </selection>
+
 </object-views>
