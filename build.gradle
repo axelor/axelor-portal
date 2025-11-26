@@ -35,29 +35,16 @@ changelog {
 }
 
 dependencies {
-
-    if (findProject(':modules:axelor-project') != null) {
-        api project(':modules:axelor-project')
-    } else {
-        api "com.axelor.apps:axelor-project:${aosVersion}"
-    }
-
     if (findProject(':modules:axelor-production') != null) {
         api project(':modules:axelor-production')
     } else {
         api "com.axelor.apps:axelor-production:${aosVersion}"
     }
 
-    if (findProject(':modules:axelor-helpdesk') != null) {
-        api project(':modules:axelor-helpdesk')
+    if (findProject(':modules:axelor-business-support') != null) {
+        api project(':modules:axelor-business-support')
     } else {
-        api "com.axelor.apps:axelor-helpdesk:${aosVersion}"
-    }
-
-    if (findProject(":modules:axelor-human-resource") != null) {
-        api project(":modules:axelor-human-resource")
-    }else {
-        api "com.axelor.apps:axelor-human-resource:${aosVersion}"
+        api "com.axelor.apps.enterprise:axelor-business-support:${aosVersion}"
     }
 
     if (findProject(':modules:axelor-mattermost') != null) {

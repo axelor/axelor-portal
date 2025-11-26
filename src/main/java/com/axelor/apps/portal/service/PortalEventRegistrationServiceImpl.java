@@ -224,7 +224,7 @@ public class PortalEventRegistrationServiceImpl implements PortalEventRegistrati
     Company company = portalAppConfig.getCompany();
     Partner partner =
         Optional.ofNullable(participant).map(PortalParticipant::getContact).orElse(null);
-    Partner mainPartner = Optional.ofNullable(partner).map(Partner::getMainPartner).orElse(null);
+    Partner mainPartner = Optional.ofNullable(partner).map(Partner::getMainPartner).orElse(partner);
     String addressStr =
         ObjectUtils.notEmpty(participant.getCompany())
             ? participant.getCompany()
