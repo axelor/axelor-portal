@@ -91,6 +91,19 @@
     <boolean name="isDisplayCloseBtn" default="true" title="Display close ticket button"/>
     <boolean name="isDisplayAssignmentBtn" default="true" title="Display assignment button"/>
 
+    <boolean name="isHomepageDisplay" title="Display homepage"/>
+    <boolean name="isHomepageDisplayNews" title="Display news"/>
+    <boolean name="isHomepageDisplayEvents" title="Display events"/>
+    <boolean name="isHomepageDisplayMessage" title="Display messages"/>
+    <boolean name="isHomepageDisplayResources" title="Display resources"/>
+
+    <string name="homepageHeroTitle" title="Title"/>
+    <string name="homepageHeroDescription" large="true" title="Description"/>
+    <string name="homepageHeroOverlayColorSelect" selection="color.name.selection"
+      title="Overlay color"/>
+    <many-to-one name="homepageHeroBgImage" ref="com.axelor.meta.db.MetaFile"
+      title="Background image"/>
+
     <boolean name="canInviteMembers" title="Invite members"/>
     <boolean name="isExistingContactsOnly" title="Only existing contacts"/>
     <boolean name="enableRecommendedNews" default="true"/>
