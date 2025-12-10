@@ -96,6 +96,19 @@
     <integer name="chatDisplayTypeSelect" title="Chat display type"
       selection="chat.display.type.select"/>
 
+    <boolean name="isHomepageDisplay" title="Display homepage"/>
+    <boolean name="isHomepageDisplayNews" title="Display news"/>
+    <boolean name="isHomepageDisplayEvents" title="Display events"/>
+    <boolean name="isHomepageDisplayMessage" title="Display messages"/>
+    <boolean name="isHomepageDisplayResources" title="Display resources"/>
+
+    <string name="homepageHeroTitle" title="Title"/>
+    <string name="homepageHeroDescription" large="true" title="Description"/>
+    <string name="homepageHeroOverlayColorSelect" selection="color.name.selection"
+      title="Overlay color"/>
+    <many-to-one name="homepageHeroBgImage" ref="com.axelor.meta.db.MetaFile"
+      title="Background image"/>
+
     <boolean name="canInviteMembers" title="Invite members"/>
     <boolean name="isExistingContactsOnly" title="Only existing contacts"/>
     <boolean name="enableRecommendedNews" default="true"/>
