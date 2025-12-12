@@ -184,6 +184,22 @@
         <field name="advancePaymentPercentage" showIf="payInAdvance"
           validIf="(payInAdvance &amp;&amp; advancePaymentPercentage > 0) || !payInAdvance"/>
       </panel>
+      <panel name="homepagePanel" title="Homepage">
+        <panel name="homepageDisplayPanel" colSpan="12" itemSpan="3">
+          <field name="isHomepageDisplay"/>
+          <field name="isHomepageDisplayNews"/>
+          <field name="isHomepageDisplayEvents"/>
+          <field name="isHomepageDisplayMessage"/>
+          <field name="isHomepageDisplayResources"/>
+        </panel>
+        <panel name="homepageHeroPanel" title="Hero details" colSpan="12">
+          <field name="homepageHeroTitle"/>
+          <field name="homepageHeroOverlayColorSelect" widget="SingleSelect"
+            x-color-field="homepageHeroOverlayColorSelect"/>
+          <field name="homepageHeroBgImage" widget="binary-link"/>
+          <field name="homepageHeroDescription" colSpan="12"/>
+        </panel>
+      </panel>
     </panel-tabs>
   </form>
 
