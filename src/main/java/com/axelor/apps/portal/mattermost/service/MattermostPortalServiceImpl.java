@@ -93,6 +93,9 @@ public class MattermostPortalServiceImpl extends MattermostServiceImpl
   @Override
   public void createUsers(Partner partner) {
     try {
+      if (partner.getIsActivatedOnPortal() != Boolean.TRUE) {
+        return;
+      }
       initialize();
       checkMailAddress(partner);
       String email = partner.getEmailAddress().getAddress();

@@ -31,10 +31,11 @@ public class PartnerController {
 
   public void createUser(ActionRequest request, ActionResponse response) {
     try {
-      Partner partner = request.getContext().asType(Partner.class);
-      partner = Beans.get(PartnerRepository.class).find(partner.getId());
-      if (ObjectUtils.isEmpty(partner.getMattermostUserId())
-          && (partner.getIsCustomer() || partner.getIsContact())) {
+      Partner partnerContext = request.getContext().asType(Partner.class);
+      if (ObjectUtils.isEmpty(partnerContext.getMattermostUserId())
+          && (partnerContext.getIsCustomer() || partnerContext.getIsContact())
+          && partnerContext.getIsActivatedOnPortal() == Boolean.TRUE) {
+        Partner partner = Beans.get(PartnerRepository.class).find(partnerContext.getId());
         Beans.get(MattermostPortalService.class).createUsers(partner);
       }
       response.setReload(true);
