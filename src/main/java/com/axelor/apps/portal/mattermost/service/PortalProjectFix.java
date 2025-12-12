@@ -105,7 +105,8 @@ public class PortalProjectFix {
     Query<Partner> partnerQuery =
         partnerRepository
             .all()
-            .filter("(self.archived is null OR self.archived = false) AND self.isCustomer = true")
+            .filter(
+                "(self.archived is null OR self.archived = false) AND self.isCustomer = true AND self.isActivatedOnPortal = true")
             .order("id");
     List<Partner> partnerList = new ArrayList<Partner>();
     int OFFSET = 0;
