@@ -26,7 +26,7 @@
             <field name="isAddressInDirectory" colSpan="3"/>
             <field name="isFunctionInDirectory" colSpan="3"/>
             <field name="isLinkedinInDirectory" colSpan="3"/>
-            <field name="directoryCompanyDescription" colSpan="12"/>
+            <field name="directoryCompanyDescription" colSpan="12" widget="html"/>
           </panel>
         </panel>
       </insert>
