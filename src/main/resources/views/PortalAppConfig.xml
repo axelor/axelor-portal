@@ -161,6 +161,7 @@
         <field name="otpTemplateList" colSpan="12"/>
       </panel>
       <panel name="settingsPanel" title="Settings">
+        <field name="isFixedHeader"/>
         <field name="canInviteMembers"/>
         <field name="isExistingContactsOnly" showIf="canInviteMembers"/>
         <panel name="contactDetailsPanel" colSpan="12" title="Contact details">
