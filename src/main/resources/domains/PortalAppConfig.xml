@@ -123,6 +123,7 @@
       name="partnerPortalWorksapce" title="Default Partner Configuration"/>
 
     <boolean name="isDisplayContact" title="show contact"/>
+    <boolean name="isFixedHeader" title="Fixed Header"/>
     <string name="contactName" title="Name"/>
     <one-to-one name="contactEmailAddress" ref="com.axelor.message.db.EmailAddress"
       title="Email"/>
