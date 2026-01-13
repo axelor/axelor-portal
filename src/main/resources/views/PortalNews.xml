@@ -13,7 +13,8 @@
 
   <form name="portal-portal-news-form" title="Portal news"
     model="com.axelor.apps.portal.db.PortalNews" width="large"
-    onNew="action-portal-record-portal-news-category-onnew">
+    onNew="action-portal-record-portal-news-category-onnew"
+    onLoad="action-portal-news-attrs-set-news-link">
     <panel name="mainPanel">
       <panel name="imagePanel" colSpan="2">
         <field name="image" widget="Image" colSpan="12" showTitle="false"
@@ -23,12 +24,16 @@
       <panel name="infoPanel" colSpan="10">
         <field name="title" required="true" colSpan="11"/>
         <field name="isFeaturedNews" colSpan="1"/>
-        <field name="slug" pattern="^[a-z0-9-]*$" colSpan="11"/>
+        <field name="slug" pattern="^[a-z0-9-]*$" colSpan="11"
+          onChange="action-portal-news-attrs-set-news-link"/>
+        <field name="$newsLink" widget="url" title="Link" readonly="true" colSpan="12"
+          showIf="id"/>
         <field name="isPrivate" colSpan="1"/>
         <field name="publicationDateTime" required="true"/>
         <field name="author"/>
       </panel>
-      <field name="categorySet" colSpan="12" widget="TagSelect"/>
+      <field name="categorySet" colSpan="12" widget="TagSelect"
+        onChange="action-portal-news-attrs-set-news-link"/>
       <field name="relatedNewsSet" colSpan="12" widget="TagSelect"/>
       <field name="partnerSet" colSpan="12" showIf="isPrivate"/>
       <field name="partnerCategorySet" colSpan="12" showIf="isPrivate"/>
@@ -71,5 +76,10 @@
     <field name="thumbnailImage"
       expr="call: com.axelor.apps.portal.utils.ImageUtils:createThumbnail(image)"/>
   </action-record>
+
+  <action-attrs name="action-portal-news-attrs-set-news-link">
+    <attribute name="value" for="$newsLink"
+      expr="eval: categorySet?.getAt(0)?.workspace?.url + '/news/' + slug"/>
+  </action-attrs>
 
 </object-views>
