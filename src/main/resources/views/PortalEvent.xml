@@ -43,6 +43,8 @@
         <field name="slug" onChange="action-portal-event-attrs-set-event-link"/>
         <field name="$eventLink" widget="url" title="Link" readonly="true" colSpan="12"
           showIf="id"/>
+        <field name="eventAllDay" colSpan="3"
+          onChange="action-portal-event-record-event-all-day-onchange"/>
         <field name="eventStartDateTime"
           onChange="action-portal-event-record-startdatetime-onchange"/>
         <field name="eventEndDateTime" showIf="!eventAllDay"
@@ -51,8 +53,6 @@
           domain="self.workspace = :workspace"/>
         <field name="eventPlace"/>
         <field name="defaultPrice"/>
-        <field name="eventAllDay" colSpan="3"
-          onChange="action-portal-event-record-event-all-day-onchange"/>
         <field name="eventAllowRegistration" colSpan="3"/>
         <field name="eventAllowMultipleRegistrations" colSpan="3"
           showIf="eventAllowRegistration"/>
