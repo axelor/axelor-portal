@@ -101,6 +101,7 @@
     <boolean name="isHomepageDisplayEvents" title="Display events"/>
     <boolean name="isHomepageDisplayMessage" title="Display messages"/>
     <boolean name="isHomepageDisplayResources" title="Display resources"/>
+    <boolean name="isHomepageDisplayHyperlinks" title="Display hyperlinks"/>
 
     <string name="homepageHeroTitle" title="Title"/>
     <string name="homepageHeroDescription" large="true" title="Description"/>
@@ -135,6 +136,9 @@
 
     <one-to-many ref="com.axelor.apps.portal.db.Carousel" name="carouselList"
       mappedBy="portalAppConfig"/>
+
+    <one-to-many ref="com.axelor.apps.portal.db.Hyperlink" name="hyperlinkList"
+      title="Hyperlinks" mappedBy="portalAppConfig"/>
 
     <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate"
       name="invitationTemplateList" title="Invitation templates" mappedBy="invitationPortalConfig"/>
