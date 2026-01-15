@@ -21,12 +21,15 @@ package com.axelor.apps.portal.web;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.service.exception.TraceBackService;
+import com.axelor.apps.portal.db.PortalWorkspace;
+import com.axelor.apps.portal.db.repo.PortalWorkspaceRepository;
 import com.axelor.apps.portal.service.PartnerMailService;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import java.util.List;
+import java.util.Map;
 
 public class PartnerPortalController {
 
@@ -40,6 +43,19 @@ public class PartnerPortalController {
         return;
       }
 
+      @SuppressWarnings("unchecked")
+      Map<String, Object> workspaceMap =
+          (Map<String, Object>) request.getContext().get("portalWorkspace");
+
+      if (workspaceMap == null || workspaceMap.get("id") == null) {
+        response.setAlert(I18n.get("Please select a workspace"));
+        return;
+      }
+
+      PortalWorkspace workspace =
+          Beans.get(PortalWorkspaceRepository.class)
+              .find(Long.valueOf(workspaceMap.get("id").toString()));
+
       List<Partner> partners =
           Beans.get(PartnerRepository.class)
               .all()
@@ -52,7 +68,7 @@ public class PartnerPortalController {
         return;
       }
 
-      String errors = Beans.get(PartnerMailService.class).sendExampleEmail(partners);
+      String errors = Beans.get(PartnerMailService.class).sendExampleEmail(partners, workspace);
 
       if (errors.isEmpty()) {
         response.setInfo(I18n.get("Emails sent successfully"));
