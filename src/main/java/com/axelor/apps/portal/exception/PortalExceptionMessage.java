@@ -46,4 +46,10 @@ public final class PortalExceptionMessage {
 
   public static final String NO_DEFAULT_EMAIL_ACCOUNT = /*$$(*/
       "No default email account configured" /*)*/;
+
+  public static final String NO_PARTNER_EMAIL_TEMPLATE = /*$$(*/
+      "No partner email template configured in Portal App Config" /*)*/;
+
+  public static final String NO_DEFAULT_PARTNER_WORKSPACE = /*$$(*/
+      "No default partner workspace configured for the selected workspace" /*)*/;
 }

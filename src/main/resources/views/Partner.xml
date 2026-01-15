@@ -91,7 +91,7 @@
     model="com.axelor.apps.base.db.Partner">
     <toolbar>
       <button name="sendExampleEmailBtn" title="Send example email"
-        onClick="action-portal-partner-method-send-example-email"/>
+        onClick="action-portal-partner-view-select-workspace-popup"/>
     </toolbar>
     <field name="partnerSeq"/>
     <field name="simpleFullName"/>
@@ -99,6 +99,27 @@
     <field name="emailAddress"/>
     <field name="mainAddress"/>
   </grid>
+
+  <form model="com.axelor.utils.db.Wizard" title="Select workspace"
+    name="partner-send-email-wizard-form">
+    <panel name="mainPanel" colSpan="12">
+      <field name="$portalWorkspace" title="Workspace" type="many-to-one"
+        target="com.axelor.apps.portal.db.PortalWorkspace" required="true"/>
+      <button name="sendEmailBtn" title="Send email"
+        onClick="action-portal-partner-method-send-example-email, close"/>
+    </panel>
+  </form>
+
+  <action-view name="action-portal-partner-view-select-workspace-popup"
+    title="Select workspace" model="com.axelor.utils.db.Wizard">
+    <view type="form" name="partner-send-email-wizard-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="show-confirm" value="false"/>
+    <view-param name="popup-save" value="false"/>
+    <view-param name="forceEdit" value="true"/>
+    <context name="_ids" expr="eval: _ids"/>
+  </action-view>
 
   <action-method name="action-portal-partner-method-send-example-email">
     <call class="com.axelor.apps.portal.web.PartnerPortalController"

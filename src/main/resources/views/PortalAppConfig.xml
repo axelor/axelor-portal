@@ -159,6 +159,7 @@
       <panel name="emailPanel" title="Email">
         <field name="invitationTemplateList" colSpan="12"/>
         <field name="otpTemplateList" colSpan="12"/>
+        <field name="partnerEmailTemplate" colSpan="6"/>
       </panel>
       <panel name="settingsPanel" title="Settings">
         <field name="isFixedHeader"/>

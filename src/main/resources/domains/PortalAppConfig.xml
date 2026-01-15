@@ -144,6 +144,8 @@
       name="invitationTemplateList" title="Invitation templates" mappedBy="invitationPortalConfig"/>
     <one-to-many ref="com.axelor.apps.portal.db.EmailTemplate" name="otpTemplateList"
       title="OTP templates" mappedBy="otpPortalConfig"/>
+    <many-to-one name="partnerEmailTemplate" ref="com.axelor.message.db.Template"
+      title="Partner email template"/>
     <many-to-one name="defaultStockLocation" title="Stock location"
       ref="com.axelor.apps.stock.db.StockLocation"/>
 
