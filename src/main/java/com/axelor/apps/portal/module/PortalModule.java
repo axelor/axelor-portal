@@ -50,6 +50,8 @@ import com.axelor.apps.portal.service.MailMessagePortalService;
 import com.axelor.apps.portal.service.MailMessagePortalServiceImpl;
 import com.axelor.apps.portal.service.NotificationService;
 import com.axelor.apps.portal.service.NotificationServiceImpl;
+import com.axelor.apps.portal.service.PartnerMailService;
+import com.axelor.apps.portal.service.PartnerMailServiceImpl;
 import com.axelor.apps.portal.service.PortalEventRegistrationService;
 import com.axelor.apps.portal.service.PortalEventRegistrationServiceImpl;
 import com.axelor.apps.portal.service.PortalInvoiceService;
@@ -96,5 +98,6 @@ public class PortalModule extends AxelorModule {
     bind(NotificationService.class).to(NotificationServiceImpl.class);
     bind(DMSFilePortalService.class).to(DMSFilePortalServiceImpl.class);
     bind(MailMessageAction.class).to(MailMessageActionPortalImpl.class);
+    bind(PartnerMailService.class).to(PartnerMailServiceImpl.class);
   }
 }

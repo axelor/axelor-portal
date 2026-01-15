@@ -9,6 +9,17 @@
   <menuitem title="Workspace" name="menu-portal-portal-workspace" parent="menu-portal-root"
     action="action.portal.porttal.workspace" order="101"/>
 
+  <menuitem title="Partners" name="menu-portal-partners-non-contact"
+    parent="menu-portal-root" action="action.portal.partners.non.contact" order="103"/>
+
+  <action-view name="action.portal.partners.non.contact" title="Partners (Companies)"
+    model="com.axelor.apps.base.db.Partner">
+    <view type="grid" name="portal-partner-non-contact-grid"/>
+    <view type="form" name="partner-form"/>
+    <domain>self.isContact = false AND (self.isAllowedToRegister = true OR self.isActivatedOnPortal
+      = true)</domain>
+  </action-view>
+
   <action-view name="action.portal.porttal.workspace" title="Workspace"
     model="com.axelor.apps.portal.db.PortalWorkspace">
     <view type="grid" name="portal-workspace-grid"/>

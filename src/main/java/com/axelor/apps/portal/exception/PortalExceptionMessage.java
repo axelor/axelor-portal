@@ -43,4 +43,7 @@ public final class PortalExceptionMessage {
   public static final String DMS_FILE_DETAILS_UPDATED = /*$$(*/ "File details updated" /*)*/;
 
   public static final String NOT_UNIQUE_SLUG = /*$$(*/ "Slug must be unique" /*)*/;
+
+  public static final String NO_DEFAULT_EMAIL_ACCOUNT = /*$$(*/
+      "No default email account configured" /*)*/;
 }

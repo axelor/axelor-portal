@@ -87,5 +87,22 @@
     <action name="action-partner-method-create-user-mattermost"/>
   </action-group>
 
+  <grid name="portal-partner-non-contact-grid" title="Partners (Companies)"
+    model="com.axelor.apps.base.db.Partner">
+    <toolbar>
+      <button name="sendExampleEmailBtn" title="Send example email"
+        onClick="action-portal-partner-method-send-example-email"/>
+    </toolbar>
+    <field name="partnerSeq"/>
+    <field name="simpleFullName"/>
+    <field name="fixedPhone"/>
+    <field name="emailAddress"/>
+    <field name="mainAddress"/>
+  </grid>
+
+  <action-method name="action-portal-partner-method-send-example-email">
+    <call class="com.axelor.apps.portal.web.PartnerPortalController"
+      method="sendExampleEmailToSelectedPartners"/>
+  </action-method>
 
 </object-views>
