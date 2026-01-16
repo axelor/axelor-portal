@@ -89,41 +89,43 @@
 
   <grid name="portal-partner-non-contact-grid" title="Partners (Companies)"
     model="com.axelor.apps.base.db.Partner">
-    <toolbar>
-      <button name="sendExampleEmailBtn" title="Send example email"
-        onClick="action-portal-partner-view-select-workspace-popup"/>
-    </toolbar>
     <field name="partnerSeq"/>
     <field name="simpleFullName"/>
     <field name="fixedPhone"/>
     <field name="emailAddress"/>
     <field name="mainAddress"/>
+    <field name="isAllowedToRegister" hidden="true"/>
+    <field name="isActivatedOnPortal" hidden="true"/>
+    <button name="sendEmailBtn" title="Send invitation email" icon="fa-envelope"
+      readonlyIf="!isAllowedToRegister || isActivatedOnPortal"
+      onClick="action-portal-partner-view-send-email-wizard"/>
   </grid>
 
-  <form model="com.axelor.utils.db.Wizard" title="Select workspace"
+  <form model="com.axelor.utils.db.Wizard" title="Send subscription email"
     name="partner-send-email-wizard-form">
     <panel name="mainPanel" colSpan="12">
-      <field name="$portalWorkspace" title="Workspace" type="many-to-one"
-        target="com.axelor.apps.portal.db.PortalWorkspace" required="true"/>
+      <field name="$template" title="Template" type="many-to-one"
+        target="com.axelor.message.db.Template" required="true"
+        domain="self.metaModel.fullName = 'com.axelor.apps.base.db.Partner' AND self.isSystem != true"/>
       <button name="sendEmailBtn" title="Send email"
-        onClick="action-portal-partner-method-send-example-email, close"/>
+        onClick="action-portal-partner-method-send-email-to-partner"/>
     </panel>
   </form>
 
-  <action-view name="action-portal-partner-view-select-workspace-popup"
-    title="Select workspace" model="com.axelor.utils.db.Wizard">
+  <action-view name="action-portal-partner-view-send-email-wizard"
+    title="Send subscription email" model="com.axelor.utils.db.Wizard">
     <view type="form" name="partner-send-email-wizard-form"/>
     <view-param name="popup" value="reload"/>
     <view-param name="show-toolbar" value="false"/>
     <view-param name="show-confirm" value="false"/>
     <view-param name="popup-save" value="false"/>
     <view-param name="forceEdit" value="true"/>
-    <context name="_ids" expr="eval: _ids"/>
+    <context name="_partnerId" expr="eval: id"/>
   </action-view>
 
-  <action-method name="action-portal-partner-method-send-example-email">
+  <action-method name="action-portal-partner-method-send-email-to-partner">
     <call class="com.axelor.apps.portal.web.PartnerPortalController"
-      method="sendExampleEmailToSelectedPartners"/>
+      method="sendEmailToPartner"/>
   </action-method>
 
 </object-views>

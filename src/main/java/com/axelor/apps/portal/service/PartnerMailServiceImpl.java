@@ -21,10 +21,6 @@ package com.axelor.apps.portal.service;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
-import com.axelor.apps.base.service.exception.TraceBackService;
-import com.axelor.apps.portal.db.PartnerPortalWorkspace;
-import com.axelor.apps.portal.db.PortalAppConfig;
-import com.axelor.apps.portal.db.PortalWorkspace;
 import com.axelor.apps.portal.exception.PortalExceptionMessage;
 import com.axelor.i18n.I18n;
 import com.axelor.message.db.Message;
@@ -33,13 +29,7 @@ import com.axelor.message.service.MessageService;
 import com.axelor.message.service.TemplateMessageService;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import javax.mail.MessagingException;
-import wslite.json.JSONException;
 
 public class PartnerMailServiceImpl implements PartnerMailService {
 
@@ -54,112 +44,22 @@ public class PartnerMailServiceImpl implements PartnerMailService {
   }
 
   @Override
-  public String sendExampleEmail(List<Partner> partners, PortalWorkspace workspace)
-      throws AxelorException {
-    PartnerPortalWorkspace partnerWorkspace = workspace.getDefaultPartnerWorkspace();
-    if (partnerWorkspace == null) {
-      throw new AxelorException(
-          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
-          I18n.get(PortalExceptionMessage.NO_DEFAULT_PARTNER_WORKSPACE));
-    }
-
-    PortalAppConfig portalAppConfig = partnerWorkspace.getPortalAppConfig();
-    if (portalAppConfig == null || portalAppConfig.getPartnerEmailTemplate() == null) {
-      throw new AxelorException(
-          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
-          I18n.get(PortalExceptionMessage.NO_PARTNER_EMAIL_TEMPLATE));
-    }
-
-    Template template = portalAppConfig.getPartnerEmailTemplate();
-    StringBuilder errors = new StringBuilder();
-
-    for (Partner partner : partners) {
-      if (partner.getEmailAddress() == null
-          || partner.getEmailAddress().getAddress() == null
-          || partner.getEmailAddress().getAddress().isEmpty()) {
-        continue;
-      }
-
-      try {
-        sendEmailToPartner(partner, template, workspace);
-      } catch (Exception e) {
-        errors.append(partner.getName()).append("\n");
-        TraceBackService.trace(e);
-      }
-    }
-
-    return errors.toString();
-  }
-
   @Transactional(rollbackOn = {Exception.class})
-  protected void sendEmailToPartner(Partner partner, Template template, PortalWorkspace workspace)
-      throws MessagingException, ClassNotFoundException, IOException, JSONException {
-    Message message = templateMessageService.generateMessage(partner, template);
+  public void sendEmail(Partner partner, Template template) throws AxelorException {
 
-    // Generate registration URL and clickable HTML link
-    String registrationUrl = generateRegistrationUrl(workspace);
-    String registrationLink =
-        "<a href=\"" + registrationUrl + "\">" + I18n.get("Click here to register") + "</a>";
-
-    if (message.getContent() != null) {
-      String content = message.getContent();
-      content = content.replace("{{REGISTRATION_LINK}}", registrationLink);
-      content = content.replace("{{REGISTRATION_URL}}", registrationUrl);
-      message.setContent(content);
-    }
-    if (message.getSubject() != null) {
-      // Only replace URL in subject (no HTML in subject)
-      message.setSubject(message.getSubject().replace("{{REGISTRATION_URL}}", registrationUrl));
-    }
-
-    messageService.sendByEmail(message);
-  }
-
-  /**
-   * Generate a registration URL from the workspace URL.
-   *
-   * <p>Example: If workspace URL is "http://localhost:3001/d/france", the generated URL will be:
-   * "http://localhost:3001/auth/register/email?callbackurl=%2Fd%2Ffrance&workspaceURI=%2Fd%2Ffrance&tenant=d&type=company"
-   *
-   * @param workspace the portal workspace
-   * @return the registration URL
-   */
-  protected String generateRegistrationUrl(PortalWorkspace workspace) {
-    String workspaceUrl = workspace.getUrl();
-    if (workspaceUrl == null || workspaceUrl.isEmpty()) {
-      return "";
+    if (partner.getEmailAddress() == null
+        || partner.getEmailAddress().getAddress() == null
+        || partner.getEmailAddress().getAddress().isEmpty()) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_CONFIGURATION_ERROR,
+          I18n.get(PortalExceptionMessage.PARTNER_NO_EMAIL));
     }
 
     try {
-      URI uri = new URI(workspaceUrl);
-      String baseUrl = uri.getScheme() + "://" + uri.getHost();
-      if (uri.getPort() != -1) {
-        baseUrl += ":" + uri.getPort();
-      }
-
-      String path = uri.getPath(); // e.g., "/d/france"
-      String encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8.toString());
-
-      // Extract tenant (first segment after the leading slash)
-      String tenant = "";
-      if (path != null && path.length() > 1) {
-        String[] segments = path.substring(1).split("/");
-        if (segments.length > 0) {
-          tenant = segments[0]; // e.g., "d"
-        }
-      }
-
-      return baseUrl
-          + "/auth/register/email?callbackurl="
-          + encodedPath
-          + "&workspaceURI="
-          + encodedPath
-          + "&tenant="
-          + tenant
-          + "&type=company";
-    } catch (Exception e) {
-      TraceBackService.trace(e);
-      return workspaceUrl;
+      Message message = templateMessageService.generateMessage(partner, template);
+      messageService.sendByEmail(message);
+    } catch (MessagingException | ClassNotFoundException e) {
+      throw new AxelorException(TraceBackRepository.CATEGORY_CONFIGURATION_ERROR, e.getMessage());
     }
   }
 }

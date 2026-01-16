@@ -20,19 +20,16 @@ package com.axelor.apps.portal.service;
 
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Partner;
-import com.axelor.apps.portal.db.PortalWorkspace;
-import java.util.List;
+import com.axelor.message.db.Template;
 
 public interface PartnerMailService {
 
   /**
-   * Send an example email to a list of partners using the template configured in the workspace.
+   * Send an email to a partner using the specified template.
    *
-   * @param partners the list of partners to send emails to
-   * @param workspace the portal workspace containing the configuration for the email template
-   * @return a string containing the names of partners for which sending failed (empty if all
-   *     succeeded)
-   * @throws AxelorException if no default partner workspace or email template is configured
+   * @param partner the partner to send email to
+   * @param template the email template to use
+   * @throws AxelorException if the email cannot be sent
    */
-  String sendExampleEmail(List<Partner> partners, PortalWorkspace workspace) throws AxelorException;
+  void sendEmail(Partner partner, Template template) throws AxelorException;
 }
