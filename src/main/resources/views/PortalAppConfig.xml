@@ -195,6 +195,8 @@
           <field name="isHomepageDisplayResources"/>
           <field name="isHomepageDisplayHyperlinks"/>
         </panel>
+        <panel-related name="hyperlinkListPanel" field="hyperlinkList" colSpan="12"
+          showIf="isHomepageDisplayHyperlinks"/>
         <panel name="homepageHeroPanel" title="Hero details" colSpan="12">
           <field name="homepageHeroTitle"/>
           <field name="homepageHeroOverlayColorSelect" widget="SingleSelect"
@@ -202,7 +204,6 @@
           <field name="homepageHeroBgImage" widget="binary-link"/>
           <field name="homepageHeroDescription" colSpan="12"/>
         </panel>
-        <panel-related name="hyperlinkListPanel" field="hyperlinkList" colSpan="12"/>
       </panel>
     </panel-tabs>
   </form>
