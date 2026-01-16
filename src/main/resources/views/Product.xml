@@ -99,7 +99,7 @@
 
   <action-validate name="portal-action-product-validate-slug">
     <error message="Slug must be unique"
-      if="__repo__(PortalApp).all().filter('self.code = ?1 AND self.installed = ?2', 'shop', 'yes').count() > 0 &amp;&amp;
+      if="__repo__(PortalApp).all().filter('self.code = ?1 AND self.isInstalled = ?2', 'shop', true).count() > 0 &amp;&amp;
       	((id != null &amp;&amp; __repo__(Product).all().filter('self.slug = ?1 AND (self.id != ?2)', slug, id).count() > 0) ||
   		(id == null &amp;&amp; __repo__(Product).all().filter('self.slug = ?1', slug).count() > 0))"/>
   </action-validate>
