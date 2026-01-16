@@ -96,28 +96,35 @@ public class PartnerMailServiceImpl implements PartnerMailService {
       throws MessagingException, ClassNotFoundException, IOException, JSONException {
     Message message = templateMessageService.generateMessage(partner, template);
 
-    // Generate registration link from workspace URL
-    String registrationLink = generateRegistrationLink(workspace);
+    // Generate registration URL and clickable HTML link
+    String registrationUrl = generateRegistrationUrl(workspace);
+    String registrationLink =
+        "<a href=\"" + registrationUrl + "\">" + I18n.get("Click here to register") + "</a>";
+
     if (message.getContent() != null) {
-      message.setContent(message.getContent().replace("{{REGISTRATION_LINK}}", registrationLink));
+      String content = message.getContent();
+      content = content.replace("{{REGISTRATION_LINK}}", registrationLink);
+      content = content.replace("{{REGISTRATION_URL}}", registrationUrl);
+      message.setContent(content);
     }
     if (message.getSubject() != null) {
-      message.setSubject(message.getSubject().replace("{{REGISTRATION_LINK}}", registrationLink));
+      // Only replace URL in subject (no HTML in subject)
+      message.setSubject(message.getSubject().replace("{{REGISTRATION_URL}}", registrationUrl));
     }
 
     messageService.sendByEmail(message);
   }
 
   /**
-   * Generate a registration link from the workspace URL.
+   * Generate a registration URL from the workspace URL.
    *
-   * <p>Example: If workspace URL is "http://localhost:3001/d/france", the generated link will be:
+   * <p>Example: If workspace URL is "http://localhost:3001/d/france", the generated URL will be:
    * "http://localhost:3001/auth/register/email?callbackurl=%2Fd%2Ffrance&workspaceURI=%2Fd%2Ffrance&tenant=d&type=company"
    *
    * @param workspace the portal workspace
-   * @return the registration link
+   * @return the registration URL
    */
-  protected String generateRegistrationLink(PortalWorkspace workspace) {
+  protected String generateRegistrationUrl(PortalWorkspace workspace) {
     String workspaceUrl = workspace.getUrl();
     if (workspaceUrl == null || workspaceUrl.isEmpty()) {
       return "";
