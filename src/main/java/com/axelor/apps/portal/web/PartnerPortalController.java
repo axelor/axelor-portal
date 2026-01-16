@@ -21,60 +21,38 @@ package com.axelor.apps.portal.web;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.base.service.exception.TraceBackService;
-import com.axelor.apps.portal.db.PortalWorkspace;
-import com.axelor.apps.portal.db.repo.PortalWorkspaceRepository;
 import com.axelor.apps.portal.service.PartnerMailService;
 import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
+import com.axelor.message.db.Template;
+import com.axelor.message.db.repo.TemplateRepository;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-import java.util.List;
 import java.util.Map;
 
 public class PartnerPortalController {
 
-  public void sendExampleEmailToSelectedPartners(ActionRequest request, ActionResponse response) {
+  public void sendEmailToPartner(ActionRequest request, ActionResponse response) {
     try {
-      @SuppressWarnings("unchecked")
-      List<Integer> ids = (List<Integer>) request.getContext().get("_ids");
-
-      if (ids == null || ids.isEmpty()) {
-        response.setAlert(I18n.get("Please select at least one partner"));
-        return;
-      }
+      Long partnerId = Long.valueOf(request.getContext().get("_partnerId").toString());
 
       @SuppressWarnings("unchecked")
-      Map<String, Object> workspaceMap =
-          (Map<String, Object>) request.getContext().get("portalWorkspace");
+      Map<String, Object> templateMap = (Map<String, Object>) request.getContext().get("template");
 
-      if (workspaceMap == null || workspaceMap.get("id") == null) {
-        response.setAlert(I18n.get("Please select a workspace"));
+      if (templateMap == null || templateMap.get("id") == null) {
+        response.setAlert(I18n.get("Please select a template"));
         return;
       }
 
-      PortalWorkspace workspace =
-          Beans.get(PortalWorkspaceRepository.class)
-              .find(Long.valueOf(workspaceMap.get("id").toString()));
+      Partner partner = Beans.get(PartnerRepository.class).find(partnerId);
 
-      List<Partner> partners =
-          Beans.get(PartnerRepository.class)
-              .all()
-              .filter("self.id IN :ids")
-              .bind("ids", ids)
-              .fetch();
+      Template template =
+          Beans.get(TemplateRepository.class).find(Long.valueOf(templateMap.get("id").toString()));
 
-      if (partners.isEmpty()) {
-        response.setAlert(I18n.get("No partners found"));
-        return;
-      }
+      Beans.get(PartnerMailService.class).sendEmail(partner, template);
 
-      String errors = Beans.get(PartnerMailService.class).sendExampleEmail(partners, workspace);
-
-      if (errors.isEmpty()) {
-        response.setInfo(I18n.get("Emails sent successfully"));
-      } else {
-        response.setAlert(I18n.get("Some emails failed") + ":\n" + errors);
-      }
+      response.setCanClose(true);
+      response.setInfo(I18n.get("Email sent successfully"));
     } catch (Exception e) {
       TraceBackService.trace(response, e);
     }
