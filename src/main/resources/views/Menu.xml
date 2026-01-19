@@ -9,10 +9,10 @@
   <menuitem title="Workspace" name="menu-portal-portal-workspace" parent="menu-portal-root"
     action="action.portal.porttal.workspace" order="101"/>
 
-  <menuitem title="Partners" name="menu-portal-partners-non-contact"
-    parent="menu-portal-root" action="action.portal.partners.non.contact" order="111"/>
+  <menuitem title="Users" name="menu-portal-partners-non-contact" parent="menu-portal-root"
+    action="action.portal.partners.non.contact" order="111"/>
 
-  <action-view name="action.portal.partners.non.contact" title="Partners (Companies)"
+  <action-view name="action.portal.partners.non.contact" title="Users"
     model="com.axelor.apps.base.db.Partner">
     <view type="grid" name="portal-partner-non-contact-grid"/>
     <view type="form" name="partner-form"/>
