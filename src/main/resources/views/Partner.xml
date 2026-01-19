@@ -87,17 +87,14 @@
     <action name="action-partner-method-create-user-mattermost"/>
   </action-group>
 
-  <grid name="portal-partner-non-contact-grid" title="Partners (Companies)"
+  <grid name="portal-partner-non-contact-grid" title="Users"
     model="com.axelor.apps.base.db.Partner">
-    <field name="partnerSeq"/>
     <field name="simpleFullName"/>
     <field name="fixedPhone"/>
     <field name="emailAddress"/>
-    <field name="mainAddress"/>
-    <field name="isAllowedToRegister" hidden="true"/>
-    <field name="isActivatedOnPortal" hidden="true"/>
+    <field name="partnerWorkspaceSet" widget="TagSelect"
+      form-view="partner-portal-workspace-form" grid-view="partner-portal-workspace-grid"/>
     <button name="sendEmailBtn" title="Send invitation email" icon="fa-envelope"
-      readonlyIf="!isAllowedToRegister || isActivatedOnPortal"
       onClick="action-portal-partner-view-send-email-wizard"/>
   </grid>
 
