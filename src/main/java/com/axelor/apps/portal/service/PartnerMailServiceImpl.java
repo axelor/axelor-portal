@@ -29,7 +29,7 @@ import com.axelor.message.service.MessageService;
 import com.axelor.message.service.TemplateMessageService;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 public class PartnerMailServiceImpl implements PartnerMailService {
 

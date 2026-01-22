@@ -76,6 +76,7 @@ import com.axelor.meta.db.MetaFile;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -83,7 +84,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.ws.rs.NotFoundException;
 import org.apache.commons.collections.CollectionUtils;
 
 public class SaleOrderPortalServiceImpl implements SaleOrderPortalService {

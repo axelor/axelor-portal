@@ -5,7 +5,7 @@ stages:
   - publish
 
 .base-env:
-  image: axelor/app-builder:7.4
+  image: axelor/app-builder:8.0
   interruptible: true
   rules:
     - if: $CI_COMMIT_TAG
@@ -42,7 +42,7 @@ build:
     - ./gradlew clean assemble -PaxelorMavenUsername=${NEXUS_READER_USERNAME} -PaxelorMavenPassword=${NEXUS_READER_PASSWORD}
 
 .publish_template: &publish_configuration
-  image: axelor/app-builder:7.4
+  image: axelor/app-builder:8.0
   stage: publish
   script:
     - ./gradlew clean publish -PaxelorMavenUsername=${NEXUS_DEPLOYMENT_USERNAME} -PaxelorMavenPassword=${NEXUS_DEPLOYMENT_PASSWORD} -P${PUBLISH_TYPE}

@@ -28,9 +28,9 @@ import com.axelor.inject.Beans;
 import com.axelor.mail.db.MailMessage;
 import com.axelor.mail.db.repo.MailMessageRepository;
 import com.axelor.meta.db.MetaFile;
+import jakarta.persistence.PersistenceException;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 
 public class MailMessagePortalRepository extends MailMessageRepository {

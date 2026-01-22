@@ -12,7 +12,8 @@ Axelor Portal Version | Compatible from AOS version | Compatible to AOS version
 --- |-----------------------------| --- 
 8.3 | 8.3                         | 8.3.+
 8.4 | 8.4                         | 8.4.+
-8.5 | 8.5                         | -
+8.5 | 8.5                         | 8.5.+
+9.0 | 9.0                         | -
 
 
 ## How to release

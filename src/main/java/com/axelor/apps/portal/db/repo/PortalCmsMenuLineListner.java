@@ -20,8 +20,8 @@ package com.axelor.apps.portal.db.repo;
 
 import com.axelor.apps.portal.db.PortalCmsMenuLine;
 import com.axelor.common.ObjectUtils;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 public class PortalCmsMenuLineListner {
 

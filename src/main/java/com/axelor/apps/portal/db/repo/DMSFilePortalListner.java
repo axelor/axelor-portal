@@ -26,7 +26,7 @@ import com.axelor.auth.db.User;
 import com.axelor.common.ObjectUtils;
 import com.axelor.dms.db.DMSFile;
 import com.axelor.inject.Beans;
-import javax.persistence.PostPersist;
+import jakarta.persistence.PostPersist;
 
 public class DMSFilePortalListner {
 

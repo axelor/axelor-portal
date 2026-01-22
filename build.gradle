@@ -15,7 +15,7 @@ try {
 
 java {
   toolchain {
-    languageVersion = JavaLanguageVersion.of(11)
+    languageVersion = JavaLanguageVersion.of(21)
   }
 }
 
@@ -35,6 +35,10 @@ changelog {
 }
 
 dependencies {
+    implementation 'com.github.groovy-wslite:groovy-wslite:1.1.3'
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.3'
+    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
+
     if (findProject(':modules:axelor-project') != null) {
         api project(':modules:axelor-project')
     } else {
@@ -63,12 +67,7 @@ dependencies {
     if (findProject(':modules:axelor-mattermost') != null) {
         api project(':modules:axelor-mattermost')
     } else {
-        api ('com.axelor.apps:axelor-mattermost') {
-            version {
-                require '[8.0, 8.1['
-                prefer '8.0.0'
-            }
-        }
+        api "com.axelor.apps:axelor-mattermost:${mattermostVersion}"
     }
 }
 

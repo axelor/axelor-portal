@@ -21,7 +21,7 @@ package com.axelor.apps.portal.db.repo;
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.auth.AuthUtils;
 import com.axelor.common.ObjectUtils;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PreUpdate;
 
 public class InvoicePortalListner {
 

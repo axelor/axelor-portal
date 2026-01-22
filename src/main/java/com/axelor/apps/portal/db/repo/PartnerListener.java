@@ -22,8 +22,8 @@ import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.mattermost.mattermost.service.MattermostService;
 import com.axelor.inject.Beans;
+import jakarta.persistence.PreRemove;
 import java.io.IOException;
-import javax.persistence.PreRemove;
 import wslite.json.JSONException;
 
 public class PartnerListener {
