@@ -177,6 +177,7 @@
           <field name="contactPhone" showIf="isDisplayContact" widget="phone"
             x-placeholder-number-type="FIXED_LINE"/>
         </panel>
+        <field name="termsOfUseAcceptanceText" colSpan="12" widget="html"/>
       </panel>
       <panel title="Payment" name="paymentPanel">
         <field name="allowOnlinePaymentForEcommerce"/>
