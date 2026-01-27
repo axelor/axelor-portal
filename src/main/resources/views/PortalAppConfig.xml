@@ -154,7 +154,6 @@
       </panel>
       <panel name="chatPanel" title="Chat">
         <field name="chatDisplayTypeSelect"/>
-        <field name="isCreateMattermostUser"/>
       </panel>
       <panel name="emailPanel" title="Email">
         <field name="invitationTemplateList" colSpan="12"/>
